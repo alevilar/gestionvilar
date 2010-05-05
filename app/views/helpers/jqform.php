@@ -11,7 +11,7 @@ App::import('Helper','Form');
  *
  */
 class JqformHelper extends FormHelper {
-    var $helpers = array('Html','Javascript', 'Form');
+    var $helpers = array('Html');
     var $format = '%Y-%m-%d';
 
     function _setup() {
@@ -22,7 +22,7 @@ class JqformHelper extends FormHelper {
     }
     
 
-    function datePicker($fieldName, $options = array()) {
+    function date($fieldName, $options = array()) {
         $this->_setup();
         $this->setEntity($fieldName);
         $htmlAttributes = $this->domId($options);
@@ -39,7 +39,8 @@ class JqformHelper extends FormHelper {
             $options['after'] .= $this->Html->image('b_drop.png', array('id'=> $htmlAttributes['id']."_drop",'style'=>'cursor:pointer'));
         }
         $output = $this->input($fieldName, $options);
-        $output .= $this->Javascript->codeBlock("datepick('" . $htmlAttributes['id'] . "','01/01/" . $options['minYear'] . "','31/12/" . $options['maxYear'] . "');");
+        $output .= $this->Html->scriptBlock("datepick('" . $htmlAttributes['id'] . "','01/01/" . $options['minYear'] . "','31/12/" . $options['maxYear'] . "');");
+
         return $output;
     } 
 }

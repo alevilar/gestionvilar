@@ -65,6 +65,8 @@ class UsersController extends AppController {
         }
 
         function logout(){
+           $this->Session->setFlash('Ha salido de su cuenta');
+           $this->redirect($this->Auth->logout());
            $this->redirect(array('action' => 'login'));
         }
 }

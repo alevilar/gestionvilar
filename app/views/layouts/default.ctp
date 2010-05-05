@@ -44,72 +44,89 @@
 
 
 
-        
-        // DatePicker JS y CSS
-         echo $this->Javascript->link(array(
-             'jquery.js',
-             'date.js',
-             'jquery.datePicker.js',
-             'cake.datePicker.js',
-            ));
+        echo $this->Html->script(array(
+        'jquery',
+        'date',
+        'jquery.datePicker', // calendario usado en input date
+        'cake.datePicker',   // calendario en input tipo date
+        'menu',
+        'jquery.form',
+        'jquery.form.wizard',
+        'jquery.history',
+        'jquery.validate',
+        ));
         echo $this->Html->css(array('datePicker.css'));
         // DatePicker end
 
+        echo $this->Html->css(array('menu.css'));
+
         ?>
         <!-- // para evitar problemas con IE y el z.index de los selects y el datePicker -->
-        <!--[if IE]><?= $this->Javascript->link( 'jquery.bgiframe'); ?><![endif]-->
+        <!--[if IE]><?= $this->Html->script( 'jquery.bgiframe'); ?><![endif]-->
         <?
 
-        
+
 
         echo $this->Html->css('gestionvilar');
 
-       // echo $this->Javascript->link('jquery');
+        // echo $this->Javascript->link('jquery');
 
         echo $scripts_for_layout;
         ?>
 
     </head>
     <body>
-        <div id="container" class="container showgrid">
+        <div id="container" class="container">
             <div id="header" class="span-24 last">
-                <h1><?php  __('Form Manager System'); ?></h1>
-            </div>
-            <div id="mesajero" class="span-24 last">
-                <?php
-                echo $this->Session->flash();
-                ?>
-            </div>
-            <div id="content" class="span-18">
+                <div class="span-10">
+                    <div id="menu">
+                        <ul class="menu">
 
-                <?php echo $content_for_layout; ?>
-
-            </div>
-            <div id="menu" class="span-6 last">
-
-                <div class="box">
-                    <h2 class="caps">Menu 1</h2>
-                    <ul>
-                        <li><? echo $this->Html->link(array('controller'=>'pages','action'=>'home'))?></li>
-
-                        <li><? echo $this->Html->link('Add Customer',array('controller'=>'customers','action'=>'add'))?></li>
-                        <li><? echo $this->Html->link('List Customer',array('controller'=>'customers','action'=>'index'))?></li>
-                    </ul>
-
-                     <ul>
-                        <li><? echo $this->Html->link('Add User',array('controller'=>'users','action'=>'add'))?></li>
-                        <li><? echo $this->Html->link('List Users',array('controller'=>'users','action'=>'index'))?></li>
-
-                        <li><? echo $this->Html->link('List Identifications Types',array('controller'=>'identification_types','action'=>'index'))?></li>
-
-                        <li><? echo $this->Html->link('Salir',array('controller'=>'users','action'=>'logout'))?></li>
-                    </ul>
+                            <li>
+                                <? echo $this->Html->link(
+                                sprintf('<span>%s</span>',__('Customers',true)),
+                                '/', array(
+                                'class'=>'parent',
+                                'escape'=>false)); ?>
+                                <div>
+                                    <ul>
+                                        <li><?= $this->Html->link(__('Add Customer',true),'/customers/add');?></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><? echo $this->Html->link(sprintf('<span>%s</span>',__('Configurations',true)), '/', array('class'=>'parent', 'escape'=>false)); ?>
+                                <div>
+                                    <ul>
+                                        <li><? echo $this->Html->link(__('Add User',true),'/users/add');?></li>
+                                        <li><? echo $this->Html->link(__('List Users',true),'/users/index');?></li>
+                                        <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> <!-- End Menu -->
                 </div>
+                <div id="mensajero" class="span-11 last">
+                    <?php
+                    echo $this->Session->flash();
+                    ?>
+                </div>
+            </div> <!-- End Header -->
 
+            <div id="content" class="span-24 last box">
+                <?php echo $content_for_layout; ?>
             </div>
+
             <div id="footer">
             </div>
         </div>
         <?php echo $this->element('sql_dump'); ?>
     </body>
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('a[href="http://apycom.com/"]').hide();
+        });
+    </script>
 </html>

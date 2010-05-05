@@ -1,4 +1,4 @@
-<div class="customers form">
+<div class="customers form box">
 <?php echo $this->Form->create('Customer');?>
 	<fieldset>
  		<legend><?php printf(__('Edit %s', true), __('Customer', true)); ?></legend>

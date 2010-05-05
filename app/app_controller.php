@@ -34,13 +34,13 @@
  * @subpackage	gestionvilar.app
  */
 class AppController extends Controller {
-    var $helpers = array('Html', 'Form', 'Jqform','Javascript', 'Session','Fpdf');
+    var $helpers = array('Html', 'Form', 'Jqform', 'Js' => array('Jquery'), 'Session','Fpdf');
     //var $components = array( 'Auth' , 'RequestHandler');
-    var $components = array('RequestHandler','Session','Acl','Auth');
+    var $components = array('RequestHandler','Session','Auth');
 
     function beforeFilter() {
         $this->Auth->loginError ='Usuario o Password Incorrectos';
-        $this->Auth->authError = 'Debe registrarse para acceder a esta página';
+        $this->Auth->authError = 'Debe registrarse para ingresar al sistema';
 
         $this->Auth->logoutRedirect='/users/login';
 

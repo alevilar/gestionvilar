@@ -1,4 +1,4 @@
-<div class="users form">
+<div class="users form box prepend-top">
 <?php echo $this->Form->create('User');?>
 	<fieldset>
  		<legend><?php printf(__('Add %s', true), __('User', true)); ?></legend>

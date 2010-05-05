@@ -1,3 +1,7 @@
+A {
+outline: none;
+}
+
 .cake-sql-log table {
 	background: #f4f4f4;
 }
@@ -78,18 +82,20 @@ div.actions ul li a:hover {
 }
 
 input[type=submit],
+input[type=reset],
 div.actions ul li a,
 td.actions a {
 	font-weight:normal;
 	padding: 4px 8px;
-	background:#e6e49f;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
-	background-image: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
-	color:#333;
-	border:1px solid #aaac62;
+	background: #333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#777), to(#000000));
+	background-image: -moz-linear-gradient(top, #777, #000000);
+	color:#fff;
+	border:1px solid #000;
 	-webkit-border-radius:8px;
 	-moz-border-radius:8px;
 	border-radius:8px;
+        border-style: inset;
 	text-decoration:none;
 	text-shadow: #fff 0px 1px 0px;
 	min-width: 0;
@@ -97,9 +103,12 @@ td.actions a {
 input[type=submit]:hover,
 div.actions ul li a:hover,
 td.actions a:hover {
-	background: #f0f09a;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7e1), to(#eeeca9));
+	background: #777;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#777));
+        color: #fff;
 }
+
+
 
 /** Related **/
 div.related {
@@ -217,4 +226,93 @@ div.code-coverage-results span.result-good {
 
 label {
     display: block;
+}
+
+
+.search-content {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+BODY {
+     background-image: url(images/background.jpg);
+     background-repeat: repeat-x;
+}
+
+#container {
+    height: 560px;
+    /*background-image: url(images/background.jpg)*/
+}
+
+#content{
+    margin-top:1.5em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 36em;
+}
+
+
+.box {
+    opacity: 0.9;
+    background-color: white;
+    height: 440px;
+}
+
+
+.alto3em {
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+
+li.li-hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#06B3E1), to(#BDD5E1));
+    background-image: -moz-linear-gradient(top, #06B3E1, #BDD5E1);
+    background-color: #06B3E1;
+
+
+}
+.li-hover A:HOVER {
+    color: black;
+}
+
+/* SIMPLE LIST */
+ul.simple-list, li.simple-list{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    border-top: 2px solid;
+}
+.simple-list A{
+    display: block;
+    text-decoration: none;
+    border-bottom: solid 1px;
+    font-weight: bolder;
+}
+
+.simple-list IMG{
+    float: right;
+}
+
+
+/* imagenes en links*/
+.images-link-1 img{
+    height: 20px;
+    max-width:30px;
+    padding-top: 0.5em;
+
+}
+A.images-link-1{
+   text-decoration: none;
+   border: none;
+}
+
+
+.login FORM{
+    background-color: grey;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #000;
 }

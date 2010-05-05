@@ -1,6 +1,10 @@
 <?php
 class Customer extends AppModel {
 	var $name = 'Customer';
+
+        var $order = 'Customer.name';
+        
+        
 	var $validate = array(
 		'name' => array(
 			'notempty' => array(
@@ -25,46 +29,9 @@ class Customer extends AppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+        var $hasOne = array('CustomerHome', 'CustomerType', 'Identification');
+
 	var $hasMany = array(
-		'CustomerHome' => array(
-			'className' => 'CustomerHome',
-			'foreignKey' => 'customer_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'CustomerType' => array(
-			'className' => 'CustomerType',
-			'foreignKey' => 'customer_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Identification' => array(
-			'className' => 'Identification',
-			'foreignKey' => 'customer_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'Representative' => array(
 			'className' => 'Representative',
 			'foreignKey' => 'customer_id',

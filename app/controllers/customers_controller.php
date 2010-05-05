@@ -75,9 +75,9 @@ class CustomersController extends AppController {
 
         function search(){
             if (!empty($this->data)) {
-		$this->set('customers', $this->paginate());
+                        //$this->set('customers', $this->paginate('Customer'));
             }
-            
+             $this->set('customers', $this->paginate('Customer'));
         }
 }
 ?>

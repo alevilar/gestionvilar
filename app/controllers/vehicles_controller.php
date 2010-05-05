@@ -8,6 +8,14 @@ class VehiclesController extends AppController {
 		$this->set('vehicles', $this->paginate());
 	}
 
+        function customer($customer_id) {
+		$this->Vehicle->recursive = 0;
+                $this->paginate['conditions'] = array('Vehicle.customer_id'=>$customer_id);
+		$this->set('vehicles', $this->paginate());
+                $this->Vehicle->Customer->id = $customer_id;
+                $this->set('customer', $this->Vehicle->Customer->read());
+	}
+
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'vehicle'));
@@ -16,16 +24,25 @@ class VehiclesController extends AppController {
 		$this->set('vehicle', $this->Vehicle->read(null, $id));
 	}
 
-	function add() {
+	function add($customer_id = null) {
+                if (empty($customer_id)) {
+                    if (!empty($this->data['Vehicle']['customer_id'])){
+                        $customer_id = $this->data['Vehicle']['customer_id'];
+                    }
+                }
 		if (!empty($this->data)) {
 			$this->Vehicle->create();
 			if ($this->Vehicle->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'vehicle'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('controller'=>'customers','action' => 'search'));
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'vehicle'));
 			}
-		}
+		} else {
+                    if (!empty($customer_id)){
+                        $this->data['Vehicle']['customer_id'] = $customer_id;
+                    }
+                }
 		$customers = $this->Vehicle->Customer->find('list');
 		$this->set(compact('customers'));
 	}
