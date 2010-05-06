@@ -1,5 +1,5 @@
 <?php
-/* State Fixture generated on: 2010-04-28 19:04:46 : 1272493606 */
+/* State Fixture generated on: 2010-05-05 20:05:18 : 1273103598 */
 class StateFixture extends CakeTestFixture {
 	var $name = 'State';
 

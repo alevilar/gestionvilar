@@ -3,7 +3,7 @@
 	<fieldset>
  		<legend><?php printf(__('Add %s', true), __('Customer Home', true)); ?></legend>
 	<?php
-		echo $this->Form->input('adress');
+		echo $this->Form->input('address');
 		echo $this->Form->input('number');
 		echo $this->Form->input('floor');
 		echo $this->Form->input('apartment');

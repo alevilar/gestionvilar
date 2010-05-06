@@ -37,7 +37,7 @@
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php __('Id'); ?></th>
-		<th><?php __('Adress'); ?></th>
+		<th><?php __('Address'); ?></th>
 		<th><?php __('Number'); ?></th>
 		<th><?php __('Floor'); ?></th>
 		<th><?php __('Apartment'); ?></th>
@@ -56,7 +56,7 @@
 		?>
 		<tr<?php echo $class;?>>
 			<td><?php echo $customerHome['id'];?></td>
-			<td><?php echo $customerHome['adress'];?></td>
+			<td><?php echo $customerHome['address'];?></td>
 			<td><?php echo $customerHome['number'];?></td>
 			<td><?php echo $customerHome['floor'];?></td>
 			<td><?php echo $customerHome['apartment'];?></td>

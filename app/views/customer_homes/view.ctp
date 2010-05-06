@@ -6,9 +6,9 @@
 			<?php echo $customerHome['CustomerHome']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Adress'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Address'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customerHome['CustomerHome']['adress']; ?>
+			<?php echo $customerHome['CustomerHome']['address']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Number'); ?></dt>

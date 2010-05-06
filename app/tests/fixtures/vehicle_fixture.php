@@ -1,5 +1,5 @@
 <?php
-/* Vehicle Fixture generated on: 2010-04-28 19:04:46 : 1272493606 */
+/* Vehicle Fixture generated on: 2010-05-05 20:05:18 : 1273103598 */
 class VehicleFixture extends CakeTestFixture {
 	var $name = 'Vehicle';
 
@@ -38,10 +38,10 @@ class VehicleFixture extends CakeTestFixture {
 			'chasis_number' => 'Lorem ipsum dolor sit amet',
 			'use' => 'Lorem ipsum dolor sit amet',
 			'adquisition_value' => 'Lorem ipsum dolor sit amet',
-			'adquisition_date' => '2010-04-28',
+			'adquisition_date' => '2010-05-05',
 			'adquisition_evidence_element' => 'Lorem ipsum dolor sit amet',
-			'created' => '1272493606',
-			'modified' => '1272493606'
+			'created' => '1273103598',
+			'modified' => '1273103598'
 		),
 	);
 }

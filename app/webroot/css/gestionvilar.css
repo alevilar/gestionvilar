@@ -230,33 +230,40 @@ label {
 
 
 .search-content {
-    max-height: 500px;
-    overflow-y: auto;
-    overflow-x: hidden
+        
 }
 
 BODY {
      background-image: url(images/background.jpg);
      background-repeat: repeat-x;
+     background-color: black;
 }
 
 #container {
-    height: 560px;
     /*background-image: url(images/background.jpg)*/
 }
 
 #content{
     margin-top:1.5em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 36em;
+    min-height: 36em;
+    border-radius: 5px;
 }
 
-
-.box {
-    opacity: 0.9;
+.cake-sql-log{
     background-color: white;
-    height: 440px;
+}
+
+.transparent-low {
+    opacity: 0.9;
+    
+}
+.transparent-mid {
+    opacity: 0.5;
+
+}
+
+.transparent-no{
+    opacity: 1;
 }
 
 

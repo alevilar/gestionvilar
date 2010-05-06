@@ -1,5 +1,5 @@
 <?php
-/* MaritalStatus Fixture generated on: 2010-04-28 19:04:45 : 1272493605 */
+/* MaritalStatus Fixture generated on: 2010-05-05 20:05:17 : 1273103597 */
 class MaritalStatusFixture extends CakeTestFixture {
 	var $name = 'MaritalStatus';
 

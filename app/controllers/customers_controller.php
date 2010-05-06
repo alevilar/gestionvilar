@@ -4,7 +4,16 @@ class CustomersController extends AppController {
 	var $name = 'Customers';
 
 	function index() {
-		$this->Customer->recursive = 0;
+		$this->Customer->recursive = 2;
+                $this->paginate = array(
+                    'contain'=> array(
+                        'Identification' => array('IdentificationType'),
+                        'CustomerType',
+                        'CustomerHome',
+                        
+                        'Representative',
+                        )
+                );
 		$this->set('customers', $this->paginate());
 	}
 
@@ -18,27 +27,36 @@ class CustomersController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
-                    debug($this->data);
 			//$this->Customer->create();
-			if ($this->Customer->saveAll($this->data)) {
+                        $retorno_save = $this->Customer->saveAllAboutCustomer($this->data);
+			switch ($retorno_save) {
+                            case -1:
+                                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'customer'));
+                                break;
+                            case -2:
+                                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'customer type'));
+                                break;
+                            case -3:
+                                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'customer identification'));
+                                break;
+                            case -4:
+                                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'customer address'));
+                                break;
+                            case 1:
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'customer'));
 				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'customer'));
+                                break;
+                            default:
+				$this->Session->setFlash(sprintf(__('Error saving the customer', true), 'customer'));
 			}
 		}
-
                 $maritalStatuses = $this->Customer->CustomerType->MaritalStatus->find('list');
-		$this->set(compact('maritalStatuses'));
-                
-                $idenficationTypes = $this->Customer->Identification->IdentificationType->find('list');
-		$this->set(compact('idenficationTypes'));
-
+                $identificationTypes = $this->Customer->Identification->IdentificationType->find('list');
                 $customers = $this->Customer->CustomerHome->Customer->find('list');
 		$cities = $this->Customer->CustomerHome->City->find('list');
                 $counties = $this->Customer->CustomerHome->City->County->find('list');
                 $states = $this->Customer->CustomerHome->City->County->State->find('list');
-		$this->set(compact('customers', 'cities', 'counties', 'states'));
+		$this->set(compact('customers', 'cities', 'counties', 'states', 'identificationTypes', 'maritalStatuses'));
 	}
 
 	function edit($id = null) {

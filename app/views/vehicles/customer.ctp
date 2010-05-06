@@ -1,12 +1,13 @@
 <div class="box">
+    <?= $this->Html->image('user.png', array('height'=>'40px', 'class'=>'pull-1'));?>
     <div class="span-8">
         <h2 class="center">
             <? echo $customer['Customer']['name']?>
         </h2>
     </div>
     <div class="span-5 last">
-        <? echo $this->Html->link('Edit Customer', '/customers/edit/'.$customer['Customer']['id'])?>
-        <? echo $this->Html->link('Add Vehicle', '/vehicles/add/'.$customer['Customer']['id'])?>
+        <? echo $this->Html->link('Editar Cliente', '/customers/edit/'.$customer['Customer']['id'])?>
+        <? echo $this->Html->link('Agregar Vehiculo', '/vehicles/add/'.$customer['Customer']['id'])?>
     </div>
 
     <div class="search-content span-13 last" id="vehicle-list">
@@ -48,7 +49,7 @@
         echo "<div class='notice span-12 last'>"
             .__('This customer has no vehicles',true)
             ." "
-            .$this->Html->link('Click here to add a new one','/vehicles/add/'.$customer['Customer']['id'])
+            .$this->Html->link('haga click aquí para agregar uno','/vehicles/add/'.$customer['Customer']['id'])
             ."</div>";
     }
     ?>

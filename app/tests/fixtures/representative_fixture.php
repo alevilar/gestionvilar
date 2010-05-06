@@ -1,5 +1,5 @@
 <?php
-/* Representative Fixture generated on: 2010-04-28 19:04:45 : 1272493605 */
+/* Representative Fixture generated on: 2010-05-05 20:05:18 : 1273103598 */
 class RepresentativeFixture extends CakeTestFixture {
 	var $name = 'Representative';
 

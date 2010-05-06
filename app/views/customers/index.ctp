@@ -1,12 +1,14 @@
+
+
 <div class="customers index">
 	<h2><?php __('Customers');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('born');?></th>
+			<th><?php echo $this->Paginator->sort('Type','CustomerType');?></th>
+                        <th><?php echo $this->Paginator->sort('Identification Type','Identification.identification_type_id');?></th>
+                        <th><?php echo $this->Paginator->sort('Identification Number','Identification.number');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modified');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -18,11 +20,11 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $customer['Customer']['id']; ?>&nbsp;</td>
 		<td><?php echo $customer['Customer']['name']; ?>&nbsp;</td>
-		<td><?php echo $customer['Customer']['born']; ?>&nbsp;</td>
+		<td><?php echo $customer['CustomerType']['type']; ?>&nbsp;</td>
+                <td><?php echo (!empty($customer['Identification']['IdentificationType']['name'])?$customer['Identification']['IdentificationType']['name']:''); ?>&nbsp;</td>
+                <td><?php echo $customer['Identification']['number']; ?>&nbsp;</td>
 		<td><?php echo $customer['Customer']['created']; ?>&nbsp;</td>
-		<td><?php echo $customer['Customer']['modified']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $customer['Customer']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $customer['Customer']['id'])); ?>

@@ -1,5 +1,5 @@
 <?php
-/* City Fixture generated on: 2010-04-28 19:04:43 : 1272493603 */
+/* City Fixture generated on: 2010-05-05 20:05:17 : 1273103597 */
 class CityFixture extends CakeTestFixture {
 	var $name = 'City';
 

@@ -1,6 +1,7 @@
 
 <div class="column span-10">
     <div class="box">
+        <?= $this->Html->image('playlist.png', array('height'=>'40px', 'class'=>'pull-1'));?>
         <h2 class="center"><? __('Customer´s List')?></h2>
 
         <div class="search-content" id="customer-search-box">
@@ -28,6 +29,7 @@
 
 <div id="vehicle-search-box" class="column span-14 last">
     <div class="box">
+        <?= $this->Html->image('playlist.png', array('height'=>'40px', 'class'=>'pull-1'));?>
         <h2 class="center"><? __('Vehicle´s List')?></h2>
 
         <div class="search-content" id="vehicle-list">

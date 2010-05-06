@@ -1,5 +1,5 @@
 <?php
-/* IdentificationType Fixture generated on: 2010-04-29 15:04:21 : 1272566241 */
+/* IdentificationType Fixture generated on: 2010-05-05 20:05:17 : 1273103597 */
 class IdentificationTypeFixture extends CakeTestFixture {
 	var $name = 'IdentificationType';
 

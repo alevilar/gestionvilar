@@ -3,7 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('adress');?></th>
+			<th><?php echo $this->Paginator->sort('address');?></th>
 			<th><?php echo $this->Paginator->sort('number');?></th>
 			<th><?php echo $this->Paginator->sort('floor');?></th>
 			<th><?php echo $this->Paginator->sort('apartment');?></th>
@@ -22,7 +22,7 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $customerHome['CustomerHome']['id']; ?>&nbsp;</td>
-		<td><?php echo $customerHome['CustomerHome']['adress']; ?>&nbsp;</td>
+		<td><?php echo $customerHome['CustomerHome']['address']; ?>&nbsp;</td>
 		<td><?php echo $customerHome['CustomerHome']['number']; ?>&nbsp;</td>
 		<td><?php echo $customerHome['CustomerHome']['floor']; ?>&nbsp;</td>
 		<td><?php echo $customerHome['CustomerHome']['apartment']; ?>&nbsp;</td>

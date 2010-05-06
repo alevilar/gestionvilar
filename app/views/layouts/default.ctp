@@ -90,7 +90,9 @@
                                 'escape'=>false)); ?>
                                 <div>
                                     <ul>
+                                        <li><?= $this->Html->link(__('Home',true),'/');?></li>
                                         <li><?= $this->Html->link(__('Add Customer',true),'/customers/add');?></li>
+                                        <li><?= $this->Html->link(__('Edit Customer',true),'/customers/index');?></li>
                                     </ul>
                                 </div>
                             </li>
@@ -100,6 +102,11 @@
                                         <li><? echo $this->Html->link(__('Add User',true),'/users/add');?></li>
                                         <li><? echo $this->Html->link(__('List Users',true),'/users/index');?></li>
                                         <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
+                                        <hr />
+                                        <li><? echo $this->Html->link(__('List Identification Types',true),'/identification_types/index');?></li>
+                                        <li><? echo $this->Html->link(__('List States',true),'/states/index');?></li>
+                                        <li><? echo $this->Html->link(__('List Counties',true),'/counties/index');?></li>
+                                        <li><? echo $this->Html->link(__('List Cities',true),'/cites/index');?></li>
                                     </ul>
                                 </div>
                             </li>
@@ -113,7 +120,7 @@
                 </div>
             </div> <!-- End Header -->
 
-            <div id="content" class="span-24 last box">
+            <div id="content" class="span-24 last box transparent-low">
                 <?php echo $content_for_layout; ?>
             </div>
 

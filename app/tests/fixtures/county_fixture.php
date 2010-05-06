@@ -1,5 +1,5 @@
 <?php
-/* County Fixture generated on: 2010-04-28 19:04:44 : 1272493604 */
+/* County Fixture generated on: 2010-05-05 20:05:17 : 1273103597 */
 class CountyFixture extends CakeTestFixture {
 	var $name = 'County';
 

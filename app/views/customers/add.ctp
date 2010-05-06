@@ -1,38 +1,43 @@
-<div class="customers form span-8 prepend-6">
+<div class="customers form span-18 prepend-3">
     <?php echo $this->Form->create('Customer');?>
     <div id="fieldWrapper">
-        <div id="first" class="span-8 step">
-            <fieldset>
+        <div id="first" class="span-18 step">
+            <fieldset class="span-16 column">
                 <legend><?php printf(__('Add %s', true), __('Customer', true)); ?></legend>
-                <?php
-                echo $this->Form->hidden('name');
+                <div class="span-8">
+                    <?php
+                    $options = array('fisica'=>__('Natural', true),'juridica'=>__('Legal', true));
+                    echo $this->Form->input('CustomerType.type',array(
+                        'type'=>'select',
+                        'options'=>$options,
+                        'empty'=>'Seleccione',
+                        'class'=>'link required',
+                    ));
 
-                $options = array('fisica'=>__('Natural', true),'juridica'=>__('Legal', true));
-                echo $this->Form->input('CustomerType.type',array(
-                'type'=>'select',
-                'options'=>$options,
-                'empty'=>'Seleccione',
-                'class'=>'link required',
-                ));
-
-                echo $this->Jqform->date('born', array('label'=> 'Fecha de Creación / Nacimiento', 'minYear'=>1910));
-
-                echo $this->Form->input('Identification.idenfication_type_id', array('empty'=>'Seleccione', 'class'=>'required'));
-                echo $this->Form->input('Identification.number', array('class'=>'required'));
-                echo $this->Form->input('Identification.authority_name');
-
-                //echo $this->Form->button('Guardar',array('type'=>'submit'));
-                ?>
+                    echo $this->Jqform->date('born', array('label'=> 'Fecha de Creación / Nacimiento', 'minYear'=>1910));
+                    ?>
+                </div>
+                <div class="span-8 last">
+                    <?
+                    echo $this->Form->input('Identification.identification_type_id', array('empty'=>'Seleccione', 'class'=>'required'));
+                    echo $this->Form->input('Identification.number', array('class'=>'required'));
+                    echo $this->Form->input('Identification.authority_name');
+                    ?>
+                </div>
             </fieldset>
         </div>
 
-        <div id="fisica" class="span-8 step">
-            <fieldset>
+        <div id="fisica" class="span-16 step">
+            <fieldset  class="span-16 column">
                 <legend id="customer-type-legend"><?php printf(__('Add %s', true), __('Natural Person', true)); ?></legend>
-                <div id="attr-fisicos">
+                <div class="span-8">
                     <?php
-                    echo $this->Form->input('CustomerNatural.name');
+                    echo $this->Form->input('CustomerType.nameFisico', array('label'=>'Nombre'));
                     echo $this->Form->input('CustomerType.surname');
+                    ?>
+                </div>
+                <div class="span-8 last">
+                    <?
                     echo $this->Form->input('CustomerType.marital_status_id', array('empty'=>'Seleccione'));
                     echo $this->Form->input('CustomerType.nuptials');
                     echo $this->Form->input('CustomerType.spouse');
@@ -41,12 +46,16 @@
                 </div>
             </fieldset>
         </div>
-        <div id="juridica" class="span-8 step">
-            <fieldset>
+        <div id="juridica" class="span-16 step">
+            <fieldset class="span-16 column">
                 <legend id="customer-type-legend"><?php printf(__('Add %s', true), __('Legal Person', true)); ?></legend>
-                <div id="attr-juridicos">
+                <div class="span-8">
                     <?
-                    echo $this->Form->input('CustomerLegal.name');
+                    echo $this->Form->input('CustomerType.nameJuridico');
+                    ?>
+                </div>
+                <div class="span-8 last">
+                    <?
                     echo $this->Form->input('CustomerType.inscription_entity');
                     echo $this->Form->input('CustomerType.inscription_number');
                     ?>
@@ -55,25 +64,31 @@
             </fieldset>
         </div>
 
-        <div id="CustomerHome" class="span-8 last step">
-            <fieldset>
+        <div id="CustomerHome" class="span-16 step">
+            <fieldset class="span-16 column">
                 <legend><?php printf(__('Add %s', true), __('Customer Home', true)); ?></legend>
-                <?php
-                echo $this->Form->input('CustomerHome.adress', array('class'=>'required'));
-                echo $this->Form->input('CustomerHome.number', array('class'=>'required'));
-                echo $this->Form->input('CustomerHome.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                echo $this->Form->input('CustomerHome.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                echo $this->Form->input('CustomerHome.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
-                echo $this->Form->input('State');
-                echo $this->Form->input('County');
-                echo $this->Form->input('CustomerHome.city_id', array('class'=>'required'));
-                ?>
+                <div class="span-8">
+                    <?php
+                    echo $this->Form->input('CustomerHome.address', array('class'=>'required'));
+                    echo $this->Form->input('CustomerHome.number', array('class'=>'required'));
+                    echo $this->Form->input('CustomerHome.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    ?>
+                </div>
+                <div class="span-8 last">
+                    <?
+                    echo $this->Form->input('State');
+                    echo $this->Form->input('County');
+                    echo $this->Form->input('CustomerHome.city_id', array('class'=>'required'));
+                    ?>
+                </div>
             </fieldset>
         </div>
 
     </div>
 
-    <div id="demoNavigation">
+    <div id="formNavigation">
         <input class="navigation_button" value="Regresar" type="reset">
         <input class="navigation_button" value="Siguiente" type="submit">
     </div>
@@ -86,7 +101,6 @@
 
 
 <script type="text/javascript">
-
     /**
      * Form Wizard
      */
@@ -110,18 +124,22 @@
 
 
     function activarValidacionesPersonaFisica(){
-        $('#CustomerNaturalName').addClass('required');
+        $('#CustomerTypeNameFisico').addClass('required');
         $('#CustomerTypeSurname').addClass('required');
-        $('#attr-juridicos').children().removeClass('required');
+
+        $('#CustomerTypeNameJuridico').removeClass('required');
+        $('#CustomerTypeInscriptionEntity').removeClass('required');
+        $('#CustomerTypeInscriptionNumber').removeClass('required');
     }
 
 
     function activarValidacionesPersonaJuridica(){
-        $('#CustomerLegalName').addClass('required');
+        $('#CustomerTypeNameJuridico').addClass('required');
         $('#CustomerTypeInscriptionEntity').addClass('required');
         $('#CustomerTypeInscriptionNumber').addClass('required');
 
-        $('#attr-fisicos').children().removeClass('required');
+        $('#CustomerTypeNameFisico').removeClass('required');
+        $('#CustomerTypeSurname').removeClass('required');
     }
 
 
@@ -134,8 +152,12 @@
         } else if (this.value == 'juridica'){
             activarValidacionesPersonaJuridica();
         } else {
-            $('#attr-juridicos').children().removeClass('required');
-            $('#attr-fisicos').children().removeClass('required');
+            $('#CustomerTypeNameFisico').removeClass('required');
+            $('#CustomerTypeSurname').removeClass('required');
+
+            $('#CustomerTypeNameJuridico').removeClass('required');
+            $('#CustomerTypeInscriptionEntity').removeClass('required');
+            $('#CustomerTypeInscriptionNumber').removeClass('required');
         }
     }
 

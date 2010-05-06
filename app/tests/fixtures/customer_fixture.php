@@ -1,5 +1,5 @@
 <?php
-/* Customer Fixture generated on: 2010-04-28 19:04:44 : 1272493604 */
+/* Customer Fixture generated on: 2010-05-06 00:05:24 : 1273116804 */
 class CustomerFixture extends CakeTestFixture {
 	var $name = 'Customer';
 
@@ -17,9 +17,9 @@ class CustomerFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'born' => '2010-04-28',
-			'created' => '1272493604',
-			'modified' => '1272493604'
+			'born' => '2010-05-06',
+			'created' => '1273116804',
+			'modified' => '1273116804'
 		),
 	);
 }
