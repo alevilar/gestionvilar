@@ -26,7 +26,7 @@
 </div>
 <div class="related">
 	<h3><?php printf(__('Related %s', true), __('Customer Types', true));?></h3>
-	<?php if (!empty($maritalStatus['CustomerType'])):?>
+	<?php if (!empty($maritalStatus['CustomerNatural'])):?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php __('Id'); ?></th>
@@ -46,7 +46,7 @@
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($maritalStatus['CustomerType'] as $customerType):
+		foreach ($maritalStatus['CustomerNatural'] as $customerType):
 			$class = null;
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';

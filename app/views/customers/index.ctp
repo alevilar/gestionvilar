@@ -1,11 +1,10 @@
 
-
 <div class="customers index">
 	<h2><?php __('Customers');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('Type','CustomerType');?></th>
+			<th><?php echo $this->Paginator->sort('type');?></th>
                         <th><?php echo $this->Paginator->sort('Identification Type','Identification.identification_type_id');?></th>
                         <th><?php echo $this->Paginator->sort('Identification Number','Identification.number');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
@@ -21,7 +20,7 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $customer['Customer']['name']; ?>&nbsp;</td>
-		<td><?php echo $customer['CustomerType']['type']; ?>&nbsp;</td>
+		<td><?php echo $customer['Customer']['type']; ?>&nbsp;</td>
                 <td><?php echo (!empty($customer['Identification']['IdentificationType']['name'])?$customer['Identification']['IdentificationType']['name']:''); ?>&nbsp;</td>
                 <td><?php echo $customer['Identification']['number']; ?>&nbsp;</td>
 		<td><?php echo $customer['Customer']['created']; ?>&nbsp;</td>

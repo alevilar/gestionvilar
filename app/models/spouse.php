@@ -1,10 +1,11 @@
 <?php
-class CustomerType extends AppModel {
-	var $name = 'CustomerType';
+class Spouse extends AppModel {
+	var $name = 'Spouse';
+	var $displayField = 'name';
 	var $validate = array(
-		'customer_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -12,9 +13,9 @@ class CustomerType extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'type' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'customer_natural_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -26,16 +27,16 @@ class CustomerType extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
-		'Customer' => array(
-			'className' => 'Customer',
-			'foreignKey' => 'customer_id',
+		'IdentificationType' => array(
+			'className' => 'IdentificationType',
+			'foreignKey' => 'identification_type_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'MaritalStatus' => array(
-			'className' => 'MaritalStatus',
-			'foreignKey' => 'marital_status_id',
+		'CustomerNatural' => array(
+			'className' => 'CustomerNatural',
+			'foreignKey' => 'customer_natural_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

@@ -97,7 +97,7 @@
 </div>
 <div class="related">
 	<h3><?php printf(__('Related %s', true), __('Customer Types', true));?></h3>
-	<?php if (!empty($customer['CustomerType'])):?>
+	<?php if (!empty($customer['CustomerLegal'])):?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php __('Id'); ?></th>
