@@ -14,6 +14,14 @@ class Identification extends AppModel {
 			),
 		),
 		'customer_id' => array(
+                        'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'debe existir solo una identificación por cliente',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',

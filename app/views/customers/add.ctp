@@ -79,7 +79,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.0.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.0.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.0.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>
@@ -100,7 +100,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.1.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.1.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.1.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>
@@ -121,7 +121,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.2.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.2.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.2.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>

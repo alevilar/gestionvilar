@@ -1078,7 +1078,7 @@ msgstr "Listar Usuarios"
 
 #: /views/layouts/default.ctp:104
 msgid "Logout"
-msgstr ""
+msgstr "Salir"
 
 #: /views/layouts/default.ctp:106
 msgid "List Identification Types"
@@ -1128,7 +1128,7 @@ msgstr "Imprimir"
 
 #: /views/vehicles/customer.ctp:49
 msgid "This customer has no vehicles"
-msgstr "Éste cliente no tiene vehiculos"
+msgstr "Este cliente no tiene vehiculos"
 
 #: /webroot/test.php:88
 msgid "Debug setting does not allow access to this url."

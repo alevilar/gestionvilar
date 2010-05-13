@@ -10,8 +10,11 @@ class VehiclesController extends AppController {
 
         function customer($customer_id) {
 		$this->Vehicle->recursive = 0;
-                $this->paginate['conditions'] = array('Vehicle.customer_id'=>$customer_id);
-		$this->set('vehicles', $this->paginate());
+                $this->paginate['Vehicle'] = array(
+                    'conditions' => array('Vehicle.customer_id'=>$customer_id),
+                    'contain' => array('Customer', 'VehicleType'),
+                        );
+		$this->set('vehicles', $this->paginate('Vehicle'));
                 $this->Vehicle->Customer->id = $customer_id;
                 $this->set('customer', $this->Vehicle->Customer->read());
 	}
@@ -43,8 +46,9 @@ class VehiclesController extends AppController {
                         $this->data['Vehicle']['customer_id'] = $customer_id;
                     }
                 }
+                $vehicle_types = $this->Vehicle->VehicleType->find('list');
 		$customers = $this->Vehicle->Customer->find('list');
-		$this->set(compact('customers'));
+		$this->set(compact('customers', 'vehicle_types'));
 	}
 
 	function edit($id = null) {
@@ -63,8 +67,9 @@ class VehiclesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Vehicle->read(null, $id);
 		}
+		$vehicle_types = $this->Vehicle->VehicleType->find('list');
 		$customers = $this->Vehicle->Customer->find('list');
-		$this->set(compact('customers'));
+		$this->set(compact('customers', 'vehicle_types'));
 	}
 
 	function delete($id = null) {

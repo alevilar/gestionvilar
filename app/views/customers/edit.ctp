@@ -3,7 +3,7 @@
     <div id="fieldWrapper">
         <div id="first" class="span-18 step">
             <fieldset class="span-16 column">
-                <legend><?php printf(__('Add %s', true), __('Customer', true)); ?></legend>
+                <legend><?php printf(__('Edit %s', true), __('Customer', true)); ?></legend>
                 <div class="span-8">
                     <?php
                     echo $this->Form->input('Customer.id');
@@ -17,6 +17,7 @@
                 </div>
                 <div class="span-8 last">
                     <?
+                    echo $this->Form->input('Identification.id');
                     echo $this->Form->input('Identification.identification_type_id', array('empty'=>'Seleccione'));
                     echo $this->Form->input('Identification.number');
                     echo $this->Form->input('Identification.authority_name');
@@ -76,8 +77,8 @@
                     <?php
                     echo $this->Form->input('CustomerHome.0.id');
                     echo $this->Form->hidden('CustomerHome.0.type', array('value'=>$homeType));
-                    echo $this->Form->input('CustomerHome.0.address', array('class'=>'required'));
-                    echo $this->Form->input('CustomerHome.0.number', array('class'=>'required'));
+                    echo $this->Form->input('CustomerHome.0.address', array());
+                    echo $this->Form->input('CustomerHome.0.number', array());
                     echo $this->Form->input('CustomerHome.0.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
                     echo $this->Form->input('CustomerHome.0.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
                     echo $this->Form->input('CustomerHome.0.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
@@ -87,7 +88,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.0.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.0.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.0.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>
@@ -114,7 +115,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.1.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.1.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.1.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>
@@ -141,7 +142,7 @@
                     <?
                     echo $this->Form->input('CustomerHome.2.state_id', array('empty'=>'Seleccione'));
                     //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.2.city_id', array('class'=>'required', 'empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.2.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>

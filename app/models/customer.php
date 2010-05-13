@@ -7,14 +7,14 @@ class Customer extends AppModel {
     var $actsAs = array('Containable');
 
 
-    var $types = array('natural'=>'Física','legal'=>'Jurídica');
+    var $types = array('natural'=>"Física",'legal'=>"Jurídica");
 
 
     var $validate = array(
             'name' => array(
                             'notempty' => array(
                                             'rule' => array('notempty'),
-                            //'message' => 'Your custom message here',
+                                            'message' => 'El nombre no puede quedar vacio',
                             //'allowEmpty' => false,
                             //'required' => false,
                             //'last' => false, // Stop validation after this rule
@@ -79,7 +79,7 @@ class Customer extends AppModel {
 
     function saveAllAboutCustomer($data) {
         $dataSource = $this->getDataSource();
-        if ( $data['Customer']['type'] == 'fisica' ) {
+        if ( $data['Customer']['type'] == 'natural' ) {
             $data['Customer']['name'] = $data['CustomerNatural']['first_name']." ".$data['CustomerNatural']['surname'];
         } else {
             $data['Customer']['name'] = $data['CustomerLegal']['name'];
@@ -95,17 +95,17 @@ class Customer extends AppModel {
         }
 
 
-        if ( $data['Customer']['type'] == 'fisica' ) {
+        if ( $data['Customer']['type'] == 'natural' ) {
             $data['CustomerNatural']['customer_id'] = $this->id;
             if (!$this->CustomerNatural->save($data['CustomerNatural'])) {
                 $dataSource->rollback($this);
-                return -2;
+                return -21;
             }
         } else {
             $data['CustomerLegal']['customer_id'] = $this->id;
             if (!$this->CustomerLegal->save($data['CustomerLegal'])) {
                 $dataSource->rollback($this);
-                return -2;
+                return -22;
             }
         }
 
@@ -118,8 +118,16 @@ class Customer extends AppModel {
             }
         }
 
-
+        $dataHome = array();
         if (!empty($data['CustomerHome'])) {
+            foreach ($data['CustomerHome'] as $ch) {
+                if (!empty($ch['address'])) {
+                    $dataHome[] = $ch;
+                }
+            }
+            $data['CustomerHome'] = $dataHome;
+        }
+        if (!empty($data['CustomerHome'])) { 
             foreach ($data['CustomerHome'] as $home) {
                 $home['customer_id'] = $this->id;
                 $this->CustomerHome->create();

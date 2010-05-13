@@ -6,6 +6,12 @@
         <div class="span-7">
             <?php
             echo $this->Form->hidden('customer_id');
+            echo $this->Form->input('vehicle_type_id', array(
+                    'empty'=>'Seleccione',
+                    'options'=>$vehicle_types,
+                    'label'=>'Clase de Vehiculo',
+            )
+            );
             echo $this->Form->input('fabrication_certificate');
             echo $this->Form->input('brand');
             echo $this->Form->input('type');
@@ -16,6 +22,7 @@
 
         <div class="span-7">
             <?php
+            echo $this->Form->input('patente');
             echo $this->Form->input('adquisition_value');
             echo $this->Jqform->date('adquisition_date');
             echo $this->Form->input('adquisition_evidence_element');
