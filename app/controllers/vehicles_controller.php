@@ -5,6 +5,9 @@ class VehiclesController extends AppController {
 
 	function index() {
 		$this->Vehicle->recursive = 0;
+                $this->paginate = array(
+                    'limit' => 10,
+                );
 		$this->set('vehicles', $this->paginate());
 	}
 
@@ -59,7 +62,7 @@ class VehiclesController extends AppController {
 		if (!empty($this->data)) {
 			if ($this->Vehicle->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'vehicle'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect('/');
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'vehicle'));
 			}
@@ -84,5 +87,42 @@ class VehiclesController extends AppController {
 		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Vehicle'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+
+        function search($customer_id = 0) {
+            $conditions = array();
+            if (!empty($this->data['Customer']['name'])) {
+                $add = array( 'Customer.name LIKE' =>"%" . $this->data['Customer']['name'] . "%");
+                $conditions = array_merge($conditions, $add);
+            }
+            if (!empty($this->data['Vehicle']['patente'])) {
+                $add = array( 'Vehicle.patente LIKE'=> "%" . $this->data['Vehicle']['patente'] . "%");
+                $conditions = array_merge($conditions, $add);
+            }
+            if (!empty($this->data['Vehicle']['chasis_number'])) {
+                $add = array( 'Vehicle.chasis_number LIKE'=>"%" . $this->data['Vehicle']['chasis_number'] . "%");
+                $conditions = array_merge($conditions, $add);
+            }
+
+            $this->paginate['Vehicle'] = array(
+                'contain'=>array('Customer', 'VehicleType'),
+                'conditions'=>$conditions,
+            );
+            $vehicles = $this->paginate('Vehicle');
+
+            $this->paginate['Vehicle'] = array(
+                'contain'=>array('Customer', 'VehicleType'),
+                'conditions'=>$conditions,
+                'group' => 'Customer.id',
+            );
+            $vehiclesForCustomer = $this->paginate('Vehicle');
+            $customers = array();
+            foreach ($vehiclesForCustomer as $v) {
+                $customers[] = $v;
+            }
+
+            $this->set('vehicles', $vehicles);
+            $this->set('customers', $customers);
+        }
 }
 ?>

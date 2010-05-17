@@ -64,6 +64,18 @@ class CitiesController extends AppController {
     }
 
 
+    function withCountyAndState() {
+        $conditions = array();
+        if (!empty($this->data['City']['name'])) {
+            $conditions[] = array('City.name LIKE'=> '%' . $this->data['City']['name'] . '%');
+        }
+        $cities = $this->City->getWithCountyAndState($conditions);
+        $this->layout = false;
+        $this->autoRender= false;
+        return json_encode($cities);
+    }
+
+
     function from_state() {
         Configure::write('debug', 0);
         $state_id = 0;

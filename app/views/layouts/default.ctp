@@ -22,7 +22,7 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>
-            <?php __('CakePHP: the rapid development php framework:'); ?>
+            Sistema Gestión de Formularios Online
             <?php echo $title_for_layout; ?>
         </title>
         <?php
@@ -54,11 +54,14 @@
         'jquery.form.wizard',
         'jquery.history',
         'jquery.validate',
+        'jquery.blockUI',
         ));
         echo $this->Html->css(array('datePicker.css'));
         // DatePicker end
 
-        echo $this->Html->css(array('menu.css'));
+        echo $this->Html->css(array(
+            'menu.css',
+            ));
 
         ?>
         <!-- // para evitar problemas con IE y el z.index de los selects y el datePicker -->
@@ -91,7 +94,7 @@
                                 <div>
                                     <ul>
                                         <li><?= $this->Html->link(__('Home',true),'/');?></li>
-                                        <li><?= $this->Html->link(__('Add Customer',true),'/customers/add');?></li>
+                                        <li><?= $this->Html->link(__('Add Customer',true),'/customers/edit');?></li>
                                         <li><?= $this->Html->link(__('Edit Customer',true),'/customers/index');?></li>
                                     </ul>
                                 </div>
@@ -104,9 +107,6 @@
                                         <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
                                         <hr />
                                         <li><? echo $this->Html->link(__('List Identification Types',true),'/identification_types/index');?></li>
-                                        <li><? echo $this->Html->link(__('List States',true),'/states/index');?></li>
-                                        <li><? echo $this->Html->link(__('List Counties',true),'/counties/index');?></li>
-                                        <li><? echo $this->Html->link(__('List Cities',true),'/cites/index');?></li>
                                     </ul>
                                 </div>
                             </li>
@@ -134,6 +134,13 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('a[href="http://apycom.com/"]').hide();
+
+        $(document).ajaxStart(function(){
+            $.blockUI({message:'<h1>Cargando...</h1>'})
+        }).ajaxStop($.unblockUI);
+
+
+           //        $.unblockUI();
         });
     </script>
 </html>

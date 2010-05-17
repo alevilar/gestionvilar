@@ -42,32 +42,8 @@ class Customer extends AppModel {
 
     var $hasMany = array(
             'CustomerHome'=>array('dependent' => true,),
-            'Representative' => array(
-                            'className' => 'Representative',
-                            'foreignKey' => 'customer_id',
-                            'dependent' => true,
-                            'conditions' => '',
-                            'fields' => '',
-                            'order' => '',
-                            'limit' => '',
-                            'offset' => '',
-                            'exclusive' => '',
-                            'finderQuery' => '',
-                            'counterQuery' => ''
-            ),
-            'Vehicle' => array(
-                            'className' => 'Vehicle',
-                            'foreignKey' => 'customer_id',
-                            'dependent' => true,
-                            'conditions' => '',
-                            'fields' => '',
-                            'order' => '',
-                            'limit' => '',
-                            'offset' => '',
-                            'exclusive' => '',
-                            'finderQuery' => '',
-                            'counterQuery' => ''
-            )
+            'Representative' => array('dependent' => true),
+            'Vehicle' => array('dependent' => true),
     );
 
     /*
@@ -101,12 +77,14 @@ class Customer extends AppModel {
                 $dataSource->rollback($this);
                 return -21;
             }
+            $data['CustomerNatural']['id'] = $this->CustomerNatural->id;
         } else {
             $data['CustomerLegal']['customer_id'] = $this->id;
             if (!$this->CustomerLegal->save($data['CustomerLegal'])) {
                 $dataSource->rollback($this);
                 return -22;
             }
+            $data['CustomerLegal']['id'] = $this->CustomerLegal->id;
         }
 
 
@@ -116,6 +94,7 @@ class Customer extends AppModel {
                 $dataSource->rollback($this);
                 return -3;
             }
+            $data['Identification']['id'] = $this->Identification->id;
         }
 
         $dataHome = array();
@@ -127,7 +106,8 @@ class Customer extends AppModel {
             }
             $data['CustomerHome'] = $dataHome;
         }
-        if (!empty($data['CustomerHome'])) { 
+        if (!empty($data['CustomerHome'])) {
+            $cont = 0;
             foreach ($data['CustomerHome'] as $home) {
                 $home['customer_id'] = $this->id;
                 $this->CustomerHome->create();
@@ -135,9 +115,11 @@ class Customer extends AppModel {
                     $dataSource->rollback($this);
                     return -4;
                 }
+                $data['CustomerHome'][$cont]['id'] = $this->CustomerHome->id;
+                $cont++;
             }
         }
-
+        $this->data = $data;
         $dataSource->commit($this);
         return 1;
     }

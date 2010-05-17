@@ -1,12 +1,15 @@
+
 <div class="customers form span-18 prepend-3">
     <?php echo $this->Form->create('Customer');?>
     <div id="fieldWrapper">
         <div id="first" class="span-18 step">
             <fieldset class="span-16 column">
-                <legend><?php printf(__('Edit %s', true), __('Customer', true)); ?></legend>
+                <legend><?php printf(__('%s', true), __('Customer', true)); ?></legend>
                 <div class="span-8">
                     <?php
-                    echo $this->Form->input('Customer.id');
+                    if (!empty($this->data['Customer']['id'])) {
+                        echo $this->Form->input('Customer.id');
+                    }
                     echo $this->Form->input('Customer.type',array(
                     'empty'=>'Seleccione',
                     'class'=>'link required',
@@ -17,7 +20,9 @@
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('Identification.id');
+                    if (!empty($this->data['Identification']['id'])) {
+                        echo $this->Form->input('Identification.id');
+                    }
                     echo $this->Form->input('Identification.identification_type_id', array('empty'=>'Seleccione'));
                     echo $this->Form->input('Identification.number');
                     echo $this->Form->input('Identification.authority_name');
@@ -31,7 +36,9 @@
                 <legend id="customer-type-legend"><?php printf(__('Add %s', true), __('Natural Person', true)); ?></legend>
                 <div class="span-8">
                     <?php
-                    echo $this->Form->input('CustomerNatural.id');
+                    if (!empty($this->data['CustomerNatural']['id'])) {
+                        echo $this->Form->input('CustomerNatural.id');
+                    }
                     echo $this->Form->input('CustomerNatural.first_name', array('label'=>'Nombre', 'class'=>'required'));
                     echo $this->Form->input('CustomerNatural.surname', array('class'=>'required'));
                     ?>
@@ -51,7 +58,9 @@
                 <legend id="customer-type-legend"><?php printf(__('Add %s', true), __('Legal Person', true)); ?></legend>
                 <div class="span-8">
                     <?
-                    echo $this->Form->input('CustomerLegal.id');
+                    if (!empty($this->data['CustomerLegal']['id'])) {
+                        echo $this->Form->input('CustomerLegal.id');
+                    }
                     echo $this->Form->input('CustomerLegal.name', array('class'=>'required'));
                     ?>
                 </div>
@@ -75,20 +84,20 @@
                 </legend>
                 <div class="span-8">
                     <?php
-                    echo $this->Form->input('CustomerHome.0.id');
+                    if (!empty($this->data['CustomerHome'][0]['id'])) {
+                        echo $this->Form->input('CustomerHome.0.id');
+                    }
                     echo $this->Form->hidden('CustomerHome.0.type', array('value'=>$homeType));
+                    echo $this->Form->input('CustomerHome.0.city');
+                    ?>
+                </div>
+                <div class="span-8 last">
+                    <?
                     echo $this->Form->input('CustomerHome.0.address', array());
                     echo $this->Form->input('CustomerHome.0.number', array());
                     echo $this->Form->input('CustomerHome.0.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
                     echo $this->Form->input('CustomerHome.0.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
                     echo $this->Form->input('CustomerHome.0.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
-                    ?>
-                </div>
-                <div class="span-8 last">
-                    <?
-                    echo $this->Form->input('CustomerHome.0.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.0.city_id', array('empty'=>'Seleccione'));
                     ?>
                 </div>
             </fieldset>
@@ -102,20 +111,20 @@
                 </legend>
                 <div class="span-8">
                     <?php
-                    echo $this->Form->input('CustomerHome.1.id');
+                    if (!empty($this->data['CustomerHome'][1]['id'])) {
+                        echo $this->Form->input('CustomerHome.1.id');
+                    }
                     echo $this->Form->hidden('CustomerHome.1.type', array('value'=>$homeType));
-                    echo $this->Form->input('CustomerHome.1.address');
-                    echo $this->Form->input('CustomerHome.1.number');
-                    echo $this->Form->input('CustomerHome.1.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.1.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.1.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.city');
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerHome.1.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.1.city_id', array('empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.1.address', array());
+                    echo $this->Form->input('CustomerHome.1.number', array());
+                    echo $this->Form->input('CustomerHome.1.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
                     ?>
                 </div>
             </fieldset>
@@ -129,20 +138,20 @@
                 </legend>
                 <div class="span-8">
                     <?php
-                    echo $this->Form->input('CustomerHome.2.id');
+                    if (!empty($this->data['CustomerHome'][2]['id'])) {
+                        echo $this->Form->input('CustomerHome.2.id');
+                    }
                     echo $this->Form->hidden('CustomerHome.2.type', array('value'=>$homeType));
-                    echo $this->Form->input('CustomerHome.2.address');
-                    echo $this->Form->input('CustomerHome.2.number');
-                    echo $this->Form->input('CustomerHome.2.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.2.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.2.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.city');
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerHome.2.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.2.city_id', array('empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.2.address', array());
+                    echo $this->Form->input('CustomerHome.2.number', array());
+                    echo $this->Form->input('CustomerHome.2.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
                     ?>
                 </div>
             </fieldset>

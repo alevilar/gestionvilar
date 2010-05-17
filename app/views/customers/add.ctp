@@ -68,18 +68,16 @@
                 <div class="span-8">
                     <?php
                     echo $this->Form->hidden('CustomerHome.0.type', array('value'=>'Legal'));
-                    echo $this->Form->input('CustomerHome.0.address');
-                    echo $this->Form->input('CustomerHome.0.number');
-                    echo $this->Form->input('CustomerHome.0.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.0.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.0.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.0.city');
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerHome.0.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.0.city_id', array('empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.0.address', array());
+                    echo $this->Form->input('CustomerHome.0.number', array());
+                    echo $this->Form->input('CustomerHome.0.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.0.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.0.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
                     ?>
                 </div>
             </fieldset>
@@ -89,18 +87,16 @@
                 <div class="span-8">
                     <?php
                     echo $this->Form->hidden('CustomerHome.1.type', array('value'=>'Comercial'));
-                    echo $this->Form->input('CustomerHome.1.address');
-                    echo $this->Form->input('CustomerHome.1.number');
-                    echo $this->Form->input('CustomerHome.1.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.1.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.1.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.city');
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerHome.1.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.1.city_id', array('empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.1.address', array());
+                    echo $this->Form->input('CustomerHome.1.number', array());
+                    echo $this->Form->input('CustomerHome.1.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.1.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
                     ?>
                 </div>
             </fieldset>
@@ -109,19 +105,18 @@
                 <legend>Guarda Habitual</legend>
                 <div class="span-8">
                     <?php
+                    echo $this->Form->input('CustomerHome.2.id');
                     echo $this->Form->hidden('CustomerHome.2.type', array('value'=>'Guarda Habitual'));
-                    echo $this->Form->input('CustomerHome.2.address');
-                    echo $this->Form->input('CustomerHome.2.number');
-                    echo $this->Form->input('CustomerHome.2.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.2.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
-                    echo $this->Form->input('CustomerHome.2.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.city');
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerHome.2.state_id', array('empty'=>'Seleccione'));
-                    //echo $this->Form->input('CustomerHome.county_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerHome.2.city_id', array('empty'=>'Seleccione'));
+                    echo $this->Form->input('CustomerHome.2.address', array());
+                    echo $this->Form->input('CustomerHome.2.number', array());
+                    echo $this->Form->input('CustomerHome.2.floor', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.apartment', array('div'=>array('class'=>'span-2'), 'class'=>'span-2'));
+                    echo $this->Form->input('CustomerHome.2.postal_code', array('div'=>array('class'=>'span-3 last'), 'class'=>'span-2'));
                     ?>
                 </div>
             </fieldset>
@@ -142,6 +137,13 @@
     $(document).ready(mostrarDireccionesLegales);
     $('#CustomerType').change(mostrarDireccionesLegales);
 
+$('#CustomerHome0CityId').autocomplete({
+    source: function(request, response) {
+				$.getJSON("<?= $this->Html->url('/cities/withCountyAndState.json') ?>", {
+					term: extractLast(request.term)
+				}, response);
+			}
+});
     function mostrarDireccionesLegales(){
            if ($('#CustomerType').val() == 'legal') {
                $('.direcciones-legales').show();

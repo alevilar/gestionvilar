@@ -4,6 +4,8 @@ class City extends AppModel {
 
     var $order = 'City.name';
 
+    var $actsAs = array('Containable');
+
     var $validate = array(
             'county_id' => array(
                             'numeric' => array(
@@ -53,30 +55,17 @@ class City extends AppModel {
         return $cities;
     }
 
-    
-    function findFromState($state_id = 0) {
-        $cities = $this->find('all', array(
-                'conditions'=> array('County.state_id'=>$state_id),
-                'order'=> array('County.name', 'City.name'),
-                'contain' => array('County'=>'State'),
-        ));
-        
-        foreach ($cities as &$city) {
-            $ci = $city['City']['name'];
-            $co = $city['County']['name'];
-            if(strlen($ci)>19) {
-                $ci = substr($ci,0,19);
-                $ci .= '...';
-            }
-            if(strlen($co)>19) {
-                $co = substr($co,0,19);
-                $co .= '...';
-            }
-            $name = "$ci ($co)";
-            $city['City']['name'] = $name;
-        }
 
+    function getWithCountyAndState($conditions) {
+        $cities = $this->find('all', array(
+                'contain' => array('County'),
+                'fields' => array("CONCAT(City.name,' ',County.name,' ')"),
+                'conditions' => $conditions,
+        ));
+
+       // debug($cities);
         return $cities;
+        
     }
 
 }

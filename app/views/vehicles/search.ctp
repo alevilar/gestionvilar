@@ -1,17 +1,8 @@
-<? //debug($paginator)?>
-<div  id="customer-and-vehicle-list" class="span-24 last">
+
 <div class="column span-9">
     <div class="span-9 column-header">
         <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
         <h2 class="center"><? __('Customer´s List')?></h2>
-    </div>
-    <div  class="span-9">
-        <?php
-        $this->Paginator->options(array('update' => '#customer-and-vehicle-list','model'=>'Customer','url'=>array('pagModel'=>'Customer')));
-        echo $this->Paginator->prev('« Anterior ', null, null, array('class' => 'disabled'));
-       // echo $this->Paginator->numbers();
-        echo $this->Paginator->next(' Siguiente »',  null,null, array('class' => 'disabled'));
-        ?> 
     </div>
     <div  id="customer-search-box" class="search-content span-9">
         <ul class="simple-list">
@@ -35,18 +26,29 @@
     </div>
 </div>
 
-<div class="column span-14 last"  id="vehicle-search-box" >
+<div class="column span-14 last" id="vehicle-search-box">
     <div class="column-header">
         <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
         <h2 class="center"><? __('Vehicle´s List')?></h2>
     </div>
-    
-    <div class="span-14 last" id="div-for-vehicles"></div>
+    <span style="float: right"><a href="#" onclick="$('#vehicle-search').toggle();">Buscador</a></span>
+    <div class="column span-14 last" id="vehicle-search">
+        <?= $this->Form->create('Vehicle', array('url'=>'/vehicles/search'));?>
+        <?= $this->Form->input('Customer.name', array('label'=>'Cliente', 'div'=>array('class'=>'span-4'),'class'=>'span-4'));?>
+        <?= $this->Form->input('patente', array('label'=>'N° Dominio', 'div'=>array('class'=>'span-2'),'class'=>'span-2'));?>
+        <?= $this->Form->input('chasis_number', array('label'=>'N° Chasis', 'div'=>array('class'=>'span-3'),'class'=>'span-3'));?>
+        <? //= $this->Js->submit('Buscar',array('update'=>'vehicle-list','div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
+        <?= $this->Form->end('Buscar',array('div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
+    </div>
+
+    <div class="span-14 last">
+        <? echo $this->element('vehicles_from_customer', $vehicles);?>
+    </div>
 </div>
 <?
 echo $this->Js->writeBuffer();
 ?>
-</div>
+
 
 <script type="text/javascript">
     $('.hover-highlight').hover(function() {
@@ -54,11 +56,6 @@ echo $this->Js->writeBuffer();
     }, function() {
         $(this).removeClass('li-hover');
     });
-
-
-    $(document).ready(function(){
-        $('#div-for-vehicles').load("<?= $this->Html->url('/vehicles'); ?>")
-    }); ;
 </script>
 
 

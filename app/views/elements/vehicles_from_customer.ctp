@@ -1,11 +1,28 @@
+<div class="search-content span-14 last" id="vehicle-list">
+    <span style="float: right">
+        <?php
+        $this->Paginator->options(array('update' => '#vehicle-list'));
+        echo $this->Paginator->prev('« Anterior ', null, null, array('class' => 'disabled'));
+        // echo $this->Paginator->numbers();
+        echo $this->Paginator->next(' Siguiente »', null, null, array('class' => 'disabled'));
+        ?>
+    </span>
+    <span style="float: right"><a href="#" onclick="$('#vehicle-search').toggle();">Buscador</a></span>
+    <div class="column span-14 last" id="vehicle-search" style="display:none">
+        <?= $this->Form->create('Vehicle', array('url'=>'/vehicles/search'));?>
+        <?= $this->Form->input('Customer.name', array('label'=>'Cliente', 'div'=>array('class'=>'span-4'),'class'=>'span-4'));?>
+        <?= $this->Form->input('patente', array('label'=>'N° Dominio', 'div'=>array('class'=>'span-2'),'class'=>'span-2'));?>
+        <?= $this->Form->input('chasis_number', array('label'=>'N° Chasis', 'div'=>array('class'=>'span-3'),'class'=>'span-3'));?>
+        <? //= $this->Js->submit('Buscar',array('update'=>'vehicle-list','div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
+        <?= $this->Form->end('Buscar',array('div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
+    </div>
 
-<div class="search-content span-13 last" id="vehicle-list">
     <ul class="simple-list">
         <?php
         $i = 0;
         foreach ($vehicles as $v):
             ?>
-        <li class='hover-highlight span-13 last'>
+        <li class='hover-highlight span-14 last'>
             <span class="span-1">
                     <?
                     switch ($v['VehicleType']['id']) {
@@ -22,19 +39,20 @@
                             $img = 'cake.icon.png';
                             break;
                     }
-                    echo $this->Html->image($img, array('width'=>'38px'));
+                    echo $this->Html->image($img, array('class'=>'span-1 last', 'style'=>'margin-top: 7px'));
                     ?>
             </span>
-                <? 
+                <?
                 $vehicleName = "[".$v['Vehicle']['patente']."] ".$v['Vehicle']['brand']." ".$v['Vehicle']['type']." ".$v['Vehicle']['model'];
                 $vehicleName .= ($this->action=='search')?' - '.$v['Customer']['name']:'';
                 ?>
-            <span class="span-10"><?= $this->Html->link($vehicleName,'/vehicles/edit/'.$v['Vehicle']['id'], array('class'=>'alto3em'));?></span>
+            <span class="span-11"><?= $this->Html->link($vehicleName,'/vehicles/edit/'.$v['Vehicle']['id'], array('class'=>'alto3em'));?></span>
             <span class="span-2 last">
                     <?
                     $pdfImg = $this->Html->image('pdf.png',array(
                             'title'=>__('Print',true)." $vehicleName",
                             'alt'=>__('Print',true)." $vehicleName",
+                            'class'=>'span-1',
                     ));
                     echo $this->Html->link($pdfImg, 'javascript: alert("Imprimir Formulario")', array(
                     'escape'=>false,
@@ -43,6 +61,7 @@
                     $editImg = $this->Html->image('edit.png',array(
                             'title'=>__('Edit',true)." $vehicleName",
                             'alt'=>__('Edit',true)." $vehicleName",
+                            'class'=>'span-1 last',
                     ));
                     echo $this->Html->link($editImg, '/vehicles/edit/'.$v['Vehicle']['id'], array(
                     'escape'=>false,
@@ -55,3 +74,7 @@
     </ul>
 </div>
 
+
+<?
+echo $this->Js->writeBuffer();
+?>
