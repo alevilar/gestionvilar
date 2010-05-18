@@ -26,6 +26,15 @@ class CustomersController extends AppController {
             $this->Session->setFlash(sprintf(__('Invalid %s', true), 'customer'));
             $this->redirect(array('action' => 'index'));
         }
+        $this->Customer->contain(array(
+            'CustomerHome','CustomerLegal',
+            'Identification'=> array('IdentificationType'),
+            'CustomerNatural'=>array(
+                'MaritalStatus',
+                'Spouse'=>array('IdentificationType'),
+                ),
+            'Representative',
+        ));
         $this->set('customer', $this->Customer->read(null, $id));
     }
 
@@ -60,7 +69,7 @@ class CustomersController extends AppController {
                     break;
                 case 1:
                     $this->Session->setFlash(sprintf(__('The %s has been saved', true), 'cliente'));
-                    $this->redirect('/');
+                    $this->redirect('/customers/view/'.$this->Customer->id);
                     break;
                 default:
                     $this->Session->setFlash(sprintf(__('Error saving the customer', true), 'customer'));

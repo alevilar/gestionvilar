@@ -16,18 +16,24 @@ class RepresentativesController extends AppController {
 		$this->set('representative', $this->Representative->read(null, $id));
 	}
 
-	function add() {
+	function add($customer_id = null) {
+                if (empty($customer_id)) {
+                    		$this->Session->setFlash(__('Invalid Customer ID.', true));
+                                $this->redirect('/');
+                }
 		if (!empty($this->data)) {
 			$this->Representative->create();
 			if ($this->Representative->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'representative'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect('/customers/view/'.$customer_id);
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'representative'));
 			}
 		}
-		$customers = $this->Representative->Customer->find('list');
-		$this->set(compact('customers'));
+                $this->data['Representative']['customer_id'] = $customer_id;
+                $this->Representative->Customer->id = $customer_id;
+		$customer = $this->Representative->Customer->read();
+		$this->set(compact('customer'));
 	}
 
 	function edit($id = null) {

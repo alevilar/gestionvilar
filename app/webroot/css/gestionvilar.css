@@ -292,7 +292,6 @@ ul.simple-list, li.simple-list{
 .simple-list A{
     display: block;
     text-decoration: none;
-    border-bottom: solid 1px;
     font-weight: bolder;
 }
 

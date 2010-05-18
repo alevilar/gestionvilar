@@ -1,301 +1,172 @@
-<div class="customers view">
-<h2><?php  __('Customer');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customer['Customer']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customer['Customer']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Born'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customer['Customer']['born']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customer['Customer']['created']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $customer['Customer']['modified']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Customer', true)), array('action' => 'edit', $customer['Customer']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Customer', true)), array('action' => 'delete', $customer['Customer']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $customer['Customer']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Customers', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Customer', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Customer Homes', true)), array('controller' => 'customer_homes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Customer Home', true)), array('controller' => 'customer_homes', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Customer Types', true)), array('controller' => 'customer_types', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Customer Type', true)), array('controller' => 'customer_types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Identifications', true)), array('controller' => 'identifications', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Identification', true)), array('controller' => 'identifications', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Representatives', true)), array('controller' => 'representatives', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Representative', true)), array('controller' => 'representatives', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Vehicles', true)), array('controller' => 'vehicles', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Vehicle', true)), array('controller' => 'vehicles', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php printf(__('Related %s', true), __('Customer Homes', true));?></h3>
-	<?php if (!empty($customer['CustomerHome'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Address'); ?></th>
-		<th><?php __('Number'); ?></th>
-		<th><?php __('Floor'); ?></th>
-		<th><?php __('Apartment'); ?></th>
-		<th><?php __('Postal Code'); ?></th>
-		<th><?php __('Customer Id'); ?></th>
-		<th><?php __('City Id'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($customer['CustomerHome'] as $customerHome):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $customerHome['id'];?></td>
-			<td><?php echo $customerHome['address'];?></td>
-			<td><?php echo $customerHome['number'];?></td>
-			<td><?php echo $customerHome['floor'];?></td>
-			<td><?php echo $customerHome['apartment'];?></td>
-			<td><?php echo $customerHome['postal_code'];?></td>
-			<td><?php echo $customerHome['customer_id'];?></td>
-			<td><?php echo $customerHome['city_id'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'customer_homes', 'action' => 'view', $customerHome['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'customer_homes', 'action' => 'edit', $customerHome['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'customer_homes', 'action' => 'delete', $customerHome['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $customerHome['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+<? //debug($customer)?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Customer Home', true)), array('controller' => 'customer_homes', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
+<div class="column span-5 actions">
+    <ul>
+        <li>
+            <?= $this->Html->link('Editar Cliente', '/customers/edit/'.$customer['Customer']['id']) ?>
+        </li>
+        <?php if ($customer['Customer']['type'] == 'natural'):?>
+        <li>
+                <?= $this->Html->link('Agregar Cónyuge', '/spouses/add/'.$customer['Customer']['id']) ?>
+        </li>
+        <?php endif;?>
+        <li>
+            <?= $this->Html->link('Agregar Apoderado', '/representatives/add/'.$customer['Customer']['id']) ?>
+        </li>
+    </ul>
 </div>
-<div class="related">
-	<h3><?php printf(__('Related %s', true), __('Customer Types', true));?></h3>
-	<?php if (!empty($customer['CustomerLegal'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Customer Id'); ?></th>
-		<th><?php __('Type'); ?></th>
-		<th><?php __('Name'); ?></th>
-		<th><?php __('Surname'); ?></th>
-		<th><?php __('Marital Status Id'); ?></th>
-		<th><?php __('Nuptials'); ?></th>
-		<th><?php __('Spouse'); ?></th>
-		<th><?php __('Inscription Entity'); ?></th>
-		<th><?php __('Inscription Number'); ?></th>
-		<th><?php __('Inscription Date'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($customer['CustomerType'] as $customerType):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $customerType['id'];?></td>
-			<td><?php echo $customerType['customer_id'];?></td>
-			<td><?php echo $customerType['type'];?></td>
-			<td><?php echo $customerType['name'];?></td>
-			<td><?php echo $customerType['surname'];?></td>
-			<td><?php echo $customerType['marital_status_id'];?></td>
-			<td><?php echo $customerType['nuptials'];?></td>
-			<td><?php echo $customerType['spouse'];?></td>
-			<td><?php echo $customerType['inscription_entity'];?></td>
-			<td><?php echo $customerType['inscription_number'];?></td>
-			<td><?php echo $customerType['inscription_date'];?></td>
-			<td><?php echo $customerType['created'];?></td>
-			<td><?php echo $customerType['modified'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'customer_types', 'action' => 'view', $customerType['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'customer_types', 'action' => 'edit', $customerType['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'customer_types', 'action' => 'delete', $customerType['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $customerType['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Customer Type', true)), array('controller' => 'customer_types', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
-</div>
-<div class="related">
-	<h3><?php printf(__('Related %s', true), __('Identifications', true));?></h3>
-	<?php if (!empty($customer['Identification'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Idenfication Type Id'); ?></th>
-		<th><?php __('Number'); ?></th>
-		<th><?php __('Authority Name'); ?></th>
-		<th><?php __('Customer Id'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($customer['Identification'] as $identification):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $identification['id'];?></td>
-			<td><?php echo $identification['idenfication_type_id'];?></td>
-			<td><?php echo $identification['number'];?></td>
-			<td><?php echo $identification['authority_name'];?></td>
-			<td><?php echo $identification['customer_id'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'identifications', 'action' => 'view', $identification['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'identifications', 'action' => 'edit', $identification['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'identifications', 'action' => 'delete', $identification['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $identification['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+<div class="customers view span-19 last">
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Identification', true)), array('controller' => 'identifications', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
-</div>
-<div class="related">
-	<h3><?php printf(__('Related %s', true), __('Representatives', true));?></h3>
-	<?php if (!empty($customer['Representative'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Name'); ?></th>
-		<th><?php __('Surname'); ?></th>
-		<th><?php __('Customer Id'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($customer['Representative'] as $representative):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $representative['id'];?></td>
-			<td><?php echo $representative['name'];?></td>
-			<td><?php echo $representative['surname'];?></td>
-			<td><?php echo $representative['customer_id'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'representatives', 'action' => 'view', $representative['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'representatives', 'action' => 'edit', $representative['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'representatives', 'action' => 'delete', $representative['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $representative['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+    <?php $customerType =  $customer['Customer']['type']?>
+    <h2><?php  echo sprintf(__('Customer %s: %s',true),$customer['Customer']['type'], $customer['Customer']['name']);?></h2>
+    <dl><?php $i = 0;
+        $class = ' class="altrow"';?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Representative', true)), array('controller' => 'representatives', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
-</div>
-<div class="related">
-	<h3><?php printf(__('Related %s', true), __('Vehicles', true));?></h3>
-	<?php if (!empty($customer['Vehicle'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Customer Id'); ?></th>
-		<th><?php __('Fabrication Certificate'); ?></th>
-		<th><?php __('Brand'); ?></th>
-		<th><?php __('Type'); ?></th>
-		<th><?php __('Model'); ?></th>
-		<th><?php __('Motor Brand'); ?></th>
-		<th><?php __('Motor Number'); ?></th>
-		<th><?php __('Chasis Brand'); ?></th>
-		<th><?php __('Chasis Number'); ?></th>
-		<th><?php __('Use'); ?></th>
-		<th><?php __('Adquisition Value'); ?></th>
-		<th><?php __('Adquisition Date'); ?></th>
-		<th><?php __('Adquisition Evidence Element'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($customer['Vehicle'] as $vehicle):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $vehicle['id'];?></td>
-			<td><?php echo $vehicle['customer_id'];?></td>
-			<td><?php echo $vehicle['fabrication_certificate'];?></td>
-			<td><?php echo $vehicle['brand'];?></td>
-			<td><?php echo $vehicle['type'];?></td>
-			<td><?php echo $vehicle['model'];?></td>
-			<td><?php echo $vehicle['motor_brand'];?></td>
-			<td><?php echo $vehicle['motor_number'];?></td>
-			<td><?php echo $vehicle['chasis_brand'];?></td>
-			<td><?php echo $vehicle['chasis_number'];?></td>
-			<td><?php echo $vehicle['use'];?></td>
-			<td><?php echo $vehicle['adquisition_value'];?></td>
-			<td><?php echo $vehicle['adquisition_date'];?></td>
-			<td><?php echo $vehicle['adquisition_evidence_element'];?></td>
-			<td><?php echo $vehicle['created'];?></td>
-			<td><?php echo $vehicle['modified'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'vehicles', 'action' => 'view', $vehicle['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'vehicles', 'action' => 'edit', $vehicle['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'vehicles', 'action' => 'delete', $vehicle['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $vehicle['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Born'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+            <?php echo $customer['Customer']['born']; ?>
+            &nbsp;
+        </dd>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Vehicle', true)), array('controller' => 'vehicles', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
+         <?php if (!empty($customer['Identification'])):?>
+            <?php if (!empty($customer['Identification']['IdentificationType'])):?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['Identification']['IdentificationType']['name'] . ' ' . $customer['Identification']['number']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Authority Name'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['Identification']['authority_name']; ?>
+            &nbsp;
+        </dd>
+        <?php endif;endif;?>
+        
+
+
+        <?php if ($customer['Customer']['type'] == 'natural'):?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerNatural']['first_name']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Surname'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerNatural']['surname']; ?>
+            &nbsp;
+        </dd>
+            <?php if ( !empty($customer['CustomerNatural']['MaritalStatus'])):?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Marital Status'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $customer['CustomerNatural']['MaritalStatus']['name']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nuptials'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $customer['CustomerNatural']['nuptials']; ?>
+            &nbsp;
+        </dd>
+            <?php endif; ?>
+        <?php else:?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerLegal']['name']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Inscription Entity'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerLegal']['inscription_entity']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Inscription Number'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerLegal']['inscription_number']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Inscription Date'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerLegal']['inscription_date']; ?>
+            &nbsp;
+        </dd>
+        <?php endif; ?>
+
+
+        <?php
+        if (!empty($customer['CustomerNatural']['Spouse'])):
+            if (count($customer['CustomerNatural']['Spouse'] > 0)):
+                ?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $customer['CustomerNatural']['Spouse']['name']; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Identification'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $customer['CustomerNatural']['Spouse']['IdentificationType']['name'] . ' ' .$customer['CustomerNatural']['Spouse']['identification_number']; ?>
+            &nbsp;
+        </dd>
+            <?php
+            endif;
+        endif;
+        ?>
+    </dl>
+
+
+    <div class="related">
+        <?php if (!empty($customer['CustomerHome'])):?>
+        <h3><?php __('Customer Homes');?></h3>
+            <?php
+            $i = 0;
+            foreach ($customer['CustomerHome'] as $customerHome):
+                $class = null;
+                if ($i++ % 2 == 0) {
+                    $class = ' class="altrow"';
+                }
+                ?>
+        <b><?= 'Dirección: '.$customerHome['type']?></b>
+        <dl>
+            <dt><?php __('City'); ?></dt>
+            <dd><?= $customerHome['city']?></dd>
+            <dt><?php __('Address'); ?></dt>
+            <dd><?= $customerHome['address']?></dd>
+            <dt><?php __('Number'); ?></dt>
+            <dd><?= $customerHome['number']?></dd>
+            <dt><?php __('Floor'); ?></dt>
+            <dd><?= $customerHome['floor']?></dd>
+            <dt><?php __('Apartment'); ?></dt>
+            <dd><?= $customerHome['apartment']?></dd>
+            <dt><?php __('Postal Code'); ?></dt>
+            <dd><?= $customerHome['postal_code']?></dd>
+        </dl>
+            <? endforeach;?>
+        <?php endif;?>
+    </div>
+
+    <div class="related">
+        <?php if (!empty($customer['Representative'])):?>
+            <?php if (count($customer['Representative'])>0):?>
+        <h3><?php __('Representative');?></h3>
+                <?php
+                $i = 0;
+                foreach ($customer['Representative'] as $representative):
+                    $class = null;
+                    if ($i++ % 2 == 0) {
+                        $class = ' class="altrow"';
+                    }
+                    ?>
+
+        <dl>
+            <dt><?php __('Name'); ?></dt>
+            <dd><?= $representative['name']?></dd>
+            <dt><?php __('Surname'); ?></dt>
+            <dd><?= $representative['surname']?></dd>
+        </dl>
+                <? endforeach;?>
+            <?php endif;
+        endif;?>
+    </div>
+
+
 </div>
+

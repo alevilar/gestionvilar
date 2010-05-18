@@ -18,17 +18,20 @@
             <? foreach ($customers as $c) {
                 $hrId = 'customer-vehicles-'.$c['Customer']['id'];
                 $imgSgte = $this->Html->image('next.png',array('width'=>'20'));
+                $imgCustomerInfo = $this->Html->image('customer_view.png',array('width'=>'14'));
+                $linkCustomerInfo = $this->Html->link($imgCustomerInfo,'/customers/view/'.$c['Customer']['id'], array('escape'=>false, 'class'=>'span-1 alto3em'));
                 $customerName = $this->Js->link(
                         $c['Customer']['name'].$imgSgte,
                         '/vehicles/customer/'.$c['Customer']['id'],
                         array(
-                        'class'   => 'alto3em',
+                        'class'   => 'alto3em span-8 last',
                         'escape'  => false,
                         'customer'=> $c['Customer']['id'],
                         'update'  => '#vehicle-search-box',
+                            'doubleClick'=>'alert("saracatinga");',
                 ));
                 $customerId = $c['Customer']['id'];
-                echo "<li class='hover-highlight'>$customerName</li>";
+                echo "<li class='hover-highlight'>$linkCustomerInfo$customerName</li>";
             }
             ?>
         </ul>

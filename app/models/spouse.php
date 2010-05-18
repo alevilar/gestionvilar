@@ -2,6 +2,9 @@
 class Spouse extends AppModel {
 	var $name = 'Spouse';
 	var $displayField = 'name';
+
+        var $actsAs = array('Containable');
+
 	var $validate = array(
 		'name' => array(
 			'notempty' => array(
