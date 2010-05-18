@@ -34,6 +34,28 @@ class SpousesController extends AppController {
         $this->set(compact('customer','identificationTypes'));
         
     }
+
+
+    function edit($id) {
+         if (empty($id)) {
+            $this->Session->setFlash(sprintf(__('Invalid %s ID.', true), 'Spouse'));
+            $this->redirect('/');
+        }
+        if (!empty($this->data)) {
+            if ($this->Spouse->save($this->data)) {
+                $this->Session->setFlash(sprintf(__('The %s has been saved', true), 'Spouse'));
+                $this->Spouse->id = $id;
+                $this->data = $this->Spouse->read();
+                $this->redirect('/customers/view/'.$this->data['CustomerNatural']['customer_id']);
+            } else {
+                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'Spouse'));
+            }
+        }
+        $this->Spouse->id = $id;
+        $this->data = $this->Spouse->read();
+        $identificationTypes = $this->Spouse->IdentificationType->find('list');
+        $this->set(compact('identificationTypes'));
+    }
 }
 
 ?>

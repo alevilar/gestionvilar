@@ -88,3 +88,7 @@
 2010-05-18 01:47:50 Notice: Notice (8): Undefined index: IdentificationType in [/var/www/gestionvilar/app/views/customers/view.ctp, line 104]
 2010-05-18 01:51:48 Notice: Notice (8): Undefined index: IdentificationType in [/var/www/gestionvilar/app/views/customers/view.ctp, line 104]
 2010-05-18 01:53:33 Notice: Notice (8): Undefined index: IdentificationType in [/var/www/gestionvilar/app/views/customers/view.ctp, line 104]
+2010-05-18 16:02:27 Notice: Notice (8): Undefined variable: customer_id in [/var/www/gestionvilar/app/controllers/spouses_controller.php, line 47]
+2010-05-18 16:04:01 Notice: Notice (8): Undefined variable: customer_id in [/var/www/gestionvilar/app/controllers/spouses_controller.php, line 47]
+2010-05-18 16:05:39 Notice: Notice (8): Undefined index: CustomerNatural in [/var/www/gestionvilar/app/controllers/spouses_controller.php, line 47]
+2010-05-18 16:19:25 Notice: Notice (8): Undefined index: CustomerNatural in [/var/www/gestionvilar/app/controllers/spouses_controller.php, line 48]

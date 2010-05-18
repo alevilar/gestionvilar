@@ -96,6 +96,7 @@
         if (!empty($customer['CustomerNatural']['Spouse'])):
             if (count($customer['CustomerNatural']['Spouse'] > 0)):
                 ?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Spouse'),'/spouses/edit/'.$customer['CustomerNatural']['Spouse']['id']) ?></dt>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
                     <?php echo $customer['CustomerNatural']['Spouse']['name']; ?>
@@ -157,6 +158,7 @@
                     ?>
 
         <dl>
+            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Representative'),'/representatives/edit/'.$representative['id']) ?></dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $representative['name']?></dd>
             <dt><?php __('Surname'); ?></dt>

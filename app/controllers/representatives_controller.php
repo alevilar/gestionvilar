@@ -44,7 +44,7 @@ class RepresentativesController extends AppController {
 		if (!empty($this->data)) {
 			if ($this->Representative->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'representative'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect('/customers/view/'.$this->data['Representative']['customer_id']);
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'representative'));
 			}
@@ -52,8 +52,6 @@ class RepresentativesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Representative->read(null, $id);
 		}
-		$customers = $this->Representative->Customer->find('list');
-		$this->set(compact('customers'));
 	}
 
 	function delete($id = null) {
