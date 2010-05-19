@@ -1,6 +1,9 @@
 <?php
 class Representative extends AppModel {
 	var $name = 'Representative';
+
+        var $nationalityTypes = array('argentino'=>'Argentino', 'extranjero'=>'Extranjero');
+
 	var $validate = array(
 		'customer_id' => array(
 			'numeric' => array(
@@ -15,14 +18,6 @@ class Representative extends AppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
-		'Customer' => array(
-			'className' => 'Customer',
-			'foreignKey' => 'customer_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	var $belongsTo = array('Customer','IdentificationType');
 }
 ?>

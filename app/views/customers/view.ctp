@@ -96,7 +96,8 @@
         if (!empty($customer['CustomerNatural']['Spouse'])):
             if (count($customer['CustomerNatural']['Spouse'] > 0)):
                 ?>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Spouse'),'/spouses/edit/'.$customer['CustomerNatural']['Spouse']['id']) ?></dt>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),'/spouses/edit/'.$customer['CustomerNatural']['Spouse']['id']) ?></dt>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),'/spouses/delete/'.$customer['CustomerNatural']['Spouse']['id'],null, 'Desea eliminar cónyuge: '.$customer['CustomerNatural']['Spouse']['name']) ?></dt>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
                     <?php echo $customer['CustomerNatural']['Spouse']['name']; ?>
@@ -156,19 +157,26 @@
                         $class = ' class="altrow"';
                     }
                     ?>
-
         <dl>
-            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Representative'),'/representatives/edit/'.$representative['id']) ?></dt>
+            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Apoderado'),'/representatives/edit/'.$representative['id']) ?></dt>
+            <dt><?php echo $this->Html->link(
+                    sprintf(__('Delete %s',true), 'Apoderado'),
+                    '/representatives/delete/'.$representative['id'], null,"¿Desea eliminar al apoderado: ".$representative['name'].' '.$representative['surname'].'?'); ?></dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $representative['name']?></dd>
             <dt><?php __('Surname'); ?></dt>
             <dd><?= $representative['surname']?></dd>
+            <dt><?php __('Identification'); ?></dt>
+            <dd><?= @$representative['IdentificationType']['name']. ' '.$representative['identification_number']?></dd>
+            <dt><?php __('Nationality'); ?></dt>
+            <dd><?= @$nationalities[$representative['nationality_type']]?></dd>
+            <dt><?php __('Country'); ?></dt>
+            <dd><?= $representative['nationality']?></dd>
         </dl>
                 <? endforeach;?>
             <?php endif;
         endif;?>
     </div>
-
 
 </div>
 

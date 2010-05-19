@@ -54,9 +54,11 @@
                             'alt'=>__('Print',true)." $vehicleName",
                             'class'=>'span-1',
                     ));
-                    echo $this->Html->link($pdfImg, 'javascript: alert("Imprimir Formulario")', array(
+                    echo $this->Html->link($pdfImg, 'javascript: ;', array(
                     'escape'=>false,
-                    'class'=>'span-1  images-link-1'));
+                    'class'=>'span-1  images-link-1',
+                        'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
+                        ));
 
                     $editImg = $this->Html->image('edit.png',array(
                             'title'=>__('Edit',true)." $vehicleName",
@@ -68,6 +70,11 @@
                     'class'=>'span-1 last images-link-1'));
                     ?>
             </span>
+            <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none">
+                <h2>Seleccionar Formulario para</h2>
+                <h3><?= $vehicleName?></h3>
+                    <? echo $this->Html->link('F 02','/f02s/add/'.$v['Vehicle']['id']);?>
+            </div>
         </li><?
         endforeach;
         ?>
@@ -78,3 +85,17 @@
 <?
 echo $this->Js->writeBuffer();
 ?>
+
+
+<script type="text/javascript">
+
+    function seleccionarFormulario(vehicle_id){
+        $.blockUI({ message: $('#formulario-de-'+vehicle_id) });
+
+        $(document).click(function(){
+            $.unblockUI;
+        });
+        setTimeout($.unblockUI, 3000);
+        return false;
+    }
+</script>

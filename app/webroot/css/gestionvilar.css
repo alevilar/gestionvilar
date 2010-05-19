@@ -2,6 +2,10 @@ A {
 outline: none;
 }
 
+textarea{
+    height: auto;
+}
+
 .cake-sql-log table {
 	background: #f4f4f4;
 }

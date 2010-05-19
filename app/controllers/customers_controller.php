@@ -33,9 +33,10 @@ class CustomersController extends AppController {
                 'MaritalStatus',
                 'Spouse'=>array('IdentificationType'),
                 ),
-            'Representative',
+            'Representative'=>array('IdentificationType'),
         ));
         $this->set('customer', $this->Customer->read(null, $id));
+        $this->set('nationalities', $this->Customer->Representative->nationalityTypes);
     }
 
     function edit($id = null) {

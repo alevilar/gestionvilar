@@ -13,7 +13,10 @@ class RepresentativesController extends AppController {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'representative'));
 			$this->redirect(array('action' => 'index'));
 		}
+                $this->Representative->contain(array('IdentificationType'));
 		$this->set('representative', $this->Representative->read(null, $id));
+
+                $this->set('representativeType', $this->Representative->nationalityTypes);
 	}
 
 	function add($customer_id = null) {
@@ -33,7 +36,10 @@ class RepresentativesController extends AppController {
                 $this->data['Representative']['customer_id'] = $customer_id;
                 $this->Representative->Customer->id = $customer_id;
 		$customer = $this->Representative->Customer->read();
-		$this->set(compact('customer'));
+
+                $identificationTypes = $this->Representative->IdentificationType->find('list');
+                $nationalityTypes = $this->Representative->nationalityTypes;
+		$this->set(compact('customer','identificationTypes','nationalityTypes'));
 	}
 
 	function edit($id = null) {
@@ -52,19 +58,26 @@ class RepresentativesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Representative->read(null, $id);
 		}
+                $identificationTypes = $this->Representative->IdentificationType->find('list');
+                $nationalityTypes = $this->Representative->nationalityTypes;
+		$this->set(compact('identificationTypes','nationalityTypes'));
+
 	}
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'representative'));
-			$this->redirect(array('action'=>'index'));
+			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'apoderado'));
+			$this->redirect('/');
 		}
+                $this->Representative->id();
+                $this->Representative->recursive = -1;
+                $data = $this->Representative->read();
 		if ($this->Representative->delete($id)) {
-			$this->Session->setFlash(sprintf(__('%s deleted', true), 'Representative'));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Representative'));
-		$this->redirect(array('action' => 'index'));
+                    $this->Session->setFlash(sprintf(__('%s deleted', true), 'Apoderado'));
+		} else {
+                    $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Apoderado'));
+                }
+		$this->redirect('/customers/view/'.$data['Representative']['customer_id']);
 	}
 }
 ?>

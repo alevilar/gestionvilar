@@ -19,8 +19,8 @@ class SpousesController extends AppController {
         $this->Spouse->CustomerNatural->Customer->id = $customer_id;
         $this->Spouse->CustomerNatural->contain(array('Customer'));
         $customer = $this->Spouse->CustomerNatural->find('first',array(
-            'conditions'=> array('CustomerNatural.customer_id'=>$customer_id)));
-        
+                'conditions'=> array('CustomerNatural.customer_id'=>$customer_id)));
+
         if (empty($customer['CustomerNatural'])) {
             $this->Session->setFlash(__('No Customer Natural added yet', true));
             $this->redirect('/');
@@ -32,12 +32,12 @@ class SpousesController extends AppController {
         $this->data['Spouse']['customer_natural_id'] = $customer['CustomerNatural']['id'];
         $identificationTypes = $this->Spouse->IdentificationType->find('list');
         $this->set(compact('customer','identificationTypes'));
-        
+
     }
 
 
     function edit($id) {
-         if (empty($id)) {
+        if (empty($id)) {
             $this->Session->setFlash(sprintf(__('Invalid %s ID.', true), 'Spouse'));
             $this->redirect('/');
         }
@@ -55,6 +55,23 @@ class SpousesController extends AppController {
         $this->data = $this->Spouse->read();
         $identificationTypes = $this->Spouse->IdentificationType->find('list');
         $this->set(compact('identificationTypes'));
+    }
+
+
+    function delete($id) {
+        if (!$id) {
+            $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'cónyuge'));
+            $this->redirect('/');
+        }
+        $this->Spouse->id();
+        $this->Spouse->recursive = -1;
+        $data = $this->Spouse->read();
+        if ($this->Spouse->delete($id)) {
+            $this->Session->setFlash(sprintf(__('%s deleted', true), 'Cónyuge'));
+        } else {
+            $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Cónyuge'));
+        }
+        $this->redirect('/customers/view/'.$data['Spouse']['customer_id']);
     }
 }
 
