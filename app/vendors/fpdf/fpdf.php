@@ -118,13 +118,14 @@ function FPDF($orientation='P', $unit='mm', $format='A4')
 		$this->Error('Incorrect unit: '.$unit);
 	//Page format
 	$this->PageFormats=array(
-            'a3'=>array(841.89,1190.55),
-            'a4'=>array(595.28,841.89),
-            'a5'=>array(420.94,595.28),
-            'letter'=>array(612,792),
-            'legal'=>array(612,1008),
+            'a3'=>array(841.89,1190.55), /* 297 × 420 */
+            'a4'=>array(595.28,841.89),  /* 210 × 297 */
+            'a5'=>array(420.94,595.28),  /* 148 × 210 */
+            'letter'=>array(612,792), /* 279 × 216*/
+            'legal'=>array(612,1008), /* 356 × 216 */
             'f01' => array(204*$this->k, 390*$this->k),
-            'f12' => array(204*$this->k, 400*$this->k),
+            'f02' => array(203*$this->k, 305*$this->k),
+            'f12' => array(203*$this->k, 305*$this->k),
             );
 	if(is_string($format))
 		$format=$this->_getpageformat($format);

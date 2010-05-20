@@ -1,8 +1,8 @@
 <?php
 
 class F02sController extends AppController{
-    /* @var $Session SessionComponent */
-    var $Session;
+
+    var $helpers = array('Fpdf');
 
     function add($vehicle_id = null) {
 
@@ -20,7 +20,7 @@ class F02sController extends AppController{
             if (!$this->F02->save($this->data)) {
                 $this->Session->setFlash('no pudo guardarse el formulario 02');
             } else {
-                $this->redirect('/f02s/generar_pdf.pdf');
+                $this->redirect('/f02s/generar_pdf/'.$this->F02->id.'.pdf');
             }
         } else {
             if (!empty($this->data['F02']['id'])) {
@@ -61,7 +61,27 @@ class F02sController extends AppController{
     }
 
 
-    function generar_pdf() {
+    function generar_pdf($id = null) {
+        if (empty($id)) {
+            $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del formulario 02');
+            $this->redirect('/');
+        }
+        
+        $conditions = array('F02.id'=>$id);
+        $form = $this->F02->find('first', array(
+                'conditions'=> $conditions,
+                'contain' => array(
+                    'Representative',
+                    'Vehicle'=>array('Customer'),
+                ),
+            ));
+        $f02types = $this->F02->types;
+        $nationalityTypes = $this->F02->Representative->nationalityTypes;
+        $this->set(compact('form','f02types','nationalityTypes'));
+    }
+
+
+    function test(){
         
     }
 }

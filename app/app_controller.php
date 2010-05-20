@@ -34,7 +34,7 @@
  * @subpackage	gestionvilar.app
  */
 class AppController extends Controller {
-    var $helpers = array('Html', 'Form', 'Jqform', 'Js' => array('Jquery'), 'Session','Fpdf');
+    var $helpers = array('Html', 'Form', 'Jqform', 'Js' => array('Jquery'), 'Session');
     //var $components = array( 'Auth' , 'RequestHandler');
     var $components = array('RequestHandler','Session','Auth');
 
