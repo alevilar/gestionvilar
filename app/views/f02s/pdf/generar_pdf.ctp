@@ -85,19 +85,22 @@ $this->Fpdf->Cell(70,5,$form['F02']['solicitante'],0, 0,'C');
 
 // APODERADO
 if (!empty($form['Representative'])) {
-    $this->Fpdf->SetXY(53,229);
-    $this->Fpdf->Cell(65,3,$form['Representative']['surname'].' '.$form['Representative']['name']);
+    $nom = $form['Representative']['surname'].' '.$form['Representative']['name'];
+    if (!empty($form['Representative']['surname'])) {
+        $this->Fpdf->SetXY(53,229);
+        $this->Fpdf->Cell(65,3,$nom);
 
-    if ($form['Representative']['nationality_type'] == 'argentino') {
-        $this->Fpdf->setIdentificationType(49, 246, $form['Representative']['identification_type_id']);
-    } else {
-        $this->Fpdf->setIdentificationType(93, 246, $form['Representative']['identification_type_id']);
+        if ($form['Representative']['nationality_type'] == 'argentino') {
+            $this->Fpdf->setIdentificationType(49, 246, $form['Representative']['identification_type_id']);
+        } else {
+            $this->Fpdf->setIdentificationType(93, 246, $form['Representative']['identification_type_id']);
+        }
+        $this->Fpdf->SetXY(43,253);
+        $this->Fpdf->Cell(30,3,$form['Representative']['identification_number']);
+
+        $this->Fpdf->SetXY(80,253);
+        $this->Fpdf->Cell(40,3,$form['Representative']['nationality']);
     }
-    $this->Fpdf->SetXY(43,253);
-    $this->Fpdf->Cell(30,3,$form['Representative']['identification_number']);
-
-    $this->Fpdf->SetXY(80,253);
-    $this->Fpdf->Cell(40,3,$form['Representative']['nationality']);
 }
 
 
@@ -160,14 +163,14 @@ $this->Fpdf->SetFont('Courier','',10);
 if ($customer_type == 'natural') {
     if ($customer['CustomerNatural']['nationality_type']== 'argentino') {
         $this->Fpdf->setIdentificationType(94, 41, $customer['Identification']['identification_type_id']);
-        
+
         //Nro Documento
         $this->Fpdf->SetXY(87,47);
         $this->Fpdf->Cell(29,3,$customer['Identification']['identification_number']);
     } else {
         $this->Fpdf->setIdentificationType(134, 41, $customer['Identification']['identification_type_id']);
 
-         // autoridad o pais que lo expidio
+        // autoridad o pais que lo expidio
         $this->Fpdf->SetXY(92,47);
         $this->Fpdf->Cell(39,3,$customer['CustomerNatural']['nationality']);
     }
@@ -176,7 +179,7 @@ if ($customer_type == 'natural') {
     $this->Fpdf->SetXY(87,55);
     $this->Fpdf->Cell(71,3,$customer['CustomerLegal']['inscription_entity']);
 
-     // n° de datos de creacion
+    // n° de datos de creacion
     $this->Fpdf->SetXY(87,62);
     $this->Fpdf->Cell(43,3,$customer['CustomerLegal']['inscription_number']);
 

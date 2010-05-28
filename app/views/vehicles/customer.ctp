@@ -11,8 +11,6 @@
     <div class="span-3 last">
          <? echo $this->Html->link('Más Info Cliente', '/customers/view/'.$customer['Customer']['id'])?>
         <br>
-        <? echo $this->Html->link('Editar Cliente', '/customers/edit/'.$customer['Customer']['id'])?>
-        <br>
         <? echo $this->Html->link('Agregar Vehiculo', '/vehicles/add/'.$customer['Customer']['id'])?>
     </div>
 </div>
