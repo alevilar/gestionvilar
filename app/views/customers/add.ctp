@@ -37,6 +37,9 @@
                     <?
                     echo $this->Form->input('CustomerNatural.marital_status_id', array('empty'=>'Seleccione'));
                     echo $this->Form->input('CustomerNatural.nuptials');
+
+                    echo $this->Form->input('CustomerNatural.nationality_type');
+                    echo $this->Form->input('CustomerNatural.nationality');
                     //echo $this->Form->input('CustomerNatural.spouse');
                     ?>
                     <input type="hidden" class="link" value="CustomerHome" />

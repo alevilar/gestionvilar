@@ -56,12 +56,65 @@ class FpdfHelper extends AppHelper {
     }
 
 
-    function MultiCell($w, $h, $txt, $border=0, $align='J', $fill=false){
+    function MultiCell($w, $h, $txt, $border=0, $align='J', $fill=true) {
         $this->Pdf->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
 
-    
-    function fondoVerde(){
+
+
+
+    function cellDate($x,$y,$date) {
+        if (!empty($date)) {
+            $this->Pdf->SetXY($x,$y);
+            $this->Pdf->Cell(7,3,date('d',strtotime($date)));
+
+            $this->Pdf->SetXY($x+9,$y);
+            $this->Pdf->Cell(7,3,date('m',strtotime($date)));
+
+            $this->Pdf->SetXY($x+18,$y);
+            $this->Pdf->Cell(7,3,date('y',strtotime($date)));
+        }
+    }
+
+
+    /**
+     *  Me imprime en el PDF 3 posibles identificaciones, me llena el multiple choice
+     *
+     * @param integer $w_start coordenada X donde comienza el primer cuadradito
+     * @param integer $h coordenada Y que no se modifica
+     * @param integer $id_type tipo d eidentificacion, de la tabla identification_types, es el ID de la identificacion
+     */
+    function setIdentificationType($w_start, $h, $id_type) {
+        switch ($id_type) {
+            case 1: // DNI
+                $this->Pdf->SetXY($w_start,$h);
+                break;
+            case 3: // LE
+            case 5: // CI
+                $this->Pdf->SetXY($w_start+10,$h);
+                break;
+            case 4: // LC
+            case 6: // Pasaporte
+                $this->Pdf->SetXY($w_start+20,$h);
+                break;
+            default: break;
+        }
+        $this->Pdf->Cell(3,4,'X');
+    }
+
+
+    function bordeBlanco() {
+        $this->Pdf->SetDrawColor(255, 255, 255);
+    }
+
+    function bordeRojo() {
+        $this->Pdf->SetDrawColor(255, 0, 0);
+    }
+
+    function fondoBlanco() {
+        $this->Pdf->SetFillColor(255, 255, 255);
+    }
+    function fondoVerde() {
         $this->Pdf->SetFillColor(218, 223, 183);
     }
 
@@ -73,7 +126,7 @@ class FpdfHelper extends AppHelper {
      *      Symbol
      *      ZapfDingbats
      *
-     * 
+     *
      * @param string $style
      *      cadena vacia: regular
      *      B: bold
@@ -83,10 +136,25 @@ class FpdfHelper extends AppHelper {
      * @param integer $size
      */
     function SetFont($family, $style='', $size=0) {
-        $this->Pdf->SetFont($family, $style, $size);
+        return $this->Pdf->SetFont($family, $style, $size);
     }
 
 
+
+    function GetStringWidth($s) {
+        return $this->Pdf->GetStringWidth($s);
+    }
+
+
+
+    /**
+     * Define el creador de el documento. Este es típicamente el nombre de
+     * la aplicación que genera el pdf.
+     * @param string creator nombre de la persona o aplicacion que genera el documento
+     */
+    function SetCreator($creator, $isUTF8=false) {
+        return $this->Pdf->SetCreator($creator, $isUTF8);
+    }
     /**
      * pone el cursor en una posicion X Y
      *
@@ -94,7 +162,7 @@ class FpdfHelper extends AppHelper {
      * @param <type> $y
      */
     function SetXY($x, $y) {
-        $this->Pdf->SetXY($x, $y);
+        return $this->Pdf->SetXY($x, $y);
     }
 
     /**
@@ -105,13 +173,13 @@ class FpdfHelper extends AppHelper {
      * @param <type> $border
      * @param <type> $ln
      * @param string $align
-                    L o una cadena vacia: alineación izquierda (valor por defecto)
-                    C: centro
-                    R: alineación derecha
+     L o una cadena vacia: alineación izquierda (valor por defecto)
+     C: centro
+     R: alineación derecha
      * @param <type> $fill
      * @param <type> $link
      */
-    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link='') {
+    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill=true, $link='') {
         $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
     }

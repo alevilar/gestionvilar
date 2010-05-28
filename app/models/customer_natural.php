@@ -2,6 +2,9 @@
 class CustomerNatural extends AppModel {
 	var $name = 'CustomerNatural';
 	var $displayField = 'surname';
+
+        var $nationalityTypes = array('argentino'=>'Argentino', 'extranjero'=>'Extranjero');
+         
 	var $validate = array(
 		'customer_id' => array(
 			'numeric' => array(

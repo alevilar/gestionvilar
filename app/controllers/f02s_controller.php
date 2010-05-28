@@ -72,12 +72,17 @@ class F02sController extends AppController{
                 'conditions'=> $conditions,
                 'contain' => array(
                     'Representative',
-                    'Vehicle'=>array('Customer'),
+                    'Vehicle'=>array('Customer'=>array('CustomerLegal','CustomerNatural','Identification')),
                 ),
             ));
         $f02types = $this->F02->types;
         $nationalityTypes = $this->F02->Representative->nationalityTypes;
-        $this->set(compact('form','f02types','nationalityTypes'));
+
+        $debug_mode = false;
+        if (!empty($this->passedArgs['debug'])){
+            $debug_mode = true;
+        }
+        $this->set(compact('form','f02types','nationalityTypes', 'debug_mode'));
     }
 
 

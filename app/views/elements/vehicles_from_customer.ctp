@@ -90,12 +90,20 @@ echo $this->Js->writeBuffer();
 <script type="text/javascript">
 
     function seleccionarFormulario(vehicle_id){
-        $.blockUI({ message: $('#formulario-de-'+vehicle_id) });
-
-        $(document).click(function(){
-            $.unblockUI;
+        $.blockUI({
+            message: $('#formulario-de-'+vehicle_id),
+            overlayCSS:  {
+                backgroundColor: '#000',
+                opacity:         0.6
+            }
         });
-        setTimeout($.unblockUI, 3000);
+
+
+       $('.blockOverlay').attr('title','Click para cerrar ventana').click($.unblockUI);
+
+
+        
+        setTimeout($.unblockUI, 10000);
         return false;
     }
 </script>

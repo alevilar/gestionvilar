@@ -35,10 +35,11 @@
             <?
 
             echo $this->Form->input('adquisition_evidence_element');
+            echo $this->Form->input('motor_brand');
             echo $this->Form->input('motor_number');
             echo $this->Form->input('chasis_brand');
             echo $this->Form->input('chasis_number');
-            echo $this->Form->input('motor_brand');
+            
             ?>
         </div>
 

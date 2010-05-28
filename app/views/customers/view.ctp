@@ -42,8 +42,6 @@
             &nbsp;
         </dd>
         <?php endif;endif;?>
-        
-
 
         <?php if ($customer['Customer']['type'] == 'natural'):?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
@@ -68,6 +66,16 @@
             &nbsp;
         </dd>
             <?php endif; ?>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality Type'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $nationalities[$customer['CustomerNatural']['nationality_type']]; ?>
+            &nbsp;
+        </dd>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                    <?php echo $customer['CustomerNatural']['nationality']; ?>
+            &nbsp;
+        </dd>
         <?php else:?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>

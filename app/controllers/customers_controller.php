@@ -99,12 +99,13 @@ class CustomersController extends AppController {
 
         $maritalStatuses = $this->Customer->CustomerNatural->MaritalStatus->find('list');
         $identificationTypes = $this->Customer->Identification->IdentificationType->find('list');
+        $nationalityTypes = $this->Customer->CustomerNatural->nationalityTypes;
         //$cities =$this->Customer->CustomerHome->City->find('list');
         //$counties = $this->Customer->CustomerHome->City->County->find('list');
         //$states = $this->Customer->CustomerHome->City->County->State->find('list');
         $types = $this->Customer->types;
         $this->set(compact(
-                'types', 'identificationTypes', 'maritalStatuses'));
+                'types', 'identificationTypes', 'maritalStatuses', 'nationalityTypes'));
     }
 
     function delete($id = null) {
