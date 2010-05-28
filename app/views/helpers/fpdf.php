@@ -57,8 +57,19 @@ class FpdfHelper extends AppHelper {
 
 
     function MultiCell($w, $h, $txt, $border=0, $align='J', $fill=true) {
+        $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
+
+    function Text($x, $y, $txt){
+        return $this->Pdf->Text($x, $y, $txt);
+    }
+
+
+    function Write($h, $txt, $link=''){
+        return $this->Pdf->Write($h, $txt, $link);
+    }
+
 
 
 

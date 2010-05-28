@@ -78,7 +78,7 @@ $this->Fpdf->MultiCell(150,10,$form['F02']['declaraciones'],0,'j');
 
 
 // SOLICITANTE
-$this->Fpdf->SetXY(45,210);
+$this->Fpdf->SetXY(45,212);
 $this->Fpdf->Cell(70,5,$form['F02']['solicitante'],0, 0,'C');
 
 
@@ -87,18 +87,18 @@ $this->Fpdf->Cell(70,5,$form['F02']['solicitante'],0, 0,'C');
 if (!empty($form['Representative'])) {
     $nom = $form['Representative']['surname'].' '.$form['Representative']['name'];
     if (!empty($form['Representative']['surname'])) {
-        $this->Fpdf->SetXY(53,229);
+        $this->Fpdf->SetXY(53,233);
         $this->Fpdf->Cell(65,3,$nom);
 
         if ($form['Representative']['nationality_type'] == 'argentino') {
-            $this->Fpdf->setIdentificationType(49, 246, $form['Representative']['identification_type_id']);
+            $this->Fpdf->setIdentificationType(49, 248, $form['Representative']['identification_type_id']);
         } else {
-            $this->Fpdf->setIdentificationType(93, 246, $form['Representative']['identification_type_id']);
+            $this->Fpdf->setIdentificationType(93, 248, $form['Representative']['identification_type_id']);
         }
-        $this->Fpdf->SetXY(43,253);
+        $this->Fpdf->SetXY(43,255);
         $this->Fpdf->Cell(30,3,$form['Representative']['identification_number']);
 
-        $this->Fpdf->SetXY(80,253);
+        $this->Fpdf->SetXY(80,255);
         $this->Fpdf->Cell(40,3,$form['Representative']['nationality']);
     }
 }
@@ -107,29 +107,22 @@ if (!empty($form['Representative'])) {
 // VEHICULO
 $vehicle = $form['Vehicle'];
 
-$this->Fpdf->SetXY(160,245);
-$this->Fpdf->Cell(33,3,$vehicle['patente']);
+$this->Fpdf->Text(160,250,$vehicle['patente']);
 
-$this->Fpdf->SetXY(150,249);
-$this->Fpdf->Cell(33,3,$vehicle['brand']);
+$this->Fpdf->Text(150,254,$vehicle['brand']);
 
-$this->Fpdf->SetXY(150,253);
-$this->Fpdf->Cell(33,3,$vehicle['type']);
+$this->Fpdf->Text(150,258,$vehicle['type']);
 
-$this->Fpdf->SetXY(150,257);
-$this->Fpdf->Cell(33,3,$vehicle['model']);
+$this->Fpdf->Text(150,262,$vehicle['model']);
 
-$this->Fpdf->SetXY(150,261);
-$this->Fpdf->Cell(33,3,$vehicle['motor_brand']);
+$this->Fpdf->Text(150,266,$vehicle['motor_brand']);
 
-$this->Fpdf->SetXY(150,265);
-$this->Fpdf->Cell(33,3,$vehicle['motor_number']);
+$this->Fpdf->Text(150,270,$vehicle['motor_number']);
 
-$this->Fpdf->SetXY(150,269);
-$this->Fpdf->Cell(33,3,$vehicle['chasis_brand']);
+$this->Fpdf->Text(150,274,$vehicle['chasis_brand']);
 
-$this->Fpdf->SetXY(150,273);
-$this->Fpdf->Cell(33,3,$vehicle['chasis_number']);
+//$this->Fpdf->SetXY(150,277);
+$this->Fpdf->Text(150,278,$vehicle['chasis_number']);
 
 
 
@@ -140,51 +133,11 @@ $this->Fpdf->Cell(33,3,$vehicle['chasis_number']);
 //     PAGINA 2
 /////////////////////////////////////////////////////////////////////
 
+if (!empty($form['F02']['description'])) {
+    $this->Fpdf->AddPage();
 
-$this->Fpdf->AddPage();
-
-
-//debug($form);
-
-$customer = $form['Vehicle']['Customer'];
-$customer_type = $customer['type'];
-$tamLetra = 10;
-while ($this->Fpdf->GetStringWidth($customer['name']>70) && $tamLetra > 6) {
-    $tamLetra--;
-}
-$this->Fpdf->SetFont('Courier','',$tamLetra);
-$this->Fpdf->SetXY(87, 15);
-$this->Fpdf->MultiCell(70,10,$customer['name']);
-
-
-$this->Fpdf->SetFont('Courier','',10);
-
-
-if ($customer_type == 'natural') {
-    if ($customer['CustomerNatural']['nationality_type']== 'argentino') {
-        $this->Fpdf->setIdentificationType(94, 41, $customer['Identification']['identification_type_id']);
-
-        //Nro Documento
-        $this->Fpdf->SetXY(87,47);
-        $this->Fpdf->Cell(29,3,$customer['Identification']['identification_number']);
-    } else {
-        $this->Fpdf->setIdentificationType(134, 41, $customer['Identification']['identification_type_id']);
-
-        // autoridad o pais que lo expidio
-        $this->Fpdf->SetXY(92,47);
-        $this->Fpdf->Cell(39,3,$customer['CustomerNatural']['nationality']);
-    }
-} else {
-    // personeria otorgada por
-    $this->Fpdf->SetXY(87,55);
-    $this->Fpdf->Cell(71,3,$customer['CustomerLegal']['inscription_entity']);
-
-    // n° de datos de creacion
-    $this->Fpdf->SetXY(87,62);
-    $this->Fpdf->Cell(43,3,$customer['CustomerLegal']['inscription_number']);
-
-    // n° de datos de creacion
-    $this->Fpdf->cellDate(133,62,$customer['born']);
+    $this->Fpdf->SetXY(45,220);
+    $this->Fpdf->MultiCell(115, 9, $form['F02']['description']);
 }
 
 

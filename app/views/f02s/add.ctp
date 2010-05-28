@@ -49,6 +49,12 @@ $vehicle = $this->data['Vehicle']
 </dl>
 </div>
 
+
+<hr>
+<h2>Reverso</h2>
+<? echo $this->Form->input('description', array('type'=>'textarea', 'rows'=>3));?>
+
+
 <?php echo $this->Form->button(__('PDF',true), array('id'=>'pdf', 'type'=>'submit'));?>
 <?php echo $this->Form->end();?>
 
