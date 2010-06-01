@@ -72,8 +72,8 @@ $this->Fpdf->Cell(3,3,'X',1,'','C',1);
 
 
 // DECLARACIONES
-$this->Fpdf->SetXY(45,193);
-$this->Fpdf->MultiCell(150,10,$form['F02']['declaraciones'],0,'j');
+$this->Fpdf->SetXY(45,190);
+$this->Fpdf->MultiCell(150,4,$form['F02']['declaraciones'],0,'j');
 
 
 
@@ -87,7 +87,7 @@ $this->Fpdf->Cell(70,5,$form['F02']['solicitante'],0, 0,'C');
 if (!empty($form['Representative'])) {
     $nom = $form['Representative']['surname'].' '.$form['Representative']['name'];
     if (!empty($form['Representative']['surname'])) {
-        $this->Fpdf->SetXY(53,233);
+        $this->Fpdf->SetXY(53,231);
         $this->Fpdf->Cell(65,3,$nom);
 
         if ($form['Representative']['nationality_type'] == 'argentino') {

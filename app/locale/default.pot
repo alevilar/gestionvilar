@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-05-28 05:22-0300\n"
+"POT-Creation-Date: 2010-06-01 01:07-0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -825,7 +825,7 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: /views/f02s/add.ctp:52
+#: /views/f02s/add.ctp:58
 msgid "PDF"
 msgstr ""
 
@@ -885,6 +885,10 @@ msgstr ""
 
 #: /views/layouts/default.ctp:109
 msgid "List Identification Types"
+msgstr ""
+
+#: /views/layouts/default.ctp:111
+msgid "Inputs Config"
 msgstr ""
 
 #: /views/marital_statuses/add.ctp:15

@@ -107,6 +107,8 @@
                                         <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
                                         <hr />
                                         <li><? echo $this->Html->link(__('List Identification Types',true),'/identification_types/index');?></li>
+                                        <hr />
+                                        <li><? echo $this->Html->link(__('Inputs Config',true),'/field_coordenates');?></li>
                                     </ul>
                                 </div>
                             </li>

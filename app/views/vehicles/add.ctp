@@ -55,4 +55,8 @@
     $(document).ready(function() {
         $('#VehicleAddForm').validate();
     });
+
+    $('#VehiclePatente').keyup(function(){
+        $(this).val($(this).val().toUpperCase());
+    });
 </script>
