@@ -2,6 +2,9 @@
 class FieldCoordenate extends AppModel {
 	var $name = 'FieldCoordenate';
 	var $displayField = 'name';
+
+        var $order = array('FieldCoordenate.id DESC');
+
 	var $validate = array(
 		'name' => array(
 			'notempty' => array(

@@ -70,10 +70,13 @@
                     'class'=>'span-1 last images-link-1'));
                     ?>
             </span>
-            <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none">
+            <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none;" class="box-list-forms">
                 <h2>Seleccionar Formulario para</h2>
                 <h3><?= $vehicleName?></h3>
-                    <? echo $this->Html->link('F 02','/f02s/add/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('01','/field_creators/addForm/F01/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('02','/f02s/add/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('12','/field_creators/addForm/F12/'.$v['Vehicle']['id']);?>
+                    
             </div>
         </li><?
         endforeach;

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gestion.z-a.com.ar\n"
-"POT-Creation-Date: 2010-06-01 01:07-0300\n"
+"POT-Creation-Date: 2010-06-02 02:33-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ale Vilar <alevilar@gmail.com>\n"
 "Language-Team: \n"
@@ -151,6 +151,7 @@ msgstr "Agregar %s"
 #: /views/customer_homes/index.ctp:65
 #: /views/customer_homes/view.ctp:39;56
 #: /views/customers/view.ctp:139
+#: /views/elements/customer_form_view.ctp:26
 msgid "City"
 msgstr "Localidad"
 
@@ -356,6 +357,7 @@ msgstr "Direcciones del Cliente"
 #: /views/customer_homes/index.ctp:61
 #: /views/customer_homes/view.ctp:2;49;50;52
 #: /views/customers/index.ctp:54
+#: /views/elements/customer_form_view.ctp:10
 msgid "Customer Home"
 msgstr "Dirección del Cliente"
 
@@ -563,12 +565,14 @@ msgstr "$s Relacionados/as"
 #: /views/cities/view.ctp:40
 #: /views/customer_homes/view.ctp:9
 #: /views/customers/view.ctp:141
+#: /views/elements/customer_form_view.ctp:22
 msgid "Address"
 msgstr "Dirección"
 
 #: /views/cities/view.ctp:41
 #: /views/customer_homes/view.ctp:14
 #: /views/customers/view.ctp:143
+#: /views/elements/customer_form_view.ctp:24
 #: /views/identification_types/view.ctp:34
 #: /views/identifications/view.ctp:14
 msgid "Number"
@@ -650,6 +654,7 @@ msgstr "Clientes"
 #: /views/customers/add.ctp:6
 #: /views/customers/edit.ctp:7
 #: /views/customers/index.ctp:52
+#: /views/elements/customer_form_view.ctp:3
 #: /views/identifications/add.ctp:22
 #: /views/identifications/edit.ctp:24
 #: /views/identifications/index.ctp:59
@@ -818,11 +823,16 @@ msgstr "Identificación del Cónyuge"
 msgid "Country"
 msgstr "Departamento"
 
+#: /views/elements/customer_form_view.ctp:5
+msgid "name"
+msgstr "Nombre"
+
 #: /views/elements/vehicles_from_customer.ctp:53;54
 msgid "Print"
 msgstr "Imprimir"
 
 #: /views/f02s/add.ctp:58
+#: /views/field_creators/add_f12.ctp:32
 msgid "PDF"
 msgstr ""
 
@@ -861,8 +871,8 @@ msgid "Add Customer"
 msgstr "Agregar Cliente"
 
 #: /views/layouts/default.ctp:98
-msgid "Edit Customer"
-msgstr "Editar Cliente"
+msgid "Help"
+msgstr "Ayuda"
 
 #: /views/layouts/default.ctp:102
 msgid "Configurations"
@@ -998,6 +1008,8 @@ msgstr "Elemento Probatorio de la Adquisición"
 msgid "Debug setting does not allow access to this url."
 msgstr "La configuración del Debug no permite acceder a esta url."
 
+#~ msgid "Edit Customer"
+#~ msgstr "Editar Cliente"
 #~ msgid "Natural"
 #~ msgstr "Física"
 #~ msgid "Legal"

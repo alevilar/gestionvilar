@@ -95,7 +95,7 @@
                                     <ul>
                                         <li><?= $this->Html->link(__('Home',true),'/');?></li>
                                         <li><?= $this->Html->link(__('Add Customer',true),'/customers/edit');?></li>
-                                        <li><?= $this->Html->link(__('Edit Customer',true),'/customers/index');?></li>
+                                        <li><?= $this->Html->link(__('Help',true),'/pages/ayuda');?></li>
                                     </ul>
                                 </div>
                             </li>

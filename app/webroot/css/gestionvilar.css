@@ -329,3 +329,10 @@ A.images-link-1{
 .column-header {
     border-bottom: 2px solid black;
 }
+
+.box-list-forms A{
+    font-size: 16pt;
+    text-shadow: 2px 2px silver;
+    margin-right: 6px;
+    margin-left: 6px;
+}

@@ -39,6 +39,25 @@ class FpdfHelper extends AppHelper {
         $this->Pdf->FPDF($orientation, $unit, $format);
     }
 
+
+    function Text($x, $y, $txt = ''){
+        return $this->Pdf->Text($x, $y, $txt);
+    }
+
+
+    function xyMultiCell($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true){
+        $this->SetXY($x, $y);
+        $this->MultiCell($w, $h, $txt, $border, $align, $fill);
+    }
+
+    function xyCell($x, $y, $txt='', $w=0, $h=0, $border=0, $ln=0, $align='C', $fill=true, $link=''){
+        $this->SetXY($x, $y);
+        $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
+    }
+
+
+    
+
     /**
      * Allows you to change the defaults set in the FPDF constructor
      *
@@ -61,18 +80,12 @@ class FpdfHelper extends AppHelper {
         $this->Pdf->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
 
-    function Text($x, $y, $txt){
-        return $this->Pdf->Text($x, $y, $txt);
-    }
+    
 
 
     function Write($h, $txt, $link=''){
         return $this->Pdf->Write($h, $txt, $link);
     }
-
-
-
-
 
     function cellDate($x,$y,$date) {
         if (!empty($date)) {
