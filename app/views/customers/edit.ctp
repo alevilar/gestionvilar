@@ -92,6 +92,8 @@
                     }
                     echo $this->Form->hidden('CustomerHome.0.type', array('value'=>$homeType));
                     echo $this->Form->input('CustomerHome.0.city');
+                    echo $this->Form->input('CustomerHome.0.county');
+                    echo $this->Form->input('CustomerHome.0.state');
                     ?>
                 </div>
                 <div class="span-8 last">
@@ -119,6 +121,8 @@
                     }
                     echo $this->Form->hidden('CustomerHome.1.type', array('value'=>$homeType));
                     echo $this->Form->input('CustomerHome.1.city');
+                    echo $this->Form->input('CustomerHome.1.county');
+                    echo $this->Form->input('CustomerHome.1.state');
                     ?>
                 </div>
                 <div class="span-8 last">
@@ -146,6 +150,8 @@
                     }
                     echo $this->Form->hidden('CustomerHome.2.type', array('value'=>$homeType));
                     echo $this->Form->input('CustomerHome.2.city');
+                    echo $this->Form->input('CustomerHome.2.county');
+                    echo $this->Form->input('CustomerHome.2.state');
                     ?>
                 </div>
                 <div class="span-8 last">

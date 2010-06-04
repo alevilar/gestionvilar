@@ -19,6 +19,7 @@ class FieldCreatorsController extends AppController {
     function addForm($form_model_name, $vehicle_id = null)
     {
         $this->{$form_model_name} = ClassRegistry::init($form_model_name);
+        $this->{$form_model_name}->vehicle_id = $vehicle_id;
         
         if (empty($vehicle_id)) {
             if (empty($this->data[$form_model_name]['vehicle_id'])) {
@@ -57,7 +58,10 @@ class FieldCreatorsController extends AppController {
         $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
         unset($this->data[$form_model_name]['id']);
         $modelViewVars = $this->{$form_model_name}->getViewVars();
-        $this->set(compact('modelViewVars', 'representatives'));
+        foreach ($modelViewVars as $varName => $varValue){
+            $this->set($varName, $varValue);
+        }
+        $this->set(compact('representatives'));
 
         $this->render(strtolower('add_' . $form_model_name));
     }

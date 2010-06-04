@@ -39,7 +39,7 @@ class CustomerNatural extends AppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasOne = array(
+	var $hasMany = array(
 		'Spouse' => array(
 			'className' => 'Spouse',
 			'foreignKey' => 'customer_natural_id',

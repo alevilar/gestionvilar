@@ -1,4 +1,5 @@
 <?php
+
 echo $this->Form->input('representative_id', array(
     'empty'=>'Seleccione',
     'default'=>'',
@@ -9,7 +10,7 @@ echo $this->Form->input('representative_id', array(
 
 
 <script type="text/javascript">
-    $('#F02RepresentativeId').change(function(){
+    $('#FormRepresentativeId').change(function(){
         var selectedRep = $('#FormRepresentativeId').val();
        if (selectedRep || selectedRep != '') {
           $('#representative-data').load('<?= $this->Html->url('/representatives/view/')?>'+selectedRep);

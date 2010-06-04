@@ -24,6 +24,13 @@ abstract class FormSkeleton extends AppModel {
      */
     var $sContain = array();
 
+    /**
+     * Id del formulario que yo quiero generar
+     * @var integer
+     */
+    var $form_id; // este sirve para generar el PDF
+    var $vehicle_id; // este sirve para generar la vista del form_add
+
     function __construct($id = false, $table = null, $ds = null) {
         parent::__construct($id, $table, $ds);
         $this->setSContain();
@@ -73,6 +80,9 @@ abstract class FormSkeleton extends AppModel {
      * @param array fields array('form_id','vehicle_id')
      */
     public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null) {
+        if (!empty($this->vehicle_id)){
+            $fields['vehicle_id'] = $this->vehicle_id;
+        }
         if ($conditions == 'data') {
             $cond = array(
                     'conditions'=> array($this->name . '.vehicle_id'=>$fields['vehicle_id']),
@@ -86,9 +96,10 @@ abstract class FormSkeleton extends AppModel {
             if (empty($ret)) {
                 $ret = $this->Vehicle->find('first', array(
                         'conditions'=> array('Vehicle.id'=>$fields['vehicle_id']),
-                        'contain' => $this->sContain['Vehicle']['Customer'],
+                        'contain' => $this->sContain['Vehicle'],
                 ));
             }
+            
             if (!empty($ret['Customer'])) {
                 $ret['Vehicle']['Customer'] = $ret['Customer'];
             }
@@ -133,6 +144,9 @@ abstract class FormSkeleton extends AppModel {
      * @param integer $fxx_id id del formulario que quiero cargar la data
      */
     public function generateDataWithFields($fxx_id) {
+        // seteo el ID del formulario
+        $this->form_id = $fxx_id;
+        
         // levanto los campos de este tipo de formulario de la tabla de coordenadas
         $this->loadFields();
 
@@ -168,9 +182,10 @@ abstract class FormSkeleton extends AppModel {
      * La vista de alta de los formularios son generados en el
      * Controller: field_creators ----  Action: addForm()
      *
+     * @param array $elements son variables que yo le puedo mandar a mi getViewVars customizado
      * @return array
      */
-    public function getViewVars() {
+    public function getViewVars($elements = array()) {
         return array();
     }
 

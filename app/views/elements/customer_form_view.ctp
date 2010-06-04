@@ -5,7 +5,14 @@
     <dt><? __('name')?></dt>
     <dd><?= $customer['name']?></dd>
     <dt>Tipo y N° Doc</dt>
-    <dd><?= $customer['Identification']['IdentificationType']['name'] . ' ' . $customer['Identification']['number']?></dd>
+    <?
+    $identif = (!empty($customer['Identification']['IdentificationType']['name']) && !empty($customer['Identification']['number']))
+            ?
+            $customer['Identification']['IdentificationType']['name'] . ' ' . $customer['Identification']['number']
+            :
+            '';
+    ?>
+    <dd><?= $identif ?></dd>
 </dl>
 <h3><? __('Customer Home')?></h3>
 <?

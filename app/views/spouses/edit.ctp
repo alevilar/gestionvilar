@@ -10,6 +10,8 @@
         echo $this->Form->input('name');
         echo $this->Form->input('identification_type_id', array('empty'=>'Seleccione'));
         echo $this->Form->input('identification_number');
+        echo $this->Form->input('identification_autority');
+        echo $this->Form->input('born');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

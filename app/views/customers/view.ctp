@@ -103,20 +103,22 @@
         <?php
         if (!empty($customer['CustomerNatural']['Spouse'])):
             if (count($customer['CustomerNatural']['Spouse'] > 0)):
+                foreach ($customer['CustomerNatural']['Spouse'] as $s):
                 ?>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),'/spouses/edit/'.$customer['CustomerNatural']['Spouse']['id']) ?></dt>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),'/spouses/delete/'.$customer['CustomerNatural']['Spouse']['id'],null, 'Desea eliminar cónyuge: '.$customer['CustomerNatural']['Spouse']['name']) ?></dt>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),'/spouses/edit/'.$s['id']) ?></dt>
+        <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),'/spouses/delete/'.$s['id'],null, 'Desea eliminar cónyuge: '.$s['name']) ?></dt>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $customer['CustomerNatural']['Spouse']['name']; ?>
+                    <?php echo $s['name']; ?>
             &nbsp;
         </dd>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Identification'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $customer['CustomerNatural']['Spouse']['IdentificationType']['name'] . ' ' .$customer['CustomerNatural']['Spouse']['identification_number']; ?>
+                    <?php echo $s['IdentificationType']['name'] . ' ' .$s['identification_number']; ?>
             &nbsp;
         </dd>
             <?php
+                endforeach;
             endif;
         endif;
         ?>

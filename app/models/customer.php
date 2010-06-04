@@ -56,7 +56,7 @@ class Customer extends AppModel {
     function saveAllAboutCustomer($data) {
         $dataSource = $this->getDataSource();
         if ( $data['Customer']['type'] == 'natural' ) {
-            $data['Customer']['name'] = $data['CustomerNatural']['first_name']." ".$data['CustomerNatural']['surname'];
+            $data['Customer']['name'] = $data['CustomerNatural']['surname']. ' ' .$data['CustomerNatural']['first_name'];
         } else {
             $data['Customer']['name'] = $data['CustomerLegal']['name'];
         }
