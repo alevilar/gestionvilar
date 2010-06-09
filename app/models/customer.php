@@ -43,6 +43,7 @@ class Customer extends AppModel {
     var $hasMany = array(
             'CustomerHome'=>array('dependent' => true,),
             'Representative' => array('dependent' => true),
+            'Condominium' => array('dependent' => true),
             'Vehicle' => array('dependent' => true),
     );
 

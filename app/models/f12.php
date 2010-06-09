@@ -57,6 +57,14 @@ class F12 extends FormSkeleton {
         $this->populateFieldWithValue('FECHA - DIA', date('d',strtotime($d['F12']['fecha'])));
         $this->populateFieldWithValue('FECHA - MES', date('m',strtotime($d['F12']['fecha'])));
         $this->populateFieldWithValue('FECHA - AÑO', date('y',strtotime($d['F12']['fecha'])));
+
+        $this->populateFieldWithValue('APELLIDO Y NOMBRE', $d['F12']['nombre']);
+        $this->populateFieldWithValue('N° Y DNI', $d['F12']['tipoynrodoc']);
+        $this->populateFieldWithValue('CALLE', $d['F12']['domicilio']);
+        $this->populateFieldWithValue('N°', $d['F12']['numero']);
+        $this->populateFieldWithValue('LOCALIDAD', $d['F12']['localidad']);
+
+/*
         $this->populateFieldWithValue('APELLIDO Y NOMBRE', $d['Vehicle']['Customer']['name']);
         if (!empty($d['Vehicle']['Customer']['Identification']['IdentificationType']))
             $this->populateFieldWithValue('N° Y DNI', $d['Vehicle']['Customer']['Identification']['IdentificationType']['name']. ' ' .$d['Vehicle']['Customer']['Identification']['number']);
@@ -70,6 +78,7 @@ class F12 extends FormSkeleton {
                 }
             }
         }
+ * */
     }
 }
 

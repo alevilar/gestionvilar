@@ -13,6 +13,9 @@
         <li>
             <?= $this->Html->link('Agregar Apoderado', '/representatives/add/'.$customer['Customer']['id']) ?>
         </li>
+        <li>
+            <?= $this->Html->link('Agregar Condominio', '/condominia/add/'.$customer['Customer']['id']) ?>
+        </li>
     </ul>
 </div>
 
@@ -182,6 +185,34 @@
             <dd><?= @$nationalities[$representative['nationality_type']]?></dd>
             <dt><?php __('Country'); ?></dt>
             <dd><?= $representative['nationality']?></dd>
+        </dl>
+                <? endforeach;?>
+            <?php endif;
+        endif;?>
+    </div>
+
+
+    <div class="related">
+        <?php if (!empty($customer['Condominium'])):?>
+            <?php if (count($customer['Condominium'])>0):?>
+        <h3><?php __('Condominium');?></h3>
+                <?php
+                $i = 0;
+                foreach ($customer['Condominium'] as $condominium):
+                    $class = null;
+                    if ($i++ % 2 == 0) {
+                        $class = ' class="altrow"';
+                    }
+                    ?>
+        <dl>
+            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), __('Condominium',true)),'/condominia/edit/'.$condominium['id']) ?></dt>
+            <dt><?php echo $this->Html->link(
+                    sprintf(__('Delete %s',true), __('Condominium',true)),
+                    '/condominia/delete/'.$condominium['id'], null,"¿Desea eliminar al condominio: ".$condominium['name'].'?'); ?></dt>
+            <dt><?php __('Name'); ?></dt>
+            <dd><?= $condominium['name']?></dd>
+            <dt><?php __('Identification'); ?></dt>
+            <dd><?= @$condominium['IdentificationType']['name']. ' '.$condominium['identification_number']?></dd>
         </dl>
                 <? endforeach;?>
             <?php endif;

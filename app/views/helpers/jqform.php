@@ -30,7 +30,7 @@ class JqformHelper extends FormHelper {
         $options['type'] = 'date';
         $options['div']['class'] = 'date';
         $options['dateFormat'] = 'DMY';
-        $options['minYear'] = isset($options['minYear']) ? $options['minYear'] : (date('Y') - 50);
+        $options['minYear'] = isset($options['minYear']) ? $options['minYear'] : (date('Y') - 100);
         $options['maxYear'] = isset($options['maxYear']) ? $options['maxYear'] : (date('Y') + 10);
 
         $options['after'] = $this->Html->image('calendar.png', array('id'=> $htmlAttributes['id'],'style'=>'cursor:pointer'));

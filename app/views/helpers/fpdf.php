@@ -166,6 +166,7 @@ class FpdfHelper extends AppHelper {
 
 
     function GetStringWidth($s) {
+        $s = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $s);
         return $this->Pdf->GetStringWidth($s);
     }
 
@@ -234,8 +235,8 @@ class FpdfHelper extends AppHelper {
 
 
 
-
-
+// para borrar el ultimo char del string
+//substr_replace($string ,"",-1);
 
 
 class Paperpdf extends FPDF {

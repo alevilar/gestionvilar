@@ -1,5 +1,5 @@
 
-<div class="clear">
+<div class="clear" id="element-customer-form-view">
 <h2><? __('Customer')?></h2>
 <dl>
     <dt><? __('name')?></dt>

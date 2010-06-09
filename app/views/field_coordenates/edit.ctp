@@ -10,8 +10,8 @@
 		echo $this->Form->input('field_type_id');
 		echo $this->Form->input('x');
 		echo $this->Form->input('y');
-		echo $this->Form->input('w');
-		echo $this->Form->input('h');
+		echo $this->Form->input('w', array('default'=>0));
+		echo $this->Form->input('h', array('default'=>0));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

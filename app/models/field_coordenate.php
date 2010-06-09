@@ -15,6 +15,14 @@ class FieldCoordenate extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+                    'norepe' => array(
+				'rule' => array('norepe'),
+				'message' => 'Éste nombre ya fue ingresado, no se puede repetir el nombre para el mismo formulario',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 		),
 		'x' => array(
 			'numeric' => array(
@@ -95,5 +103,21 @@ class FieldCoordenate extends AppModel {
 			'order' => ''
 		)
 	);
+
+
+        function norepe(){
+            $this->recursive = -1;
+            $trajo = $this->find('count', array(
+                'conditions'=>array(
+                    'field_creator_id'=>$this->data['FieldCoordenate']['field_creator_id'],
+                    'name'=>$this->data['FieldCoordenate']['name'],
+                )
+            ));
+            if ($trajo > 0){
+                return false;
+            } else {
+                return true;
+            }
+        }
 }
 ?>
