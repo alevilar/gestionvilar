@@ -5,12 +5,13 @@
 	<?php
 		echo $this->Form->input('field_creator_id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('description');
 		echo $this->Form->input('field_type_id');
 		echo $this->Form->input('x');
 		echo $this->Form->input('y');
+                echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array(1=>1,2=>2)));
 		echo $this->Form->input('w', array('default'=>0));
 		echo $this->Form->input('h', array('default'=>0));
+                echo $this->Form->input('description');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

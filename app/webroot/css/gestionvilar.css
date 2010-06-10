@@ -336,3 +336,11 @@ A.images-link-1{
     margin-right: 6px;
     margin-left: 6px;
 }
+
+.btn-ocultar{
+    background-color: white;
+    color: red;
+    border: 1px black solid;
+    display: none;
+    float: right;
+}

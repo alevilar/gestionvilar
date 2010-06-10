@@ -63,7 +63,7 @@ class CustomerNatural extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
 	);
 }
 ?>

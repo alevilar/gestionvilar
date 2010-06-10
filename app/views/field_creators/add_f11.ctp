@@ -4,7 +4,7 @@ $form_name = 'F11';
 $customer = empty($this->data['Vehicle']['Customer']['name'])?'':$this->data['Vehicle']['Customer']['name'];
 $vehicle_id = $this->data['Vehicle']['id'];
 ?>
-<h1>Formulario 11 de <?= $customer?> -- Dominio: <? $this->data['Vehicle']['patente']?></h1>
+<h1>Formulario 11 de <?= $customer?> -- Dominio: <?= $this->data['Vehicle']['patente']?></h1>
 
 
 <? //echo $this->element('vehicle_form_view', array('vehicle'=>$this->data['Vehicle']));?>
@@ -20,7 +20,7 @@ echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 
 ?>
 
-<div class="span-10">
+<div class="span-11">
     <? echo $this->Form->input('datos');?>
 
     <?
@@ -29,7 +29,7 @@ echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 </div>
 
 
-<div class="span-14 last">
+<div class="span-13 last">
     <b>Si elige un Apoderado, los datos que se imprimiran serán de éste, y no los del vendedor</b>
     <?
     
@@ -37,7 +37,7 @@ echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
     
         echo $this->element('customer_form_view', array('customer'=>$this->data['Vehicle']['Customer']));   
     ?>
-    <p>El cónyuge dado de alta en el sistema, para este formulario seria el "Apoderado del cónyuge". Entonces, restaria escribir el nombre del cónyuge:</p>
+    <p>El cónyuge dado de alta en el sistema, puede ser utilizado como "Apoderado del Cónyuge". en ese caso, debe seleccionarlo y escribir un nombre para el cónyugue:</p>
     <?
     echo $this->element('spouse_form_ajax_input');
     

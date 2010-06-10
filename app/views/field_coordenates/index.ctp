@@ -1,13 +1,20 @@
 <div class="fieldCoordenates index">
 	<h2><?php __('Field Coordenates');?></h2>
 
+<?
+$paginator->options(array('url' => $this->passedArgs));
 
+
+echo $this->Form->create('FieldCoordenate',array('url'=>'index'));
+echo $this->Form->input('field_creator_id');
+echo $this->Form->end('Buscar');
+?>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('field_creator_id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('description');?></th>
+			<th><?php echo $this->Paginator->sort('page');?></th>
 			<th><?php echo $this->Paginator->sort('field_type_id');?></th>
 			<th><?php echo $this->Paginator->sort('x');?></th>
 			<th><?php echo $this->Paginator->sort('y');?></th>
@@ -29,7 +36,7 @@
 			<?php echo $this->Html->link($fieldCoordenate['FieldCreator']['name'], array('controller' => 'field_creators', 'action' => 'view', $fieldCoordenate['FieldCreator']['id'])); ?>
 		</td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['name']; ?>&nbsp;</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['description']; ?>&nbsp;</td>
+		<td><?php echo $fieldCoordenate['FieldCoordenate']['page']; ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($fieldCoordenate['FieldType']['name'], array('controller' => 'field_types', 'action' => 'view', $fieldCoordenate['FieldType']['id'])); ?>
 		</td>
@@ -67,5 +74,7 @@
 		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Creator', true)), array('controller' => 'field_creators', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Field Types', true)), array('controller' => 'field_types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Type', true)), array('controller' => 'field_types', 'action' => 'add')); ?> </li>
+                <br>
+                <li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Type', true)), array('controller' => 'field_coordenates', 'action' => 'mapear')); ?> </li>
 	</ul>
 </div>

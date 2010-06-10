@@ -36,8 +36,9 @@ class CondominiaController extends AppController {
 		$identificationTypes = $this->Condominium->IdentificationType->find('list');
 		$maritalStatuses = $this->Condominium->MaritalStatus->find('list');
 		$customers = $this->Condominium->Customer->find('list');
+                $nationalityTypes = $this->Condominium->nationalityTypes;
                 $customer = $this->Condominium->Customer->read(null, $customer_id);
-		$this->set(compact('identificationTypes', 'maritalStatuses', 'customers', 'customer'));
+		$this->set(compact('identificationTypes', 'maritalStatuses', 'customers', 'customer','nationalityTypes'));
 	}
 
 	function edit($id = null) {
@@ -48,7 +49,7 @@ class CondominiaController extends AppController {
 		if (!empty($this->data)) {
 			if ($this->Condominium->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'condominium'));
-				$this->redirect('/customers/view/'.$customer_id);
+				$this->redirect('/customers/view/'.$this->data['Condominium']['customer_id']);
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'condominium'));
 			}
@@ -59,8 +60,9 @@ class CondominiaController extends AppController {
 		$identificationTypes = $this->Condominium->IdentificationType->find('list');
 		$maritalStatuses = $this->Condominium->MaritalStatus->find('list');
 		$customers = $this->Condominium->Customer->find('list');
+                $nationalityTypes = $this->Condominium->nationalityTypes;
                 $customer = $this->Condominium->Customer->read(null, $this->data['Condominium']['customer_id']);
-		$this->set(compact('identificationTypes', 'maritalStatuses', 'customers','customer'));
+		$this->set(compact('identificationTypes', 'maritalStatuses', 'customers','customer','nationalityTypes'));
 	}
 
 	function delete($id = null) {

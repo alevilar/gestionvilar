@@ -61,7 +61,12 @@ class F11 extends FormSkeleton {
     }
 
 
-    function mapData() {
+    function mapDataPage2() {
+        return null;
+    }
+    
+
+    function mapDataPage1() {
         $d = $this->data;
         $this->populateFieldWithValue("dominio", $d["Vehicle"]["patente"]);
         $this->populateFieldWithValue("indicar datos...", $d["F11"]["datos"]);
@@ -85,7 +90,6 @@ class F11 extends FormSkeleton {
         }
 
         if (!empty($d['Representative'])) {
-            debug($d['Representative']);
             $apeNom = $d['Representative']['surname']. ' ' .$d['Representative']['name'];
              $this->populateFieldWithValue("apellido y nombre", $apeNom);
             switch ($d['Representative']['identification_type_id']){

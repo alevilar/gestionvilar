@@ -84,9 +84,9 @@ class FieldCreatorsController extends AppController {
             }
         }
         $conditions = array($form_model_name .'.vehicle_id'=>$vehicle_id);
-
+            
         if (!empty($this->data)) {
-            if (!$this->{$form_model_name}->save($this->data)) {
+            if (!$this->{$form_model_name}->save($this->data[$this->{$form_model_name}->name])) {
                 $this->Session->setFlash("no pudo guardarse el formulario $form_model_name");
             } else {
                 $this->redirect('generar_pdf/'.$form_model_name.'/'.$this->{$form_model_name}->id.'.pdf');
@@ -122,7 +122,6 @@ class FieldCreatorsController extends AppController {
 
 
     function generar_pdf($form_model_name, $fxx_id = null) {
-
         if (empty($form_model_name)) {
             $this->Session->setFlash('Formulario inválido. Se debe pasar como 1er parámetro el formulario Ej: "F02"');
             $this->redirect('/');
@@ -148,11 +147,12 @@ class FieldCreatorsController extends AppController {
             $debug_mode = true;
         }
 
-        $this->data = $fxx->fields;
+        $page1 = $fxx->fieldsPage1;
+        $page2 = $fxx->fieldsPage2;
 
         $this->set('form_name',$form_model_name);
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);
-        $this->set(compact('modelViewVars', 'debug_mode'));
+        $this->set(compact('modelViewVars', 'debug_mode', 'page1', 'page2'));
     }
 
 }

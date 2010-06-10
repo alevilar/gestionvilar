@@ -42,7 +42,12 @@ class F12 extends FormSkeleton {
     }
 
 
-    function mapData() {
+    function mapDataPage2() {
+        return null;
+    }
+    
+
+    function mapDataPage1() {
         $d = $this->data;
         $this->populateFieldWithValue('dominio', $d['Vehicle']['patente']);
         $this->populateFieldWithValue('MARCA', $d['Vehicle']['brand']);

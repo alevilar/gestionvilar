@@ -46,7 +46,12 @@
                 $vehicleName = "[".$v['Vehicle']['patente']."] ".$v['Vehicle']['brand']." ".$v['Vehicle']['type']." ".$v['Vehicle']['model'];
                 $vehicleName .= ($this->action=='search')?' - '.$v['Customer']['name']:'';
                 ?>
-            <span class="span-11"><?= $this->Html->link($vehicleName,'/vehicles/edit/'.$v['Vehicle']['id'], array('class'=>'alto3em'));?></span>
+            <span class="span-11">
+                    <?= $this->Html->link($vehicleName,'javascript: ;', array(
+                            'class'=>'alto3em',
+                            'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
+                    ));?>
+            </span>
             <span class="span-2 last">
                     <?
                     $pdfImg = $this->Html->image('pdf.png',array(
@@ -57,8 +62,8 @@
                     echo $this->Html->link($pdfImg, 'javascript: ;', array(
                     'escape'=>false,
                     'class'=>'span-1  images-link-1',
-                        'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
-                        ));
+                    'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
+                    ));
 
                     $editImg = $this->Html->image('edit.png',array(
                             'title'=>__('Edit',true)." $vehicleName",
@@ -75,9 +80,18 @@
                 <h3><?= $vehicleName?></h3>
                     <? echo $this->Html->link('01','/field_creators/addForm/F01/'.$v['Vehicle']['id']);?>
                     <? echo $this->Html->link('02','/f02s/add/'.$v['Vehicle']['id']);?>
-                <? echo $this->Html->link('11','/field_creators/addForm/F11/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('03','/field_creators/addForm/F03/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('04','/field_creators/addForm/F04/'.$v['Vehicle']['id']);?>
+                <br />
+                    <? echo $this->Html->link('08','/field_creators/addForm/F08/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('11','/field_creators/addForm/F11/'.$v['Vehicle']['id']);?>
                     <? echo $this->Html->link('12','/field_creators/addForm/F12/'.$v['Vehicle']['id']);?>
-                    
+                <br />
+                    <? echo $this->Html->link('13','/field_creators/addForm/F13/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('13','/field_creators/addForm/F13/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('31A','/field_creators/addForm/F31A/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('59M','/field_creators/addForm/59M/'.$v['Vehicle']['id']);?>
+
             </div>
         </li><?
         endforeach;
@@ -103,10 +117,10 @@ echo $this->Js->writeBuffer();
         });
 
 
-       $('.blockOverlay').attr('title','Click para cerrar ventana').click($.unblockUI);
+        $('.blockOverlay').attr('title','Click para cerrar ventana').click($.unblockUI);
 
 
-        
+
         setTimeout($.unblockUI, 10000);
         return false;
     }

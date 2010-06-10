@@ -4,7 +4,26 @@ class FieldCoordenatesController extends AppController {
 	var $name = 'FieldCoordenates';
 
 	function index() {
+            $condiciones = array();
+            $limit = 30;
+                if (!empty($this->passedArgs['field_creator_id'])) {
+                    $condiciones = array("FieldCoordenate.field_creator_id"=>$this->passedArgs['field_creator_id']);
+                    $limit = 999999;
+                }
+                if (!empty($this->data['FieldCoordenate'])){
+                    foreach ($this->data['FieldCoordenate'] as $campo=>$buscar){
+                        $condiciones = array("FieldCoordenate.$campo"=>$buscar);
+                        $limit = 999999;
+                        $this->passedArgs = array_merge($this->passedArgs,array($campo=>$buscar));
+                    }
+                }
 		$this->FieldCoordenate->recursive = 0;
+                $this->paginate = array(
+                    'limit'=>$limit,
+                    'conditions'=> $condiciones,
+                );
+                $fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
+                $this->set(compact('fieldCreators'));
 		$this->set('fieldCoordenates', $this->paginate());
 	}
 
@@ -30,7 +49,7 @@ class FieldCoordenatesController extends AppController {
 			$this->FieldCoordenate->create();
 			if ($this->FieldCoordenate->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'field coordenate'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index/field_creator_id:'.$this->data['FieldCoordenate']['field_creator_id']));
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'field coordenate'));
 			}
@@ -48,7 +67,7 @@ class FieldCoordenatesController extends AppController {
 		if (!empty($this->data)) {
 			if ($this->FieldCoordenate->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'field coordenate'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index/field_creator_id:'.$this->data['FieldCoordenate']['field_creator_id']));
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'field coordenate'));
 			}

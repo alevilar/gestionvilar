@@ -3,13 +3,14 @@ $form_name = 'F01';
 
 $customer = empty($this->data['Vehicle']['Customer']['name'])?'':$this->data['Vehicle']['Customer']['name'];
 $vehicle_id = $this->data['Vehicle']['id'];
-debug($vehicle_id);
 ?>
-<h1>Formulario <?= "$form_name de $customer"?> -- Dominio: <?= $this->data['Vehicle']['patente']?></h1>
+<h1>Formulario <?= "$form_name"?> -- Dominio: <?= $this->data['Vehicle']['patente']?></h1>
+
 
 
 <? //echo $this->element('vehicle_form_view', array('vehicle'=>$this->data['Vehicle']));?>
 
+<div class="span-12">
 <?php
 echo $this->Form->create($form_name, array('url'=> "/field_creators/addForm/$form_name/$vehicle_id"));
 
@@ -19,42 +20,23 @@ if (!empty($this->data[$form_name]['id'])) {
 
 echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 
-?>
+// Se certifica que las condiciones de identificación que figuran en esta solicitu fueron verificadas con el certificado de fabricación y con el automotor cuya inscripción se solicita a favor el señor'));
+echo $this->Form->input('se_certifica_obs', array('label'=>'Observación concesionaria o Industria Terminal'));
 
+echo $this->Form->input('observaciones');
+
+echo $this->element('field_forms/spouses_data');
+echo $this->element('field_forms/condominium_data');
+echo $this->element('representative_form_ajax_input');
+?>
+</div>
+<div class="span-12 last">
 <?
-if (count($spouses) == 1) {
-    $val = each($spouses);
-    echo $this->Form->hidden('spouse_id', array(
-                    'value'=>array('value'=> $val['key'])));
-    echo "<h2>".__('Customer´ Spouse',true).$val['value']."</h2>";
-} elseif (count($spouses) > 1) {
-    echo $this->Form->input('spouse_id', array('options'=>$spouses, 'empty'=>'Seleccione'));
-}
-
-if (count($condominia) == 1) {
-    $val = each($condominia);
-    echo $this->Form->hidden('condominium_id', array(
-                    'value'=>array('value'=> $val['key'])));
-    echo "<h2>".__('Customer´s Condominium',true).": ".$val['value']."</h2>";
-} elseif (count($condominia) > 1) {
-    echo $this->Form->input('condominium_id', array('options'=>$condominia, 'empty'=>'Seleccione'));
-}
-
-if (count($representatives) == 1) {
-    $val = each($representatives);
-    echo $this->Form->hidden('representative_id', array(
-                    'value'=>array('value'=> $val['key'])));
-    echo "<h2>".__('Customer´s representatives',true).": ".$val['value']."</h2>";
-} elseif (count($representatives) > 1) {
-    echo $this->Form->input('representative_id', array('options'=>$representatives, 'empty'=>'Seleccione'));
-}
-
-
+echo $this->element('customer_form_view', array('customer'=>$this->data['Vehicle']['Customer'])); 
+echo $this->element('vehicle_form_view', array('vehicle'=>$this->data['Vehicle']));
 ?>
 
-<? echo $this->element('customer_form_view', array('customer'=>$this->data['Vehicle']['Customer'])); ?>
-<? echo $this->element('vehicle_form_view', array('vehicle'=>$this->data['Vehicle'])); ?>
-
+</div>
 
 
 <?php echo $this->Form->button(__('PDF',true), array('id'=>'pdf', 'type'=>'submit'));?>

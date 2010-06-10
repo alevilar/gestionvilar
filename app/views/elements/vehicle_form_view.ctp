@@ -2,6 +2,8 @@
 
 <div class="clear">
 <h2>Vehículo</h2>
+<? echo $html->link('editar','/vehicles/edit/'.$vehicle['id']);?>
+
 <dl>
     <dt>Dominio</dt>
     <dd><?= $vehicle['patente']?></dd>

@@ -2,6 +2,9 @@
 class Condominium extends AppModel {
 	var $name = 'Condominium';
 	var $displayField = 'name';
+
+        var $nationalityTypes = array('argentino'=>'Argentino', 'extranjero'=>'Extranjero');
+
 	var $validate = array(
 		'customer_id' => array(
 			'numeric' => array(

@@ -1,6 +1,7 @@
 
 <div class="clear" id="element-customer-form-view">
 <h2><? __('Customer')?></h2>
+<? echo $html->link('editar','/customers/edit/'.$customer['id']);?>
 <dl>
     <dt><? __('name')?></dt>
     <dd><?= $customer['name']?></dd>
