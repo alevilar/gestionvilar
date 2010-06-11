@@ -1,15 +1,16 @@
-<div class="condominia form">
+<div class="characters form">
     <h1>Cliente: <?= $customer['Customer']['name']?></h1>
-    <?php echo $this->Form->create('Condominium');?>
+    <?php echo $this->Form->create('Character');?>
     <fieldset>
-        <legend><?php printf(__('Edit %s', true), __('Condominium', true)); ?></legend>
+        <legend><?php printf(__('Edit %s', true), __('Character', true)); ?></legend>
         <?php
         echo $this->Form->input('id');
         ?>
         <fieldset>
-            <legend><?php printf(__('Add %s', true), __('Condominium', true)); ?></legend>
+            <legend><?php printf(__('Add %s', true), __('Character', true)); ?></legend>
             <?php
             echo $this->Form->input('customer_id');
+            echo $this->Form->input('character_type_id');
             echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
             echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));
             echo $this->Form->input('persona_fisica_o_juridica', array('options'=>array('Física'=>'Física','Jurídica'=>'Jurídica')));

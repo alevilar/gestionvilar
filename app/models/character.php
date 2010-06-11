@@ -1,6 +1,6 @@
 <?php
-class Condominium extends AppModel {
-	var $name = 'Condominium';
+class Character extends AppModel {
+	var $name = 'Character';
 	var $displayField = 'name';
 
         var $nationalityTypes = array('argentino'=>'Argentino', 'extranjero'=>'Extranjero');
@@ -19,7 +19,7 @@ class Condominium extends AppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array('IdentificationType', 'MaritalStatus', 'Customer');
+	var $belongsTo = array('CharacterType', 'IdentificationType', 'MaritalStatus', 'Customer');
 
 }
 ?>

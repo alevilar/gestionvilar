@@ -270,6 +270,12 @@ abstract class FormSkeleton extends AppModel {
                 if ($palabra == 'CUIT'){
                     $palabra .= " ".array_shift($vec);
                 }
+                // si el renglon tiene ancho infinito, o sin límite
+                if ($coordenada['FieldCoordenate']['w'] == 0) {
+                    array_unshift($vec,$palabra);
+                    $texto = implode(" ", $vec);
+                    $vec = array(); // vacio el array
+                }
                 if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth($texto)) {
                     $texto .= " " . $palabra;
                 } else {

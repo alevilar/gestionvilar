@@ -40,23 +40,23 @@ class FpdfHelper extends AppHelper {
     }
 
 
-    function Text($x, $y, $txt = ''){
+    function Text($x, $y, $txt = '') {
         return $this->Pdf->Text($x, $y, $txt);
     }
 
 
-    function xyMultiCell($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true){
+    function xyMultiCell($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true) {
         $this->SetXY($x, $y);
         $this->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
 
-    function xyCell($x, $y, $txt='', $w=0, $h=0, $border=0, $ln=0, $align='C', $fill=true, $link=''){
+    function xyCell($x, $y, $txt='', $w=0, $h=0, $border=0, $ln=0, $align='C', $fill=true, $link='') {
         $this->SetXY($x, $y);
         $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
     }
 
 
-    
+
 
     /**
      * Allows you to change the defaults set in the FPDF constructor
@@ -80,10 +80,10 @@ class FpdfHelper extends AppHelper {
         $this->Pdf->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
 
-    
 
 
-    function Write($h, $txt, $link=''){
+
+    function Write($h, $txt, $link='') {
         return $this->Pdf->Write($h, $txt, $link);
     }
 
@@ -205,6 +205,26 @@ class FpdfHelper extends AppHelper {
      * @param <type> $link
      */
     function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill=true, $link='') {
+        // recorto el texto si sobrepasa el ancho de la celda
+        $vec = explode($txt);
+        $texto = '';
+        while ($palabra = array_shift($vec)) {
+            if ($palabra == 'CUIT') {
+                $palabra .= " ".array_shift($vec);
+            }
+            // si el renglon tiene ancho infinito, o sin límite
+            if ($w == 0) {
+                array_unshift($vec,$palabra);
+                $texto = implode(" ", $vec);
+                $vec = array(); // vacio el array
+            }
+            if ($w >= $this->GetStringWidth($texto)) {
+                $texto .= " " . $palabra;
+            } else { // si quedó recortado le agrego los puntos suspensivos
+                $texto .= "...";
+            }
+        }
+        $txt = $texto;
         $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
     }

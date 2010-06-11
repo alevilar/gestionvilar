@@ -26,7 +26,7 @@ echo $this->Form->input('se_certifica_obs', array('label'=>'Observación concesi
 echo $this->Form->input('observaciones');
 
 echo $this->element('field_forms/spouses_data');
-echo $this->element('field_forms/condominium_data');
+echo $this->element('field_forms/character_data');
 echo $this->element('representative_form_ajax_input');
 ?>
 </div>

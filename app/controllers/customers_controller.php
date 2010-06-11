@@ -34,7 +34,7 @@ class CustomersController extends AppController {
                 'Spouse'=>array('IdentificationType'),
                 ),
             'Representative'=>array('IdentificationType'),
-            'Condominium'=>array('IdentificationType'),
+            'Character'=>array('IdentificationType'),
         ));
         $this->set('customer', $this->Customer->read(null, $id));
         $this->set('nationalities', $this->Customer->Representative->nationalityTypes);

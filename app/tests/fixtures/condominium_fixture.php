@@ -1,7 +1,7 @@
 <?php
-/* Condominium Fixture generated on: 2010-06-08 16:06:02 : 1276023602 */
-class CondominiumFixture extends CakeTestFixture {
-	var $name = 'Condominium';
+/* Character Fixture generated on: 2010-06-08 16:06:02 : 1276023602 */
+class CharacterFixture extends CakeTestFixture {
+	var $name = 'Character';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),

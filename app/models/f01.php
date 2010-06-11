@@ -18,7 +18,7 @@ class F01 extends FormSkeleton {
     );
 
 
-    var $belongsTo = array('Vehicle','Condominium','Spouse', 'Representative');
+    var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
 
 
     /**
@@ -32,12 +32,12 @@ class F01 extends FormSkeleton {
 
     function setSContain() {
         $this->sContain = array(
-                'Condominium',
+                'Character',
                 'Representative',
                 'Spouse',
                 'Vehicle' => array(
                         'Customer'=>array(
-                                'Condominium',
+                                'Character'=>array('CharacterType'),
                                 'Representative',
                                 'CustomerLegal',
                                 'CustomerNatural'=>array('Spouse'),
@@ -62,11 +62,15 @@ class F01 extends FormSkeleton {
         }
 
         $retCondominios = array();
-        if (!empty($coso['Vehicle']['Customer']['Condominium'])) {
-            $con = $coso['Vehicle']['Customer']['Condominium'];
+        if (!empty($coso['Vehicle']['Customer']['Character'])) {
+            $con = $coso['Vehicle']['Customer']['Character'];
             $vec2 = array();
             foreach ($con as $c) {
-                $vec2[$c['id']] = $c['name'];
+                $characterType = '';
+                if (!empty($c['CharacterType']['name'])) {
+                    $characterType = " (".$c['CharacterType']['name'].")";
+                }
+                $vec2[$c['id']] = $c['name'].$characterType;
             }
             $retCondominios = $vec2;
         }
@@ -81,7 +85,7 @@ class F01 extends FormSkeleton {
             $retRepresentatives = $vec3;
         }
 
-        return array('spouses'=>$ret, 'condominia'=>$retCondominios, 'representatives'=>$retRepresentatives);
+        return array('spouses'=>$ret, 'characters'=>$retCondominios, 'representatives'=>$retRepresentatives);
     }
 
     
@@ -98,11 +102,11 @@ class F01 extends FormSkeleton {
          */
 
         // PORCENTAJE TITULAR
-        if (empty($d['Condominium'])) {
+        if (empty($d['Character'])) {
             $tEntero = '100';
             $tDecimal = '00';
         } else {
-            $valor = abs(100-$d['Condominium']['porcentaje']);
+            $valor = abs(100-$d['Character']['porcentaje']);
             $tEntero = (int)$valor;
             $tDecimal = (int)(($valor-$tEntero)*100);
             if ($tDecimal == 0) {
@@ -235,32 +239,32 @@ class F01 extends FormSkeleton {
          *
          *                      CONDOMINIO
          */
-        if (!empty($d['Condominium'])) {
+        if (!empty($d['Character'])) {
             // PORCENTAJE
-            $tEntero = (int)$d['Condominium']['porcentaje'];
-            $tDecimal = (int)(($d['Condominium']['porcentaje']-$tEntero)*100);
+            $tEntero = (int)$d['Character']['porcentaje'];
+            $tDecimal = (int)(($d['Character']['porcentaje']-$tEntero)*100);
 
             $this->populateFieldWithValue("c entero %", $tEntero);
             $this->populateFieldWithValue("c decimal %", $tDecimal);
 
             $this->meterNombreCompletoEnVariosRenglones(array(
                     'renglones'=> array("c nombre 1", "c nombre 2", "c nombre 3"),
-                    'field_name'=> $d["Condominium"]["name"],
+                    'field_name'=> $d["Character"]["name"],
             ));
 
             // DOMICILIO
-            $this->populateFieldWithValue("c calle", $d["Condominium"]["calle"]);
-            $this->populateFieldWithValue("c numero", $d["Condominium"]["numero_calle"]);
-            $this->populateFieldWithValue("c piso", $d["Condominium"]["piso"]);
-            $this->populateFieldWithValue("c depto", $d["Condominium"]["depto"]);
-            $this->populateFieldWithValue("c cod postal", $d["Condominium"]["cp"]);
-            $this->populateFieldWithValue("c localidad", $d["Condominium"]["localidad"]);
-            $this->populateFieldWithValue("c partido o depto", $d["Condominium"]["departamento"]);
-            $this->populateFieldWithValue("c provincia", $d["Condominium"]["provincia"]);
+            $this->populateFieldWithValue("c calle", $d["Character"]["calle"]);
+            $this->populateFieldWithValue("c numero", $d["Character"]["numero_calle"]);
+            $this->populateFieldWithValue("c piso", $d["Character"]["piso"]);
+            $this->populateFieldWithValue("c depto", $d["Character"]["depto"]);
+            $this->populateFieldWithValue("c cod postal", $d["Character"]["cp"]);
+            $this->populateFieldWithValue("c localidad", $d["Character"]["localidad"]);
+            $this->populateFieldWithValue("c partido o depto", $d["Character"]["departamento"]);
+            $this->populateFieldWithValue("c provincia", $d["Character"]["provincia"]);
 
 
             // PERSONA FÍSICA
-            if ('Física' == $d["Condominium"]["persona_fisica_o_juridica"]) {
+            if ('Física' == $d["Character"]["persona_fisica_o_juridica"]) {
                 $condom_id_campos = array(
                         'argentino'=> array(
                                 'dni' => "c dni",
@@ -273,10 +277,10 @@ class F01 extends FormSkeleton {
                                 'pasaporte' => "c extranjeros pasaporte",
                         )
                 );
-                $this->populateIdentifications($d["Condominium"]["nationality_type_id"], $d["Condominium"]["identification_type_id"], $condom_id_campos);
+                $this->populateIdentifications($d["Character"]["nationality_type_id"], $d["Character"]["identification_type_id"], $condom_id_campos);
 
-                $this->populateFieldWithValue("c documento", $d["Condominium"]["identification_number"]);
-                $this->populateFieldWithValue("c autoridad q lo expidio", $d["Condominium"]["identification_authority"]);
+                $this->populateFieldWithValue("c documento", $d["Character"]["identification_number"]);
+                $this->populateFieldWithValue("c autoridad q lo expidio", $d["Character"]["identification_authority"]);
 
 
                 $fieldsCondFechaNacimiento = array(
@@ -284,7 +288,7 @@ class F01 extends FormSkeleton {
                         'mes'=> "c mes",
                         'año'=> "c año",
                 );
-                $this->populateDayMonthYear($d['Condominium']['fecha_nacimiento'], $fieldsCondFechaNacimiento);
+                $this->populateDayMonthYear($d['Character']['fecha_nacimiento'], $fieldsCondFechaNacimiento);
 
 
                 $condFieldsMaritalStat = array(
@@ -293,12 +297,12 @@ class F01 extends FormSkeleton {
                         'viudo'=> "c viudo",
                         'divorciado'=> "c divorciado",
                 );
-                $this->populateMaritalStatuses($d["Condominium"]["marital_status_id"], $condFieldsMaritalStat);
+                $this->populateMaritalStatuses($d["Character"]["marital_status_id"], $condFieldsMaritalStat);
 
-                $this->populateFieldWithValue("c nupcia", $d["Condominium"]["nupcia"]);
-                $this->populateFieldWithValue("c nombre conyuge", $d["Condominium"]["conyuge"]);
-                $this->populateFieldWithValue("c personeria", $d["Condominium"]["personeria_otorgada"]);
-                $this->populateFieldWithValue("c datos de inscrip", $d["Condominium"]["inscripcion"]);
+                $this->populateFieldWithValue("c nupcia", $d["Character"]["nupcia"]);
+                $this->populateFieldWithValue("c nombre conyuge", $d["Character"]["conyuge"]);
+                $this->populateFieldWithValue("c personeria", $d["Character"]["personeria_otorgada"]);
+                $this->populateFieldWithValue("c datos de inscrip", $d["Character"]["inscripcion"]);
             }
             else {
                 // PERSONA JURÍDICA
@@ -307,10 +311,10 @@ class F01 extends FormSkeleton {
                         'mes'=> "c mess",
                         'año'=> "c añoo",
                 );
-                $this->populateDayMonthYear($d['Condominium']['fecha_inscripcion'], $fieldsCondFechaInscripcion );
+                $this->populateDayMonthYear($d['Character']['fecha_inscripcion'], $fieldsCondFechaInscripcion );
             }
 
-            //$this->populateFieldWithValue("fecha, sello ...", $d["Condominium"]["fieldname"]);
+            //$this->populateFieldWithValue("fecha, sello ...", $d["Character"]["fieldname"]);
 
         }// Fin COndominio
     }
@@ -341,9 +345,9 @@ class F01 extends FormSkeleton {
          *
          *                      CONDOMINIO
          */
-        if (!empty($d['Condominium'])) {
+        if (!empty($d['Character'])) {
             // APODERADO DEL CONDOMINIO
-            $this->populateFieldWithValue("cc apellido", $d["Condominium"]["apoderado_name"]);
+            $this->populateFieldWithValue("cc apellido", $d["Character"]["apoderado_name"]);
             $fieldCondominioApoderado = array(
                     'none'=>array(
                             'dni'=> "cc dni",
@@ -352,9 +356,9 @@ class F01 extends FormSkeleton {
                             'lc'=> "cc l.c",
                             'pasaporte'=> "cc pasaporte",
             ));
-            $this->populateIdentifications('none', $d['Condominium']['apoderado_identification_type_id'], $fieldCondominioApoderado);
-            $this->populateFieldWithValue("cc numero", $d["Condominium"]["apoderado_identification_number"]);
-            $this->populateFieldWithValue("cc autoridad", $d["Condominium"]["apoderado_identification_auth"]);
+            $this->populateIdentifications('none', $d['Character']['apoderado_identification_type_id'], $fieldCondominioApoderado);
+            $this->populateFieldWithValue("cc numero", $d["Character"]["apoderado_identification_number"]);
+            $this->populateFieldWithValue("cc autoridad", $d["Character"]["apoderado_identification_auth"]);
         }
 
 

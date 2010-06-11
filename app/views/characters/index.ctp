@@ -1,5 +1,5 @@
-<div class="condominia index">
-	<h2><?php __('Condominia');?></h2>
+<div class="characters index">
+	<h2><?php __('Characters');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
@@ -26,41 +26,41 @@
 	</tr>
 	<?php
 	$i = 0;
-	foreach ($condominia as $condominium):
+	foreach ($characters as $character):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $condominium['Condominium']['id']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['porcentaje']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['name']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['calle']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['numero_calle']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['piso']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['depto']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['cp']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['localidad']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['departamento']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['provincia']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['identification_id']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['fecha_nacimiento']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['id']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['porcentaje']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['name']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['calle']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['numero_calle']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['piso']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['depto']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['cp']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['localidad']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['departamento']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['provincia']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['identification_id']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['fecha_nacimiento']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($condominium['MaritalStatus']['name'], array('controller' => 'marital_statuses', 'action' => 'view', $condominium['MaritalStatus']['id'])); ?>
+			<?php echo $this->Html->link($character['MaritalStatus']['name'], array('controller' => 'marital_statuses', 'action' => 'view', $character['MaritalStatus']['id'])); ?>
 		</td>
-		<td><?php echo $condominium['Condominium']['nupcia']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['conyuge']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['personeria_otorgada']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['inscripcion']; ?>&nbsp;</td>
-		<td><?php echo $condominium['Condominium']['fecha_inscripcion']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['nupcia']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['conyuge']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['personeria_otorgada']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['inscripcion']; ?>&nbsp;</td>
+		<td><?php echo $character['Character']['fecha_inscripcion']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($condominium['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $condominium['Customer']['id'])); ?>
+			<?php echo $this->Html->link($character['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $character['Customer']['id'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $condominium['Condominium']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $condominium['Condominium']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $condominium['Condominium']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $condominium['Condominium']['id'])); ?>
+			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $character['Character']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $character['Character']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $character['Character']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $character['Character']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -82,7 +82,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Condominium', true)), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Character', true)), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Identification Types', true)), array('controller' => 'identification_types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Identification Type', true)), array('controller' => 'identification_types', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Marital Statuses', true)), array('controller' => 'marital_statuses', 'action' => 'index')); ?> </li>
