@@ -106,10 +106,18 @@
                                         <li><? echo $this->Html->link(__('List Users',true),'/users/index');?></li>
                                         <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
                                         <hr />
-                                        <li><? echo $this->Html->link(__('List Identification Types',true),'/identification_types/index');?></li>
-                                        <li><? echo $this->Html->link(__('List Character Types',true),'/character_types/index');?></li>
-                                        <hr />
-                                        <li><? echo $this->Html->link(__('Inputs Config',true),'/field_coordenates');?></li>
+                                        <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
+                                        <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add_from_all');?></li>
+                                        <li><? echo $this->Html->link(__('Identification Types',true),'/identification_types/index');?></li>
+                                        <li><? echo $this->Html->link(__('Character Types',true),'/character_types/index');?></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><? echo $this->Html->link(sprintf('<span>%s</span>',__('Advanced',true)), '/', array('class'=>'parent', 'escape'=>false)); ?>
+                                <div>
+                                    <ul>
+                                        <li><? echo $this->Html->link(__('Field Coordenates',true),'/field_coordenates');?></li>
+                                        <li><? echo $this->Html->link(__('Field Map',true),'/field_coordenates/mapear');?></li>
                                     </ul>
                                 </div>
                             </li>

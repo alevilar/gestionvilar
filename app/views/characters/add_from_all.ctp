@@ -1,10 +1,9 @@
 <div class="characters form">
-    <h1>Cliente: <?= $customer['Customer']['name']?></h1>
-<?php echo $this->Form->create('Character', array('url'=>'add/'.$customer['Customer']['id']));?>
+<?php echo $this->Form->create('Character', array('url'=>'add_from_all'));?>
 	<fieldset>
- 		<legend><?php printf(__('Add %s', true), __('Character', true)); ?></legend>
+ 		<legend><?php printf(__('Add %s', true), __('Generic Character', true)); ?></legend>
 	<?php
-		echo $this->Form->input('customer_id', array('empty'=>'Seleccione'));
+		//echo $this->Form->hidden('customer_id', array('value'=>0));
                 echo $this->Form->input('character_type_id');
 		echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
 		echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));

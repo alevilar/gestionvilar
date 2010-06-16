@@ -84,9 +84,7 @@ class CustomersController extends AppController {
                 $this->Customer->contain(array(
                         'CustomerNatural',
                         'CustomerLegal',
-                        'CustomerHome'=>array(
-                                'City'=>array('County'),
-                        ),
+                        'CustomerHome',
                         'Identification',
                 ));
                 $this->data = $this->Customer->read();

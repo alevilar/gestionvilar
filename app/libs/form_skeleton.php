@@ -83,7 +83,7 @@ abstract class FormSkeleton extends AppModel {
      * @param array fields array('form_id','vehicle_id')
      */
     public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null) {
-        if (!empty($this->vehicle_id)){
+        if (!empty($this->vehicle_id)) {
             $fields['vehicle_id'] = $this->vehicle_id;
         }
         if ($conditions == 'data') {
@@ -95,14 +95,13 @@ abstract class FormSkeleton extends AppModel {
 
             $ret =  parent::find('first', $cond);
 
-
             if (empty($ret)) {
                 $ret = $this->Vehicle->find('first', array(
                         'conditions'=> array('Vehicle.id'=>$fields['vehicle_id']),
                         'contain' => $this->sContain['Vehicle'],
                 ));
             }
-            
+
             if (!empty($ret['Customer'])) {
                 $ret['Vehicle']['Customer'] = $ret['Customer'];
             }
@@ -149,7 +148,7 @@ abstract class FormSkeleton extends AppModel {
     public function generateDataWithFields($fxx_id) {
         // seteo el ID del formulario
         $this->form_id = $fxx_id;
-        
+
         // levanto los campos de este tipo de formulario de la tabla de coordenadas
         $this->loadFields();
 
@@ -175,17 +174,17 @@ abstract class FormSkeleton extends AppModel {
         $id = $this->getFieldCreatorId();
         $this->fieldsPage1 = $this->FieldCoordenate->find('all', array(
                 'conditions'=>array(
-                    'FieldCoordenate.field_creator_id'=>(int)$id,
-                    'FieldCoordenate.page'=>1,
-                    ),
+                        'FieldCoordenate.field_creator_id'=>(int)$id,
+                        'FieldCoordenate.page'=>1,
+                ),
                 'contain'=>array('FieldType')
         ));
 
         $this->fieldsPage2 = $this->FieldCoordenate->find('all', array(
                 'conditions'=>array(
-                    'FieldCoordenate.field_creator_id'=>(int)$id,
-                    'FieldCoordenate.page'=>2,
-                    ),
+                        'FieldCoordenate.field_creator_id'=>(int)$id,
+                        'FieldCoordenate.page'=>2,
+                ),
                 'contain'=>array('FieldType')
         ));
     }
@@ -199,8 +198,46 @@ abstract class FormSkeleton extends AppModel {
      * @param array $elements son variables que yo le puedo mandar a mi getViewVars customizado
      * @return array
      */
-    public function getViewVars($elements = array()) {
-        return array();
+    function getViewVars () {
+        $coso = $this->find();
+
+        $ret = array();
+        if (!empty($coso['Vehicle']['Customer']['CustomerNatural']['Spouse'])) {
+            $sps = $coso['Vehicle']['Customer']['CustomerNatural']['Spouse'];
+            $vec = array();
+            foreach ($sps as $s) {
+                $vec[$s['id']] = $s['name'];
+            }
+            $ret = $vec;
+        }
+
+        $retCondominios = array();
+        if (!empty($coso['Vehicle']['Customer']['Character'])) {
+            $con = $coso['Vehicle']['Customer']['Character'];
+            $vec2 = array();
+            foreach ($con as $c) {
+                $characterType = '';
+                if (!empty($c['CharacterType']['name'])) {
+                    $characterType = " (".$c['CharacterType']['name'].")";
+                }
+                $vec2[$c['id']] = $c['name'].$characterType;
+            }
+            $charactersFromAll = $this->Character->find('list',array('conditions'=>array('Character.customer_id'=>null)));
+            $retCondominios = $vec2 +  $charactersFromAll;
+        }
+       
+
+        $retRepresentatives = array();
+        if (!empty($coso['Vehicle']['Customer']['Representative'])) {
+            $con = $coso['Vehicle']['Customer']['Representative'];
+            $vec3 = array();
+            foreach ($con as $c) {
+                $vec3[$c['id']] = $c['name'];
+            }
+            $retRepresentatives = $vec3;
+        }
+
+        return array('spouses'=>$ret, 'characters'=>$retCondominios, 'representatives'=>$retRepresentatives);
     }
 
 
@@ -229,6 +266,51 @@ abstract class FormSkeleton extends AppModel {
     }
 
 
+    /**
+     * Me inserta el noimbre de un Customer en varios renglones.
+     * Si el Customer es Lega, entonces inserta el CUIT con el número
+     * este sirve en varios formularios, como el 01 y el 03
+     *
+     * @param  array  'renglones' => Son los field_coordenates name, en ellos se imprimiran el valor pasado
+     *                  string 'field_name'=> Texto a imprimir en esos renglones
+     *
+     * @param array $megaVector es el vector que viene del find, generalmente del tipo [Vehicle][Customer][CustomerLegal], etc
+     * @param integer $model es el modelo que quiero llenar, puede ser 'Customer' o 'Character'
+     */
+    function meterNombreCompletoEnVariosRenglonesConCuit($options, $megaVector = null, $model = 'Customer') {
+        if (!empty($megaVector)){
+            $d = $megaVector;
+        } else {
+            $d = $this->data;
+        }
+        if ($model == 'Customer') {
+            // NOMBRE   (Si es persona jurídica le tengo que poner el CUIT a lo ultimo del nombre)
+            $tName = $d['Vehicle']['Customer']['name'];
+            if (!empty($d['Vehicle']['Customer']['Identification']['IdentificationType'])) {
+                $tipoYDoc = $d['Vehicle']['Customer']['Identification']['IdentificationType']['name']." ".$d['Vehicle']['Customer']['Identification']['number'];
+
+                $tipoId = $d['Vehicle']['Customer']['Identification']['IdentificationType']['id'];
+                $tipoYDoc = ($tipoId == 2 || $tipoId == 7 ) // SI ES CUIT o CUIL !!
+                        ? $tipoYDoc : '';
+                $tName .= " ".$tipoYDoc;
+            }
+            $options['field_name'] = $tName;
+            $this->meterNombreCompletoEnVariosRenglones($options);
+        } else { // model DEL tipo 'Character'
+            // NOMBRE   (Si es persona jurídica le tengo que poner el CUIT a lo ultimo del nombre)
+            $tName = $d[$model]['name'];
+            if (!empty($d[$model]['IdentificationType'])) {
+                $tipoYDoc = $d[$model]['IdentificationType']['name']." ".$d[$model]['identification_number'];
+
+                $tipoId = $d[$model]['IdentificationType']['id'];
+                $tipoYDoc = ($tipoId == 2 || $tipoId == 7 ) // SI ES CUIT o CUIL !!
+                        ? $tipoYDoc : '';
+                $tName .= " ".$tipoYDoc;
+            }
+            $options['field_name'] = $tName;
+            $this->meterNombreCompletoEnVariosRenglones($options);
+        }
+    }
 
     /**
      *
@@ -267,7 +349,7 @@ abstract class FormSkeleton extends AppModel {
 
             $texto = '';
             while ($palabra = array_shift($vec)) {
-                if ($palabra == 'CUIT'){
+                if (strtoupper($palabra) == 'CUIT' || strtoupper($palabra) == 'CUIL') {
                     $palabra .= " ".array_shift($vec);
                 }
                 // si el renglon tiene ancho infinito, o sin límite
@@ -279,7 +361,7 @@ abstract class FormSkeleton extends AppModel {
                 if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth($texto)) {
                     $texto .= " " . $palabra;
                 } else {
-                     array_unshift($vec,$palabra);
+                    array_unshift($vec,$palabra);
                     break;
                 }
             }
@@ -365,15 +447,21 @@ abstract class FormSkeleton extends AppModel {
      *                       ['mes']
      *                       ['año']
      */
-    function populateDayMonthYear($date, $fields) {
+    function populateDayMonthYear($date, $fields = null) {
+        if (empty($date)){
+            return -1;
+        }
+        if (empty($fields)) {
+            $fields = array(
+                    'dia'=> 'dia',
+                    'mes'=> 'mes',
+                    'año'=> 'año',
+            );
+        }
         $this->populateFieldWithValue($fields['dia'], date('d', strtotime($date)));
         $this->populateFieldWithValue($fields['mes'], date('m', strtotime($date)));
         $this->populateFieldWithValue($fields['año'], date('y', strtotime($date)));
     }
-
-    
-
-
 
 }
 

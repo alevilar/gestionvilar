@@ -3,30 +3,20 @@
 App::import('Lib', 'FormSkeleton');
 
 
-class F01 extends FormSkeleton {
-    var $validate = array(
-            'vehicle_id' => array(
-                            'notempty' => array(
-                                            'rule' => array('notempty'),
-                                            'message' => 'Debe seleccionar un valor.',
-                            ),
-                            'numeric' => array(
-                                            'rule' => array('numeric'),
-                                            'message'=>'Debe ingresar una valor numérico en este campo'
-                            ),
-            ),
-    );
+
+class F04 extends FormSkeleton {
+	var $name = 'F04';
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+	 var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
 
 
-    var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
-
-
-    /**
+        /**
      *
      * @return integer id generado en el Insert en la tabla field_creators
      */
     function getFieldCreatorId() {
-        return 1;
+        return 4;
     }
 
 
@@ -48,6 +38,7 @@ class F01 extends FormSkeleton {
         );
     }
 
+    
 
 
     function mapDataPage1() {
@@ -87,7 +78,7 @@ class F01 extends FormSkeleton {
                     ? $tipoYDoc : '';
             debug($tipoYDoc);
             $tName .= " ".$tipoYDoc;
-            // die($tName);
+           // die($tName);
         }
         $this->meterNombreCompletoEnVariosRenglones(array(
                 'renglones'=> array("t nombre 1", "t nombre 2", "t nombre 3"),
@@ -133,9 +124,9 @@ class F01 extends FormSkeleton {
                     $multipleChoiceIdentification);
             $this->populateFieldWithValue("t n° documento", $d['Vehicle']['Customer']['Identification']['number']);
             $this->populateFieldWithValue("t autoridad q lo expidio", $d['Vehicle']['Customer']['Identification']['authority_name']);
-            $this->populateFieldWithValue("t dia", date('d',strtotime($d['Vehicle']['Customer']['born'])));
-            $this->populateFieldWithValue("t mes", date('m',strtotime($d['Vehicle']['Customer']['born'])));
-            $this->populateFieldWithValue("t año", date('y',strtotime($d['Vehicle']['Customer']['born'])));
+            $this->populateFieldWithValue("t dia", date('d',strtotime($d['Vehicle']['Customer']['Identification'])));
+            $this->populateFieldWithValue("t mes", date('m',strtotime($d['Vehicle']['Customer']['Identification'])));
+            $this->populateFieldWithValue("t año", date('y',strtotime($d['Vehicle']['Customer']['Identification'])));
 
 
             $fieldsMaritalStat = array(
@@ -208,11 +199,10 @@ class F01 extends FormSkeleton {
             $this->populateFieldWithValue("c entero %", $tEntero);
             $this->populateFieldWithValue("c decimal %", $tDecimal);
 
-            $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
-                    'renglones'=> array("c nombre 1", "c nombre 2", "c nombre 3")),
-                    $d,
-                    'Character');
-
+            $this->meterNombreCompletoEnVariosRenglones(array(
+                    'renglones'=> array("c nombre 1", "c nombre 2", "c nombre 3"),
+                    'field_name'=> $d["Character"]["name"],
+            ));
 
             // DOMICILIO
             $this->populateFieldWithValue("c calle", $d["Character"]["calle"]);
@@ -334,5 +324,4 @@ class F01 extends FormSkeleton {
 
     }
 }
-
 ?>

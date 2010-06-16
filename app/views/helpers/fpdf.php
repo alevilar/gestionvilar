@@ -206,7 +206,7 @@ class FpdfHelper extends AppHelper {
      */
     function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill=true, $link='') {
         // recorto el texto si sobrepasa el ancho de la celda
-        $vec = explode($txt);
+        $vec = explode(" ",$txt);
         $texto = '';
         while ($palabra = array_shift($vec)) {
             if ($palabra == 'CUIT') {

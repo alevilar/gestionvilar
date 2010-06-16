@@ -67,7 +67,7 @@
 
         <div id="CustomerHome" class="span-16 step">
             <fieldset class="span-16 column">
-                <legend>Domicilio Legal</legend>
+                <legend>Domicilio Legal (es la que se imprime en los formularios)</legend>
                 <div class="span-8">
                     <?php
                     echo $this->Form->hidden('CustomerHome.0.type', array('value'=>'Legal'));

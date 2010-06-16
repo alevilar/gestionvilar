@@ -14,7 +14,7 @@
             <?= $this->Html->link('Agregar Apoderado', '/representatives/add/'.$customer['Customer']['id']) ?>
         </li>
         <li>
-            <?= $this->Html->link('Agregar Condominio', '/characters/add/'.$customer['Customer']['id']) ?>
+            <?= $this->Html->link('Agregar Actor', '/characters/add/'.$customer['Customer']['id']) ?>
         </li>
     </ul>
 </div>

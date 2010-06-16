@@ -1,4 +1,5 @@
-<div class="characters form">
+<? $rand = (int)rand(10, 989898) ?>
+<div class="characters form" id="edit-character-div-<?php echo $rand?>">
     <h1>Cliente: <?= $customer['Customer']['name']?></h1>
     <?php echo $this->Form->create('Character');?>
     <fieldset>
@@ -60,5 +61,10 @@
         </fieldset>
     </fieldset>
 
-    <?php echo $this->Form->end(__('Submit', true));?>
+    <?php echo $this->Js->submit(__('Submit', true), array('url'=> array('action'=>'edit'), 'update' => '#edit-character-div-'.$rand));?>
+    <?php echo $this->Form->end();?>
 </div>
+
+<?
+
+echo $js->writeBuffer();

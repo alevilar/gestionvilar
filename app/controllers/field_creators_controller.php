@@ -73,6 +73,12 @@ class FieldCreatorsController extends AppController {
      */
     function addForm($form_model_name, $vehicle_id = null) {
         $this->{$form_model_name} = ClassRegistry::init($form_model_name);
+
+        if (get_parent_class($this->{$form_model_name}) != 'FormSkeleton'){
+            debug("ERROR !!!!! ::::::: La clase del formulario no extiende de FormSkeleton !!!! por eso es que se ven errores");
+
+        }
+
         $this->{$form_model_name}->vehicle_id = $vehicle_id;
 
         if (empty($vehicle_id)) {

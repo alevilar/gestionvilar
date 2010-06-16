@@ -46,19 +46,6 @@ class F11 extends FormSkeleton {
     }
 
 
-    function getViewVars (){
-       $coso = $this->find();
-       $ret = array();
-       if (!empty($coso['Vehicle']['Customer']['CustomerNatural']['Spouse'])){
-            $sps = $coso['Vehicle']['Customer']['CustomerNatural']['Spouse'];
-            $vec = array();
-            foreach ($sps as $s) {
-                $vec[$s['id']] = $s['name'];
-            }
-           $ret = $vec;
-       }
-       return array('spouses'=>$ret);
-    }
 
 
     function mapDataPage2() {
