@@ -4,6 +4,7 @@ App::import('Lib', 'FormSkeleton');
 
 class F59m extends FormSkeleton {
     var $name = 'F59m';
+    var $useTable = 'f59ms';
     
     var $validate = array(
             'vehicle_id' => array(
@@ -32,7 +33,18 @@ class F59m extends FormSkeleton {
 
 
     function setSContain() {
-        $this->sContain = array('Agent'=>array(),'Vehicle'=>array('Customer'=>array('CustomerHome','CustomerNatural','CustomerLegal')));
+        $this->sContain = array(
+            'Agent'=>array(
+                'IdentificationType'
+                ),
+            'Vehicle'=>array(
+                'Customer'=>array(
+                    'CustomerHome',
+                    'CustomerNatural',
+                    'CustomerLegal',
+                    )
+                )
+            );
     }
 
 
@@ -46,7 +58,26 @@ class F59m extends FormSkeleton {
 
 
     function mapDataPage1() {
+        $d = $this->data;
 
+        $this->populateFieldWithValue("apellido", $d["Agent"]["surname"]);
+        $this->populateFieldWithValue("nombre", $d["Agent"]["first_name"]);
+        $this->populateFieldWithValue("dni", $d["Agent"]['IdentificationType']['name']. ' '.$d["Agent"]['identification_number']);
+        $this->populateFieldWithValue("domicilio", $d["Agent"]["address"]);
+        $this->populateFieldWithValue("numero", $d["Agent"]["address_number"]);
+        $this->populateFieldWithValue("piso", $d["Agent"]["address_floor"]);
+        $this->populateFieldWithValue("depto", $d["Agent"]["address_apartment"]);
+        $this->populateFieldWithValue("localidad", $d["Agent"]["city"]);
+        $this->populateFieldWithValue("provincia", $d["Agent"]["county"]);
+        $this->populateFieldWithValue("cod post", $d["Agent"]["postal_code"]);
+        $this->populateFieldWithValue("matricula", $d["Agent"]["license"]);
+        $this->populateFieldWithValue("mat manda", $d["Agent"]["super_license"]);
+
+        $this->populateFieldWithValue("dominio", $d["vehicle"]["patente"]);
+        $this->populateFieldWithValue("tramite", $d["F59m"]["tramite"]);
+        $this->populateFieldWithValue("solicitud", $d["F59m"]["solicitud_tipo"]);
+        $this->populateFieldWithValue("control", $d["F59m"]["n_control"]);
+        $this->populateFieldWithValue("observaciones", $d["F59m"]["observaciones"]);
     }
 
 

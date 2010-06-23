@@ -41,6 +41,7 @@ class FpdfHelper extends AppHelper {
 
 
     function Text($x, $y, $txt = '') {
+        $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         return $this->Pdf->Text($x, $y, $txt);
     }
 
@@ -222,6 +223,7 @@ class FpdfHelper extends AppHelper {
                 $texto .= " " . $palabra;
             } else { // si quedó recortado le agrego los puntos suspensivos
                 $texto .= "...";
+                break;
             }
         }
         $txt = $texto;

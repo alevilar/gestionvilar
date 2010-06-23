@@ -138,8 +138,7 @@ class FieldCreatorsController extends AppController {
             $this->redirect('/');
         }
 
-        $fxx = ClassRegistry::init(strtoupper($form_model_name));
-
+        $fxx = ClassRegistry::init($form_model_name);
         $fxx->generateDataWithFields($fxx_id);
 
 

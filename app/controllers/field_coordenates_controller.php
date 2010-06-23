@@ -31,7 +31,11 @@ class FieldCoordenatesController extends AppController {
         function mapear(){
            // $cond = array ('FieldCoordenate.field_creator_id'=>$field_creator_id);
             $res = $this->FieldCoordenate->find('all', array(
-                'order' => array('FieldCoordenate.field_creator_id','FieldCoordenate.id'),
+
+                'order' => array(
+                    'FieldCoordenate.field_creator_id',
+                    "RPAD(FieldCoordenate.name,1,'?')",
+                    'FieldCoordenate.id'),
                 ));
             $this->set('res', $res);
         }

@@ -1,5 +1,5 @@
 <?
-$form_name = 'F59M';
+$form_name = 'F59m';
 
 $customer = empty($this->data['Vehicle']['Customer']['name'])?'':$this->data['Vehicle']['Customer']['name'];
 $vehicle_id = $this->data['Vehicle']['id'];

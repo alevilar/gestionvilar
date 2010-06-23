@@ -274,16 +274,18 @@ abstract class FormSkeleton extends AppModel {
      * @param  array  'renglones' => Son los field_coordenates name, en ellos se imprimiran el valor pasado
      *                  string 'field_name'=> Texto a imprimir en esos renglones
      *
-     * @param array $megaVector es el vector que viene del find, generalmente del tipo [Vehicle][Customer][CustomerLegal], etc
      * @param integer $model es el modelo que quiero llenar, puede ser 'Customer' o 'Character'
      */
-    function meterNombreCompletoEnVariosRenglonesConCuit($options, $megaVector = null, $model = 'Customer') {
-        if (!empty($megaVector)){
-            $d = $megaVector;
-        } else {
-            $d = $this->data;
-        }
-        if ($model == 'Customer') {
+    function meterNombreCompletoEnVariosRenglonesConCuit($options, $model = 'Customer') {
+        $options['field_name'] = $this->getNombreWidthCuitIfLegal($model);
+        $this->meterNombreCompletoEnVariosRenglones($options);
+    }
+
+
+    function getNombreWidthCuitIfLegal($model){
+        $d = $this->data;
+        $tName = '';
+         if ($model == 'Customer') {
             // NOMBRE   (Si es persona jurídica le tengo que poner el CUIT a lo ultimo del nombre)
             $tName = $d['Vehicle']['Customer']['name'];
             if (!empty($d['Vehicle']['Customer']['Identification']['IdentificationType'])) {
@@ -294,8 +296,6 @@ abstract class FormSkeleton extends AppModel {
                         ? $tipoYDoc : '';
                 $tName .= " ".$tipoYDoc;
             }
-            $options['field_name'] = $tName;
-            $this->meterNombreCompletoEnVariosRenglones($options);
         } else { // model DEL tipo 'Character'
             // NOMBRE   (Si es persona jurídica le tengo que poner el CUIT a lo ultimo del nombre)
             $tName = $d[$model]['name'];
@@ -307,9 +307,8 @@ abstract class FormSkeleton extends AppModel {
                         ? $tipoYDoc : '';
                 $tName .= " ".$tipoYDoc;
             }
-            $options['field_name'] = $tName;
-            $this->meterNombreCompletoEnVariosRenglones($options);
         }
+        return $tName;
     }
 
     /**
@@ -348,6 +347,13 @@ abstract class FormSkeleton extends AppModel {
             )));
 
             $texto = '';
+
+            // si oes multicell entonces meto todo el string de una yaque eso lo maneja el propio metodo Multicell
+            if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
+                 $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $options['field_name']);
+                 return 1;
+            }
+
             while ($palabra = array_shift($vec)) {
                 if (strtoupper($palabra) == 'CUIT' || strtoupper($palabra) == 'CUIL') {
                     $palabra .= " ".array_shift($vec);
@@ -369,7 +375,7 @@ abstract class FormSkeleton extends AppModel {
             $texto = ''; // lo vuelvo a inicializar
             if (count($vec)==0) break; // salgo del For renglones
         }
-        //die("termino");
+        return 2;
     }
 
 

@@ -5,6 +5,9 @@
         <li>
             <?= $this->Html->link('Editar Cliente', '/customers/edit/'.$customer['Customer']['id']) ?>
         </li>
+         <li>
+            <?= $this->Html->link('Eliminar Cliente', '/customers/delete/'.$customer['Customer']['id'],null,'Esto eliminará al cliente y sus vehículos.\n¿Seguro que desea proseguir?') ?>
+        </li>
         <?php if ($customer['Customer']['type'] == 'natural'):?>
         <li>
                 <?= $this->Html->link('Agregar Cónyuge', '/spouses/add/'.$customer['Customer']['id']) ?>
@@ -17,6 +20,18 @@
             <?= $this->Html->link('Agregar Actor', '/characters/add/'.$customer['Customer']['id']) ?>
         </li>
     </ul>
+
+    <div id="sticky-note">
+        <?php
+        echo $this->Form->create('Customer',array('action'=>'edit_notes'));
+        echo $this->Form->input('id', array('value'=>$customer['Customer']['id']));
+        echo $this->Form->textarea('notes', array('class'=>'span-5 notes','rows'=>14, 'value'=>$customer['Customer']['notes']));
+        echo $this->Js->submit(__('Save', true)." ".__('Notes',true), array(
+            'url'=> array('action'=>'edit_notes'),
+            ));
+        echo $this->Form->end();
+        ?>
+    </div>
 </div>
 
 <div class="customers view span-19 last">
@@ -32,19 +47,20 @@
             &nbsp;
         </dd>
 
-         <?php if (!empty($customer['Identification'])):?>
+        <?php if (!empty($customer['Identification'])):?>
             <?php if (!empty($customer['Identification']['IdentificationType'])):?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                <?php echo $customer['Identification']['IdentificationType']['name'] . ' ' . $customer['Identification']['number']; ?>
+                    <?php echo $customer['Identification']['IdentificationType']['name'] . ' ' . $customer['Identification']['number']; ?>
             &nbsp;
         </dd>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Authority Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                <?php echo $customer['Identification']['authority_name']; ?>
+                    <?php echo $customer['Identification']['authority_name']; ?>
             &nbsp;
         </dd>
-        <?php endif;endif;?>
+            <?php endif;
+        endif;?>
 
         <?php if ($customer['Customer']['type'] == 'natural'):?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
@@ -71,12 +87,12 @@
             <?php endif; ?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality Type'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $nationalities[$customer['CustomerNatural']['nationality_type']]; ?>
+                <?php echo $nationalities[$customer['CustomerNatural']['nationality_type']]; ?>
             &nbsp;
         </dd>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $customer['CustomerNatural']['nationality']; ?>
+                <?php echo $customer['CustomerNatural']['nationality']; ?>
             &nbsp;
         </dd>
         <?php else:?>
@@ -107,20 +123,20 @@
         if (!empty($customer['CustomerNatural']['Spouse'])):
             if (count($customer['CustomerNatural']['Spouse'] > 0)):
                 foreach ($customer['CustomerNatural']['Spouse'] as $s):
-                ?>
+                    ?>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),'/spouses/edit/'.$s['id']) ?></dt>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),'/spouses/delete/'.$s['id'],null, 'Desea eliminar cónyuge: '.$s['name']) ?></dt>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $s['name']; ?>
+                        <?php echo $s['name']; ?>
             &nbsp;
         </dd>
         <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Identification'); ?></dt>
         <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $s['IdentificationType']['name'] . ' ' .$s['identification_number']; ?>
+                        <?php echo $s['IdentificationType']['name'] . ' ' .$s['identification_number']; ?>
             &nbsp;
         </dd>
-            <?php
+                <?php
                 endforeach;
             endif;
         endif;
@@ -173,8 +189,8 @@
         <dl>
             <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Apoderado'),'/representatives/edit/'.$representative['id']) ?></dt>
             <dt><?php echo $this->Html->link(
-                    sprintf(__('Delete %s',true), 'Apoderado'),
-                    '/representatives/delete/'.$representative['id'], null,"¿Desea eliminar al apoderado: ".$representative['name'].' '.$representative['surname'].'?'); ?></dt>
+                            sprintf(__('Delete %s',true), 'Apoderado'),
+                            '/representatives/delete/'.$representative['id'], null,"¿Desea eliminar al apoderado: ".$representative['name'].' '.$representative['surname'].'?'); ?></dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $representative['name']?></dd>
             <dt><?php __('Surname'); ?></dt>
@@ -207,8 +223,8 @@
         <dl>
             <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), __('Character',true)),'/characters/edit/'.$character['id']) ?></dt>
             <dt><?php echo $this->Html->link(
-                    sprintf(__('Delete %s',true), __('Character',true)),
-                    '/characters/delete/'.$character['id'], null,"¿Desea eliminar al condominio: ".$character['name'].'?'); ?></dt>
+                            sprintf(__('Delete %s',true), __('Character',true)),
+                            '/characters/delete/'.$character['id'], null,"¿Desea eliminar al condominio: ".$character['name'].'?'); ?></dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $character['name']?></dd>
             <dt><?php __('Identification'); ?></dt>

@@ -11,12 +11,41 @@ class F04 extends FormSkeleton {
 	 var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
 
 
+
+         var $tipoTramites = array(
+             1 => 'Solicitud de cambio de carroceria',
+             2 => 'Denuncia de robo o hurto',
+             3 => 'Denuncia de recupero',
+             'Solicitud de baja de automotor' => array(
+                        1 => 'Siniestro, desarme, desgaste o envejecimiento',
+                        2 => 'Exportación definitiva'),
+             'Solicitud de baja de motor solamente' => array(
+                        1 => 'Destrucción, siniestro, desarme, desgaste',
+                        2 => 'Otras causas'),
+             'Solicitud de alta de motor' => array(
+                        1 => 'Es nuevo y producido por una fábrica terminal nacional',
+                        2 => 'Es nuevo e importado',
+                        3 => 'Perteneció a un vehiculo inscripto en el R.N.P.A',
+                        4 => 'Es usado, armado fuera de fábrica o de origen no previsto en los casos anteriores'),
+             7 => 'Solicitud de cambio de domicilio del titular que fija el lugar de radicación del automotor',
+         );
+
+
         /**
      *
      * @return integer id generado en el Insert en la tabla field_creators
      */
     function getFieldCreatorId() {
-        return 4;
+        return 12;
+    }
+
+
+    function getViewVars(){
+        $vars = parent::getViewVars();
+
+        $vars['tipoTramites'] = $this->tipoTramites;
+
+        return $vars;
     }
 
 

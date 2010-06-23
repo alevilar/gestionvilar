@@ -77,15 +77,14 @@ class VehiclesController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'vehicle'));
-			$this->redirect(array('action'=>'index'));
+			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), __('vehicle',true)));
+			$this->redirect('/');
 		}
 		if ($this->Vehicle->delete($id)) {
-			$this->Session->setFlash(sprintf(__('%s deleted', true), 'Vehicle'));
-			$this->redirect(array('action'=>'index'));
+			$this->Session->setFlash(sprintf(__('%s deleted', true), __('Vehicle',true) ));
+			$this->redirect('/');
 		}
-		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Vehicle'));
-		$this->redirect(array('action' => 'index'));
+		$this->Session->setFlash(sprintf(__('%s was not deleted', true), __('Vehicle',true) ));
 	}
 
 

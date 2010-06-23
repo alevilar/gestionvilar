@@ -3,6 +3,18 @@ class CustomersController extends AppController {
 
     var $name = 'Customers';
 
+
+    function edit_notes($id = null){
+        $this->layout = 'ajax';
+        if (!empty($this->data['Customer']['id'])){
+            if(!$this->Customer->save($this->data)){
+                debug($this->Customer->validationErrors);
+                echo "Falló al guardar";
+            }
+        }
+        $this->autoRender = false;
+    }
+
     function index() {
         $this->paginate['Customer'] = array(
                 'limit'=>10,
@@ -109,15 +121,14 @@ class CustomersController extends AppController {
 
     function delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'customer'));
-            $this->redirect(array('action'=>'index'));
+            $this->Session->setFlash(sprintf(__('Invalid id for %s', true), __('customer',true)));
+            $this->redirect('/');
         }
         if ($this->Customer->delete($id)) {
-            $this->Session->setFlash(sprintf(__('%s deleted', true), 'Customer'));
-            $this->redirect(array('action'=>'index'));
+            $this->Session->setFlash(sprintf(__('%s deleted', true), __('Customer',true)));
+            $this->redirect('/');
         }
-        $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Customer'));
-        $this->redirect(array('action' => 'index'));
+        $this->Session->setFlash(sprintf(__('%s was not deleted', true), __('Customer',true)));
     }
 
 

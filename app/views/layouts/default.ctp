@@ -141,6 +141,7 @@
         <?php echo $this->element('sql_dump'); ?>
     </body>
 
+    <?php echo $js->writeBuffer();?>
 
     <script type="text/javascript">
         $(document).ready(function(){

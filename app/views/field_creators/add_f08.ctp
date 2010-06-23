@@ -18,14 +18,31 @@ $vehicle_id = $this->data['Vehicle']['id'];
     }
     echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 
-    echo $this->element('field_forms/character_data', array('label'=>'Condominio en la compra'));
-
-    echo $this->element('field_forms/character_data', array('label'=>'Vendedor', 'field'=>'vendedor_id'));
-
-    echo $this->element('field_forms/character_data', array('label'=>'Condominio en la Venta', 'field'=>'vendedor_condominium_id'));
-
-
     ?>
+    <fieldset>
+        <legend>"E"</legend>
+        <?
+        echo $this->element('field_forms/character_data', array('label'=>'Condominio en la compra'));
+        ?>
+    </fieldset>
+
+    <fieldset>
+        <legend>"I"</legend>
+        <?
+        echo $this->Form->input('i_fecha_sello', array('label'=>'Fecha, firma y sello del certificante'));
+        echo $this->element('field_forms/character_data', array('label'=>'Vendedor', 'field'=>'vendedor_id'));
+        ?>
+    </fieldset>
+
+    <fieldset>
+        <legend>"J"</legend>
+        <?
+        echo $this->Form->input('j_fecha_sello', array('label'=>'Fecha, firma y sello del certificante'));
+        echo $this->element('field_forms/character_data', array('label'=>'Condominio en la Venta', 'field'=>'vendedor_condominium_id'));
+
+
+        ?>
+    </fieldset>
 
 
     <fieldset>
@@ -72,6 +89,10 @@ $vehicle_id = $this->data['Vehicle']['id'];
         echo $this->Form->input('o_autorizado_name', array('label'=>false,'div'=>false));
         echo " tipo de documento y n° ";
         echo $this->Form->input('o_tipo_y_num_doc', array('label'=>false,'div'=>false));
+
+        echo "<br>Recibí título y cédula de identificación ";
+        echo $this->Form->input('o_recibi_tit', array('label'=>false,'div'=>false));
+
         ?>
     </fieldset>
 </div>

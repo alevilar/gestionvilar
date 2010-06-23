@@ -210,7 +210,6 @@ class F01 extends FormSkeleton {
 
             $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
                     'renglones'=> array("c nombre 1", "c nombre 2", "c nombre 3")),
-                    $d,
                     'Character');
 
 

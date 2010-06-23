@@ -1,4 +1,7 @@
-<div class="vehicles form span-18 center prepend-3">
+
+
+
+<div class="vehicles form span-18 center prepend-1">
     <?php echo $this->Form->create('Vehicle');?>
     <fieldset class="span-18">
         <legend><?php printf(__('Edit %s', true), __('Vehicle', true)); ?></legend>
@@ -48,6 +51,14 @@
     <?php echo $this->Form->end('Guardar');?>
 
 </div>
+
+
+<div class="actions span-3 prepend-2 last">
+    <ul><li>
+    <?= $this->Html->link('Eliminar Vehiculo','/vehicles/delete/'.$this->data['Vehicle']['id'],null,'¿Desea eliminar éste vehiculo?')?>
+        </li></ul>
+</div>
+
 
 
 <script type="text/javascript">

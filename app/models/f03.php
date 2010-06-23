@@ -69,7 +69,7 @@ class F03 extends FormSkeleton {
 
         $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
                 'renglones'=> array("a apellido 1", "a apellido 2", "a apellido 3 (cuit)")
-                ),$d);
+                ));
 
 
         if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {
@@ -146,7 +146,7 @@ class F03 extends FormSkeleton {
         //      E   ::Deudor
         $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
                 'renglones'=> array("d apellido 1", "d apellido 2", "d apellido 3 (cuil)")
-                ),$d,'Character');
+                ),'Character');
         $this->populateFieldWithValue("d calle", $d["Character"]["calle"]);
         $this->populateFieldWithValue("d numero", $d["Character"]["numero_calle"]);
         $this->populateFieldWithValue("d piso", $d["Character"]["piso"]);
