@@ -6,6 +6,16 @@ $f02types;
 //debug($form);die();
 
 
+$this->Fpdf->AddPage();
+
+if ($debug_mode) {
+    $this->Fpdf->fondoVerde();
+    $this->Fpdf->bordeRojo();
+} else {
+    $this->Fpdf->fondoBlanco();
+    $this->Fpdf->bordeBlanco();
+}
+
 // PATENTE
 $this->Fpdf->SetFont('Courier','B',12);
 $this->Fpdf->SetXY('90','43');
@@ -132,3 +142,5 @@ if (!empty($form['F02']['description'])) {
 
 
 
+
+echo $this->Fpdf->output('f02_'.$form['F02']['solicitante'].'.pdf','i');

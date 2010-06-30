@@ -55,6 +55,12 @@ abstract class FormSkeleton extends AppModel {
     abstract function mapDataPage2();
 
 
+    /**
+     *  Son los capos que seran renderizados en el formulario de ADD del formulario en cuestion
+     */
+    abstract function getFormImputs($data);
+
+
 
     /**
      * Es el setter del atributo $sContain
@@ -155,9 +161,40 @@ abstract class FormSkeleton extends AppModel {
         // levanto la data del Formulario
         $this->loadFormData($fxx_id);
 
-        // setteo los valores
+        // asigno los valoresque en field_coordenates ya tienen un campo en la tabla del model asignado
+        $this->autoPopulateFields();
+
+        // asigo los valores manuales que no fueron llenados en el proceso anterior por cualquier mpotivo
         $this->mapDataPage1();
         $this->mapDataPage2();
+    }
+
+
+    /**
+     * Segun lo ingresado en el campo "related_field_table de la tabla field:coordenates
+     * voy llenando con los datos guardados en la tabla del formulario para ingresarlos automaticaente al PDF
+     * 
+     */
+    function autoPopulateFields(){
+        foreach ($this->fieldsPage1 as $p){
+            if (!empty($p['FieldCoordenate']['related_field_table'])){
+                $campo = $p['FieldCoordenate']['related_field_table'];
+                $formCampoNombre = $p['FieldCoordenate']['name'];
+                $fontSize = $p['FieldCoordenate']['font_size'];
+                $valor = $this->data[$this->name][$campo];
+                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
+            }
+        }
+        unset($p);
+        foreach ($this->fieldsPage2 as $p){
+            if (!empty($p['FieldCoordenate']['related_field_table'])){
+                $campo = $p['FieldCoordenate']['related_field_table'];
+                $formCampoNombre = $p['FieldCoordenate']['name'];
+                $fontSize = $p['FieldCoordenate']['font_size'];
+                $valor = $this->data[$this->name][$campo];
+                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
+            }
+        }
     }
 
 
@@ -225,7 +262,7 @@ abstract class FormSkeleton extends AppModel {
             $charactersFromAll = $this->Character->find('list',array('conditions'=>array('Character.customer_id'=>null)));
             $retCondominios = $vec2 +  $charactersFromAll;
         }
-       
+
 
         $retRepresentatives = array();
         if (!empty($coso['Vehicle']['Customer']['Representative'])) {
@@ -246,22 +283,31 @@ abstract class FormSkeleton extends AppModel {
      *
      * @param string $fieldname es el campo "name" de la tabla field_coordenates. Es el campo al cual yo quiero ponerle un valor
      * @param string $value el valor que quiero que se muestre en el PDF
+     * @param array $options
+     *                      ['fontSize'] tamaño de la fuente por defaul en 10pt
+     *
      * @return integer pagina donde fue encontrada (1 o 2) retorna 0 si no encuentra nada
+     *
      */
-    function populateFieldWithValue($fieldname, $value) {
+    function populateFieldWithValue($fieldname, $value, $options = array('fontSize'=>10)) {
+        if (empty($fieldname)) return -1;
+
         foreach ($this->fieldsPage1 as &$f) {
             if(($f['FieldCoordenate']['name'] == $fieldname)) {
                 $f['FieldCoordenate']['value'] = $value;
+                $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
                 return 1;
             }
         }
         foreach ($this->fieldsPage2 as &$f) {
             if(($f['FieldCoordenate']['name'] == $fieldname)) {
                 $f['FieldCoordenate']['value'] = $value;
+                $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
                 return 2;
             }
         }
-        $this->log("$this->name PopulateFieldWidthValue::: El campo '$fieldname' no fue encontrado.");
+        debug("<br>El campo '$fieldname' para el valor '$value' no fué encontrado<br>");
+        $this->log("$this->name PopulateFieldWidthValue::: El campo '$fieldname' para el valor '$value' no fué encontrado.",'field_coordenates');
         return 0;
     }
 
@@ -282,10 +328,10 @@ abstract class FormSkeleton extends AppModel {
     }
 
 
-    function getNombreWidthCuitIfLegal($model){
+    function getNombreWidthCuitIfLegal($model) {
         $d = $this->data;
         $tName = '';
-         if ($model == 'Customer') {
+        if ($model == 'Customer') {
             // NOMBRE   (Si es persona jurídica le tengo que poner el CUIT a lo ultimo del nombre)
             $tName = $d['Vehicle']['Customer']['name'];
             if (!empty($d['Vehicle']['Customer']['Identification']['IdentificationType'])) {
@@ -326,7 +372,6 @@ abstract class FormSkeleton extends AppModel {
 
         // preparo el texto en array para recorrerlo y calcular su tamaño
         $vec = explode(" ",$options['field_name']);
-
         App::import('Vendor','fpdf/fpdf');
         $orientation='P';
         $unit='mm';
@@ -347,11 +392,10 @@ abstract class FormSkeleton extends AppModel {
             )));
 
             $texto = '';
-
-            // si oes multicell entonces meto todo el string de una yaque eso lo maneja el propio metodo Multicell
+            // si oes multicell entonces meto todo el string de una saque eso lo maneja el propio metodo Multicell
             if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
-                 $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $options['field_name']);
-                 return 1;
+                $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $options['field_name']);
+                return 1;
             }
 
             while ($palabra = array_shift($vec)) {
@@ -364,13 +408,14 @@ abstract class FormSkeleton extends AppModel {
                     $texto = implode(" ", $vec);
                     $vec = array(); // vacio el array
                 }
-                if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth($texto)) {
+                if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth(iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $texto." " . $palabra))) {
                     $texto .= " " . $palabra;
                 } else {
                     array_unshift($vec,$palabra);
                     break;
                 }
             }
+
             $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
             $texto = ''; // lo vuelvo a inicializar
             if (count($vec)==0) break; // salgo del For renglones
@@ -454,7 +499,7 @@ abstract class FormSkeleton extends AppModel {
      *                       ['año']
      */
     function populateDayMonthYear($date, $fields = null) {
-        if (empty($date)){
+        if (empty($date)) {
             return -1;
         }
         if (empty($fields)) {
@@ -468,6 +513,8 @@ abstract class FormSkeleton extends AppModel {
         $this->populateFieldWithValue($fields['mes'], date('m', strtotime($date)));
         $this->populateFieldWithValue($fields['año'], date('y', strtotime($date)));
     }
+
+ 
 
 }
 

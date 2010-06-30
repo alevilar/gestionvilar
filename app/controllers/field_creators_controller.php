@@ -121,9 +121,13 @@ class FieldCreatorsController extends AppController {
         foreach ($modelViewVars as $varName => $varValue) {
             $this->set($varName, $varValue);
         }
-        $this->set(compact('representatives'));
 
-        $this->render(strtolower('add_' . $form_model_name));
+        $formInputs = $this->{$form_model_name}->getFormImputs($this->data);
+        $form_name = $this->{$form_model_name}->name;
+        
+        $this->set(compact('representatives', 'formInputs', 'form_name'));
+
+        //$this->render(strtolower('add_' . $form_model_name));
     }
 
 
@@ -138,9 +142,9 @@ class FieldCreatorsController extends AppController {
             $this->redirect('/');
         }
 
+        /* @var $fxx FormSkeleton */
         $fxx = ClassRegistry::init($form_model_name);
         $fxx->generateDataWithFields($fxx_id);
-
 
         $debug_mode = false;
         if (!empty($this->passedArgs['debug'])) {
@@ -158,6 +162,8 @@ class FieldCreatorsController extends AppController {
         $this->set('form_name',$form_model_name);
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);
         $this->set(compact('modelViewVars', 'debug_mode', 'page1', 'page2'));
+
+       // debug($page1);//die("terminarlo");
     }
 
 }

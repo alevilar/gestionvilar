@@ -52,7 +52,7 @@
             echo $this->Form->input('nupcia');
             echo $this->Form->input('conyuge', array('label'=>__('Spouse',true)));
             ?>
-            <h2>Apoderado del Cónyuge</h2>
+            <h4>Apoderado del Cónyuge</h4>
               <?
            echo $this->Form->input('conyuge_apoderado_name', array('label'=>'Apellido y Nombre del Apoderado'));
             echo $this->Form->input('conyuge_apoderado_identification_type_id', array('label'=>'Tipo de Doc.', 'options'=>$identificationTypes,'empty'=>'Seleccione'));
@@ -63,7 +63,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>Apoderado del Condominio</legend>
+            <legend>Apoderado del Actor</legend>
             <?
             echo $this->Form->input('apoderado_name', array('label'=>'Apellido y Nombre del Apoderado'));
             echo $this->Form->input('apoderado_identification_type_id', array('label'=>'Tipo de Doc.', 'options'=>$identificationTypes,'empty'=>'Seleccione'));

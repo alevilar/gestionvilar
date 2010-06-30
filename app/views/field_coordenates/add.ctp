@@ -6,11 +6,18 @@
 		echo $this->Form->input('field_creator_id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('field_type_id');
-		echo $this->Form->input('x');
-		echo $this->Form->input('y');
+                echo $this->Form->input('font_size', array('default'=>10, 'after'=>'también se peden ingresar valores con decimales. Ej: 12.45 (notar que el decimal va con punto)'));
+		echo $this->Form->input('x', array('after'=>'Coordenada X en milimetros'));
+		echo $this->Form->input('y', array('after'=>'Coordenada Y en milimetros'));
                 echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array(1=>1,2=>2)));
-		echo $this->Form->input('w', array('default'=>0));
-		echo $this->Form->input('h', array('default'=>0));
+		echo $this->Form->input('w', array('default'=>0, 'after'=>'Ancho en milimetros. Si queda en cero, el ancho no importa'));
+		echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
+
+                echo "<hr>";
+                echo $this->Form->input('related_field_table', array('before'=>'AVAZADO - Aca se deberá escribir el nombre del campo en la tabla de la base de datos que hace referencia a este campo. Si no se escribe nada quiere decir que el campo merece un tratamiento especial yserá intercepatado y tatado desde la prograamación del código fuente.'));
+                echo $this->Form->input('test_print_text',array('before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+                echo "<hr>";
+                
                 echo $this->Form->input('description');
 	?>
 	</fieldset>

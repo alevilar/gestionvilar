@@ -272,7 +272,7 @@ class F03 extends FormSkeleton {
         $this->populateFieldWithValue("m calle", $d["F03"]["m_calle"]);
         $this->populateFieldWithValue("m n°", $d["F03"]["m_numero"]);
 
-        $this->populateFieldWithValue("registro endoso", $d["F03"]["m_algo"]);
+        $this->populateFieldWithValue("m registro endoso", $d["F03"]["m_algo"]);
         $this->populateFieldWithValue("m registro endoso de", $d["F03"]["m_de"]);
         $this->populateFieldWithValue("registrado", $d["F03"]["m_endoso_de"]);
         $this->populateFieldWithValue("a favor de", $d["F03"]["m_favor_de"]);

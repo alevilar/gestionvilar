@@ -103,7 +103,7 @@ class F08 extends FormSkeleton {
         // $this->populateFieldWithValue("a inscripcion", $d["Model"]["fieldname"]);
 
         $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
-                'renglones'=> array("d nombre", "d denomincacion")
+                'renglones'=> array("d nombre", "d denomincacion".'d denominacionnn')
         ));
 
 
@@ -190,7 +190,7 @@ class F08 extends FormSkeleton {
             $this->populateFieldWithValue("e %2", $tDecimal);
 
             $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
-                    'renglones'=> array("d apellido 1", "d apellido 2", "d apellido 3 (cuil)")
+                    'renglones'=> array("d nombre", "d denomincacion",'e denominacionnn')
                     ),'Character');
 
             $this->populateFieldWithValue("e calle", $d["Character"]["calle"]);
@@ -240,7 +240,7 @@ class F08 extends FormSkeleton {
             $this->populateMaritalStatuses($d['Character']['marital_status_id'], $dFieldsMaritalStat);
 
             $this->populateFieldWithValue("e nupcia", $d["Character"]["nupcia"]);
-            $this->populateFieldWithValue("e apellidoe", $d["Character"]["conyuge"]);
+            $this->populateFieldWithValue("e apellido", $d["Character"]["conyuge"]);
             $this->populateFieldWithValue("e personeria", $d["Character"]["personeria_otorgada"]);
             $this->populateFieldWithValue("e datos", $d["Character"]["inscripcion"]);
             $dInscDate = array(
@@ -460,7 +460,7 @@ class F08 extends FormSkeleton {
                                 'le'=> $vMeter['arg le'],
                                 'lc'=> $vMeter['arg lc'],
                         ),
-                        'extanjero' => array(
+                        'extranjero' => array(
                                 'dni'=> $vMeter['ext dni'],
                                 'ci'=> $vMeter['ext ci'],
                                 'pasap'=> $vMeter['ext pasap'],
@@ -473,6 +473,7 @@ class F08 extends FormSkeleton {
                 $id_type_id = 'identification_type_id';
                 $id_number = $d["Representative"]["identification_number"];
                 $auth =  $d["Representative"]["nationality"];
+                $nacionalityType = $d['Representative']['nationality_type'];
             }
         } else {
             if (!empty($d[$tipo])) {
@@ -480,15 +481,13 @@ class F08 extends FormSkeleton {
                 $id_type_id = 'apoderado_identification_type_id';
                 $id_number = $d[$tipo]["apoderado_identification_number"];
                 $auth =  $d[$tipo]["apoderado_identification_auth"];
+                $nacionalityType = $d[$tipo]['nationality_type_id'];
             }
         }
-
-        $this->populateIdentifications($d['Representative']['nationality_type'], $d[$tipo][$id_type_id], $fieldApoderado);
+        $this->populateIdentifications($nacionalityType, $d[$tipo][$id_type_id], $fieldApoderado);
         $this->populateFieldWithValue($vMeter['name'],$name);
         $this->populateFieldWithValue($vMeter['numerodoc'], $id_number);
         $this->populateFieldWithValue($vMeter['autoridad'], $auth);
-
-
     }
 
 

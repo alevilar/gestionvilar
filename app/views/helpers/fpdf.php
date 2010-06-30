@@ -160,11 +160,17 @@ class FpdfHelper extends AppHelper {
      *
      * @param integer $size
      */
-    function SetFont($family, $style='', $size=0) {
+    function SetFont($family = 'Helvetica', $style='B', $size=10) {
         return $this->Pdf->SetFont($family, $style, $size);
     }
 
-
+    /**
+     *
+     * @param float $size  El tamaño (en puntos).
+     */
+    function SetFontSize(float $size){
+        return $this->Pdf->SetFontSize($size);
+    }
 
     function GetStringWidth($s) {
         $s = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $s);
@@ -206,27 +212,17 @@ class FpdfHelper extends AppHelper {
      * @param <type> $link
      */
     function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill=true, $link='') {
-        // recorto el texto si sobrepasa el ancho de la celda
-        $vec = explode(" ",$txt);
-        $texto = '';
-        while ($palabra = array_shift($vec)) {
-            if ($palabra == 'CUIT') {
-                $palabra .= " ".array_shift($vec);
+        if ($w < $this->GetStringWidth($txt)) {
+            // recorto el texto si sobrepasa el ancho de la celda
+            $txtAuxCort = '';
+            $txtAux='';
+            for($i= 0;$w >= $this->GetStringWidth($txtAuxCort);$i++){
+                $txtAux .= substr($txt, $i,1);
+                $txtAuxCort = $txtAux.'...';
             }
-            // si el renglon tiene ancho infinito, o sin límite
-            if ($w == 0) {
-                array_unshift($vec,$palabra);
-                $texto = implode(" ", $vec);
-                $vec = array(); // vacio el array
-            }
-            if ($w >= $this->GetStringWidth($texto)) {
-                $texto .= " " . $palabra;
-            } else { // si quedó recortado le agrego los puntos suspensivos
-                $texto .= "...";
-                break;
-            }
+            
+            $txt = $txtAux.'...';
         }
-        $txt = $texto;
         $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
     }

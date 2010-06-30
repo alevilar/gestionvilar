@@ -85,7 +85,6 @@ class F01 extends FormSkeleton {
 
             $tipoYDoc = ($d['Vehicle']['Customer']['Identification']['IdentificationType']['id'] == 2) // SI ES CUIT !
                     ? $tipoYDoc : '';
-            debug($tipoYDoc);
             $tName .= " ".$tipoYDoc;
             // die($tName);
         }

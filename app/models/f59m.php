@@ -57,7 +57,47 @@ class F59m extends FormSkeleton {
     }
 
 
+
+
+    function getFormImputs($data){
+        $capos = array(
+            array(
+           'legend'=> '"A" DATOS DEL MANDATARIO / EMPLEADO',
+                 'agent_id'=> array('empty'=>'Seleccione'),
+                'mandatario_apellidos',
+                'mandatario_nombre',
+                'mandatario_identification',
+                'mandatario_domicilio',
+                'mandatario_domicilio_numero',
+                'mandatario_domicilio_piso',
+                'mandatario_domicilio_dpto',
+                'mandatario_localidad',
+                'mandatario_provincia',
+                'mandatario_cp',
+                'mandatario_matricula',
+                'mandatario_matricula_mandatario',
+            ),
+            array(
+            'legend'=> '"B" TRAMITE PRESENTADO',
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
+                'vehiculo_dominio',
+                'tramite',
+                'solicitud_tipo',
+                'n_control',
+            ),
+            array(
+             'legend'=> '"C" OBSERVACIONES',
+                'observaciones',
+            )
+           
+        );
+        return $capos;
+    }
+
+    
+
     function mapDataPage1() {
+        /*
         $d = $this->data;
 
         $this->populateFieldWithValue("apellido", $d["Agent"]["surname"]);
@@ -78,6 +118,7 @@ class F59m extends FormSkeleton {
         $this->populateFieldWithValue("solicitud", $d["F59m"]["solicitud_tipo"]);
         $this->populateFieldWithValue("control", $d["F59m"]["n_control"]);
         $this->populateFieldWithValue("observaciones", $d["F59m"]["observaciones"]);
+         */
     }
 
 

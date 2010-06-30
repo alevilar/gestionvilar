@@ -12,12 +12,13 @@ if ($debug_mode) {
 
 
 // Fuente
-$this->Fpdf->SetFont('Courier','',10);
-
+$this->Fpdf->SetFont();
 
 
 
 foreach ($page1 as $f) {
+
+
     $c = $f['FieldCoordenate'];
     $fType = $f['FieldType']['name'];
 
@@ -35,12 +36,13 @@ if (count($page2)>0) {
         $fType = $f['FieldType']['name'];
 
         if (!empty($c['value'])) {
+            $this->Fpdf->SetFontSize($c['fontSize']);
             $this->Fpdf->{$fType}($c['x'], $c['y'], $c['value'], $c['w'], $c['h']);
         }
     }
 }
 
-
+//die("vista");
 
 
 echo $this->Fpdf->output($form_name.'_'.$vehicle_domain.'.pdf','i');
