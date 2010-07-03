@@ -30,6 +30,7 @@ abstract class FormSkeleton extends AppModel {
      * @var integer
      */
     var $form_id; // este sirve para generar el PDF
+    var $form_name = null; // este sirve para las vistas generalmente
     var $vehicle_id; // este sirve para generar la vista del form_add
 
     function __construct($id = false, $table = null, $ds = null) {
@@ -46,14 +47,15 @@ abstract class FormSkeleton extends AppModel {
 
 
     /**
-     * Me mapea la data del formulario para cada field
-     * utiliza los atributos this->data y this->fields
-     * esto hay que redefinirlo para cada formulario
+     *
+     * @return string $formName nombre del foprmilario EJ: F02
      */
-    abstract function mapDataPage1();
-
-    abstract function mapDataPage2();
-
+    public function getFormName(string $formName){
+        if (empty($this->form_name)){
+            debug("Error: Nombre del formulario no setteado para Model: ".$this->name);
+        }
+        return $this->form_name;
+    }
 
     /**
      *  Son los capos que seran renderizados en el formulario de ADD del formulario en cuestion
@@ -114,6 +116,7 @@ abstract class FormSkeleton extends AppModel {
         } else {
             $ret = parent::find($conditions, $fields, $order, $recursive);
         }
+        $this->data = $ret;
         return $ret;
     }
 
@@ -165,10 +168,18 @@ abstract class FormSkeleton extends AppModel {
         $this->autoPopulateFields();
 
         // asigo los valores manuales que no fueron llenados en el proceso anterior por cualquier mpotivo
-        $this->mapDataPage1();
-        $this->mapDataPage2();
+        $this->mapDataPage();
     }
 
+
+    /**
+     * Esta funcion modifica campos que por algun motivo no quier que sean asignados
+     * automaticamente desde la base de datos
+     * @return null
+     */
+    function mapDataPage(){
+        return null;
+    }
 
     /**
      * Segun lo ingresado en el campo "related_field_table de la tabla field:coordenates
@@ -197,6 +208,17 @@ abstract class FormSkeleton extends AppModel {
         }
     }
 
+
+    /**
+     *  aca puedo escribir codigo javascript para ser ejecutado al final de la
+     *  vista del formulario ADD_FORM
+     *
+     * @return string
+     *                  EJ:  echo 'var algo=null;';
+     */
+    function getJavascript(){
+        echo '';
+    }
 
 
 

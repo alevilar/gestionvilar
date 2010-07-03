@@ -123,9 +123,12 @@ class FieldCreatorsController extends AppController {
         }
 
         $formInputs = $this->{$form_model_name}->getFormImputs($this->data);
-        $form_name = $this->{$form_model_name}->name;
+        $formName = $this->{$form_model_name}->name;
+        $writeJavascript = $this->{$form_model_name}->getJavascript();
+
+        $elements = $this->{$form_model_name}->getElements();
         
-        $this->set(compact('representatives', 'formInputs', 'form_name'));
+        $this->set(compact('representatives', 'formInputs', 'formName', 'elements', 'writeJavascript'));
 
         //$this->render(strtolower('add_' . $form_model_name));
     }

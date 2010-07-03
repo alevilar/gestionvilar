@@ -5,6 +5,7 @@ App::import('Lib', 'FormSkeleton');
 class F59m extends FormSkeleton {
     var $name = 'F59m';
     var $useTable = 'f59ms';
+    var $formName = 'F59M';
     
     var $validate = array(
             'vehicle_id' => array(
@@ -50,8 +51,17 @@ class F59m extends FormSkeleton {
 
     function getViewVars() {
         $cosasParaver = parent::getViewVars();
+        $cosasParaver['formName'] = $this->formName;
 
         $agents['agents'] = $this->Agent->find('list');
+        $agentAux = $this->Agent->find('all', array('contain'=>array('IdentificationType')));
+        
+        foreach ($agentAux as $au) {
+            //debug(json_encode($au));
+            $au['Agent']['identification_name'] = $au['IdentificationType']['name'];
+            $agents['agentJsonData'][$au['Agent']['id']] = json_encode($au['Agent']);
+        }
+
         return $cosasParaver + $agents;
         return array();
     }
@@ -59,31 +69,44 @@ class F59m extends FormSkeleton {
 
 
 
+/**
+ *
+ * @return array [nombre del elemento] => array [opciones del elemento]
+ */
+    function getElements(){
+        return array(
+            'field_forms/agents_data' => array('vehicle'=>$this->data['Vehicle']),
+            //'customer_form_view' => array('customer'=>$this->data['Vehicle']['Customer'])
+        );
+    }
+
+
+
     function getFormImputs($data){
         $capos = array(
             array(
            'legend'=> '"A" DATOS DEL MANDATARIO / EMPLEADO',
-                 'agent_id'=> array('empty'=>'Seleccione'),
-                'mandatario_apellidos',
-                'mandatario_nombre',
-                'mandatario_identification',
-                'mandatario_domicilio',
-                'mandatario_domicilio_numero',
-                'mandatario_domicilio_piso',
-                'mandatario_domicilio_dpto',
-                'mandatario_localidad',
-                'mandatario_provincia',
-                'mandatario_cp',
-                'mandatario_matricula',
-                'mandatario_matricula_mandatario',
+                //'agent_id'=> array('empty'=>'Seleccione'),
+                'mandatario_apellidos'=> array('label'=>'Apellidos'),
+                'mandatario_nombre'=> array('label'=>'Nombres'),
+                'mandatario_identification'=> array('label'=>'Tipo y N° Documento'),
+                'mandatario_domicilio'=> array('label'=>'Dirección'),
+                'mandatario_domicilio_numero'=> array('label'=>'Número'),
+                'mandatario_domicilio_piso'=> array('label'=>'Piso'),
+                'mandatario_domicilio_dpto'=> array('label'=>'Departamento'),
+                'mandatario_localidad'=> array('label'=>'Localidad'),
+                'mandatario_provincia'=> array('label'=>'Provincia'),
+                'mandatario_cp'=> array('label'=>'Código Postal'),
+                'mandatario_matricula' => array('label'=>'Matrícula'),
+                'mandatario_matricula_mandatario' => array('label'=>'Matrícula Mandatario'),
             ),
             array(
             'legend'=> '"B" TRAMITE PRESENTADO',
                 'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-                'vehiculo_dominio',
-                'tramite',
-                'solicitud_tipo',
-                'n_control',
+                'vehiculo_dominio'=> array('label'=>'Dominio'),
+                'tramite'=> array('label'=>'Trámite'),
+                'solicitud_tipo'=> array('label'=>'Tipo de Solicitud'),
+                'n_control'=> array('label'=>'N° Control'),
             ),
             array(
              'legend'=> '"C" OBSERVACIONES',
@@ -96,34 +119,5 @@ class F59m extends FormSkeleton {
 
     
 
-    function mapDataPage1() {
-        /*
-        $d = $this->data;
-
-        $this->populateFieldWithValue("apellido", $d["Agent"]["surname"]);
-        $this->populateFieldWithValue("nombre", $d["Agent"]["first_name"]);
-        $this->populateFieldWithValue("dni", $d["Agent"]['IdentificationType']['name']. ' '.$d["Agent"]['identification_number']);
-        $this->populateFieldWithValue("domicilio", $d["Agent"]["address"]);
-        $this->populateFieldWithValue("numero", $d["Agent"]["address_number"]);
-        $this->populateFieldWithValue("piso", $d["Agent"]["address_floor"]);
-        $this->populateFieldWithValue("depto", $d["Agent"]["address_apartment"]);
-        $this->populateFieldWithValue("localidad", $d["Agent"]["city"]);
-        $this->populateFieldWithValue("provincia", $d["Agent"]["county"]);
-        $this->populateFieldWithValue("cod post", $d["Agent"]["postal_code"]);
-        $this->populateFieldWithValue("matricula", $d["Agent"]["license"]);
-        $this->populateFieldWithValue("mat manda", $d["Agent"]["super_license"]);
-
-        $this->populateFieldWithValue("dominio", $d["vehicle"]["patente"]);
-        $this->populateFieldWithValue("tramite", $d["F59m"]["tramite"]);
-        $this->populateFieldWithValue("solicitud", $d["F59m"]["solicitud_tipo"]);
-        $this->populateFieldWithValue("control", $d["F59m"]["n_control"]);
-        $this->populateFieldWithValue("observaciones", $d["F59m"]["observaciones"]);
-         */
-    }
-
-
-    function mapDataPage2() {
-
-    }
 }
 ?>

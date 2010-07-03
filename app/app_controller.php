@@ -62,6 +62,13 @@ class AppController extends Controller {
     }
 
     function isAuthorized(){
+        if ($this->Auth->user('username') != 'dolores' &
+            $this->Auth->user('username') != 'alevilar' &
+            $this->Auth->user('username') != 'matias'){
+                if ($this->action == 'delete'){
+                    return false;
+                }
+        }
         return true;
     }
     

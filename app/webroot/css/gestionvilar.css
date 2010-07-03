@@ -2,6 +2,14 @@ A {
     outline: none;
 }
 
+.letra-azul{
+    color: blue;
+}
+
+.letra-marron{
+    color: maroon;
+}
+
 textarea{
     height: auto;
 }

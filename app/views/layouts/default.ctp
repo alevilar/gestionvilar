@@ -45,16 +45,18 @@
 
 
         echo $this->Html->script(array(
-        'jquery',
-        'date',
-        'jquery.datePicker', // calendario usado en input date
-        'cake.datePicker',   // calendario en input tipo date
-        'menu',
-        'jquery.form',
-        'jquery.form.wizard',
-        'jquery.history',
-        'jquery.validate',
-        'jquery.blockUI',
+            'jquery',
+            'date',
+            'jquery.datePicker', // calendario usado en input date
+            'cake.datePicker',   // calendario en input tipo date
+            'menu',
+            'jquery.form',
+            'jquery.form.wizard',
+            'jquery.history',
+            'jquery.validate',
+            'jquery.blockUI',
+            'jquery.cakeFormFill',
+            'jquery.populate',
         ));
         echo $this->Html->css(array('datePicker.css'));
         // DatePicker end

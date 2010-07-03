@@ -1,5 +1,4 @@
 <?
-
 $form_name = 'F59m';
 
 $customer = empty($this->data['Vehicle']['Customer']['name'])?'':$this->data['Vehicle']['Customer']['name'];
@@ -22,8 +21,8 @@ if (!empty($this->data[$form_name]['id'])) {
 echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 
 
-//echo $this->Form->inputs($formInputs);
-/*
+echo $this->Form->inputs();
+
 echo $this->Form->inputs('observaciones', array('type'=>'textarea'));
 echo $this->Form->input('observaciones', array('type'=>'textarea'));
 echo $this->Form->input('observaciones', array('type'=>'textarea'));
@@ -42,7 +41,7 @@ echo $this->Form->input('tramite',array('label'=>'Trámite'));
 echo $this->Form->input('solicitud_tipo', array('label'=>'Solicitud Tipo'));
 echo $this->Form->input('n_control', array('label'=>'N° Control'));
 echo $this->Form->input('observaciones', array('type'=>'textarea'));
-*/
+
 echo $this->element('field_forms/agents_data');
 ?>
 </div>

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gestion.z-a.com.ar\n"
-"POT-Creation-Date: 2010-06-23 19:11-0300\n"
+"POT-Creation-Date: 2010-07-02 23:43-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ale Vilar <alevilar@gmail.com>\n"
 "Language-Team: \n"
@@ -184,11 +184,10 @@ msgstr "Vehiculo"
 #: /views/customer_homes/index.ctp:13;59
 #: /views/customer_homes/view.ctp:47
 #: /views/customers/index.ctp:11;50
-#: /views/field_coordenates/add.ctp:20
-#: /views/field_coordenates/edit.ctp:21
+#: /views/field_coordenates/add.ctp:27
+#: /views/field_coordenates/edit.ctp:27
 #: /views/field_coordenates/index.ctp:23;70
 #: /views/field_coordenates/view.ctp:52
-#: /views/field_creators/add.ctp:12
 #: /views/field_creators/edit.ctp:13
 #: /views/field_creators/index.ctp:7;43
 #: /views/field_creators/view.ctp:17;41
@@ -229,11 +228,10 @@ msgstr "Acciones"
 #: /views/customer_homes/index.ctp:62;64
 #: /views/customer_homes/view.ctp:51;53;55
 #: /views/customers/index.ctp:53;55;57;59;61
-#: /views/field_coordenates/add.ctp:23;24;26
-#: /views/field_coordenates/edit.ctp:25;26;28
+#: /views/field_coordenates/add.ctp:30;31;33
+#: /views/field_coordenates/edit.ctp:31;32;34
 #: /views/field_coordenates/index.ctp:73;75
 #: /views/field_coordenates/view.ctp:56;58;60
-#: /views/field_creators/add.ctp:15;16
 #: /views/field_creators/edit.ctp:17;18
 #: /views/field_creators/index.ctp:46
 #: /views/field_creators/view.ctp:21;23
@@ -261,7 +259,7 @@ msgstr "Listar %s"
 #: /views/agents/edit.ctp:5
 #: /views/agents/index.ctp:2
 #: /views/agents/view.ctp:91
-#: /views/layouts/default.ctp:109
+#: /views/layouts/default.ctp:111
 msgid "Agents"
 msgstr "Gestores"
 
@@ -279,7 +277,7 @@ msgstr "Gestores"
 #: /views/identifications/edit.ctp:21
 #: /views/identifications/index.ctp:56
 #: /views/identifications/view.ctp:38
-#: /views/layouts/default.ctp:111
+#: /views/layouts/default.ctp:113
 msgid "Identification Types"
 msgstr "Tipos de Identificaciones"
 
@@ -298,11 +296,10 @@ msgstr "Tipos de Identificaciones"
 #: /views/customer_homes/index.ctp:61;63;65
 #: /views/customer_homes/view.ctp:52;54;56
 #: /views/customers/index.ctp:52;54;56;58;60;62
-#: /views/field_coordenates/add.ctp:25;27
-#: /views/field_coordenates/edit.ctp:27;29
+#: /views/field_coordenates/add.ctp:32;34
+#: /views/field_coordenates/edit.ctp:33;35
 #: /views/field_coordenates/index.ctp:72;74;76;78
 #: /views/field_coordenates/view.ctp:57;59;61
-#: /views/field_creators/add.ctp:17
 #: /views/field_creators/edit.ctp:19
 #: /views/field_creators/index.ctp:45;47
 #: /views/field_creators/view.ctp:22;24;73
@@ -349,10 +346,9 @@ msgstr "Tipo de Identificación"
 #: /views/customers/add.ctp:6;29;51
 #: /views/customers/edit.ctp:36;61
 #: /views/field_coordenates/add.ctp:4
-#: /views/field_creators/add.ctp:4
 #: /views/identification_types/add.ctp:4
 #: /views/identifications/add.ctp:4
-#: /views/layouts/default.ctp:110
+#: /views/layouts/default.ctp:112
 #: /views/marital_statuses/add.ctp:4
 #: /views/representatives/add.ctp:5
 #: /views/spouses/add.ctp:6
@@ -367,7 +363,7 @@ msgstr "Agregar %s"
 #: /views/agents/edit_ajax.ctp:6
 #: /views/agents/index.ctp:7
 #: /views/agents/view.ctp:2;89;90;92
-#: /views/elements/field_forms/agents_data.ctp:5
+#: /views/elements/field_forms/agents_data.ctp:6
 msgid "Agent"
 msgstr "Gestor"
 
@@ -391,9 +387,8 @@ msgstr ""
 #: /views/characters/edit.ctp:77
 #: /views/customer_homes/add.ctp:15
 #: /views/customer_homes/edit.ctp:16
-#: /views/field_coordenates/add.ctp:17
-#: /views/field_coordenates/edit.ctp:18
-#: /views/field_creators/add.ctp:9
+#: /views/field_coordenates/add.ctp:24
+#: /views/field_coordenates/edit.ctp:24
 #: /views/field_creators/edit.ctp:10
 #: /views/identification_types/add.ctp:9
 #: /views/identification_types/edit.ctp:10
@@ -499,7 +494,7 @@ msgstr "Editar"
 #: /views/customer_homes/edit.ctp:22
 #: /views/customer_homes/index.ctp:39
 #: /views/customers/index.ctp:30
-#: /views/field_coordenates/edit.ctp:24
+#: /views/field_coordenates/edit.ctp:30
 #: /views/field_coordenates/index.ctp:50
 #: /views/field_creators/edit.ctp:16
 #: /views/field_creators/index.ctp:23
@@ -529,7 +524,7 @@ msgstr "Eliminar"
 #: /views/customer_homes/index.ctp:39
 #: /views/customer_homes/view.ctp:50
 #: /views/customers/index.ctp:30
-#: /views/field_coordenates/edit.ctp:24
+#: /views/field_coordenates/edit.ctp:30
 #: /views/field_coordenates/index.ctp:50
 #: /views/field_coordenates/view.ctp:55
 #: /views/field_creators/edit.ctp:16
@@ -626,7 +621,7 @@ msgstr "Apellido"
 #: /views/agents/view.ctp:24
 #: /views/character_types/view.ctp:44
 msgid "Identification Number"
-msgstr "Tipo de Identificación"
+msgstr "Número de Identificación"
 
 #: /views/agents/view.ctp:29
 #: /views/characters/add.ctp:16
@@ -715,7 +710,7 @@ msgstr "Tipo de Actor"
 #: /views/character_types/edit.ctp:17
 #: /views/character_types/index.ctp:2
 #: /views/character_types/view.ctp:21
-#: /views/layouts/default.ctp:112
+#: /views/layouts/default.ctp:114
 msgid "Character Types"
 msgstr "Tipo de Actores"
 
@@ -960,7 +955,7 @@ msgstr "Estado Marital"
 #: /views/identifications/edit.ctp:23
 #: /views/identifications/index.ctp:58
 #: /views/identifications/view.ctp:40
-#: /views/layouts/default.ctp:90
+#: /views/layouts/default.ctp:92
 #: /views/representatives/index.ctp:52
 #: /views/vehicles/view.ctp:93
 msgid "Customers"
@@ -1157,7 +1152,8 @@ msgstr "Imprimir"
 #: /views/field_creators/add_f08.ctp:114
 #: /views/field_creators/add_f11.ctp:50
 #: /views/field_creators/add_f12.ctp:50
-#: /views/field_creators/add_f59m.ctp:40
+#: /views/field_creators/add_f59m.ctp:57
+#: /views/field_creators/add_form.ctp:69
 msgid "PDF"
 msgstr ""
 
@@ -1165,56 +1161,52 @@ msgstr ""
 #: /views/field_coordenates/edit.ctp:4
 #: /views/field_coordenates/index.ctp:72
 #: /views/field_coordenates/view.ctp:2;54;55;57
-#: /views/field_creators/add.ctp:17
 #: /views/field_creators/edit.ctp:19
 #: /views/field_creators/index.ctp:47
 #: /views/field_creators/view.ctp:24;73
 msgid "Field Coordenate"
 msgstr "Generador de Coordenadas para Formularios"
 
-#: /views/field_coordenates/add.ctp:23
-#: /views/field_coordenates/edit.ctp:25
+#: /views/field_coordenates/add.ctp:30
+#: /views/field_coordenates/edit.ctp:31
 #: /views/field_coordenates/index.ctp:2
 #: /views/field_coordenates/view.ctp:56
-#: /views/field_creators/add.ctp:16
 #: /views/field_creators/edit.ctp:18
 #: /views/field_creators/index.ctp:46
 #: /views/field_creators/view.ctp:23;28
-#: /views/layouts/default.ctp:119
+#: /views/layouts/default.ctp:121
 msgid "Field Coordenates"
 msgstr "Coordenadas de los Campos"
 
-#: /views/field_coordenates/add.ctp:24
-#: /views/field_coordenates/edit.ctp:26
+#: /views/field_coordenates/add.ctp:31
+#: /views/field_coordenates/edit.ctp:32
 #: /views/field_coordenates/index.ctp:73
 #: /views/field_coordenates/view.ctp:58
-#: /views/field_creators/add.ctp:15
 #: /views/field_creators/edit.ctp:17
 #: /views/field_creators/index.ctp:2
 #: /views/field_creators/view.ctp:21
 msgid "Field Creators"
 msgstr "Creador de Campos de Formulario"
 
-#: /views/field_coordenates/add.ctp:25
-#: /views/field_coordenates/edit.ctp:27
+#: /views/field_coordenates/add.ctp:32
+#: /views/field_coordenates/edit.ctp:33
 #: /views/field_coordenates/index.ctp:74
 #: /views/field_coordenates/view.ctp:9;59
-#: /views/field_creators/add.ctp:4
 #: /views/field_creators/edit.ctp:4
 #: /views/field_creators/index.ctp:45
 #: /views/field_creators/view.ctp:2;19;20;22
 msgid "Field Creator"
 msgstr "Creador de un Campo del Formulario"
 
-#: /views/field_coordenates/add.ctp:26
-#: /views/field_coordenates/edit.ctp:28
+#: /views/field_coordenates/add.ctp:33
+#: /views/field_coordenates/edit.ctp:34
 #: /views/field_coordenates/index.ctp:75
 #: /views/field_coordenates/view.ctp:60
 msgid "Field Types"
 msgstr "Tipo de Campos para los formularios"
 
-#: /views/field_coordenates/add.ctp:27
-#: /views/field_coordenates/edit.ctp:29
+#: /views/field_coordenates/add.ctp:34
+#: /views/field_coordenates/edit.ctp:35
 #: /views/field_coordenates/index.ctp:76;78
 #: /views/field_coordenates/view.ctp:24;61
 msgid "Field Type"
@@ -1245,6 +1237,10 @@ msgstr ""
 msgid "H"
 msgstr ""
 
+#: /views/field_creators/add_form.ctp:20
+msgid "Download PDF"
+msgstr "Descargar PDF"
+
 #: /views/field_creators/view.ctp:33
 msgid "Field Creator Id"
 msgstr "Creador de Campos ID"
@@ -1253,43 +1249,43 @@ msgstr "Creador de Campos ID"
 msgid "Field Type Id"
 msgstr "Tipo de Campo ID"
 
-#: /views/layouts/default.ctp:96
+#: /views/layouts/default.ctp:98
 msgid "Home"
 msgstr ""
 
-#: /views/layouts/default.ctp:97
+#: /views/layouts/default.ctp:99
 msgid "Add Customer"
 msgstr "Agregar Cliente"
 
-#: /views/layouts/default.ctp:98
+#: /views/layouts/default.ctp:100
 msgid "Help"
 msgstr "Ayuda"
 
-#: /views/layouts/default.ctp:102
+#: /views/layouts/default.ctp:104
 msgid "Configurations"
 msgstr "Configuraciones"
 
-#: /views/layouts/default.ctp:105
+#: /views/layouts/default.ctp:107
 msgid "Add User"
 msgstr "Agregar Usuario"
 
-#: /views/layouts/default.ctp:106
+#: /views/layouts/default.ctp:108
 msgid "List Users"
 msgstr "Listar Usuarios"
 
-#: /views/layouts/default.ctp:107
+#: /views/layouts/default.ctp:109
 msgid "Logout"
 msgstr "Salir"
 
-#: /views/layouts/default.ctp:110
+#: /views/layouts/default.ctp:112
 msgid "Generic Character"
 msgstr "Actor Genérico"
 
-#: /views/layouts/default.ctp:116
+#: /views/layouts/default.ctp:118
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: /views/layouts/default.ctp:120
+#: /views/layouts/default.ctp:122
 msgid "Field Map"
 msgstr "Mapeo de Campos"
 

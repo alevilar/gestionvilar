@@ -9,7 +9,7 @@
         <div class="span-6">
             <?php
             echo $this->Form->hidden('id');
-            echo $this->Form->input('customer_id');
+            echo $this->Form->input('customer_id', array('class'=>'span-6 last'));
             echo $this->Form->input('vehicle_type_id', array(
             'empty'=>'Seleccione',
             'options'=>$vehicle_types,
