@@ -40,7 +40,7 @@ class AppController extends Controller {
 
     function beforeFilter() {
         $this->Auth->loginError ='Usuario o Password Incorrectos';
-        $this->Auth->authError = 'Debe registrarse para ingresar al sistema';
+        $this->Auth->authError = 'No tiene permisos para acceder aquí';
 
         $this->Auth->logoutRedirect='/users/login';
 

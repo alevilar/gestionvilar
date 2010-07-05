@@ -19,7 +19,8 @@ echo $this->Form->end('Buscar');
 			<th><?php echo $this->Paginator->sort('x');?></th>
 			<th><?php echo $this->Paginator->sort('y');?></th>
 			<th><?php echo $this->Paginator->sort('w');?></th>
-			<th><?php echo $this->Paginator->sort('h');?></th>
+			<th><?php echo $this->Paginator->sort('font_size');?></th>
+                        <th><?php echo $this->Paginator->sort('related_field_table');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -43,7 +44,8 @@ echo $this->Form->end('Buscar');
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['x']; ?>&nbsp;</td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['y']; ?>&nbsp;</td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['w']; ?>&nbsp;</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['h']; ?>&nbsp;</td>
+		<td><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?>&nbsp;</td>
+                <td><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCoordenate['FieldCoordenate']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCoordenate['FieldCoordenate']['id'])); ?>

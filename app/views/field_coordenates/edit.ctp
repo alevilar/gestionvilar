@@ -15,8 +15,37 @@
 		echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
 
                 echo "<hr>";
-                echo $this->Form->input('related_field_table', array('before'=>'AVAZADO - Aca se deberá escribir el nombre del campo en la tabla de la base de datos que hace referencia a este campo. Si no se escribe nada quiere decir que el campo merece un tratamiento especial yserá intercepatado y tatado desde la prograamación del código fuente.'));
-                echo $this->Form->input('test_print_text',array('before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+
+
+                $modelo = ClassRegistry::init("F".strtolower($this->data['FieldCreator']['name']));
+
+                echo "<div class='clear letra-azul'><b>Listado de Campos posibles:</b><br>";
+                foreach ($modelo->_schema as $c=>$v){
+                    echo $c." - ";
+                }
+                echo "</div>";
+
+                $camposMostrar = "<div class='letra-marron bold'>";
+                $dist = 99999999;
+                $campo = '';
+                foreach ($modelo->_schema as $c=>$v){
+                    $distA = levenshtein(strtolower($c), strtolower($this->data['FieldCoordenate']['name']));
+                    if ($distA < $dist){
+                        $dist = $distA;
+                        if ($distA <= 30){
+                            $camposMostrar .=  $c." - ";
+                        }
+                        $campo = $c;
+                    }
+                }
+                $camposMostrar .= "</div><br>";
+
+
+                
+                echo $this->Form->input('related_field_table', array('label'=>'Nombre del campo en Base de Datos','after'=>$camposMostrar,'before'=>'AVAZADO - Aca se deberá escribir el nombre del campo en la tabla de la base de datos que hace referencia a este campo. Si no se escribe nada quiere decir que el campo merece un tratamiento especial yserá intercepatado y tatado desde la prograamación del código fuente.'));
+                echo $this->Form->input('test_print_text',array('label'=>'Texto a imprimir para realizar pruebas de impresión','value'=>'Lalalal Lalalala Lala','before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+
+                echo $this->Form->input('continue_field_coordenate_id', array('empty'=>'Ninguno (si no entra, escribir solo el texto que entra y listo)','label'=>'¿En que campo continuar escribiendo?','after'=>'Indicar donde continuar escribiendo, en caso de que el texto no entrara en solo este campo del formulario. (hay veces en que uno desea seguir escribiendo en el reverso de la hoja, por ejemplo)','options'=>$fieldCoordenates));
                 echo "<hr>";
                 echo $this->Form->input('description');
 	?>

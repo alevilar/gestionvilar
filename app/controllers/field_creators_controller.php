@@ -3,7 +3,7 @@ class FieldCreatorsController extends AppController {
 
     var $name = 'FieldCreators';
 
-    var $uses = array('FieldCreator','FieldCoordenate');
+    var $uses = array('FieldCreator','FieldCoordenate','Printer');
 
     var $helpers = array('Fpdf');
     
@@ -79,8 +79,7 @@ class FieldCreatorsController extends AppController {
 
         }
 
-        $this->{$form_model_name}->vehicle_id = $vehicle_id;
-
+        // aegurarse que llego el vehiculo como parámetro. Caso contrario,redirigir y mostrar error.
         if (empty($vehicle_id)) {
             if (empty($this->data[$form_model_name]['vehicle_id'])) {
                 $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del vehículo');
@@ -89,25 +88,29 @@ class FieldCreatorsController extends AppController {
                 $vehicle_id = $this->data[$form_model_name]['vehicle_id'];
             }
         }
-        $conditions = array($form_model_name .'.vehicle_id'=>$vehicle_id);
+        // settear el id del vehiculo
+        $this->{$form_model_name}->vehicle_id = $vehicle_id;
+
+        
+        //$conditions = array($form_model_name .'.vehicle_id'=>$vehicle_id);
             
         if (!empty($this->data)) {
             if (!$this->{$form_model_name}->save($this->data[$this->{$form_model_name}->name])) {
                 $this->Session->setFlash("no pudo guardarse el formulario $form_model_name");
             } else {
-                $this->redirect('generar_pdf/'.$form_model_name.'/'.$this->{$form_model_name}->id.'.pdf');
-            }
-        } else {
-            if (!empty($this->data[$form_model_name]['id'])) {
-                $this->{$form_model_name}->id = $this->data[$form_model_name]['id'];
-                $conditions = array($form_model_name .'.id'=>$this->{$form_model_name}->id);
+                $this->redirect('generar_pdf/'.$this->data[$form_model_name]['printer_id'].'/'.$form_model_name.'/'.$this->{$form_model_name}->id.'.pdf');
             }
         }
 
-        $this->data = $this->{$form_model_name}->find(
-                'data', array(
+        if (!empty($this->data[$form_model_name]['id'])) {
+            $this->{$form_model_name}->id = $this->data[$form_model_name]['id'];
+            //$conditions = array($form_model_name .'.id'=>$this->{$form_model_name}->id);
+        }        
+
+        $this->data = $this->{$form_model_name}->find('data', array(
                 'form_id'=>$this->{$form_model_name}->id,
-                'vehicle_id'=>$vehicle_id));
+                'vehicle_id'=>$vehicle_id)
+        );
 
         $representatives = array();
         if (!empty($this->data['Vehicle']['Customer']['Representative'])) {
@@ -117,24 +120,29 @@ class FieldCreatorsController extends AppController {
         }
         $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
         unset($this->data[$form_model_name]['id']);
+
+        // meto en la vista las variables
         $modelViewVars = $this->{$form_model_name}->getViewVars();
         foreach ($modelViewVars as $varName => $varValue) {
             $this->set($varName, $varValue);
         }
-
         $formInputs = $this->{$form_model_name}->getFormImputs($this->data);
-        $formName = $this->{$form_model_name}->name;
+        $formName = $form_model_name;
         $writeJavascript = $this->{$form_model_name}->getJavascript();
-
         $elements = $this->{$form_model_name}->getElements();
+        $printers = $this->Printer->find('list');
         
-        $this->set(compact('representatives', 'formInputs', 'formName', 'elements', 'writeJavascript'));
+        $this->set(compact('representatives', 'formInputs', 'formName', 'elements', 'writeJavascript', 'printers'));
 
         //$this->render(strtolower('add_' . $form_model_name));
     }
 
 
-    function generar_pdf($form_model_name, $fxx_id = null) {
+    function generar_pdf($printer_id,$form_model_name, $fxx_id = null) {
+
+        $this->Printer->id = $printer_id;
+        $printer = $this->Printer->read();
+
         if (empty($form_model_name)) {
             $this->Session->setFlash('Formulario inválido. Se debe pasar como 1er parámetro el formulario Ej: "F02"');
             $this->redirect('/');
@@ -164,7 +172,7 @@ class FieldCreatorsController extends AppController {
 
         $this->set('form_name',$form_model_name);
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);
-        $this->set(compact('modelViewVars', 'debug_mode', 'page1', 'page2'));
+        $this->set(compact('modelViewVars', 'debug_mode', 'page1', 'page2', 'printer'));
 
        // debug($page1);//die("terminarlo");
     }

@@ -2,12 +2,18 @@ A {
     outline: none;
 }
 
+
+
 .letra-azul{
     color: blue;
 }
 
 .letra-marron{
     color: maroon;
+}
+
+.bold{
+    font-weight: bolder;
 }
 
 textarea{

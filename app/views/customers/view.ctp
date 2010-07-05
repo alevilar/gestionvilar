@@ -45,12 +45,6 @@
         <dl><?php $i = 0;
             $class = ' class="altrow"';?>
 
-            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Born'); ?></dt>
-            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                <?php echo $customer['Customer']['born']; ?>
-                &nbsp;
-            </dd>
-
             <?php if (!empty($customer['Identification'])):?>
                 <?php if (!empty($customer['Identification']['IdentificationType'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>
@@ -77,6 +71,15 @@
                     <?php echo $customer['CustomerNatural']['surname']; ?>
                 &nbsp;
             </dd>
+
+
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Born'); ?></dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerNatural']['born']; ?>
+                &nbsp;
+            </dd>
+
+            
                 <?php if ( !empty($customer['CustomerNatural']['MaritalStatus'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Marital Status'); ?></dt>
             <dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -103,6 +106,11 @@
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
             <dd<?php if ($i++ % 2 == 0) echo $class;?>>
                     <?php echo $customer['CustomerLegal']['name']; ?>
+                &nbsp;
+            </dd>
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Born'); ?></dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerLegal']['inscription_date']; ?>
                 &nbsp;
             </dd>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Inscription Entity'); ?></dt>

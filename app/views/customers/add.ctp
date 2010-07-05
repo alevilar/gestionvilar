@@ -10,8 +10,6 @@
                     'empty'=>'Seleccione',
                     'class'=>'link required',
                     ));
-
-                    echo $this->Jqform->date('born', array('label'=> 'Fecha de Creación / Nacimiento', 'minYear'=>1910));
                     ?>
                 </div>
                 <div class="span-8 last">
@@ -31,6 +29,7 @@
                     <?php
                     echo $this->Form->input('CustomerNatural.first_name', array('label'=>'Nombre', 'class'=>'required'));
                     echo $this->Form->input('CustomerNatural.surname', array('class'=>'required'));
+                    echo $this->Jqform->date('CustomerNatural.born', array('label'=> 'Fecha de Nacimiento', 'minYear'=>1910));
                     ?>
                 </div>
                 <div class="span-8 last">
@@ -52,6 +51,7 @@
                 <div class="span-8">
                     <?
                     echo $this->Form->input('CustomerLegal.name', array('class'=>'required'));
+                    echo $this->Jqform->date('CustomerLegal.inscription_date', array('label'=> 'Fecha de Creación', 'minYear'=>1910));
                     ?>
                 </div>
                 <div class="span-8 last">

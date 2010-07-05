@@ -108,6 +108,8 @@
                                         <li><? echo $this->Html->link(__('List Users',true),'/users/index');?></li>
                                         <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
                                         <hr />
+                                        <li><? echo $this->Html->link(__('List Printers',true),'/printers');?></li>
+                                        <hr />
                                         <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
                                         <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add_from_all');?></li>
                                         <li><? echo $this->Html->link(__('Identification Types',true),'/identification_types/index');?></li>
@@ -129,6 +131,7 @@
                 <div id="mensajero" class="span-11 last">
                     <?php
                     echo $this->Session->flash();
+                    echo $session->flash('auth');
                     ?>
                 </div>
             </div> <!-- End Header -->

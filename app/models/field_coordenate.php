@@ -101,7 +101,11 @@ class FieldCoordenate extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+                'FieldContinue'=> array(
+                    'className'=> 'FieldCoordenate',
+                    'foreignKey' => 'continue_field_coordenate_id',
+                ),
 	);
 
 

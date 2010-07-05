@@ -30,7 +30,6 @@ abstract class FormSkeleton extends AppModel {
      * @var integer
      */
     var $form_id; // este sirve para generar el PDF
-    var $form_name = null; // este sirve para las vistas generalmente
     var $vehicle_id; // este sirve para generar la vista del form_add
 
     function __construct($id = false, $table = null, $ds = null) {
@@ -44,23 +43,20 @@ abstract class FormSkeleton extends AppModel {
      * @return integer id generado en el Insert en la tabla field_creators
      */
     abstract public function getFieldCreatorId();
-
-
-    /**
-     *
-     * @return string $formName nombre del foprmilario EJ: F02
-     */
-    public function getFormName(string $formName){
-        if (empty($this->form_name)){
-            debug("Error: Nombre del formulario no setteado para Model: ".$this->name);
-        }
-        return $this->form_name;
-    }
+    
 
     /**
      *  Son los capos que seran renderizados en el formulario de ADD del formulario en cuestion
      */
     abstract function getFormImputs($data);
+
+
+/**
+ * Array de elementos a mostrar en la vista
+ */
+    public function getElements(){
+        return array();
+    }
 
 
 
@@ -91,6 +87,7 @@ abstract class FormSkeleton extends AppModel {
      * @param array fields array('form_id','vehicle_id')
      */
     public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null) {
+        
         if (!empty($this->vehicle_id)) {
             $fields['vehicle_id'] = $this->vehicle_id;
         }
@@ -108,6 +105,9 @@ abstract class FormSkeleton extends AppModel {
                         'conditions'=> array('Vehicle.id'=>$fields['vehicle_id']),
                         'contain' => $this->sContain['Vehicle'],
                 ));
+                if (!empty($ret['Vehicle']['Customer'])) {
+                    $ret['Customer'] = $ret['Vehicle']['Customer'];
+                }
             }
 
             if (!empty($ret['Customer'])) {
@@ -116,6 +116,42 @@ abstract class FormSkeleton extends AppModel {
         } else {
             $ret = parent::find($conditions, $fields, $order, $recursive);
         }
+      
+
+        // DOMICILIO
+        $encontrado = false;
+        if (!empty($ret['Vehicle']['Customer']['CustomerHome'])) {
+            foreach ($ret['Vehicle']['Customer']['CustomerHome'] as $h) {
+                if ($h['type']== 'Legal') {
+                    foreach ($h as $k=>$v) {
+                        $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                    }
+                    $encontrado = true;
+                    break;
+                }
+                if (!$encontrado) {
+                    if ($h['type']== 'Comercial') {
+                        foreach ($h as $k=>$v) {
+                            $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                        }
+                        $encontrado = true;
+                        break;
+                    }
+                }
+                if (!$encontrado) {
+                    foreach ($h as $k=>$v) {
+                        $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                    }
+                }
+            }
+        }
+
+        // IDENTIFICACION
+         if (!empty($ret['Vehicle']['Customer']['Identification']['IdentificationType'])) {
+            $ret['Vehicle']['Customer']['identification_type'] = $ret['Vehicle']['Customer']['Identification']['IdentificationType']['name'];
+            $ret['Vehicle']['Customer']['identification_number'] = $ret['Vehicle']['Customer']['Identification']['number'];
+         }
+
         $this->data = $ret;
         return $ret;
     }
@@ -536,6 +572,14 @@ abstract class FormSkeleton extends AppModel {
         $this->populateFieldWithValue($fields['año'], date('y', strtotime($date)));
     }
 
+
+
+
+
+
+
+
+    
  
 
 }

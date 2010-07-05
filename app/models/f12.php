@@ -30,6 +30,42 @@ class F12 extends FormSkeleton {
     }
 
 
+
+    function getFormImputs($data)
+    {
+        return array(
+            array(
+                'legend'=> 'Datos del Automotor Verificado',
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
+                'vehicle_patente'=> array('value'=>$data['Vehicle']['patente']),
+                'vehicle_brand' => array('value'=>$data['Vehicle']['brand']),
+                'vehicle_type' => array('value'=>$data['Vehicle']['type']),
+                'vehicle_model' => array('value'=>$data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('value'=>$data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('value'=>$data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('value'=>$data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('value'=>$data['Vehicle']['chasis_number']),
+            ),
+            array(
+                'legend'=>'Observaciones y/o constancias',
+                'observaciones'=> array('type'=>'textarea'),
+                'lugar',
+                'fecha_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
+                'fecha_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
+                'fecha_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
+            ),
+            array(
+                'legend'=>'Datos del Solicitante',
+                'nombre' => array('label'=>'Apellido y Nombre', 'value'=>$data['Vehicle']['Customer']['name']),
+                'tipoynrodoc'=>array('label'=>'N° y tipo de documento', 'value'=>$data['Vehicle']['Customer']['identification_type']. " ".$data['Vehicle']['Customer']['identification_number']),
+                'domicilio' => array('value'=>$data['Vehicle']['Customer']['Home']['address']),
+                'numero' => array('value'=>$data['Vehicle']['Customer']['Home']['number']),
+                'localidad' => array('value'=>$data['Vehicle']['Customer']['Home']['city']),
+            )
+        );
+    }
+
+
     function setSContain() {
         $this->sContain = array(
                 'Vehicle' => array(
@@ -41,50 +77,6 @@ class F12 extends FormSkeleton {
         );
     }
 
-
-    function mapDataPage2() {
-        return null;
-    }
-    
-
-    function mapDataPage1() {
-        $d = $this->data;
-        $this->populateFieldWithValue('dominio', $d['Vehicle']['patente']);
-        $this->populateFieldWithValue('MARCA', $d['Vehicle']['brand']);
-        $this->populateFieldWithValue('TIPO', $d['Vehicle']['type']);
-        $this->populateFieldWithValue('MODELO', $d['Vehicle']['model']);
-        $this->populateFieldWithValue('MARCA MOTOR', $d['Vehicle']['motor_brand']);
-        $this->populateFieldWithValue('N° MOTOR', $d['Vehicle']['motor_number']);
-        $this->populateFieldWithValue('MARCA CHASIS', $d['Vehicle']['chasis_brand']);
-        $this->populateFieldWithValue('N° CHASIS', $d['Vehicle']['chasis_number']);
-        $this->populateFieldWithValue('OBSERVACIONES', $d['F12']['observaciones']);
-        $this->populateFieldWithValue('LUGAR', $d['F12']['lugar']);
-        $this->populateFieldWithValue('FECHA - DIA', date('d',strtotime($d['F12']['fecha'])));
-        $this->populateFieldWithValue('FECHA - MES', date('m',strtotime($d['F12']['fecha'])));
-        $this->populateFieldWithValue('FECHA - AÑO', date('y',strtotime($d['F12']['fecha'])));
-
-        $this->populateFieldWithValue('APELLIDO Y NOMBRE', $d['F12']['nombre']);
-        $this->populateFieldWithValue('N° Y DNI', $d['F12']['tipoynrodoc']);
-        $this->populateFieldWithValue('CALLE', $d['F12']['domicilio']);
-        $this->populateFieldWithValue('N°', $d['F12']['numero']);
-        $this->populateFieldWithValue('LOCALIDAD', $d['F12']['localidad']);
-
-/*
-        $this->populateFieldWithValue('APELLIDO Y NOMBRE', $d['Vehicle']['Customer']['name']);
-        if (!empty($d['Vehicle']['Customer']['Identification']['IdentificationType']))
-            $this->populateFieldWithValue('N° Y DNI', $d['Vehicle']['Customer']['Identification']['IdentificationType']['name']. ' ' .$d['Vehicle']['Customer']['Identification']['number']);
-        if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {
-            foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
-                if ($h['type']== 'Legal') {
-                    $this->populateFieldWithValue('CALLE', $h['address']);
-                    $this->populateFieldWithValue('N°', $h['number']);
-                    $this->populateFieldWithValue('LOCALIDAD', $h['city']);
-                    break;
-                }
-            }
-        }
- * */
-    }
 }
 
 ?>

@@ -30,6 +30,8 @@ class F11 extends FormSkeleton {
     }
 
 
+
+
     function setSContain() {
         $this->sContain = array(
                 'Spouse',
@@ -46,7 +48,126 @@ class F11 extends FormSkeleton {
     }
 
 
+    public function beforeSave($options) {
+        parent::beforeSave($options);
 
+        if (!empty($this->data[$this->name])){
+
+            
+            switch ($this->data[$this->name]['vendedor_marital_status_id']){
+               case 1: // Casado
+                    $this->data[$this->name]['vendedor_casado'] = 'X';
+                    break;
+               case 2: //Soltero
+                    $this->data[$this->name]['vendedor_soltero'] = 'X';
+                    break;
+                case 3: // Viudo
+                    $this->data[$this->name]['vendedor_viudo'] = 'X';
+                    break;
+                case 4 : // DIvorciado
+                    $this->data[$this->name]['vendedor_divorciado'] = 'X';
+                    break;
+            }
+            
+
+            switch ($this->data[$this->name]['representative_identification_type_id']){
+                 case 1: //DNI
+                     $this->data[$this->name]['representative_identification_dni'] = 'X';
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['representative_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['representative_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['representative_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['representative_identification_ci'] = 'X';
+                    breaK;
+            }
+
+
+            switch ($this->data[$this->name]['spouse_identification_type_id']){
+                 case 1: //DNI
+                    $this->data[$this->name]['spouse_identification_dni'] = 'X';
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['spouse_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['spouse_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['spouse_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['spouse_identification_ci'] = 'X';
+                    breaK;
+            }
+       }
+            
+    }
+
+
+
+     function getFormImputs($data){
+         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+         $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+
+        $customerMaritalStatus = '';
+        $customerNuptials = '';
+        if ($data['Customer']['type'] == 'natural' && !empty($data['Customer']['CustomerNatural'])) {
+            $customerMaritalStatus = $data['Customer']['CustomerNatural']['marital_status_id'];
+            $customerNuptials = $data['Customer']['CustomerNatural']['nuptials'];
+        }
+
+         return array(
+             array(
+                 'legend'=>'Dominio',
+                 'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
+                 'vehicle_patente'=>array('label'=>'N° de Chapa Patente', 'value'=>$data['Vehicle']['patente'] ),
+                 ),
+             array(
+                 'legend'=>'Vendedor o Transmitente',
+                 'vendedor_name'=> array('label'=> 'Apellido y Nombres o Denominación del Vendedor', 'value'=>$data['Customer']['name'], 'class'=>'span-11 clear'),
+                 'vendedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione', 'value'=>$customerMaritalStatus),
+                 'vendedor_nuptials'=> array('div'=>array('class'=>'span-3 clear'), 'class'=>'span-1', 'label'=>'Nupcia N°','value'=>$customerNuptials),
+             ),
+              array(
+                'legend'=>'Indicar datos del comprados o adquiriente y lugar de entega del vehiculo. Si no la recuerda, fecha anticipada',
+                 'datos'=>array('label'=>false),
+             ),
+             array(
+                 'legend'=>false,
+                 'representative_id',
+                 'representative_name',
+                 'representative_identification_type_id'=> array('label'=>'Tipo Documento', 'options'=>$identificationsTypes, 'empty'=>'Seleccione'),
+                 'representative_identification_autoridad_o_pais',
+                 'representative_fecha_firma',
+             ),
+             array(
+                 'legend'=>false,
+                 'entrega_posesion',
+                 'entrega_tenencia',
+             ),
+             array(
+                 'legend'=>false,
+                 'spouse_id',
+                 'spouse_name',
+                 'spouse_identification_number',
+                 'spouse_identification_type_id'=> array('label'=>'Tipo Documento', 'options'=>$identificationsTypes, 'empty'=>'Seleccione'),
+                 'spouse_identification_autoridad_o_pais',
+                 'spouse_identification_fecha_firma',
+             ),
+         );
+     }
+
+
+
+
+    
 
     function mapDataPage2() {
         return null;

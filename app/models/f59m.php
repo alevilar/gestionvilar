@@ -5,7 +5,6 @@ App::import('Lib', 'FormSkeleton');
 class F59m extends FormSkeleton {
     var $name = 'F59m';
     var $useTable = 'f59ms';
-    var $formName = 'F59M';
     
     var $validate = array(
             'vehicle_id' => array(
@@ -51,7 +50,6 @@ class F59m extends FormSkeleton {
 
     function getViewVars() {
         $cosasParaver = parent::getViewVars();
-        $cosasParaver['formName'] = $this->formName;
 
         $agents['agents'] = $this->Agent->find('list');
         $agentAux = $this->Agent->find('all', array('contain'=>array('IdentificationType')));
@@ -61,25 +59,22 @@ class F59m extends FormSkeleton {
             $au['Agent']['identification_name'] = $au['IdentificationType']['name'];
             $agents['agentJsonData'][$au['Agent']['id']] = json_encode($au['Agent']);
         }
-
         return $cosasParaver + $agents;
-        return array();
     }
 
 
 
 
-/**
- *
- * @return array [nombre del elemento] => array [opciones del elemento]
- */
+    /**
+     *
+     * @return array [nombre del elemento] => array [opciones del elemento]
+     */
     function getElements(){
         return array(
             'field_forms/agents_data' => array('vehicle'=>$this->data['Vehicle']),
             //'customer_form_view' => array('customer'=>$this->data['Vehicle']['Customer'])
         );
     }
-
 
 
     function getFormImputs($data){
@@ -103,16 +98,15 @@ class F59m extends FormSkeleton {
             array(
             'legend'=> '"B" TRAMITE PRESENTADO',
                 'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-                'vehiculo_dominio'=> array('label'=>'Dominio'),
+                'vehiculo_dominio'=> array('label'=>'Dominio', 'value'=>$data['Vehicle']['patente']),
                 'tramite'=> array('label'=>'Trámite'),
                 'solicitud_tipo'=> array('label'=>'Tipo de Solicitud'),
                 'n_control'=> array('label'=>'N° Control'),
             ),
             array(
              'legend'=> '"C" OBSERVACIONES',
-                'observaciones',
+                'observaciones'=> array('type'=>'textarea'),
             )
-           
         );
         return $capos;
     }

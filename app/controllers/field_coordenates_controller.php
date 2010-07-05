@@ -59,8 +59,9 @@ class FieldCoordenatesController extends AppController {
 			}
 		}
 		$fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
+                $fieldCoordenates = $this->FieldCoordenate->find('list', array('field'=>array('FieldCoordenate.id','CONCAT(FieldCoordenate.name, " ",FieldCoordenate.field_creator_id)')));
 		$fieldTypes = $this->FieldCoordenate->FieldType->find('list');
-		$this->set(compact('fieldCreators', 'fieldTypes'));
+		$this->set(compact('fieldCreators', 'fieldTypes', 'fieldCoordenates'));
 	}
 
 	function edit($id = null) {
@@ -79,9 +80,11 @@ class FieldCoordenatesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->FieldCoordenate->read(null, $id);
 		}
+
+                $fieldCoordenates = $this->FieldCoordenate->find('list', array('conditions'=>array('FieldCoordenate.field_creator_id'=>$this->data['FieldCoordenate']['field_creator_id'])));
 		$fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
 		$fieldTypes = $this->FieldCoordenate->FieldType->find('list');
-		$this->set(compact('fieldCreators', 'fieldTypes'));
+		$this->set(compact('fieldCreators', 'fieldTypes', 'fieldCoordenates'));
 	}
 
 	function delete($id = null) {
