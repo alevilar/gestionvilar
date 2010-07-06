@@ -10,11 +10,11 @@
 <div class="representatives view">
 <h2><?php  __('Representative');?></h2>
 	<?php $i = 0; $class = ' class="altrow"';?>
-		<b><?php __('Name'); ?>:</b> <?php echo $representative['Representative']['name']; ?><br>
+		<b><?php __('Name'); ?>:</b> <?php echo $representative['Representative']['first_name']; ?><br>
 
 		<b><?php __('Surname'); ?>:</b> <?php echo $representative['Representative']['surname']; ?><br>
                 
-                <b>Identificación:</b> <?= @$representative['IdentificationType']['name'].' '.$representative['Representative']['identification_number']?><br>
+                <b>Identificación:</b> <?= @$representative['IdentificationType']['first_name'].' '.$representative['Representative']['identification_number']?><br>
 
                 <b>Nacionalidad:</b> <?= @$representativeType[$representative['Representative']['nationality_type']]?><br>
 

@@ -24,6 +24,7 @@ foreach ($page1 as $f) {
     if (!empty($c['value'])) {
         $pX = (int)$c['x'] + (int)$printer['Printer']['x'];
         $pY = (int)$c['y'] + (int)$printer['Printer']['y'];
+        $this->Fpdf->SetFontSize(floatval($c['fontSize']));
         $this->Fpdf->{$fType}($pX, $pY, $c['value'], $c['w'], $c['h']);
     }
 }
@@ -39,13 +40,11 @@ if (count($page2)>0) {
             // adiciono la variacion por la impresra seleccionada
             $pX = (int)$c['x'] + (int)$printer['Printer']['x'];
             $pY = (int)$c['y'] + (int)$printer['Printer']['y'];
-            $this->Fpdf->SetFontSize($c['fontSize']);
+            
+            $this->Fpdf->SetFontSize(floatval($c['fontSize']));
             $this->Fpdf->{$fType}($pX, $pY, $c['value'], $c['w'], $c['h']);
         }
     }
 }
-
-//die("vista");
-
 
 echo $this->Fpdf->output($form_name.'_'.$vehicle_domain.'.pdf','i');

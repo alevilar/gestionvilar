@@ -4,6 +4,9 @@ class Representative extends AppModel {
 
         var $nationalityTypes = array('argentino'=>'Argentino', 'extranjero'=>'Extranjero');
 
+        var $virtualFields = array('name' => 'CONCAT(Representative.surname, " ", Representative.first_name)');
+
+
 	var $validate = array(
 		'customer_id' => array(
 			'numeric' => array(

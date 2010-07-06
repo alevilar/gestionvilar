@@ -22,13 +22,6 @@
         <option class="opt-agents" value="<?php echo $a?>" json='<?php echo $agentJsonData[$a]?>'><?php echo $v?></option>
             <?php }?>
     </select>
-
-
-
-    <div id="agent-hide-link-<?php echo $random ?>" class="btn-ocultar"><a href="javascript: ;">Ocultar</a></div>
-
-    <div id="agent-data-<?php echo $random  ?>" style="background: silver"></div>
-
 </div>
 
 <script type="text/javascript">

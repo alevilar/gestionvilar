@@ -3,7 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('name');?></th>
+			<th><?php echo $this->Paginator->sort('first_name');?></th>
 			<th><?php echo $this->Paginator->sort('surname');?></th>
 			<th><?php echo $this->Paginator->sort('customer_id');?></th>
 			<th class="actions"><?php __('Actions');?></th>
@@ -18,10 +18,10 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $representative['Representative']['id']; ?>&nbsp;</td>
-		<td><?php echo $representative['Representative']['name']; ?>&nbsp;</td>
+		<td><?php echo $representative['Representative']['first_name']; ?>&nbsp;</td>
 		<td><?php echo $representative['Representative']['surname']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($representative['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $representative['Customer']['id'])); ?>
+			<?php echo $this->Html->link($representative['Customer']['first_name'], array('controller' => 'customers', 'action' => 'view', $representative['Customer']['id'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $representative['Representative']['id'])); ?>

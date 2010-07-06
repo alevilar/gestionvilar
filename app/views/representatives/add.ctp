@@ -4,7 +4,7 @@
 	<fieldset>
  		<legend><?php printf(__('Add %s', true), __('Representative', true)); ?></legend>
 	<?php
-		echo $this->Form->input('name');
+		echo $this->Form->input('first_name');
 		echo $this->Form->input('surname');
 		echo $this->Form->hidden('customer_id');
 

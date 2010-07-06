@@ -21,6 +21,7 @@ class FieldCoordenatesController extends AppController {
                 $this->paginate = array(
                     'limit'=>$limit,
                     'conditions'=> $condiciones,
+                    'order'=>'FieldCoordenate.id ASC',
                 );
                 $fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
                 $this->set(compact('fieldCreators'));

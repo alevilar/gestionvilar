@@ -112,12 +112,7 @@ class FieldCreatorsController extends AppController {
                 'vehicle_id'=>$vehicle_id)
         );
 
-        $representatives = array();
-        if (!empty($this->data['Vehicle']['Customer']['Representative'])) {
-            foreach ($this->data['Vehicle']['Customer']['Representative'] as $rep) {
-                $representatives[$rep['id']] = $rep['surname']. ' ' .$rep['name'];
-            }
-        }
+        
         $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
         unset($this->data[$form_model_name]['id']);
 
@@ -132,7 +127,7 @@ class FieldCreatorsController extends AppController {
         $elements = $this->{$form_model_name}->getElements();
         $printers = $this->Printer->find('list');
         
-        $this->set(compact('representatives', 'formInputs', 'formName', 'elements', 'writeJavascript', 'printers'));
+        $this->set(compact('formInputs', 'formName', 'elements', 'writeJavascript', 'printers'));
 
         //$this->render(strtolower('add_' . $form_model_name));
     }

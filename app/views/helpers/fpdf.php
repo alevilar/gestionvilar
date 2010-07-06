@@ -168,7 +168,7 @@ class FpdfHelper extends AppHelper {
      *
      * @param float $size  El tamaño (en puntos).
      */
-    function SetFontSize(float $size){
+    function SetFontSize($size){
         return $this->Pdf->SetFontSize($size);
     }
 
@@ -218,10 +218,10 @@ class FpdfHelper extends AppHelper {
             $txtAux='';
             for($i= 0;$w >= $this->GetStringWidth($txtAuxCort);$i++){
                 $txtAux .= substr($txt, $i,1);
-                $txtAuxCort = $txtAux.'...';
+                $txtAuxCort = $txtAux;
             }
             
-            $txt = $txtAux.'...';
+            $txt = $txtAux;
         }
         $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);

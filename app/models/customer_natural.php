@@ -40,13 +40,7 @@ class CustomerNatural extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $hasMany = array(
-		'Spouse' => array(
-			'className' => 'Spouse',
-			'foreignKey' => 'customer_natural_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
+		'Spouse' => array('dependent' => true),
 	);
 
 	var $belongsTo = array(

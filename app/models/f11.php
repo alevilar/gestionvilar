@@ -51,8 +51,19 @@ class F11 extends FormSkeleton {
     public function beforeSave($options) {
         parent::beforeSave($options);
 
-        if (!empty($this->data[$this->name])){
+        if (!empty($this->data[$this->name]['es_entrega'])){
+            // si es 1 es posesion
+            // si es 0 es entrega
+            if ($this->data[$this->name]['es_entrega'] == 1){
+                $this->data[$this->name]['entrega_tenencia'] = 'X';
+            } elseif($this->data[$this->name]['es_entrega'] == 0) {
+                $this->data[$this->name]['entrega_posesion'] = 'X';
+            }
 
+        }
+
+        
+        if (!empty($this->data[$this->name])){
             
             switch ($this->data[$this->name]['vendedor_marital_status_id']){
                case 1: // Casado
@@ -107,6 +118,8 @@ class F11 extends FormSkeleton {
                     breaK;
             }
        }
+
+       return true;
             
     }
 
@@ -118,9 +131,9 @@ class F11 extends FormSkeleton {
 
         $customerMaritalStatus = '';
         $customerNuptials = '';
-        if ($data['Customer']['type'] == 'natural' && !empty($data['Customer']['CustomerNatural'])) {
-            $customerMaritalStatus = $data['Customer']['CustomerNatural']['marital_status_id'];
-            $customerNuptials = $data['Customer']['CustomerNatural']['nuptials'];
+        if ($data['Vehicle']['Customer']['type'] == 'natural' && !empty($data['Vehicle']['Customer']['CustomerNatural'])) {
+            $customerMaritalStatus = $data['Vehicle']['Customer']['CustomerNatural']['marital_status_id'];
+            $customerNuptials = $data['Vehicle']['Customer']['CustomerNatural']['nuptials'];
         }
 
          return array(
@@ -131,137 +144,90 @@ class F11 extends FormSkeleton {
                  ),
              array(
                  'legend'=>'Vendedor o Transmitente',
-                 'vendedor_name'=> array('label'=> 'Apellido y Nombres o Denominación del Vendedor', 'value'=>$data['Customer']['name'], 'class'=>'span-11 clear'),
+                 'vendedor_name'=> array('label'=> 'Apellido y Nombres o Denominación del Vendedor', 'value'=>$data['Vehicle']['Customer']['name'], 'class'=>'span-11 clear'),
                  'vendedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione', 'value'=>$customerMaritalStatus),
                  'vendedor_nuptials'=> array('div'=>array('class'=>'span-3 clear'), 'class'=>'span-1', 'label'=>'Nupcia N°','value'=>$customerNuptials),
              ),
               array(
-                'legend'=>'Indicar datos del comprados o adquiriente y lugar de entega del vehiculo. Si no la recuerda, fecha anticipada',
-                 'datos'=>array('label'=>false),
+                'legend'=>false,
+                 'datos'=>array('label'=>'Indicar datos del comprados o adquiriente y lugar de entega del vehiculo. Si no la recuerda, fecha anticipada'),
              ),
              array(
-                 'legend'=>false,
-                 'representative_id',
-                 'representative_name',
+                 'legend'=>'Apoderado',
+                 'representative_name' => array('label'=>'Nombre'),
                  'representative_identification_type_id'=> array('label'=>'Tipo Documento', 'options'=>$identificationsTypes, 'empty'=>'Seleccione'),
-                 'representative_identification_autoridad_o_pais',
-                 'representative_fecha_firma',
+                 'representative_identification_number' => array('label'=>'N° Documento'),
+                 'representative_identification_autority' => array('label'=>'Autoridad (o Pais) que lo expidió'),
+                 'representative_fecha_firma' => array('label'=>'Fecha (para el sello y firma del certificante)'),
              ),
              array(
                  'legend'=>false,
-                 'entrega_posesion',
-                 'entrega_tenencia',
+                 'es_entrega'=>array(
+                     'label'=>'Si no se tratara de una venta seleccionar lo que corresponda',
+                     'options'=>array('Entrega de Posesión','Entrega de Tenencia'),
+                     'empty'=>'Seleccione',
+                     ),
              ),
              array(
-                 'legend'=>false,
-                 'spouse_id',
-                 'spouse_name',
-                 'spouse_identification_number',
+                 'legend'=>'Cónyuge',
+                 'conyuge_name' => array('label'=>'Apellido y Nombre del cónyuge del vendedor o transmitente'),
+                 'spouse_name' => array('label'=>'Apellido y Nombre del Apoderado del Cónyuge'),
                  'spouse_identification_type_id'=> array('label'=>'Tipo Documento', 'options'=>$identificationsTypes, 'empty'=>'Seleccione'),
-                 'spouse_identification_autoridad_o_pais',
-                 'spouse_identification_fecha_firma',
+                 'spouse_identification_number'=> array('label'=>'N° DOcumento'),
+                 'spouse_identification_autority'=> array('label'=>'Autoridad (o País) que lo expidió'),
+                 'spouse_identification_fecha_firma'=> array('label'=>'Fecha (para el sello y firma del certificante)'),
              ),
          );
      }
 
 
+     public function getElements() {
+         return array(
+            'field_forms/spouses_data'=> array('label'=>'Cónyuge o su Apoderado'),
+             'field_forms/representatives_data'=> array(),
+         );
+     }
 
+     public function getViewVars() {
+         parent::getViewVars();
 
-    
+         // Get Spouses
+         $spouses = array();
+         if (!empty($this->data['Vehicle']['Customer']['CustomerNatural']['id'])){
+             $spouses = ClassRegistry::init('Spouse')->find('all',array(
+                    'conditions'=>array('customer_natural_id'=>$this->data['Vehicle']['Customer']['CustomerNatural']['id']),
+                    'recursive'=>-1,
+                 ));
+         }
+         $finalSpouses = array();
+         foreach($spouses as $sp){
+             $finalSpouses[$sp['Spouse']['id']] = array(
+                 'text'=>$sp['Spouse']['name'],
+                 'json'=>json_encode($sp['Spouse']),
+             );
+         }
 
-    function mapDataPage2() {
-        return null;
-    }
-    
+         // Get Representatives
+         $representatives = array();
+         if (!empty($this->data['Vehicle']['Customer']['id'])){
+             $representatives = ClassRegistry::init('Representative')->find('all',array(
+                    'conditions'=>array('customer_id'=>$this->data['Vehicle']['Customer']['id']),
+                    'recursive'=>-1,
+                 ));
+         }
+         $finalRepresentatives = array();
+         foreach($representatives as $rp){
+             $finalRepresentatives[$rp['Representative']['id']] = array(
+                 'text'=>$rp['Representative']['name'],
+                 'json'=>json_encode($rp['Representative']),
+             );
+         }
 
-    function mapDataPage1() {
-        $d = $this->data;
-        $this->populateFieldWithValue("dominio", $d["Vehicle"]["patente"]);
-        $this->populateFieldWithValue("indicar datos...", $d["F11"]["datos"]);
-        $this->populateFieldWithValue("vendedor o trans", $d['Vehicle']["Customer"]["name"]);
-
-        if (!empty($d['Vehicle']["Customer"]['CustomerNatural']['marital_status_id'])){
-            switch ($d['Vehicle']["Customer"]['CustomerNatural']['marital_status_id']){
-               case 1: // Casado
-                   $this->populateFieldWithValue("casado", 'X');
-               break;
-               case 2: //Soltero
-                    $this->populateFieldWithValue("soltero", 'X');
-                    break;
-                case 3: // Viudo
-                    $this->populateFieldWithValue("viudo", 'X');
-                    break;
-                case 4 : // DIvorciado
-                    $this->populateFieldWithValue("divorciado", 'X');
-                    break;
-            }
-        }
-
-        if (!empty($d['Representative'])) {
-            $apeNom = $d['Representative']['surname']. ' ' .$d['Representative']['name'];
-             $this->populateFieldWithValue("apellido y nombre", $apeNom);
-            switch ($d['Representative']['identification_type_id']){
-                case 1: //DNI
-                     $this->populateFieldWithValue("dni", 'X');
-                    breaK;
-                case 6: // Pasaporte
-                    $this->populateFieldWithValue(" pasaporte", 'X');
-                    breaK;
-                case 3: // LE
-                    $this->populateFieldWithValue("l.e", 'X');
-                    breaK;
-                case 4: // LC
-                    $this->populateFieldWithValue("l.c", 'X');
-                    breaK;
-                case 5: // CI
-                    $this->populateFieldWithValue("c.i", 'X');
-                    breaK;
-            }
-            $id_number = $d['Representative']['identification_number'];
-            $this->populateFieldWithValue("numero", $id_number);
-            $this->populateFieldWithValue("autoridad", $d['Representative']['nationality']);
-        }
-
-        // este no se imprime
-        //$this->populateFieldWithValue("fecha, sello ...", $d["Model"]["fieldname"]);
-
-
-        $this->populateFieldWithValue("apellido y nombre", $d["F11"]["nombre_del_conyuge"]);
-        
-        if (!empty($d['Spouse'])) {
-            $s = $d['Spouse'];
-            $this->populateFieldWithValue("apellido y nombre conyuge", $s["name"]);
-            
-            switch ($s['identification_type_id']){
-                case 1: //DNI
-                     $this->populateFieldWithValue("dni conyuge", 'X');
-                    breaK;
-                case 6: // Pasaporte
-                    $this->populateFieldWithValue("pasaporte conyuge", 'X');
-                    breaK;
-                case 3: // LE
-                    $this->populateFieldWithValue("l.e conyuge", 'X');
-                    breaK;
-                case 4: // LC
-                    $this->populateFieldWithValue("l.c conyuge", 'X');
-                    breaK;
-                case 5: // CI
-                    $this->populateFieldWithValue("c.i conyuge", 'X');
-                    breaK;
-            }
-
-            $this->populateFieldWithValue("numero conyuge", $s["identification_number"]);
-            $this->populateFieldWithValue("autoridad conyuge", $s["identification_autority"]);
-            //$this->populateFieldWithValue("fecha y sello", $d["Model"]["fieldname"]);
-        }
-
-        if ($d["F11"]["tipo_entrega"] == 'posesion'){
-            $this->populateFieldWithValue("entrega posesion", 'X');
-            //$this->populateFieldWithValue("entrega tenencia", '');
-        } else {
-            $this->populateFieldWithValue("entrega tenencia", 'X');
-        }
-    }
+         return array(
+            'spouses'=>$finalSpouses,
+            'representatives'=> $finalRepresentatives,
+         );
+     }
 }
 
 ?>

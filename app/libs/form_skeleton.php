@@ -112,6 +112,7 @@ abstract class FormSkeleton extends AppModel {
 
             if (!empty($ret['Customer'])) {
                 $ret['Vehicle']['Customer'] = $ret['Customer'];
+                unset($ret['Customer']);
             }
         } else {
             $ret = parent::find($conditions, $fields, $order, $recursive);
