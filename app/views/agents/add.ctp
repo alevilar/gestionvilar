@@ -29,6 +29,7 @@
             echo $this->Form->input('address_number');
             echo $this->Form->input('address_floor');
             echo $this->Form->input('address_apartment');
+            echo $this->Form->input('postal_code');
             echo $this->Form->input('city');
             echo $this->Form->input('county');
             echo $this->Form->input('state');

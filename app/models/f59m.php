@@ -23,13 +23,9 @@ class F59m extends FormSkeleton {
     var $belongsTo = array('Agent','Vehicle');
 
 
-    /**
-     *
-     * @return integer id generado en el Insert en la tabla field_creators
-     */
-    function getFieldCreatorId() {
-        return 16;
-    }
+    // Id del Formulario
+    var $form_id = 16;
+
 
 
     function setSContain() {

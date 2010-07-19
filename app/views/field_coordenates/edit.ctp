@@ -24,25 +24,37 @@
                 }
                 echo "</div>";
 
-                $camposMostrar = "<div class='letra-marron bold'>";
+                $camposMostrar = "<div class='letra-marron bold' style='font-size: 14pt'><u>".$this->data['FieldCoordenate']['name']."</u><br>";
                 $dist = 99999999;
                 $campo = '';
+                $vecResult = array();
                 foreach ($modelo->_schema as $c=>$v){
-                    $distA = levenshtein(strtolower($c), strtolower($this->data['FieldCoordenate']['name']));
-                    if ($distA < $dist){
-                        $dist = $distA;
-                        if ($distA <= 30){
-                            $camposMostrar .=  $c." - ";
-                        }
-                        $campo = $c;
+                    $distA = levenshtein(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );
+                    if (similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) ) > 1) {
+                        $distA -= similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );
+                        $vecResult[$distA][] = $c;
                     }
                 }
-                $camposMostrar .= "</div><br>";
+                
+                ksort(&$vecResult);
+                $cont = 0;
+                foreach ($vecResult as $res){
+                    $camposMostrar .= implode(" - ", $res)." - ";
+                    if ($cont == 4){
+                        break;
+                    }
+                    $cont++;
+                }
+                //$camposMostrar .= implode(",", $vecResult)."</div><br>";
 
 
                 
                 echo $this->Form->input('related_field_table', array('label'=>'Nombre del campo en Base de Datos','after'=>$camposMostrar,'before'=>'AVAZADO - Aca se deberá escribir el nombre del campo en la tabla de la base de datos que hace referencia a este campo. Si no se escribe nada quiere decir que el campo merece un tratamiento especial yserá intercepatado y tatado desde la prograamación del código fuente.'));
-                echo $this->Form->input('test_print_text',array('label'=>'Texto a imprimir para realizar pruebas de impresión','value'=>$this->data['FieldCoordenate']['name'],'before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+
+                if (empty($this->data['FieldCoordenate']['test_print_text']) || (trim($this->data['FieldCoordenate']['test_print_text']) == 'Lalalal Lalalala Lala')){
+                    $this->data['FieldCoordenate']['test_print_text'] = $this->data['FieldCoordenate']['name'];
+                }
+                echo $this->Form->input('test_print_text',array('label'=>'Texto a imprimir para realizar pruebas de impresión', 'value'=> $this->data['FieldCoordenate']['test_print_text'],'before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
 
                 echo $this->Form->input('continue_field_coordenate_id', array('empty'=>'Ninguno (si no entra, escribir solo el texto que entra y listo)','label'=>'¿En que campo continuar escribiendo?','after'=>'Indicar donde continuar escribiendo, en caso de que el texto no entrara en solo este campo del formulario. (hay veces en que uno desea seguir escribiendo en el reverso de la hoja, por ejemplo)','options'=>$fieldCoordenates));
                 echo "<hr>";

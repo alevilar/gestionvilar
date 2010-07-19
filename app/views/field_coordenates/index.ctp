@@ -45,7 +45,7 @@ echo $this->Form->end('Buscar');
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['y']; ?>&nbsp;</td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['w']; ?>&nbsp;</td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?>&nbsp;</td>
-                <td title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?>"><?php echo empty($fieldCoordenate['FieldCoordenate']['related_field_table'])?'':'x'?></td>
+                <td title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?>" style="cursor: help"><?php echo empty($fieldCoordenate['FieldCoordenate']['related_field_table'])?'':'ver'?></td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCoordenate['FieldCoordenate']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCoordenate['FieldCoordenate']['id'])); ?>

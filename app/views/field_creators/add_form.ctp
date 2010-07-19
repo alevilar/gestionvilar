@@ -84,7 +84,7 @@ $vehicle_id = $this->data['Vehicle']['id'];
 
 
 <div class="clear">
-    <?php echo $this->Form->button(__('PDF',true), array('id'=>'pdf', 'type'=>'submit'));?>
+    <?php echo $this->Form->button(__('Download PDF',true), array('id'=>'pdf', 'type'=>'submit'));?>
 </div>
 <?php echo $this->Form->end();?>
 
@@ -94,7 +94,7 @@ $vehicle_id = $this->data['Vehicle']['id'];
 
 <?php
 // escribo el javascript pasado desde el controlador
-echo $writeJavascript
+$this->Js->buffer($writeJavascript);
 ?>
 
 

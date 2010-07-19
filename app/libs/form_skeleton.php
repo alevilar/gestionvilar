@@ -31,10 +31,18 @@ abstract class FormSkeleton extends AppModel {
      */
     var $form_id; // este sirve para generar el PDF
     var $vehicle_id; // este sirve para generar la vista del form_add
+    var $elements = array(); // array de elementos a mostrar en el formulario de carga para este formulario, justamente.
+                             // el array es dela forma: array('nombre del elemento'=>array('optiones'))
+
+
 
     function __construct($id = false, $table = null, $ds = null) {
         parent::__construct($id, $table, $ds);
         $this->setSContain();
+
+        if (empty($this->form_id)) {
+            debug("No se declaró el ID del formulario, no se puede continuar");
+        }
 
     }
 
@@ -42,7 +50,9 @@ abstract class FormSkeleton extends AppModel {
      *
      * @return integer id generado en el Insert en la tabla field_creators
      */
-    abstract public function getFieldCreatorId();
+    final public function getFieldCreatorId(){
+        return $this->form_id;
+    }
     
 
     /**
@@ -55,7 +65,7 @@ abstract class FormSkeleton extends AppModel {
  * Array de elementos a mostrar en la vista
  */
     public function getElements(){
-        return array();
+        return $this->elements;
     }
 
 
@@ -75,7 +85,21 @@ abstract class FormSkeleton extends AppModel {
      )
      )
      */
-    abstract function setSContain();
+    public function setSContain(){
+        $this->sContain = array(
+                'Representative',
+                'Vehicle' => array(
+                        'Customer'=>array(
+                                'Character'=>array('CharacterType'),
+                                'Representative',
+                                'CustomerLegal',
+                                'CustomerNatural'=>array('Spouse'),
+                                'CustomerHome',
+                                'Identification'=>array('IdentificationType')
+                        )
+                )
+        );
+    }
 
 
 
@@ -91,6 +115,7 @@ abstract class FormSkeleton extends AppModel {
         if (!empty($this->vehicle_id)) {
             $fields['vehicle_id'] = $this->vehicle_id;
         }
+        // este es el find que usan los formularios
         if ($conditions == 'data') {
             $cond = array(
                     'conditions'=> array($this->name . '.vehicle_id'=>$fields['vehicle_id']),
@@ -99,8 +124,10 @@ abstract class FormSkeleton extends AppModel {
             );
 
             $ret =  parent::find('first', $cond);
-
             if (empty($ret)) {
+                if (empty($this->Vehicle)){
+                    $this->Vehicle = ClassRegistry::init('Vehicle');
+                }
                 $ret = $this->Vehicle->find('first', array(
                         'conditions'=> array('Vehicle.id'=>$fields['vehicle_id']),
                         'contain' => $this->sContain['Vehicle'],
@@ -172,6 +199,7 @@ abstract class FormSkeleton extends AppModel {
         $this->data = $this->find('first', array(
                 'conditions'=> $conditions,
                 'contain' => $this->sContain,
+                'recursive'=>0,
         ));
     }
 
@@ -192,8 +220,6 @@ abstract class FormSkeleton extends AppModel {
      * @param integer $fxx_id id del formulario que quiero cargar la data
      */
     public function generateDataWithFields($fxx_id) {
-        // seteo el ID del formulario
-        $this->form_id = $fxx_id;
 
         // levanto los campos de este tipo de formulario de la tabla de coordenadas
         $this->loadFields();
@@ -204,19 +230,11 @@ abstract class FormSkeleton extends AppModel {
         // asigno los valoresque en field_coordenates ya tienen un campo en la tabla del model asignado
         $this->autoPopulateFields();
 
-        // asigo los valores manuales que no fueron llenados en el proceso anterior por cualquier mpotivo
-        $this->mapDataPage();
+       
     }
 
 
-    /**
-     * Esta funcion modifica campos que por algun motivo no quier que sean asignados
-     * automaticamente desde la base de datos
-     * @return null
-     */
-    function mapDataPage(){
-        return null;
-    }
+
 
     /**
      * Segun lo ingresado en el campo "related_field_table de la tabla field:coordenates
@@ -225,12 +243,15 @@ abstract class FormSkeleton extends AppModel {
      */
     function autoPopulateFields(){
         foreach ($this->fieldsPage1 as $p){
-            if (!empty($p['FieldCoordenate']['related_field_table'])){
+            if (!empty($p['FieldCoordenate']['related_field_table'])) {
                 $campo = $p['FieldCoordenate']['related_field_table'];
                 $formCampoNombre = $p['FieldCoordenate']['name'];
                 $fontSize = $p['FieldCoordenate']['font_size'];
-                $valor = $this->data[$this->name][$campo];
+              
+                $valor = $this->data[$this->name][trim($campo)];
+              
                 $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
+              
             }
         }
         unset($p);
@@ -268,6 +289,8 @@ abstract class FormSkeleton extends AppModel {
         $this->FieldCoordenate = ClassRegistry::init('FieldCoordenate');
         $this->FieldCoordenate->recursive = -1;
         $id = $this->getFieldCreatorId();
+
+        
         $this->fieldsPage1 = $this->FieldCoordenate->find('all', array(
                 'conditions'=>array(
                         'FieldCoordenate.field_creator_id'=>(int)$id,
@@ -295,45 +318,7 @@ abstract class FormSkeleton extends AppModel {
      * @return array
      */
     function getViewVars () {
-        $coso = $this->find();
-
-        $ret = array();
-        if (!empty($coso['Vehicle']['Customer']['CustomerNatural']['Spouse'])) {
-            $sps = $coso['Vehicle']['Customer']['CustomerNatural']['Spouse'];
-            $vec = array();
-            foreach ($sps as $s) {
-                $vec[$s['id']] = $s['name'];
-            }
-            $ret = $vec;
-        }
-
-        $retCondominios = array();
-        if (!empty($coso['Vehicle']['Customer']['Character'])) {
-            $con = $coso['Vehicle']['Customer']['Character'];
-            $vec2 = array();
-            foreach ($con as $c) {
-                $characterType = '';
-                if (!empty($c['CharacterType']['name'])) {
-                    $characterType = " (".$c['CharacterType']['name'].")";
-                }
-                $vec2[$c['id']] = $c['name'].$characterType;
-            }
-            $charactersFromAll = $this->Character->find('list',array('conditions'=>array('Character.customer_id'=>null)));
-            $retCondominios = $vec2 +  $charactersFromAll;
-        }
-
-
-        $retRepresentatives = array();
-        if (!empty($coso['Vehicle']['Customer']['Representative'])) {
-            $con = $coso['Vehicle']['Customer']['Representative'];
-            $vec3 = array();
-            foreach ($con as $c) {
-                $vec3[$c['id']] = $c['name'];
-            }
-            $retRepresentatives = $vec3;
-        }
-
-        return array('spouses'=>$ret, 'characters'=>$retCondominios, 'representatives'=>$retRepresentatives);
+        return array();
     }
 
 

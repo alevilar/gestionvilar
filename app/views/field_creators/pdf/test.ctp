@@ -31,7 +31,12 @@ $this->Fpdf->SetFont('Helvetica','B',10);
     $this->Fpdf->fondoVerde();
     $this->Fpdf->Cell(30,10,'XXXXX',1,'','C',1);
     
-    
+
+
+
+    $this->Fpdf->fondoVerde();
+    //  xyMultiCell($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true)
+    $this->Fpdf->xyMultiCell(10, 120,'Probando ',60,8,1,'','J',1);
    
 
 // debug($this->Fpdf->Pdf);

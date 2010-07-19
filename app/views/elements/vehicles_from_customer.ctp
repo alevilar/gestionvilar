@@ -79,7 +79,7 @@
                 <h2>Seleccionar Formulario para</h2>
                 <h3><?= $vehicleName?></h3>
                     <? //echo $this->Html->link('01','/field_creators/addForm/F01/'.$v['Vehicle']['id']);?>
-                    <? //echo $this->Html->link('02','/f02s/add/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('02','/field_creators/addForm/F02/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('03','/field_creators/addForm/F03/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('04','/field_creators/addForm/F04/'.$v['Vehicle']['id']);?>
                 <br />
@@ -90,6 +90,7 @@
                     <? //echo $this->Html->link('13','/field_creators/addForm/F13/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('13','/field_creators/addForm/F13/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('31A','/field_creators/addForm/F31A/'.$v['Vehicle']['id']);?>
+                    
                     <? echo $this->Html->link('59M','/field_creators/addForm/F59m/'.$v['Vehicle']['id']);?>
 
             </div>

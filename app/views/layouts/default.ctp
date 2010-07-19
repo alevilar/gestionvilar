@@ -77,56 +77,18 @@
         // echo $this->Javascript->link('jquery');
 
         echo $scripts_for_layout;
+
+        echo $js->writeBuffer();
         ?>
 
     </head>
     <body>
+        
+        
         <div id="container" class="container">
             <div id="header" class="span-24 last">
                 <div class="span-10">
-                    <div id="menu">
-                        <ul class="menu">
-
-                            <li>
-                                <? echo $this->Html->link(
-                                sprintf('<span>%s</span>',__('Customers',true)),
-                                '/', array(
-                                'class'=>'parent',
-                                'escape'=>false)); ?>
-                                <div>
-                                    <ul>
-                                        <li><?= $this->Html->link(__('Home',true),'/');?></li>
-                                        <li><?= $this->Html->link(__('Add Customer',true),'/customers/edit');?></li>
-                                        <li><?= $this->Html->link(__('Help',true),'/pages/ayuda');?></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li><? echo $this->Html->link(sprintf('<span>%s</span>',__('Configurations',true)), '/', array('class'=>'parent', 'escape'=>false)); ?>
-                                <div>
-                                    <ul>
-                                        <li><? echo $this->Html->link(__('Add User',true),'/users/add');?></li>
-                                        <li><? echo $this->Html->link(__('List Users',true),'/users/index');?></li>
-                                        <li><? echo $this->Html->link(__('Logout',true),'/users/logout');?></li>
-                                        <hr />
-                                        <li><? echo $this->Html->link(__('List Printers',true),'/printers');?></li>
-                                        <hr />
-                                        <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
-                                        <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add_from_all');?></li>
-                                        <li><? echo $this->Html->link(__('Identification Types',true),'/identification_types/index');?></li>
-                                        <li><? echo $this->Html->link(__('Character Types',true),'/character_types/index');?></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li><? echo $this->Html->link(sprintf('<span>%s</span>',__('Advanced',true)), '/', array('class'=>'parent', 'escape'=>false)); ?>
-                                <div>
-                                    <ul>
-                                        <li><? echo $this->Html->link(__('Field Coordenates',true),'/field_coordenates');?></li>
-                                        <li><? echo $this->Html->link(__('Field Map',true),'/field_coordenates/mapear');?></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div> <!-- End Menu -->
+                    <?php echo $this->element('menu'); ?>
                 </div>
                 <div id="mensajero" class="span-11 last">
                     <?php
@@ -146,7 +108,7 @@
         <?php echo $this->element('sql_dump'); ?>
     </body>
 
-    <?php echo $js->writeBuffer();?>
+    
 
     <script type="text/javascript">
         $(document).ready(function(){
