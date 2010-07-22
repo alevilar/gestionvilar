@@ -61,6 +61,24 @@ class F02 extends FormSkeleton {
     );
 
 
+
+    function getJavascript(){
+        $texto = 'Informe Histórico de Estado de Dominio respecto de embargos, prendas, Inhibiciones, denuncia de venta, cualquier otra medida cautelar que afecte al dominio. Codigo Automotor. Datos Sociedades. Fecha Titular Actual. Numeros de Control Cedula/s y Titulo vigente.';
+      
+        return "
+            $('#txt_declaracion').change(function(){
+                if ($(this).val() == 1){
+                    $('textarea[name=\"data[F02][declaraciones]\"]').html('$texto');
+                } else {
+                    $('textarea[name=\"data[F02][declaraciones]\"]').html('');
+                }
+            });
+
+
+";
+    }
+
+
     public function beforeSave($options) {
         parent::beforeSave($options);
         
@@ -69,7 +87,12 @@ class F02 extends FormSkeleton {
             $numTipo = $this->data[$this->name]['d_tipo'];
             $this->data[$this->name]['d_tipo'.$numTipo] = 'X';
         }
-           
+
+        if (!empty($this->data[$this->name]['declaraciones'])) {
+            $this->data[$this->name]['declaraciones'] = '                                        '.$this->data[$this->name]['declaraciones'];
+        }
+
+
 
 /**
  *
@@ -117,6 +140,7 @@ class F02 extends FormSkeleton {
             ),
             array(
                 'legend'=>'"E" Declaraciones',
+                'texto_declaracion'=> array('id'=>'txt_declaracion','label'=>'¿Agregar Texto Automático a la declaracion?', 'options'=> array('No','Agregar Texto')),
                 'declaraciones' => array('label'=>false),
             ),
             array(

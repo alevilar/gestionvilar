@@ -27,8 +27,8 @@
                         'class'   => 'alto3em',
                         'escape'  => false,
                         'customer'=> $c['Customer']['id'],
-                        'update'  => '#vehicle-search-box',
-                            'doubleClick'=>'alert("saracatinga");',
+                        'update'  => '#vehicle-list',
+                            'complete'=>'updateVehicleHeader()',
                 ));
                 $customerId = $c['Customer']['id'];
                 echo "<li class='hover-highlight'>$customerName</li>";
@@ -39,9 +39,19 @@
 </div>
 
 <div class="column span-14 last"  id="vehicle-search-box" >
-    <div class="column-header">
+    <div id="vehicle-list-header" class="column-header">
         <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
         <h2 class="center"><? __('Vehicle´s List')?></h2>
+    </div>
+
+    <div id="vehicle-header-customer" class="span-13 column-header" style="display: none;">
+        <?= $this->Html->image('user.png', array('height'=>'40px', 'style'=>'float:left'));?>
+        <h2 id="vehicle-customer-title" class="center span-9"></h2>
+        <div class="span-3 last">
+             <? echo $this->Html->link('Más Info Cliente', '#', array('id'=>'btn-cliente-view'))?>
+            <br>
+            <? echo $this->Html->link('Agregar Vehiculo', '#', array('id'=>'btn-add-vehicle'))?>
+        </div>
     </div>
     
     <div class="span-14 last" id="div-for-vehicles"></div>
@@ -61,7 +71,17 @@ echo $this->Js->writeBuffer();
 
     $(document).ready(function(){
         $('#div-for-vehicles').load("<?= $this->Html->url('/vehicles'); ?>")
-    }); ;
+        });
+
+
+
+        function updateVehicleHeader(){
+            $('#vehicle-list-header').hide();
+            $('#vehicle-header-customer').show();
+            $('#vehicle-customer-title').html(customer.name);
+            $('#btn-cliente-view').attr('href','<?php echo $this->Html->url('/customers/view/')?>'+customer.id);
+            $('#btn-add-vehicle').attr('href','<?php echo $this->Html->url('/vehicles/add/')?>'+customer.id);
+        };
 </script>
 
 

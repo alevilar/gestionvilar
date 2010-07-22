@@ -1,14 +1,17 @@
 
-
-
-<div class="vehicles form span-18 center prepend-1">
+<div class="vehicles form span-24 last">
     <?php echo $this->Form->create('Vehicle');?>
-    <fieldset class="span-18">
+    <fieldset class="span-24 last">
         <legend><?php printf(__('Edit %s', true), __('Vehicle', true)); ?></legend>
+        <div class="span-6">
+<?php
+             echo $this->Form->textarea('notes', array('class'=>'notes span-6','rows'=>14, 'value'=>$this->data['Vehicle']['notes']));
 
+             ?>
+        </div>
         <div class="span-6">
             <?php
-            echo $this->Form->hidden('id');
+             echo $this->Form->hidden('id');
             echo $this->Form->input('customer_id', array('class'=>'span-6 last'));
             echo $this->Form->input('vehicle_type_id', array(
             'empty'=>'Seleccione',
@@ -52,12 +55,17 @@
 
 </div>
 
-
-<div class="actions span-3 prepend-2 last">
-    <ul><li>
-    <?= $this->Html->link('Eliminar Vehiculo','/vehicles/delete/'.$this->data['Vehicle']['id'],null,'¿Desea eliminar éste vehiculo?')?>
+<div class="clear"></div>
+<div class="actions span-3" style="float:right">
+        <ul><li>
+            <?= $this->Html->link('Eliminar Vehículo','/vehicles/delete/'.$this->data['Vehicle']['id'],null,'¿Desea eliminar éste vehiculo?')?>
         </li></ul>
 </div>
+
+
+
+
+
 
 
 

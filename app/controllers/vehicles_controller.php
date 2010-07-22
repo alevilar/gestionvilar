@@ -4,8 +4,8 @@ class VehiclesController extends AppController {
 	var $name = 'Vehicles';
 
 	function index() {
-		$this->Vehicle->recursive = 0;
                 $this->paginate = array(
+                    'contain'=> array('VehicleType'),
                     'limit' => 10,
                 );
 		$this->set('vehicles', $this->paginate());
@@ -18,6 +18,7 @@ class VehiclesController extends AppController {
                     'contain' => array('Customer', 'VehicleType'),
                         );
 		$this->set('vehicles', $this->paginate('Vehicle'));
+                $this->Vehicle->Customer->recursive = -1;
                 $this->Vehicle->Customer->id = $customer_id;
                 $this->set('customer', $this->Vehicle->Customer->read());
 	}

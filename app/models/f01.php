@@ -20,34 +20,19 @@ class F01 extends FormSkeleton {
 
     var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
 
-
-    /**
-     *
-     * @return integer id generado en el Insert en la tabla field_creators
-     */
-    function getFieldCreatorId() {
-        return 1;
-    }
+    var $form_id = 1;
 
 
-    function setSContain() {
-        $this->sContain = array(
-                'Character',
-                'Representative',
-                'Spouse',
-                'Vehicle' => array(
-                        'Customer'=>array(
-                                'Character'=>array('CharacterType'),
-                                'Representative',
-                                'CustomerLegal',
-                                'CustomerNatural'=>array('Spouse'),
-                                'CustomerHome',
-                                'Identification'=>array('IdentificationType')
-                        )
-                )
+
+    function getFormImputs($data) {
+        return array(
+            array(
+                'legend'=> 'Identificación del titular',
+                'solicitante'=> array('label'=>'Apellido y Nombres o Denominación'),
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
+            )
         );
     }
-
 
 
     function mapDataPage1() {

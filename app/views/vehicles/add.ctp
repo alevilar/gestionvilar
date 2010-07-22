@@ -1,16 +1,22 @@
-<div class="vehicles form span-18 center prepend-3">
-    <?php echo $this->Form->create('Vehicle');?>
-    <fieldset class="span-18">
-        <legend><?php printf(__('Add %s', true), __('Vehicle', true)); ?></legend>
 
+<div class="vehicles form span-24 last">
+    <?php echo $this->Form->create('Vehicle');?>
+    <fieldset class="span-24 last">
+        <legend><?php printf(__('Add %s', true), __('Vehicle', true)); ?></legend>
+        <div class="span-6">
+<?php
+             echo $this->Form->textarea('notes', array('class'=>'notes span-6','rows'=>14));
+
+             ?>
+        </div>
         <div class="span-6">
             <?php
-            echo $this->Form->input('customer_id');
+            echo $this->Form->hidden('customer_id');
             echo $this->Form->input('vehicle_type_id', array(
             'empty'=>'Seleccione',
             'options'=>$vehicle_types,
             'label'=>'Clase de Vehiculo',
-            'class'=>'required',
+                'class'=>'required',
             )
             );
             echo $this->Form->input('fabrication_certificate');
@@ -33,13 +39,12 @@
 
         <div class="span-6 last">
             <?
-
             echo $this->Form->input('adquisition_evidence_element');
             echo $this->Form->input('motor_brand');
             echo $this->Form->input('motor_number');
             echo $this->Form->input('chasis_brand');
             echo $this->Form->input('chasis_number');
-            
+
             ?>
         </div>
 
@@ -50,10 +55,9 @@
 </div>
 
 
-
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#VehicleAddForm').validate();
+        $('#VehicleEditForm').validate();
     });
 
     $('#VehiclePatente').keyup(function(){

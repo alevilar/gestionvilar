@@ -34,7 +34,8 @@ class FpdfHelper extends AppHelper {
         } elseif (is_string($settings)) {
             $format= $settings;
         }
-        $this->Pdf = new Paperpdf();
+        //$this->Pdf = new Paperpdf();
+        $this->Pdf = new FPDFCellFit();
 
         $this->Pdf->FPDF($orientation, $unit, $format);
     }
@@ -48,18 +49,26 @@ class FpdfHelper extends AppHelper {
 
     function xyMultiCell($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true) {
         $this->SetXY($x, $y);
-        $this->MultiCell($w, $h, $txt, $border, $align, $fill);
+        return $this->MultiCell($w, $h, $txt, $border, $align, $fill);
     }
 
     function xyCell($x, $y, $txt='', $w=0, $h=0, $border=0, $ln=0, $align='C', $fill=true, $link='') {
         $this->SetXY($x, $y);
-        $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
+        return $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
     }
 
     
     function xyLetra($x, $y, $txt = '', $w = 0, $h = 0, $border=0, $align='J', $fill=true) {
         $this->SetXY($x, $y);
-        $this->MultiCell($w, $h, $txt, $border, $align, $fill);
+        return $this->MultiCell($w, $h, $txt, $border, $align, $fill);
+    }
+
+
+    function xyCeldaAjustable($x, $y, $txt='', $w, $h=0, $border=0, $ln=0, $align='', $fill=0, $link='')
+    {
+        $this->SetXY($x, $y);
+        $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
+        $this->Pdf->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, 1, 0);
     }
 
 
@@ -204,7 +213,8 @@ class FpdfHelper extends AppHelper {
     }
 
     /**
-     *
+     * Imprime texto en una celda., y si el txp no entra trunca hasta la ultima palabra. No recorta las palabras por el medio
+     * 
      * @param <type> $w width
      * @param <type> $h heigth default 0
      * @param <type> $txt texto convertuido e UTF-8 a ISO
@@ -231,6 +241,7 @@ class FpdfHelper extends AppHelper {
         }
         $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
+        return $txt;
     }
 
 
@@ -315,7 +326,7 @@ class Paperpdf extends FPDF {
  *
  * http://www.fpdf.de/downloads/addons/62/
  */
-class FPDF_CellFit extends FPDF {
+class FPDFCellFit extends FPDF {
 
     //Cell with horizontal scaling if text is too wide
     function CellFit($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $scale=0, $force=1)

@@ -1,4 +1,4 @@
-<div class="search-content span-14 last" id="vehicle-list">
+<div id="vehicle-list" class="search-content span-14 last">
     <span style="float: right">
         <?php
         $this->Paginator->options(array('update' => '#vehicle-list'));
@@ -78,7 +78,7 @@
             <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none;" class="box-list-forms">
                 <h2>Seleccionar Formulario para</h2>
                 <h3><?= $vehicleName?></h3>
-                    <? //echo $this->Html->link('01','/field_creators/addForm/F01/'.$v['Vehicle']['id']);?>
+                    <? echo $this->Html->link('01','/field_creators/addForm/F01/'.$v['Vehicle']['id']);?>
                     <? echo $this->Html->link('02','/field_creators/addForm/F02/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('03','/field_creators/addForm/F03/'.$v['Vehicle']['id']);?>
                     <? //echo $this->Html->link('04','/field_creators/addForm/F04/'.$v['Vehicle']['id']);?>
@@ -107,7 +107,6 @@ echo $this->Js->writeBuffer();
 
 
 <script type="text/javascript">
-
     function seleccionarFormulario(vehicle_id){
         $.blockUI({
             message: $('#formulario-de-'+vehicle_id),

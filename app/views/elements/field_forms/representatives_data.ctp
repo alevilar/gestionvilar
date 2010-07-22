@@ -8,6 +8,9 @@ if (empty($label)) {
 if (empty ($field)) {
     $field = 'representative_id';
 }
+if (empty ($field_prefix)) {
+    $field_prefix = 'representative';
+}
 
 // armo el JSON de Apoderados o Represetatives
 if (empty($representatives)) {
@@ -39,6 +42,7 @@ if (empty($representatives)) {
 
 <script type="text/javascript">
     $(document).ready(populateCampos);
+    $('#FormRepresentativeId-<?php echo $random ?>').change(populateCampos);
     
     function populateCampos(){
         var seleccionado = $('#FormRepresentativeId-<?php echo $random ?>  option:selected');  
@@ -46,17 +50,17 @@ if (empty($representatives)) {
         if (seleccionado.val()){
             var Representative =  jQuery.parseJSON(seleccionado.attr('json'));
             for (property in Representative) {
-                var inputName = "data[<?php echo $formName?>][representative_"+property+"]";
+                var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>_"+property+"]";
                 $('[name="'+inputName+'"]').val(Representative[property]);
             }
         } else {
-            var inputName = "data[<?php echo $formName?>][representative";
+            var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>";
             $('input[name^="'+inputName+'"]').val('');
             $('select[name^="'+inputName+'"]').val('');
         }
     }
 
-    $('#FormRepresentativeId-<?php echo $random ?>').change(populateCampos);
+  
     
     
 </script>
