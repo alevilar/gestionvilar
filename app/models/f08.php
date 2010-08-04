@@ -18,56 +18,216 @@ class F08 extends FormSkeleton {
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
-    var $belongsTo = array('Vehicle', 'Representative', 'Spouse', 'Character');
+    var $form_id = 2;
 
 
-    public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null) {
-        $ret = parent::find($conditions, $fields, $order, $recursive);
+    var $elements = array(
+            'field_forms/character_data'=> array('field_prefix'=>'comprador', 'label'=>'Comprador'),
+    );
 
 
-        if (!empty($ret['F08'])) {
-            $this->Character->recursive = -1;
-            $this->Character->id = $ret['F08']['vendedor_id'];
-            $vendedor = $this->Character->read();
+    function getFormImputs($data) {
+         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
 
-            $this->Character->id = $ret['F08']['vendedor_condominium_id'];
-            $vendedorCond = $this->Character->read();
+        return array(
+           
+            array(
+                'legend'=>'"D" Comprador o Adquiriente',
+                'comprador_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'comprador_name'=>array('label'=>'Apellido y Nombre o Denominación'),
+                'comprador_calle'=>array('label'=>'Calle'),
+                'comprador_numero_calle'=>array('label'=>'Número'),
+                'comprador_piso'=>array('label'=>'Piso'),
+                'comprador_depto'=>array('label'=>'Dep'),
+                'comprador_cp'=>array('label'=>'Código Postal'),
+                'comprador_localidad'=>array('label'=>'Localidad'),
+                'comprador_departamento'=>array('label'=>'Partido o Departamento'),
+                'comprador_provincia'=>array('label'=>'Provincia'),
+                'comprador_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+                'comprador_identification_number'=>array('label'=>'N° identificación'),
+                'comprador_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'comprador_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'comprador_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento'),
+                'comprador_marital_status_id'=>array('label'=>'Fecha de Nacimiento'),
+                'comprador_nupcia'=>array('label'=>'Nupcia'),
+                'comprador_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+                'comprador_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+                'comprador_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación'),
+                'comprador_persona_fisica_o_juridica'=>array('type'=>'hidden'),
 
-            $ret['Vendedor'] = $vendedor['Character'];
-            $ret['VendedorCondominio'] = $vendedorCond['Character'];
-        }
-//debug($ret);
-        return $ret;
-    }
 
-
-    /**
-     *
-     * @return integer id generado en el Insert en la tabla field_creators
-     */
-    function getFieldCreatorId() {
-        return 6;
-    }
-
-
-    function setSContain() {
-        $this->sContain = array(
-                'Character',
-                'Representative',
-                'Spouse',
-                'Vehicle' => array(
-                        'Customer'=>array(
-                                'Character'=>array('CharacterType'),
-                                'Representative',
-                                'CustomerLegal',
-                                'CustomerNatural'=>array('Spouse'),
-                                'CustomerHome',
-                                'Identification'=>array('IdentificationType')
-                        )
-                )
+                'comprador_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
+                'comprador_conyuge_apoderado_name',
+                'comprador_conyuge_apoderado_identification_type_id',
+                'comprador_conyuge_apoderado_identification_number',
+                'comprador_conyuge_apoderado_nationality_type',
+                'comprador_conyuge_apoderado_identification_auth',
+                'comprador_apoderado_name',
+                'comprador_apoderado_identification_type_id',
+                'comprador_apoderado_identification_number',
+                'comprador_apoderado_nationality_type',
+                'comprador_apoderado_identification_auth',
+                ),
+            array(
+                'legend'=>'"E" Condominio en la Compra o Adquisición',
+                'condominiocomprador_porcentaje',
+                'condominiocomprador_name',
+                'condominiocomprador_calle',
+                'condominiocomprador_numero_calle',
+                'condominiocomprador_piso',
+                'condominiocomprador_depto',
+                'condominiocomprador_cp',
+                'condominiocomprador_localidad',
+                'condominiocomprador_departamento',
+                'condominiocomprador_provincia',
+                'condominiocomprador_identification_type_id',
+                'condominiocomprador_identification_number',
+                'condominiocomprador_nationality_type_id',
+                'condominiocomprador_identification_authority',
+                'condominiocomprador_fecha_nacimiento',
+                'condominiocomprador_marital_status_id',
+                'condominiocomprador_nupcia',
+                'condominiocomprador_personeria_otorgada',
+                'condominiocomprador_inscripcion',
+                'condominiocomprador_fecha_inscripcion',
+                'condominiocomprador_persona_fisica_o_juridica',
+                'condominiocomprador_conyuge',
+                'condominiocomprador_conyuge_apoderado_name',
+                'condominiocomprador_conyuge_apoderado_identification_type_id',
+                'condominiocomprador_conyuge_apoderado_identification_number',
+                'condominiocomprador_conyuge_apoderado_nationality_type',
+                'condominiocomprador_conyuge_apoderado_identification_auth',
+                'condominiocomprador_apoderado_name',
+                'condominiocomprador_apoderado_identification_type_id',
+                'condominiocomprador_apoderado_identification_number',
+                'condominiocomprador_apoderado_nationality_type',
+                'condominiocomprador_apoderado_identification_auth',
+            ),
+            array(
+                'legend'=>'"I" Vendedor o Transmitente',
+                'vendedor_porcentaje',
+                'vendedor_name',
+                'vendedor_calle',
+                'vendedor_numero_calle',
+                'vendedor_piso',
+                'vendedor_depto',
+                'vendedor_cp',
+                'vendedor_localidad',
+                'vendedor_departamento',
+                'vendedor_provincia',
+                'vendedor_identification_type_id',
+                'vendedor_identification_number',
+                'vendedor_nationality_type_id',
+                'vendedor_identification_authority',
+                'vendedor_fecha_nacimiento',
+                'vendedor_marital_status_id',
+                'vendedor_nupcia',
+                'vendedor_personeria_otorgada',
+                'vendedor_inscripcion',
+                'vendedor_fecha_inscripcion',
+                'vendedor_persona_fisica_o_juridica',
+                'vendedor_conyuge',
+                'vendedor_conyuge_apoderado_name',
+                'vendedor_conyuge_apoderado_identification_type_id',
+                'vendedor_conyuge_apoderado_identification_number',
+                'vendedor_conyuge_apoderado_nationality_type',
+                'vendedor_conyuge_apoderado_identification_auth',
+                'vendedor_apoderado_name',
+                'vendedor_apoderado_identification_type_id',
+                'vendedor_apoderado_identification_number',
+                'vendedor_apoderado_nationality_type',
+                'vendedor_apoderado_identification_auth',
+                 'i_fecha_sello',
+            ),
+            array(
+                'legend'=>'"J" Condominio en la venta o Transmisión',
+                'condominiovendedor_porcentaje',
+                'condominiovendedor_name',
+                'condominiovendedor_calle',
+                'condominiovendedor_numero_calle',
+                'condominiovendedor_piso',
+                'condominiovendedor_depto',
+                'condominiovendedor_cp',
+                'condominiovendedor_localidad',
+                'condominiovendedor_departamento',
+                'condominiovendedor_provincia',
+                'condominiovendedor_identification_type_id',
+                'condominiovendedor_identification_number',
+                'condominiovendedor_nationality_type_id',
+                'condominiovendedor_identification_authority',
+                'condominiovendedor_fecha_nacimiento',
+                'condominiovendedor_marital_status_id',
+                'condominiovendedor_nupcia',
+                'condominiovendedor_personeria_otorgada',
+                'condominiovendedor_inscripcion',
+                'condominiovendedor_fecha_inscripcion',
+                'condominiovendedor_persona_fisica_o_juridica',
+                'condominiovendedor_conyuge',
+                'condominiovendedor_conyuge_apoderado_name',
+                'condominiovendedor_conyuge_apoderado_identification_type_id',
+                'condominiovendedor_conyuge_apoderado_identification_number',
+                'condominiovendedor_conyuge_apoderado_nationality_type',
+                'condominiovendedor_conyuge_apoderado_identification_auth',
+                'condominiovendedor_apoderado_name',
+                'condominiovendedor_apoderado_identification_type_id',
+                'condominiovendedor_apoderado_identification_number',
+                'condominiovendedor_apoderado_nationality_type',
+                'condominiovendedor_apoderado_identification_auth',
+                'j_fecha_sello',
+            ),
+             array(
+                'legend'=>'"A"',
+                'a_lugar_contrato',
+                'a_precio_compra',
+                ),
+            array(
+                'legend'=>'"F" Vehículo que se tansfiere',
+                'vehicle_id'=>array('type'=>'hidden'),
+                'vehicle_patente',
+                'vehicle_brand',
+                'vehicle_type',
+                'vehicle_model',
+                'vehicle_motor_brand',
+                'vehicle_motor_number',
+                'vehicle_chasis_brand',
+                'vehicle_chasis_number',
+            ),
+            
+            array(
+                'legend'=>'"K" Comprador o Adquiriente',
+                'representative_name',
+                'representative_identification_number',
+                'representative_identification_autority',
+                'representative_fecha_firma',
+            ),
+            array(
+                'legend'=>'"L" Condominio en la compra o adquisición',
+                'spouse_name',
+                'spouse_identification_autority',
+                'spouse_identification_fecha_firma',
+            ),
+            array(
+                'legend'=>'"M" Observaciones',
+                'observaciones'=>array('label'=>false),
+            ),
+            array(
+                'legend'=>'"H" Deudas y gravámenes declarados por el vendedor',
+                'h1_fecha',
+                'h1_importe',
+                'h1_acreedor',
+                'h2_fecha',
+                'h2_importe',
+                'h2_acreedor',
+            ),
+            array(
+                'legend'=>'"O"',
+                'o_autorizado_name',
+                'o_tipo_y_num_doc',
+                'o_recibi_tit',
+            ),
         );
     }
-
 
 
 

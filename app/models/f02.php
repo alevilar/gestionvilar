@@ -76,6 +76,24 @@ class F02 extends FormSkeleton {
 
 
 ";
+    function setSContain() {
+        $this->sContain = array(
+                'Character',
+                'Representative',
+                'Spouse',
+                'Vehicle' => array(
+                        'Customer'=>array(
+                                'Character'=>array('CharacterType'),
+                                'Representative',
+                                'CustomerLegal',
+                                'CustomerNatural'=>array('Spouse'),
+                                'CustomerHome',
+                                'Identification'=>array('IdentificationType')
+                        )
+                )
+        );
+    }
+
     }
 
 
@@ -94,17 +112,17 @@ class F02 extends FormSkeleton {
 
 
 
-/**
- *
- *
- *              representative_identification_dni
-                representative_identification_le
-                representative_identification_lc
-                representative_identification_ext_dni
-                representative_identification_ci
-                representative_identification_pasap
- *
- */
+        /**
+         *
+         *
+         *  representative_identification_dni
+            representative_identification_le
+            representative_identification_lc
+            representative_identification_ext_dni
+            representative_identification_ci
+            representative_identification_pasap
+         *
+         */
         switch ($this->data[$this->name]['representative_identification_type_id']) {
             case 1: //DNI
                 $this->data[$this->name]['representative_identification_dni'] = 'X';
@@ -122,10 +140,7 @@ class F02 extends FormSkeleton {
                 $this->data[$this->name]['representative_identification_ci'] = 'X';
                 breaK;
         }
-
-
-        //debug($this->data);die();
-
+        
         return true;
     }
 

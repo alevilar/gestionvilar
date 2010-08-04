@@ -34,6 +34,11 @@ abstract class FormSkeleton extends AppModel {
     var $elements = array(); // array de elementos a mostrar en el formulario de carga para este formulario, justamente.
                              // el array es dela forma: array('nombre del elemento'=>array('optiones'))
 
+    /**
+     * Default belongs para tosos los modelos
+     * @var array
+     */
+    var $belongsTo = array('Vehicle','Representative');
 
 
     function __construct($id = false, $table = null, $ds = null) {
