@@ -41,26 +41,11 @@ if (empty($representatives)) {
 
 
 <script type="text/javascript">
-    $(document).ready(populateCampos);
-    $('#FormRepresentativeId-<?php echo $random ?>').change(populateCampos);
-    
-    function populateCampos(){
-        var seleccionado = $('#FormRepresentativeId-<?php echo $random ?>  option:selected');  
-
-        if (seleccionado.val()){
-            var Representative =  jQuery.parseJSON(seleccionado.attr('json'));
-            for (property in Representative) {
-                var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>_"+property+"]";
-                $('[name="'+inputName+'"]').val(Representative[property]);
-            }
-        } else {
-            var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>";
-            $('input[name^="'+inputName+'"]').val('');
-            $('select[name^="'+inputName+'"]').val('');
-        }
+    $(document).ready(function(){
+        populateCampos(<?php echo "'Representative','$formName','$field_prefix',$random"?>);
+    });
+    $('<?php echo "#FormRepresentativeId-$random" ?>').change(function(){
+        populateCampos(<?php echo "'Representative','$formName','$field_prefix',$random"?>);
     }
-
-  
-    
-    
+    );
 </script>

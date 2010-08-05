@@ -45,7 +45,13 @@ $vehicle_id = $this->data['Vehicle']['id'];
     <div id="opciones-de-eleccion" class="clear span-24 last"><hr />
         <h3 class="letra-marron">Seleccione los datos dinámicos que desea agregar</h3>
             <?php
+            
             foreach ($elements as $e=>$opt) {
+                if (is_numeric($e)) {
+                    $els = array_keys($opt);
+                    $e = $els[0];
+                    $opt = $opt[$e];
+                }
                 echo $this->element($e, $opt);
             }
             ?>

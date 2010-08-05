@@ -57,6 +57,7 @@
             'jquery.blockUI',
             'jquery.cakeFormFill',
             'jquery.populate',
+            'default',
         ));
         echo $this->Html->css(array('datePicker.css'));
         // DatePicker end

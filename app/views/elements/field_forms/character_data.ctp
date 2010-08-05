@@ -16,6 +16,11 @@ if (empty ($field_prefix)) {
 if (empty($characters)) {
     $characters = $this->data['Vehicle']['Customer']['Character'];
 
+    foreach ($characters as &$ch) {
+        $ch['fecha_nacimiento'] = date('d-m-Y',strtotime($ch['fecha_nacimiento']));
+        $ch['fecha_inscripcion'] = date('d-m-Y',strtotime($ch['fecha_inscripcion']));
+    }
+    
     $finalCharacters = array();
     foreach($characters as $rp) {
         $finalCharacters[$rp['id']] = array(
@@ -25,9 +30,12 @@ if (empty($characters)) {
     }
     $characters = $finalCharacters;
 }
+
+    
+
 ?>
 
-<div id="element-character" class="span-5 element">
+<div id="element-character-<?php echo $random?>" class="span-5 element">
     <?php if (!empty($label)) {?>
     <label><?php echo $label?></label>
         <?php }?>
@@ -41,22 +49,11 @@ if (empty($characters)) {
 
 
 <script type="text/javascript">
-    $(document).ready(populateCamposCharacter);
-    $('#FormCharacterId-<?php echo $random ?>').change(populateCamposCharacter);
-
-    function populateCamposCharacter(){
-        var seleccionado = $('#FormCharacterId-<?php echo $random ?>  option:selected');
-
-        if (seleccionado.val()){
-            var Representative =  jQuery.parseJSON(seleccionado.attr('json'));
-            for (property in Representative) {
-                var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>_"+property+"]";
-                $('[name="'+inputName+'"]').val(Representative[property]);
-            }
-        } else {
-            var inputName = "data[<?php echo $formName?>][<?php echo $field_prefix?>";
-            $('input[name^="'+inputName+'"]').val('');
-            $('select[name^="'+inputName+'"]').val('');
-        }
+    $(document).ready(function(){
+        populateCampos(<?php echo "'Character','$formName','$field_prefix',$random"?>);
+    });
+    $('<?php echo "#FormCharacterId-$random" ?>').change(function(){
+        populateCampos(<?php echo "'Character','$formName','$field_prefix',$random"?>);
     }
+    );
 </script>
