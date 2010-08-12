@@ -186,6 +186,11 @@ abstract class FormSkeleton extends AppModel {
          }
 
         $this->data = $ret;
+
+        // AGregar nombre con CUIT si es Clicnte Juridico
+        $nombreCuit = $this->getNombreWidthCuitIfLegal('Customer');
+        $ret['Vehicle']['Customer']['name_n_cuit'] = $nombreCuit;
+
         return $ret;
     }
 
@@ -204,7 +209,6 @@ abstract class FormSkeleton extends AppModel {
         $this->data = $this->find('first', array(
                 'conditions'=> $conditions,
                 'contain' => $this->sContain,
-                'recursive'=>0,
         ));
     }
 
@@ -240,6 +244,32 @@ abstract class FormSkeleton extends AppModel {
 
 
 
+    private function makePopulation($p){
+         if (!empty($p['FieldCoordenate']['related_field_table'])) {
+                $campo = $p['FieldCoordenate']['related_field_table'];
+                $formCampoNombre = $p['FieldCoordenate']['name'];
+                $fontSize = $p['FieldCoordenate']['font_size'];
+
+                if (!array_key_exists($campo, $this->data[$this->name])) {
+                        debug("no existe el campo $campo para el FieldCreator ID() ".$p['FieldCoordenate']['id']);
+                        return -1; // el campo no existe como columna del modelo
+                }
+
+                if(!empty($p['FieldCoordenate']['continue_field_coordenate_id'])){
+                    $arrayCampos = array(
+                        'renglones'=> array(
+                            $p['FieldCoordenate']['name'],
+                            $p['FieldContinue']['name']),
+                        'field_name'=>$this->data[$this->name][trim($campo)]);
+                    $this->meterNombreCompletoEnVariosRenglones($arrayCampos);
+                } else {
+                    $valor = $this->data[$this->name][trim($campo)];
+                    $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
+                }
+                return 1; // paso OK
+         }
+         return 0; // esta vacio el campo
+    }
 
     /**
      * Segun lo ingresado en el campo "related_field_table de la tabla field:coordenates
@@ -247,27 +277,21 @@ abstract class FormSkeleton extends AppModel {
      * 
      */
     function autoPopulateFields(){
+        $fallo = false;
         foreach ($this->fieldsPage1 as $p){
-            if (!empty($p['FieldCoordenate']['related_field_table'])) {
-                $campo = $p['FieldCoordenate']['related_field_table'];
-                $formCampoNombre = $p['FieldCoordenate']['name'];
-                $fontSize = $p['FieldCoordenate']['font_size'];
-              
-                $valor = $this->data[$this->name][trim($campo)];
-              
-                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
-              
-            }
+           if ($this->makePopulation($p) <0){
+               $fallo = true;
+           }
         }
         unset($p);
         foreach ($this->fieldsPage2 as $p){
-            if (!empty($p['FieldCoordenate']['related_field_table'])){
-                $campo = $p['FieldCoordenate']['related_field_table'];
-                $formCampoNombre = $p['FieldCoordenate']['name'];
-                $fontSize = $p['FieldCoordenate']['font_size'];
-                $valor = $this->data[$this->name][$campo];
-                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
-            }
+           if ($this->makePopulation($p) <0){
+               $fallo = true;
+           }
+        }
+
+        if ($fallo && (Configure::read('debug') > 0)){
+                die;
         }
     }
 
@@ -292,7 +316,6 @@ abstract class FormSkeleton extends AppModel {
      */
     private function loadFields() {
         $this->FieldCoordenate = ClassRegistry::init('FieldCoordenate');
-        $this->FieldCoordenate->recursive = -1;
         $id = $this->getFieldCreatorId();
 
         
@@ -301,7 +324,7 @@ abstract class FormSkeleton extends AppModel {
                         'FieldCoordenate.field_creator_id'=>(int)$id,
                         'FieldCoordenate.page'=>1,
                 ),
-                'contain'=>array('FieldType')
+                'contain'=>array('FieldType','FieldContinue')
         ));
 
         $this->fieldsPage2 = $this->FieldCoordenate->find('all', array(
@@ -309,7 +332,7 @@ abstract class FormSkeleton extends AppModel {
                         'FieldCoordenate.field_creator_id'=>(int)$id,
                         'FieldCoordenate.page'=>2,
                 ),
-                'contain'=>array('FieldType')
+                'contain'=>array('FieldType','FieldContinue')
         ));
     }
 
@@ -371,12 +394,21 @@ abstract class FormSkeleton extends AppModel {
      *
      * @param integer $model es el modelo que quiero llenar, puede ser 'Customer' o 'Character'
      */
-    function meterNombreCompletoEnVariosRenglonesConCuit($options, $model = 'Customer') {
-        $options['field_name'] = $this->getNombreWidthCuitIfLegal($model);
+    function meterNombreCompletoEnVariosRenglonesConCuit($options, $model = 'Customer', $metercuit = true) {
+        if ($metercuit) {
+            $options['field_name'] = $this->getNombreWidthCuitIfLegal($model);
+        }
         $this->meterNombreCompletoEnVariosRenglones($options);
     }
 
 
+    /**
+     * Me devuelve el nombre del cliente agregandole el CUIT al final, en caso de ser
+     * un cliente juridico. Caso contrario devuelve el string vacio.
+     * 
+     * @param string $model
+     * @return string
+     */
     function getNombreWidthCuitIfLegal($model) {
         $d = $this->data;
         $tName = '';
@@ -407,7 +439,10 @@ abstract class FormSkeleton extends AppModel {
     }
 
     /**
-     *
+     * Meto lo que venga en el string 'field_name' en distintos 'renglones'
+     * lo que hace esta funcion es ir agregando palabra a palabra. opara asegurarse que
+     * siempre entraran palabras completas y nunca quedaran cortadas.
+     * 
      * @param array $options
      *                  array  'renglones' => Son los field_coordenates name, en ellos se imprimiran el valor pasado
      *                  string 'field_name'=> Texto a imprimir en esos renglones
@@ -421,29 +456,31 @@ abstract class FormSkeleton extends AppModel {
 
         // preparo el texto en array para recorrerlo y calcular su tamaño
         $vec = explode(" ",$options['field_name']);
+
+        // inicializo el FPDF para luego verificar el tamaño de la celda
         App::import('Vendor','fpdf/fpdf');
         $orientation='P';
         $unit='mm';
         $format='legal';
-
         $fpdfAux = new FPDF();
         $fpdfAux->FPDF($orientation, $unit, $format);
         $fpdfAux->AddPage();
         // Fuente
         $fpdfAux->SetFont('Courier','',10);
-
         $field_coord = ClassRegistry::init('FieldCoordenate');
         foreach($options['renglones'] as $r) {
             $coordenada = $field_coord->find('first', array(
                     'conditions'=>array(
-                            'name'=>$r,
-                            'field_creator_id'=>$this->getFieldCreatorId(),
+                            'FieldCoordenate.name'=>$r,
+                            'FieldCoordenate.field_creator_id'=>$this->getFieldCreatorId(),
             )));
-
             $texto = '';
+
             // si oes multicell entonces meto todo el string de una saque eso lo maneja el propio metodo Multicell
             if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
-                $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $options['field_name']);
+                debug("MULTICELL  ::".$coordenada['FieldCoordenate']['name']);
+                $texto = implode(" ", $vec);
+                $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
                 return 1;
             }
 
@@ -464,7 +501,8 @@ abstract class FormSkeleton extends AppModel {
                     break;
                 }
             }
-
+            debug("CELDA  ::".$coordenada['FieldCoordenate']['name']);
+            debug($texto);
             $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
             $texto = ''; // lo vuelvo a inicializar
             if (count($vec)==0) break; // salgo del For renglones

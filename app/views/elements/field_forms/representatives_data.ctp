@@ -41,11 +41,17 @@ if (empty($representatives)) {
 
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        populateCampos(<?php echo "'Representative','$formName','$field_prefix',$random"?>);
-    });
-    $('<?php echo "#FormRepresentativeId-$random" ?>').change(function(){
-        populateCampos(<?php echo "'Representative','$formName','$field_prefix',$random"?>);
+    function meterRepresentative(){
+        var modelName = '<?php echo 'Representative' ?>';
+        var formName = '<?php echo $formName?>';
+        var prefix = 'representative';
+        var randomNumber = <?php echo $random?>;
+
+        if (modelName && formName && randomNumber) {
+            populateCampos(modelName,formName, prefix, randomNumber);
+        }
     }
-    );
+
+    $(document).ready(meterRepresentative);
+    $('<?php echo "#FormRepresentativeId-$random" ?>').change(meterRepresentative);
 </script>

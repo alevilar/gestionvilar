@@ -26,31 +26,17 @@ if (empty ($field)) {
 
 
 <script type="text/javascript">
-    function populateCampos(){
-        var seleccionado = $('#FormSpouseId-<?php echo $random ?>  option:selected');
-        
-        if (seleccionado.val()){
-            Spouse = eval("(" +seleccionado.attr('json') +")");
+    function meterSpouse(){
+        var modelName = '<?php echo 'Spouse' ?>';
+        var formName = '<?php echo $formName?>';
+        var prefix = 'spouse';
+        var randomNumber = <?php echo $random?>;
 
-            $('#FormSpouseId-<?php echo $random ?>').cakeFormFill(
-            {
-                '"data[<?php echo $formName?>][spouse_name]"':Spouse.name,
-                '"data[<?php echo $formName?>][spouse_identification_type_id]"':Spouse.identification_type_id,
-                '"data[<?php echo $formName?>][spouse_identification_number]"':Spouse.identification_number,
-                '"data[<?php echo $formName?>][spouse_identification_autority]"':Spouse.identification_autority
-            }
-        );
-        } else {
-            $('#FormSpouseId-<?php echo $random ?>').cakeFormFill(
-            {
-                '"data[<?php echo $formName?>][spouse_name]"': '',
-                '"data[<?php echo $formName?>][spouse_identification_type_id]"': '',
-                '"data[<?php echo $formName?>][spouse_identification_number]"': '',
-                '"data[<?php echo $formName?>][spouse_identification_autority]"': ''
-            });
+        if (modelName && formName && randomNumber) {
+            populateCampos(modelName,formName, prefix, randomNumber);
         }
     }
 
-    $('#FormSpouseId-<?php echo $random ?>').change(populateCampos);
-    $(document).ready(populateCampos)
+    $('#FormSpouseId-<?php echo $random ?>').change(meterSpouse);
+    $(document).ready(meterSpouse)
 </script>
