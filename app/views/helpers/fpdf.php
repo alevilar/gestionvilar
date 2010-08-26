@@ -669,7 +669,10 @@ class FPDFCellFit extends FPDF {
                         $this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
                         $this->_out(sprintf('%.3f Tw', $this->ws*$this->k));
                     }
-                    $this->Cell($w, $h, substr($s, $j, $sep-$j), $b, 2, $align, $fill);
+                    if ($nl == $maxline) // si es la ultima linea que escriba todo
+                        $this->CellFitScale($w, $h, substr($s, $j), $b, 2, $align, $fill);
+                    else
+                        $this->Cell($w, $h, substr($s, $j, $sep-$j), $b, 2, $align, $fill);
                     $i=$sep+1;
                 }
                 $sep=-1;

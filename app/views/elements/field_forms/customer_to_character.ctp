@@ -42,7 +42,6 @@ if (empty($customer)) {
     if (!empty($d['Vehicle']['Customer']['CustomerNatural'])) {
         $customer['persona_fisica_o_juridica'] = 'fisica';
         $customer['nationality_type_id'] =  $d['Vehicle']['Customer']['CustomerNatural']['nationality_type'] ;
-        $customer['identification_authority'] ;
         $customer['anio_nacimiento'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
         $customer['mes_nacimiento']  = date('m',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born']));
         $customer['dia_nacimiento']  = date('d',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
@@ -64,6 +63,7 @@ if (empty($customer)) {
     if (!empty($d['Vehicle']['Customer']['Identification'])) {
         $customer['identification_type_id'] = $d['Vehicle']['Customer']['Identification']['identification_type_id'] ;
         $customer['identification_number'] =  $d['Vehicle']['Customer']['Identification']['number'] ;
+        $customer['identification_authority'] = $d['Vehicle']['Customer']['Identification']['authority_name'] ;
     }
 
     // CONYUGE
