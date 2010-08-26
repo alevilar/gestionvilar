@@ -161,7 +161,6 @@ class CustomersController extends AppController {
         }
 
         $this->paginate['Customer'] = array(
-                'limit'=>10,
                 'contain'=> array('Vehicle'=>array('VehicleType')),
                 'conditions'=> $conditions,
                 'page'=> $pageCustomer,

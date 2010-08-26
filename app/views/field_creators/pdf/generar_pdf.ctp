@@ -39,12 +39,14 @@ function meterTexto($f, $printer, $vistaObject){
     $fType = $f['FieldType']['name'];
 
     if (!empty($c['value'])) {
-        $pX = (int)$c['x'] + (int)$printer['Printer']['x'];
-        $pY = (int)$c['y'] + (int)$printer['Printer']['y'];
+        $c['x'] = (int)$c['x'] + (int)$printer['Printer']['x'];
+        $c['y'] = (int)$c['y'] + (int)$printer['Printer']['y'];
+        $c['txt'] = $c['value'];
         $vistaObject->Fpdf->SetFontSize(floatval($c['font_size']));
-        $textoImprimio = $vistaObject->Fpdf->{$fType}($pX, $pY, $c['value'], $c['w'], $c['h']);
+        $textoImprimio = $vistaObject->Fpdf->printStuff($fType,$c);
+        //$textoImprimio = $vistaObject->Fpdf->{$fType}($pX, $pY, $c['value'], $c['w'], $c['h'], $c['renglones_max']);
         if ($textoImprimio != $c['value'] && !empty($c['FieldCoordenate'])){
-            meterTexto($c['FieldCoordenate']);
+            meterTexto($c, $printer, $vistaObject);
         }
     } else {
        // debug($c['value']."<<<<---->".$f['FieldCoordenate']['name']);

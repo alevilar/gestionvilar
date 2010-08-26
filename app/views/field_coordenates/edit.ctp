@@ -13,7 +13,7 @@
                 echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array(1=>1,2=>2)));
                 echo $this->Form->input('w', array('default'=>0, 'after'=>'Ancho en milimetros. Si queda en cero, el ancho no importa'));
 		echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
-
+                echo $this->Form->input('renglones_max', array('label'=>'Máxima cantidad de renglones', 'after'=>'Éste parámetro es útil cuando se selecciona MultiCell (múltiples renglones)'));
                 echo "<hr>";
 
                 $modelo = ClassRegistry::init("F".strtolower($this->data['FieldCreator']['name']));

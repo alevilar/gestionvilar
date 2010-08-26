@@ -1,3 +1,4 @@
+<h2><?php  echo $html->link(sprintf(__('Customer %s: %s',true),$customer['Customer']['type'], $customer['Customer']['name']), '/customers/view/'.$customer['Customer']['id']);?></h2>
 
 <div class="vehicles form span-24 last">
     <?php echo $this->Form->create('Vehicle');?>

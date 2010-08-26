@@ -3,7 +3,7 @@
 	<fieldset>
             <legend><?php echo __('Add',true). ' '.__('Character',true); ?></legend>
             <?php
-            echo $this->Form->input('customer_id');
+            echo $this->Form->input('customer_id', array('empty'=>'Éste Actor se puede utilizar con todos los clientes'));
             echo $this->Form->input('character_type_id');
             echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
             echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));

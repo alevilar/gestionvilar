@@ -8,6 +8,9 @@
         <li>
             <?= $this->Html->link('Eliminar Cliente', '/customers/delete/'.$customer['Customer']['id'],null,'Esto eliminará al cliente y sus vehículos.\n¿Seguro que desea proseguir?') ?>
         </li>
+        <li>
+            <?= $this->Html->link('Agregar Vehículo', '/vehicles/add/'.$customer['Customer']['id']) ?>
+        </li>
         <?php if ($customer['Customer']['type'] == 'natural'):?>
         <li>
                 <?= $this->Html->link('Agregar Cónyuge', '/spouses/add/'.$customer['Customer']['id']) ?>

@@ -6,7 +6,6 @@ class VehiclesController extends AppController {
 	function index() {
                 $this->paginate = array(
                     'contain'=> array('VehicleType'),
-                    'limit' => 10,
                 );
 		$this->set('vehicles', $this->paginate());
 	}
@@ -31,17 +30,23 @@ class VehiclesController extends AppController {
 		$this->set('vehicle', $this->Vehicle->read(null, $id));
 	}
 
-	function add($customer_id = null) {
+	function add($customer_id = null, $continue_adding = true) {
                 if (empty($customer_id)) {
                     if (!empty($this->data['Vehicle']['customer_id'])){
                         $customer_id = $this->data['Vehicle']['customer_id'];
                     }
                 }
+                $this->Vehicle->Customer->id = $customer_id;
+                $this->Vehicle->Customer->recursive = -1;
+                $customer = $this->Vehicle->Customer->read();
+                
 		if (!empty($this->data)) {
 			$this->Vehicle->create();
 			if ($this->Vehicle->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'vehicle'));
-				$this->redirect(array('controller'=>'customers','action' => 'search'));
+                                if (!$continue_adding) {
+                                    $this->redirect(array('controller'=>'customers','action' => 'search'));
+                                }
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'vehicle'));
 			}
@@ -52,7 +57,7 @@ class VehiclesController extends AppController {
                 }
                 $vehicle_types = $this->Vehicle->VehicleType->find('list');
 		$customers = $this->Vehicle->Customer->find('list');
-		$this->set(compact('customers', 'vehicle_types'));
+		$this->set(compact('customers', 'vehicle_types','customer'));
 	}
 
 	function edit($id = null) {
