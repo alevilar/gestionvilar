@@ -101,6 +101,7 @@ class FieldCreatorsController extends AppController {
         if (!empty($this->data)) {
             if (!$this->{$form_model_name}->save($this->data[$this->{$form_model_name}->name])) {
                 $this->Session->setFlash("no pudo guardarse el formulario $form_model_name");
+                debug($this->{$form_model_name}->validationErrors);
             } else {
                 $this->redirect('generar_pdf/'.$this->data[$form_model_name]['printer_id'].'/'.$form_model_name.'/'.$this->{$form_model_name}->id.'.pdf');
             }

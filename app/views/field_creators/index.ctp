@@ -4,6 +4,8 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
+                        <th><?php echo $this->Paginator->sort('model');?></th>
+                        <th><?php echo $this->Paginator->sort('adtivo');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -17,6 +19,8 @@
 	<tr<?php echo $class;?>>
 		<td><?php echo $fieldCreator['FieldCreator']['id']; ?>&nbsp;</td>
 		<td><?php echo $fieldCreator['FieldCreator']['name']; ?>&nbsp;</td>
+                <td><?php echo $fieldCreator['FieldCreator']['model']; ?>&nbsp;</td>
+                <td><?php echo $fieldCreator['FieldCreator']['activo']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCreator['FieldCreator']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCreator['FieldCreator']['id'])); ?>

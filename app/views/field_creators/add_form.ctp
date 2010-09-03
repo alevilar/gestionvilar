@@ -26,6 +26,7 @@ $vehicle_id = $this->data['Vehicle']['id'];
     ));
 
     echo $this->Form->button(__('Download PDF',true), array('id'=>'pdf', 'type'=>'submit'));
+    echo $this->Form->button(__('Reset', true), array('type'=>'reset'));
 
     echo $this->Form->input('printer_id', array(
         'label'=>array('text'=>'Impresora a utilizar', 'class'=>'span-3 prepend-1'),

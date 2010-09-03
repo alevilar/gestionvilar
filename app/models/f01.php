@@ -22,17 +22,256 @@ class F01 extends FormSkeleton {
 
     var $form_id = 1;
 
+    var $elements = array(
+          array('field_forms/customer_to_character'=> array(
+                            'label'=>'El Cliente es',
+                            'options'=>array(
+                                'comprador'=>'Titular',
+                                'condominiocomprador'=>'Condominio',
+                                ))),
+          array('field_forms/character_data'=> array('field_prefix'=>'comprador', 'label'=>'Actor Como "Titular"')),
+          array('field_forms/character_data'=> array('field_prefix'=>'condominiocomprador', 'label'=>'Actor Como "Condominio"')),
+    );
+
 
 
     function getFormImputs($data) {
-        return array(
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+         $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+
+        $coso =  array(
             array(
-                'legend'=> 'Identificación del titular',
-                'solicitante'=> array('label'=>'Apellido y Nombres o Denominación'),
+                'legend'=>'Identificación del Titular',
+                'comprador_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'comprador_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
+                'comprador_calle'=>array('label'=>'Calle'),
+                'comprador_numero_calle'=>array('label'=>'Número'),
+                'comprador_piso'=>array('label'=>'Piso'),
+                'comprador_depto'=>array('label'=>'Dep'),
+                'comprador_cp'=>array('label'=>'Código Postal'),
+                'comprador_localidad'=>array('label'=>'Localidad'),
+                'comprador_departamento'=>array('label'=>'Partido o Departamento'),
+                'comprador_provincia'=>array('label'=>'Provincia'),
+                'comprador_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+                'comprador_identification_number'=>array('label'=>'N° Documento'),
+                'comprador_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'comprador_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'comprador_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
+                'comprador_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+                'comprador_nupcia'=>array('label'=>'Nupcia'),
+                'comprador_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
+
+                'comprador_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+                'comprador_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+                'comprador_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
+                'comprador_persona_fisica_o_juridica'=>array('type'=>'hidden'),
+
+//                'comprador_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
+//                'comprador_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
+//                'comprador_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
+//                'comprador_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
+//                'comprador_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
+                ),
+            array(
+                'legend'=>'Identificación del Condominio',
+                'condominiocomprador_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'condominiocomprador_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
+                'condominiocomprador_calle'=>array('label'=>'Calle'),
+                'condominiocomprador_numero_calle'=>array('label'=>'Número'),
+                'condominiocomprador_piso'=>array('label'=>'Piso'),
+                'condominiocomprador_depto'=>array('label'=>'Dep'),
+                'condominiocomprador_cp'=>array('label'=>'Código Postal'),
+                'condominiocomprador_localidad'=>array('label'=>'Localidad'),
+                'condominiocomprador_departamento'=>array('label'=>'Partido o Departamento'),
+                'condominiocomprador_provincia'=>array('label'=>'Provincia'),
+                'condominiocomprador_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+                'condominiocomprador_identification_number'=>array('label'=>'N° Documento'),
+                'condominiocomprador_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'condominiocomprador_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'condominiocomprador_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
+                'condominiocomprador_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+                'condominiocomprador_nupcia'=>array('label'=>'Nupcia'),
+                 'condominiocomprador_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
+
+                'condominiocomprador_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+                'condominiocomprador_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+                'condominiocomprador_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
+                'condominiocomprador_persona_fisica_o_juridica'=>array('type'=>'hidden'),
+
+//                'condominiocomprador_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
+//                'condominiocomprador_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
+//                'condominiocomprador_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
+//                'condominiocomprador_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
+//                'condominiocomprador_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
+            ),
+             array(
+                'legend'=>'Identificación del Automotor',
                 'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-            )
+                'vehicle_patente'=> array('label'=>'Dominio','value'=>$data['Vehicle']['patente']),
+                'vehicle_brand' => array('label'=>'Marca','value'=>$data['Vehicle']['brand']),
+                'vehicle_type' => array('label'=>'Tipo','value'=>$data['Vehicle']['type']),
+                'vehicle_model' => array('label'=>'Modelo','value'=>$data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),
+                'vehicle_use' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['use']),
+                'vehicle_adquisition_value' => array('label'=>'Valor de adquisición','value'=>$data['Vehicle']['adquisition_value']),
+                'vehicle_adquisition_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime($data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime($data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime($data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_evidence_element' => array('label'=>'Elemento provatorio de la adquisición','value'=>$data['Vehicle']['adquisition_evidence_element']),
+                
+            ),
+
+            array(
+                'legend'=>'+',
+                'se_certifica_obs' => array('type'=>'textarea', 'label'=>'Se certifica que las condiciones de indetificación que figuran en esta solicitud fueron verificacas con el certificado de fabricación y con el automotor cuya inscripción se solicita a favor del señor'),
+                 'obervaciones' => array('label'=>'Observaciones', 'type'=>'textarea'),
+                 ),
+            
+             array(
+                'legend'=>'Apoderado del Titular',
+                'comprador_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
+                'comprador_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'empty'=>'Seleccione','options'=>$identificationsTypes),
+                'comprador_apoderado_identification_number'=>array('label'=>'N° Documento',),
+                'comprador_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'comprador_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'representative_fecha_firma',
+            ),
+            array(
+                 'legend'=>'Apoderado del Condominio',
+                'condominiocomprador_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
+                'condominiocomprador_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'empty'=>'Seleccione','options'=>$identificationsTypes),
+                'condominiocomprador_apoderado_identification_number'=>array('label'=>'N° Documento', ),
+                'condominiocomprador_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'condominiocomprador_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
+            ),
         );
+            
+
+
+        return $coso;
     }
+
+     public function beforeSave($options) {
+        // modificar fechas de formato dd-mm-aa hay que poner cada dato por separado
+//         'fecha_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
+//         'fecha_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
+//         'fecha_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
+//
+        if (!empty( $this->data[$this->name]['comprador_fecha_nacimiento'])) {
+            list(   $this->data[$this->name]['comprador_dia_nacimiento'],
+                    $this->data[$this->name]['comprador_mes_nacimiento'],
+                    $this->data[$this->name]['comprador_anio_nacimiento'])
+                 = split('[/.-]', $this->data[$this->name]['comprador_fecha_nacimiento']);
+            }
+        if (!empty( $this->data[$this->name]['comprador_fecha_inscripcion'])) {
+            list(   $this->data[$this->name]['comprador_dia_inscripcion'],
+                    $this->data[$this->name]['comprador_mes_inscripcion'],
+                    $this->data[$this->name]['comprador_anio_inscripcion'])
+                 = split('[/.-]', $this->data[$this->name]['comprador_fecha_inscripcion']);
+        }
+
+        if (!empty( $this->data[$this->name]['condominiocomprador_fecha_nacimiento'])) {
+            list(   $this->data[$this->name]['condominiocomprador_dia_nacimiento'],
+                    $this->data[$this->name]['condominiocomprador_mes_nacimiento'],
+                    $this->data[$this->name]['condominiocomprador_anio_nacimiento'])
+                 = split('[/.-]', $this->data[$this->name]['condominiocomprador_fecha_nacimiento']);
+            }
+        if (!empty( $this->data[$this->name]['condominiocomprador_fecha_inscripcion'])) {
+            list(   $this->data[$this->name]['condominiocomprador_dia_inscripcion'],
+                    $this->data[$this->name]['condominiocomprador_mes_inscripcion'],
+                    $this->data[$this->name]['condominiocomprador_anio_inscripcion'])
+                 = split('[/.-]', $this->data[$this->name]['condominiocomprador_fecha_inscripcion']);
+        }
+
+        // COMPRADOR
+        if (!empty( $this->data[$this->name]['comprador_identification_type_id'])) {
+            switch ($this->data[$this->name]['comprador_identification_type_id']) {
+                case 1: //DNI
+                    if ($this->data[$this->name]['comprador_nationality_type_id'] == 'argentino') {
+                        $this->data[$this->name]['comprador_identification_dni'] = 'X';
+                    } else {
+                        $this->data[$this->name]['comprador_identification_dni_ext'] = 'X';
+                    }
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['comprador_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['comprador_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['comprador_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['comprador_identification_ci'] = 'X';
+                    breaK;
+            }
+        }
+        switch ($this->data[$this->name]['comprador_marital_status_id']) {
+            case 1: // Casado
+                $this->data[$this->name]['comprador_casado'] = 'X';
+                break;
+            case 2: //Soltero
+                $this->data[$this->name]['comprador_soltero'] = 'X';
+                break;
+            case 3: // Viudo
+                $this->data[$this->name]['comprador_viudo'] = 'X';
+                break;
+            case 4 : // DIvorciado
+                $this->data[$this->name]['comprador_divorciado'] = 'X';
+                break;
+        }
+
+
+        // CONDOMINIO COMPRADOR
+        if (!empty( $this->data[$this->name]['condominiocomprador_identification_type_id'])) {
+            switch ($this->data[$this->name]['condominiocomprador_identification_type_id']) {
+                case 1: //DNI
+                    if ($this->data[$this->name]['condominiocomprador_nationality_type_id'] == 'argentino') {
+                        $this->data[$this->name]['condominiocomprador_identification_dni'] = 'X';
+                    } else {
+                        $this->data[$this->name]['condominiocomprador_identification_dni_ext'] = 'X';
+                    }
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['condominiocomprador_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['condominiocomprador_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['condominiocomprador_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['condominiocomprador_identification_ci'] = 'X';
+                    breaK;
+            }
+        }
+
+        if (!empty( $this->data[$this->name]['condominiocomprador_marital_status_id'])) {
+            switch ($this->data[$this->name]['condominiocomprador_marital_status_id']) {
+                case 1: // Casado
+                    $this->data[$this->name]['condominiocomprador_casado'] = 'X';
+                    break;
+                case 2: //Soltero
+                    $this->data[$this->name]['condominiocomprador_soltero'] = 'X';
+                    break;
+                case 3: // Viudo
+                    $this->data[$this->name]['condominiocomprador_viudo'] = 'X';
+                    break;
+                case 4 : // DIvorciado
+                    $this->data[$this->name]['condominiocomprador_divorciado'] = 'X';
+                    break;
+            }
+        }
+
+        return true;
+        
+     }
 
 
     function mapDataPage1() {

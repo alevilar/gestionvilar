@@ -25,7 +25,11 @@ foreach ($pages as $p) {
     }
 }
 
+// show inline, descarga o muestra en browser si tiene el plugin instalado
 echo $this->Fpdf->output($form_name.'_'.$vehicle_domain.'.pdf','i');
+
+// force download
+//echo $this->Fpdf->output($form_name.'_'.$vehicle_domain.'.pdf','D');
 
 
 

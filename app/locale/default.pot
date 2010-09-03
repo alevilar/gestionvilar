@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-08-25 00:59-0300\n"
+"POT-Creation-Date: 2010-08-30 00:46-0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1322,8 +1322,12 @@ msgstr ""
 msgid "H"
 msgstr ""
 
-#: /views/field_creators/add_form.ctp:28;93
+#: /views/field_creators/add_form.ctp:28;94
 msgid "Download PDF"
+msgstr ""
+
+#: /views/field_creators/add_form.ctp:29
+msgid "Reset"
 msgstr ""
 
 #: /views/field_creators/view.ctp:33

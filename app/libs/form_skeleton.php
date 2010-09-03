@@ -185,6 +185,23 @@ abstract class FormSkeleton extends AppModel {
             $ret['Vehicle']['Customer']['identification_number'] = $ret['Vehicle']['Customer']['Identification']['number'];
          }
 
+         // Actores Genericos
+         if (!empty($ret['Vehicle']['Customer']['id'])) {
+            $actoresGen = $this->Vehicle->Customer->Character->find('all', array(
+                'contain'=> array('CharacterType'),
+                'conditions'=> array(
+                    'OR' => array(
+                        'Character.customer_id'=>$ret['Vehicle']['Customer']['id'],
+                        'Character.customer_id IS NULL',
+                    )
+                )
+            ));
+            foreach ($actoresGen as $aG) {
+                $ret['Vehicle']['Customer']['Character'][] = $aG['Character'];
+            }
+             //debug($actoresGen);
+         }
+
         $this->data = $ret;
 
         // AGregar nombre con CUIT si es Clicnte Juridico
@@ -448,9 +465,14 @@ abstract class FormSkeleton extends AppModel {
      *                  string 'field_name'=> Texto a imprimir en esos renglones
      */
     function  meterNombreCompletoEnVariosRenglones($options) {
-        if(empty($options['renglones'])||empty($options['field_name'])) {
+        if(empty($options['field_name'])) {
+            return -2;
+        }
+        
+        if(empty($options['renglones'])) {
             $this->log("en metodo meterNomvreCOmpletoEnVariosCamposn no se pasaron los paramentros correctamente");
             debug("no se pasaron los parametros correctamente");
+            debug($options);
             return -1;
         }
 
@@ -478,7 +500,6 @@ abstract class FormSkeleton extends AppModel {
 
             // si oes multicell entonces meto todo el string de una saque eso lo maneja el propio metodo Multicell
             if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
-                debug("MULTICELL  ::".$coordenada['FieldCoordenate']['name']);
                 $texto = implode(" ", $vec);
                 $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
                 return 1;
@@ -501,8 +522,6 @@ abstract class FormSkeleton extends AppModel {
                     break;
                 }
             }
-            debug("CELDA  ::".$coordenada['FieldCoordenate']['name']);
-            debug($texto);
             $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
             $texto = ''; // lo vuelvo a inicializar
             if (count($vec)==0) break; // salgo del For renglones

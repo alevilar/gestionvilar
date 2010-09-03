@@ -18,282 +18,312 @@ class F03 extends FormSkeleton {
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
-    var $belongsTo = array('Vehicle',
-        'Character'=>array('foreignKey'=>'deudor_id'), // deudor
-        );
+     var $elements = array(
+          array('field_forms/customer_to_character'=> array(
+                            'label'=>'El Cliente es',
+                            'options'=>array(
+                                'acreedor'=>'Acreedor',
+                                'deudor'=>'Deudor',
+                                ))),
+          array('field_forms/character_data'=> array('field_prefix'=>'acreedor', 'label'=>'Actor Como "Acreedor"')),
+          array('field_forms/character_data'=> array('field_prefix'=>'deudor', 'label'=>'Actor Como "Deudor"')),
+    );
+
+     var $form_id = 3;
 
 
-    /**
-     *
-     * @return integer id generado en el Insert en la tabla field_creators
-     */
-    function getFieldCreatorId() {
-        return 3;
-    }
+    function getFormImputs($data) {
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+         $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
 
+        $coso =  array(
+            array(
+                'legend'=>'Identificación del Acreedor',
+                'acreedor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'acreedor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
+                'acreedor_calle'=>array('label'=>'Calle'),
+                'acreedor_numero_calle'=>array('label'=>'Número'),
+                'acreedor_piso'=>array('label'=>'Piso'),
+                'acreedor_depto'=>array('label'=>'Dep'),
+                'acreedor_cp'=>array('label'=>'Código Postal'),
+                'acreedor_localidad'=>array('label'=>'Localidad'),
+                'acreedor_departamento'=>array('label'=>'Partido o Departamento'),
+                'acreedor_provincia'=>array('label'=>'Provincia'),
+                'acreedor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+                'acreedor_identification_number'=>array('label'=>'N° Documento'),
+                'acreedor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'acreedor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'acreedor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
+                'acreedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+                'acreedor_nupcia'=>array('label'=>'Nupcia'),
+                'acreedor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
 
-    function setSContain() {
-        $this->sContain = array(
-                'Character',
-                'Vehicle' => array(
-                        'Customer'=>array(
-                                'Character'=>array('CharacterType'),
-                                'Representative',
-                                'CustomerLegal',
-                                'CustomerNatural'=>array('Spouse'),
-                                'CustomerHome',
-                                'Identification'=>array('IdentificationType')
-                        )
-                )
-        );
-    }
+                'acreedor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+                'acreedor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+                'acreedor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
+                'acreedor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
 
-
-
-
-
-    function mapDataPage1() {
-        $d = $this->data;
-
-        //   A
-        $this->populateFieldWithValue("dominio", $d["Vehicle"]["patente"]);
-        $this->populateDayMonthYear($d['F03']['a_fecha_contrato']);
-        $this->populateFieldWithValue("monto del contrato", $d["F03"]["a_monto_contrato"]);
-
-
-        //   D  ::Acreedor
-        $a = $d['Vehicle']['Customer'];
-
-
-        // $this->populateFieldWithValue("a inscripcion", $d["Model"]["fieldname"]);
-
-        $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
-                'renglones'=> array("a apellido 1", "a apellido 2", "a apellido 3 (cuit)")
-                ));
-
-
-        if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {
-            foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
-                if ($h['type']== 'Legal') {
-                    $this->populateFieldWithValue("a calle", $h["address"]);
-                    $this->populateFieldWithValue("a numero", $h["number"]);
-                    $this->populateFieldWithValue("a piso", $h["floor"]);
-                    $this->populateFieldWithValue("a depto", $h["apartment"]);
-                    $this->populateFieldWithValue("a cod pos", $h["postal_code"]);
-                    $this->populateFieldWithValue("a localidad", $h["city"]);
-                    $this->populateFieldWithValue("a partido", $h["county"]);
-                    $this->populateFieldWithValue("a provincia", $h["state"]);
-                }
-            }
-        }
-
-        // PERSONA FÍSICA
-        if (!empty($d['Vehicle']['Customer']['CustomerNatural'])) {
-
-            $multipleChoiceIdentification = array(
-                    'argentino'=> array(
-                            'dni' => 'a arg dni',
-                            'le' => "a arg le",
-                            'lc' => "a arg lc",
-                    ),
-                    'extranjero' => array(
-                            'dni' => "a ext dni",
-                            'ci' => "a ext ci",
-                            'pasaporte' => "a ext pas",
-                    )
-            );
-            $this->populateIdentifications(
-                    $d['Vehicle']['Customer']['CustomerNatural']['nationality_type'],
-                    $d['Vehicle']['Customer']['Identification']['identification_type_id'],
-                    $multipleChoiceIdentification);
-
-            $this->populateFieldWithValue("a n doc", $d['Vehicle']['Customer']['Identification']['number']);
-            $this->populateFieldWithValue("a autoridad", $d['Vehicle']['Customer']['Identification']['authority_name']);
-            $aBornDate = array(
-                    'dia'=> 'a dia',
-                    'mes'=> 'a mes',
-                    'año'=> 'a año',
-            );
-            $this->populateDayMonthYear($d['Vehicle']['Customer']['born'], $aBornDate);
-
-
-            $aFieldsMaritalStat = array(
-                    'casado'=> "a casado",
-                    'soltero'=> "a sol",
-                    'viudo'=> "a viudo",
-                    'divorciado'=> "a divor",
-            );
-            $this->populateMaritalStatuses($d['Vehicle']["Customer"]['CustomerNatural']['marital_status_id'], $aFieldsMaritalStat);
-            $this->populateFieldWithValue("a nupcia", $d['Vehicle']["Customer"]['CustomerNatural']['nuptials']);
-            if (!empty($d['Vehicle']["Customer"]['CustomerNatural']['Spouse']['name'])) {
-                $this->populateFieldWithValue("a nombre", $d['Vehicle']["Customer"]['CustomerNatural']['Spouse']['name']);
-            }
-        } else {
-            // PErSONA JURIDICA
-            $this->populateFieldWithValue("a personeria", $d['Vehicle']["Customer"]['CustomerLegal']["inscription_entity"]);
-            $this->populateFieldWithValue("a datos", $d['Vehicle']["Customer"]['CustomerLegal']["inscription_number"]);
-            $clBornDate = array(
-                    'dia' => 'a diaa',
-                    'mes' => 'a mess',
-                    'año' => 'a añoo',
-            );
-            $this->populateDayMonthYear($d['Vehicle']['Customer']['born'], $clBornDate);
-        }
-
-
-
-
-        //      E   ::Deudor
-        $this->meterNombreCompletoEnVariosRenglonesConCuit(array(
-                'renglones'=> array("d apellido 1", "d apellido 2", "d apellido 3 (cuil)")
-                ),'Character');
-        $this->populateFieldWithValue("d calle", $d["Character"]["calle"]);
-        $this->populateFieldWithValue("d numero", $d["Character"]["numero_calle"]);
-        $this->populateFieldWithValue("d piso", $d["Character"]["piso"]);
-        $this->populateFieldWithValue("d depto", $d["Character"]["depto"]);
-        $this->populateFieldWithValue("d cod pos", $d["Character"]["cp"]);
-        $this->populateFieldWithValue("d localidad", $d["Character"]["localidad"]);
-        $this->populateFieldWithValue("d partido", $d["Character"]["departamento"]);
-        $this->populateFieldWithValue("d provincia", $d["Character"]["provincia"]);
-
-
-        $dId = array(
-                'argentino'=> array(
-                        'dni' => 'd arg dni',
-                        'le' => "d arg le",
-                        'lc' => "d arg lc",
+//                'acreedor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
+//                'acreedor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
+//                'acreedor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
+//                'acreedor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
+//                'acreedor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
                 ),
-                'extranjero' => array(
-                        'dni' => "d ext dni",
-                        'ci' => "d ext ci",
-                        'pasaporte' => "d ext pas",
-                )
-        );
-        $this->populateIdentifications(
-                $d['Character']['nationality_type_id'],
-                $d['Character']['identification_type_id'],
-                $dId);
+            array(
+                'legend'=>'Identificación del Condominio',
+                'deudor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'deudor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
+                'deudor_calle'=>array('label'=>'Calle'),
+                'deudor_numero_calle'=>array('label'=>'Número'),
+                'deudor_piso'=>array('label'=>'Piso'),
+                'deudor_depto'=>array('label'=>'Dep'),
+                'deudor_cp'=>array('label'=>'Código Postal'),
+                'deudor_localidad'=>array('label'=>'Localidad'),
+                'deudor_departamento'=>array('label'=>'Partido o Departamento'),
+                'deudor_provincia'=>array('label'=>'Provincia'),
+                'deudor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+                'deudor_identification_number'=>array('label'=>'N° Documento'),
+                'deudor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                'deudor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                'deudor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
+                'deudor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+                'deudor_nupcia'=>array('label'=>'Nupcia'),
+                 'deudor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
 
-        $this->populateFieldWithValue("d n doc", $d["Character"]["identification_number"]);
-        $this->populateFieldWithValue("d autoridad", $d["Character"]["identification_authority"]);
+                'deudor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+                'deudor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+                'deudor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
+                'deudor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
 
-        $dBornDate = array(
-                'dia'=> "d dia",
-                'mes'=> "d mes",
-                'año'=> "d año",
-        );
-        $this->populateDayMonthYear($d['Character']['fecha_nacimiento'], $dBornDate);
+//                'deudor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
+//                'deudor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
+//                'deudor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
+//                'deudor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
+//                'deudor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
+            ),
+            array(
+                'legend'=>'"G" Identificación del Automotor',
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
+                'vehicle_patente'=> array('label'=>'Dominio','value'=>$data['Vehicle']['patente']),
+                'vehicle_brand' => array('label'=>'Marca','value'=>$data['Vehicle']['brand']),
+                'vehicle_type' => array('label'=>'Tipo','value'=>$data['Vehicle']['type']),
+                'vehicle_model' => array('label'=>'Modelo','value'=>$data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),                
+            ),
+
+            array(
+                'legend'=>'"A"',
+                'a_dia'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
+                'a_mes'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
+                'a_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
+                'a_monto' =>array('label'=>'Monto del contrato'),
+               
+            ) ,
+
+            array(
+                'legend'=>'"I" Modalidades del Contrato',
+                'i_grado' => array('label'=>'Grado N°'),
+                'i_clausula' => array('options'=>array(0=>'SI', 1=>'NO'), 'label'=>'Cláusula de actualización'),
+                'i_clausula_si'=> array('type'=>'hidden'),
+                'i_clausula_no'=> array('type'=>'hidden')	,
+                'i_concepto' => array('options'=>array(0=>'Saldo de Precio', 1=>'Préstamo'), 'label'=>'Concepto'),
+                'i_concepto_saldo'=> array('type'=>'hidden'),
+                'i_concepto_prestamo'=> array('type'=>'hidden'),
+                
+            ),
+            
+            array(
+                'legend'=>'"J" Conste que el contrato fue presentado',
+                'j_dia' =>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día'),
+                'j_mes' =>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
+                'j_anio' =>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
+                'j_seccional' => array('Seccional'),
+            ),
+
+            array(
+                'legend'=>'"K" Certifico',
+                'k_lugar' => array('Lugar'),
+                'k_mes' =>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes')	,
+                'k_anio' =>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
+            ),
+            array(
+                'legend'=>'"L"',
+                'l_autorizo'=> array('label'=>'Autorizo'),
+                'l_dni' => array('label'=>'DNI'),
+            ),
+            array(
+                'legend'=>'"M" Endoso',
+                'm_endozo' => array('label'=>'Endozo'),
+                'm_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
+                'm_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
+                'm_registro_endoso'=> array('label'=>'Registro del endozo'),
+                'm_paguese'=> array('label'=>'paguese'),
+                'm_registrado'=> array('label'=>'registrado'),
+                'm_domiciliado_en'=> array('label'=>'domiciliado en'),
+                'm_a_favor_de'=> array('label'=>'a favor de'),
+                'm_calle'=> array('label'=>'calle'),
+                'm_numero_calle'=> array('label'=>'calle n°'),
+                'm_libro_registro'=> array('label'=>'libro registro'),
+                'm_registro_endoso_de'=> array('label'=>'registro endoso de'),
+            ),
+            array(
+                'legend'=>'"N" Cancelación del Contrato',
+                'n_de'	=>array('label'=>'día'),
+                'n_del_anio'	=>array('label'=>'Año'),
+                'n_registro_cancelacion_dia' => array('label'=>'Cancelación día')	,
+                'n_registro_cancelacion_mes'  => array('label'=>'Cancelación mes')	,
+                'n_registro_cancelacion_anio'  => array('label'=>'Cancelación año'),
+            ),
+            array(
+                'legend'=>'"O" Traslado',
+                'o_traslado' =>array('label'=>'traslado'),
+                'o_traslado_dia' =>array('label'=>'trslado día'),
+                'o_traslado_mes' =>array('label'=>'traslado mes'),
+                'o_traslado_anio' =>array('label'=>'traslado año'),
+                'o_se_tomo_nota' =>array('label'=>'se tomó nota'),
+                'o_n' =>array('label'=>'n°'),
+            ),
+             
+            );
 
 
-        $dFieldsMaritalStat = array(
-                'casado'=> "d casado",
-                'soltero'=> "d sol",
-                'viudo'=> "d viudo",
-                'divorciado'=> "d divor",
-        );
-        $this->populateMaritalStatuses($d['Character']['marital_status_id'], $dFieldsMaritalStat);
-
-        $this->populateFieldWithValue("d nupcia", $d["Character"]["nupcia"]);
-        $this->populateFieldWithValue("d nombre", $d["Character"]["conyuge"]);
-        $this->populateFieldWithValue("d personeria", $d["Character"]["personeria_otorgada"]);
-        $this->populateFieldWithValue("d datos", $d["Character"]["inscripcion"]);
-        $dInscDate = array(
-                'dia'=> "d diaa",
-                'mes'=> "d mess",
-                'año'=> "d añoo",
-        );
-        $this->populateDayMonthYear($d['Character']['fecha_inscripcion'], $dInscDate);
-
-
-        //      G
-        $this->populateFieldWithValue("g dominio", $d["Vehicle"]["patente"]);
-        $this->populateFieldWithValue("g marca", $d["Vehicle"]["brand"]);
-        $this->populateFieldWithValue("g tipo", $d["Vehicle"]["type"]);
-        $this->populateFieldWithValue("g modelo", $d["Vehicle"]["model"]);
-        $this->populateFieldWithValue("g marca motor", $d["Vehicle"]["motor_brand"]);
-        $this->populateFieldWithValue("g n motor", $d["Vehicle"]["motor_number"]);
-        $this->populateFieldWithValue("g marca chasis", $d["Vehicle"]["chasis_brand"]);
-        $this->populateFieldWithValue("g n chasis", $d["Vehicle"]["chasis_number"]);
-
-
-
-        //      H
-        if ($d["F03"]["h_si"]) {
-            $this->populateFieldWithValue("h solicitud si", 'X');
-        } else {
-            $this->populateFieldWithValue("h solicitud no", 'X');
-        }
-
-        //      I   Modalidades del contrato
-        if ($d['F03']['i_clausula_actualizacion']) {
-            $this->populateFieldWithValue("i clausula si", 'X');
-        } else {
-            $this->populateFieldWithValue("i clausula no", 'X');
-        }
-        $this->populateFieldWithValue("i grado", $d["F03"]["i_grado"]);
-
-        if ($d['F03']['i_concepto_prestamo']) {
-            $this->populateFieldWithValue("i concepto prestamo", 'X');
-        } else {
-            $this->populateFieldWithValue("i concepto saldo", 'X');
-        }
-
-
-
+        return $coso;
     }
 
 
-    function mapDataPage2() {
-        $d = $this->data;
+
+
+    public function beforeSave($options) {
+
+        if (empty($this->data[$this->name]['i_concepto'])) {
+            $this->data[$this->name]['i_concepto_saldo'] = 'X';
+        } else {
+            $this->data[$this->name]['i_concepto_prestamo'] = 'X';
+        }
+
+        if (empty($this->data[$this->name]['i_clausula'])) {
+            $this->data[$this->name]['i_clausula_si'] = 'X';
+        } else {
+            $this->data[$this->name]['i_clausula_no'] = 'X';
+        }
         
-        //      J
-        $this->populateFieldWithValue("j seccional", $d["F03"]["j_registro_seccional_de"]);
-        $this->populateFieldWithValue("j dia", $d["F03"]["j_dia"]);
-        $this->populateFieldWithValue("j mes", $d["F03"]["j_mes"]);
-        $this->populateFieldWithValue("j año", $d["F03"]["j_anio"]);
+        if (!empty( $this->data[$this->name]['acreedor_fecha_nacimiento'])) {
+            list(   $this->data[$this->name]['acreedor_dia_nacimiento'],
+                    $this->data[$this->name]['acreedor_mes_nacimiento'],
+                    $this->data[$this->name]['acreedor_anio_nacimiento'])
+                 = split('[/.-]', $this->data[$this->name]['acreedor_fecha_nacimiento']);
+            }
+        if (!empty( $this->data[$this->name]['acreedor_fecha_inscripcion'])) {
+            list(   $this->data[$this->name]['acreedor_dia_inscripcion'],
+                    $this->data[$this->name]['acreedor_mes_inscripcion'],
+                    $this->data[$this->name]['acreedor_anio_inscripcion'])
+                 = split('[/.-]', $this->data[$this->name]['acreedor_fecha_inscripcion']);
+        }
 
-        //      K
-        $this->populateFieldWithValue("k lugar", $d["F03"]["k_lugar_y_dia"]);
-        $this->populateFieldWithValue("k mes", $d["F03"]["k_mes"]);
-        $this->populateFieldWithValue("k año", $d["F03"]["k_anio"]);
+        if (!empty( $this->data[$this->name]['deudor_fecha_nacimiento'])) {
+            list(   $this->data[$this->name]['deudor_dia_nacimiento'],
+                    $this->data[$this->name]['deudor_mes_nacimiento'],
+                    $this->data[$this->name]['deudor_anio_nacimiento'])
+                 = split('[/.-]', $this->data[$this->name]['deudor_fecha_nacimiento']);
+            }
+        if (!empty( $this->data[$this->name]['deudor_fecha_inscripcion'])) {
+            list(   $this->data[$this->name]['deudor_dia_inscripcion'],
+                    $this->data[$this->name]['deudor_mes_inscripcion'],
+                    $this->data[$this->name]['deudor_anio_inscripcion'])
+                 = split('[/.-]', $this->data[$this->name]['deudor_fecha_inscripcion']);
+        }
+
+        // COMPRADOR
+        if (!empty( $this->data[$this->name]['acreedor_identification_type_id'])) {
+            switch ($this->data[$this->name]['acreedor_identification_type_id']) {
+                case 1: //DNI
+                    if ($this->data[$this->name]['acreedor_nationality_type_id'] == 'argentino') {
+                        $this->data[$this->name]['acreedor_identification_dni'] = 'X';
+                    } else {
+                        $this->data[$this->name]['acreedor_identification_dni_ext'] = 'X';
+                    }
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['acreedor_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['acreedor_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['acreedor_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['acreedor_identification_ci'] = 'X';
+                    breaK;
+            }
+        }
+        switch ($this->data[$this->name]['acreedor_marital_status_id']) {
+            case 1: // Casado
+                $this->data[$this->name]['acreedor_casado'] = 'X';
+                break;
+            case 2: //Soltero
+                $this->data[$this->name]['acreedor_soltero'] = 'X';
+                break;
+            case 3: // Viudo
+                $this->data[$this->name]['acreedor_viudo'] = 'X';
+                break;
+            case 4 : // DIvorciado
+                $this->data[$this->name]['acreedor_divorciado'] = 'X';
+                break;
+        }
 
 
-        //      L
-        $this->populateFieldWithValue("l autorizo", $d["F03"]["l_autorizo"]);
-        $this->populateFieldWithValue("l dni", $d["F03"]["l_doc"]);
+        // CONDOMINIO COMPRADOR
+        if (!empty( $this->data[$this->name]['deudor_identification_type_id'])) {
+            switch ($this->data[$this->name]['deudor_identification_type_id']) {
+                case 1: //DNI
+                    if ($this->data[$this->name]['deudor_nationality_type_id'] == 'argentino') {
+                        $this->data[$this->name]['deudor_identification_dni'] = 'X';
+                    } else {
+                        $this->data[$this->name]['deudor_identification_dni_ext'] = 'X';
+                    }
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name]['deudor_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name]['deudor_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name]['deudor_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name]['deudor_identification_ci'] = 'X';
+                    breaK;
+            }
+        }
 
+        if (!empty( $this->data[$this->name]['deudor_marital_status_id'])) {
+            switch ($this->data[$this->name]['deudor_marital_status_id']) {
+                case 1: // Casado
+                    $this->data[$this->name]['deudor_casado'] = 'X';
+                    break;
+                case 2: //Soltero
+                    $this->data[$this->name]['deudor_soltero'] = 'X';
+                    break;
+                case 3: // Viudo
+                    $this->data[$this->name]['deudor_viudo'] = 'X';
+                    break;
+                case 4 : // DIvorciado
+                    $this->data[$this->name]['deudor_divorciado'] = 'X';
+                    break;
+            }
+        }
 
-        //      M
-        $this->populateFieldWithValue("m endoso", $d["F03"]["m_dia"]);
-        $this->populateFieldWithValue("m mes", $d["F03"]["m_mes"]);
-        $this->populateFieldWithValue("m año", $d["F03"]["m_anio"]);
-        $this->populateFieldWithValue("m paguese", $d["F03"]["m_a_la_orden"]);
-        $this->populateFieldWithValue("m domiciliado en", $d["F03"]["m_domicilio"]);
-        $this->populateFieldWithValue("m calle", $d["F03"]["m_calle"]);
-        $this->populateFieldWithValue("m n°", $d["F03"]["m_numero"]);
+        return true;
 
-        $this->populateFieldWithValue("m registro endoso", $d["F03"]["m_algo"]);
-        $this->populateFieldWithValue("m registro endoso de", $d["F03"]["m_de"]);
-        $this->populateFieldWithValue("registrado", $d["F03"]["m_endoso_de"]);
-        $this->populateFieldWithValue("a favor de", $d["F03"]["m_favor_de"]);
-        $this->populateFieldWithValue("libro registro", $d["F03"]["m_folio"]);
+     }
 
-
-
-        //      N
-        $this->populateFieldWithValue("n de..", $d["F03"]["n_contrato_mes"]);
-        $this->populateFieldWithValue("n del año...", $d["F03"]["n_contrato_anio"]);
-        $this->populateFieldWithValue("registro cancelacion dia", $d["F03"]["n_cancela_dia"]);
-        $this->populateFieldWithValue("registro cancelacion mes", $d["F03"]["n_cancela_mes"]);
-        $this->populateFieldWithValue("registro cancelacion año", $d["F03"]["n_cancela_anio"]);
-
-        //      O
-        $this->populateFieldWithValue("o traslado", $d["F03"]["o_traslado"]);
-        $this->populateFieldWithValue("o mes", $d["F03"]["o_de"]);
-        $this->populateFieldWithValue("o año", $d["F03"]["o_anio"]);
-        $this->populateFieldWithValue("o se tomo nota...", $d["F03"]["o_ubicacion"]);
-        $this->populateFieldWithValue("o n°", $d["F03"]["o_numero"]);
-    }
+     
 
 }
 ?>

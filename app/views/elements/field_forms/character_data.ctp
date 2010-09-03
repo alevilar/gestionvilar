@@ -39,7 +39,7 @@ if (empty($characters)) {
     <?php if (!empty($label)) {?>
     <label><?php echo $label?></label>
         <?php }?>
-    <select name="<?php echo "data[$formName][$field]"?>" id="<?php echo 'FormCharacterId-'.$random?>">
+    <select name="<?php echo "data[$formName][$field]"?>" id="<?php echo 'FormCharacterId-'.$random?>" class="span-5">
         <option value="">Seleccione</option>
         <?php foreach ($characters as $a=>$v) {?>
         <option class="opt-characters" value="<?php echo $a?>" json='<?php echo $v['json']?>'><?php echo $v['text']?></option>

@@ -412,7 +412,7 @@ class FPDFCellFit extends FPDF {
             //Override user alignment (since text will fill up cell)
             $align='';
         }
-
+        
         //Pass on to Cell method
         $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
 
@@ -669,10 +669,11 @@ class FPDFCellFit extends FPDF {
                         $this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
                         $this->_out(sprintf('%.3f Tw', $this->ws*$this->k));
                     }
-                    if ($nl == $maxline) // si es la ultima linea que escriba todo
+                    if ($nl == $maxline) {// si es la ultima linea que escriba todo y que lo comprima con FitScale
                         $this->CellFitScale($w, $h, substr($s, $j), $b, 2, $align, $fill);
-                    else
+                    } else {
                         $this->Cell($w, $h, substr($s, $j, $sep-$j), $b, 2, $align, $fill);
+                    }
                     $i=$sep+1;
                 }
                 $sep=-1;
@@ -682,8 +683,10 @@ class FPDFCellFit extends FPDF {
                 $nl++;
                 if($border and $nl==2)
                     $b=$b2;
-                if ( $maxline  && $nl > $maxline )
+                if ( $maxline  && $nl > $maxline ){
+                    //die("aaaa");
                     return substr($s, $i);
+                }
             }
             else
                 $i++;

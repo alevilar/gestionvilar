@@ -160,19 +160,21 @@ class F08 extends FormSkeleton {
                     breaK;
             }
         }
-        switch ($this->data[$this->name]['condominiocomprador_marital_status_id']) {
-            case 1: // Casado
-                $this->data[$this->name]['condominiocomprador_casado'] = 'X';
-                break;
-            case 2: //Soltero
-                $this->data[$this->name]['condominiocomprador_soltero'] = 'X';
-                break;
-            case 3: // Viudo
-                $this->data[$this->name]['condominiocomprador_viudo'] = 'X';
-                break;
-            case 4 : // DIvorciado
-                $this->data[$this->name]['condominiocomprador_divorciado'] = 'X';
-                break;
+        if (!empty( $this->data[$this->name]['condominiocomprador_marital_status_id'])) {
+            switch ($this->data[$this->name]['condominiocomprador_marital_status_id']) {
+                case 1: // Casado
+                    $this->data[$this->name]['condominiocomprador_casado'] = 'X';
+                    break;
+                case 2: //Soltero
+                    $this->data[$this->name]['condominiocomprador_soltero'] = 'X';
+                    break;
+                case 3: // Viudo
+                    $this->data[$this->name]['condominiocomprador_viudo'] = 'X';
+                    break;
+                case 4 : // DIvorciado
+                    $this->data[$this->name]['condominiocomprador_divorciado'] = 'X';
+                    break;
+            }
         }
 
 
@@ -420,7 +422,7 @@ class F08 extends FormSkeleton {
                 'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
                 'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
                 'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),
-                'vehicle_usess' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['use']),
+                'vehicle_use' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['use']),
             ),
             array(
                 'legend'=>'"K" Comprador o Adquiriente',
