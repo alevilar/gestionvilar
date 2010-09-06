@@ -48,6 +48,16 @@
         <dl><?php $i = 0;
             $class = ' class="altrow"';?>
 
+            <?php if (!empty($customer['Customer']['cuit_cuil'])) { ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>>CUIT o CUIL EXTRA</dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php echo $customer['Customer']['cuit_cuil']; ?>
+                <br><cite>Este dato seria utilizado en formularios del tipo 01, 03, etc, y va colocado, usualmente, cerca del nombre.</cite>
+            </dd>
+            <?php } ?>
+
+            
+
             <?php if (!empty($customer['Identification'])):?>
                 <?php if (!empty($customer['Identification']['IdentificationType'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>

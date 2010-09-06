@@ -126,13 +126,15 @@ class FieldCreatorsController extends AppController {
         foreach ($modelViewVars as $varName => $varValue) {
             $this->set($varName, $varValue);
         }
+
+        $formBlackList = $this->{$form_model_name}->fieldsBlackList;
         $formInputs = $this->{$form_model_name}->getFormImputs($this->data);
         $formName = $form_model_name;
         $writeJavascript = $this->{$form_model_name}->getJavascript();
         $elements = $this->{$form_model_name}->getElements();
         $printers = $this->Printer->find('list');
 
-        $this->set(compact('formInputs', 'formName', 'elements', 'writeJavascript', 'printers'));
+        $this->set(compact('formInputs', 'formName', 'elements', 'writeJavascript', 'printers', 'formBlackList'));
 
         //$this->render(strtolower('add_' . $form_model_name));
     }

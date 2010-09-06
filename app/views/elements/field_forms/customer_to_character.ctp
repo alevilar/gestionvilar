@@ -20,6 +20,7 @@ if (empty($customer)) {
 
     $customer['porcentaje'] = '';
     $customer['name'] = $d['Vehicle']['Customer']['name'];
+    $customer['cuit_cuil'] = $d['Vehicle']['Customer']["cuit_cuil"] ;
 
     // domicilio
     if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {

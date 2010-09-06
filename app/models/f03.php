@@ -41,6 +41,7 @@ class F03 extends FormSkeleton {
             array(
                 'legend'=>'Identificación del Acreedor',
                 'acreedor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'acreedor_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
                 'acreedor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
                 'acreedor_calle'=>array('label'=>'Calle'),
                 'acreedor_numero_calle'=>array('label'=>'Número'),
@@ -73,6 +74,7 @@ class F03 extends FormSkeleton {
             array(
                 'legend'=>'Identificación del Condominio',
                 'deudor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'deudor_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
                 'deudor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
                 'deudor_calle'=>array('label'=>'Calle'),
                 'deudor_numero_calle'=>array('label'=>'Número'),

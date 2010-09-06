@@ -1,5 +1,6 @@
 <?php
 
+
 abstract class FormSkeleton extends AppModel {
     /**
      * Este dato se llena de la tabla field_coordenates de acuerdo al tipo
@@ -8,6 +9,16 @@ abstract class FormSkeleton extends AppModel {
      */
     var $fieldsPage1 = array(); // ANVERSO
     var $fieldsPage2 = array(); // REVERSO
+
+
+    /**
+     *
+     *  Es solo para mstar una columan vacia en la fista addForm del formCreator
+     *  es solo util como una cuesion de diseño y es un hack para
+     *  que quede lo maslindo y entendible posible
+     * @var constant array
+     */
+    var $COLUMNA_VACIA =  array('legend'=>'', '-'=> array('type'=>'hidden'));
 
     /**
      * Esta variable sirve para llenar con lo datos del formulario a imprimir
@@ -39,6 +50,14 @@ abstract class FormSkeleton extends AppModel {
      * @var array
      */
     var $belongsTo = array('Vehicle','Representative');
+
+
+    /**
+     * Lista negra de campos. Son los capos que no quiero que se rendericen automaticaente
+     * cuando use el input helper. para mas informacion ver el metodo inpputts del FormHelper
+     * @var array
+     */
+    var $fieldsBlackList = array('modified', 'created');
 
 
     function __construct($id = false, $table = null, $ds = null) {

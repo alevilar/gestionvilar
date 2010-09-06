@@ -44,6 +44,7 @@ class F01 extends FormSkeleton {
             array(
                 'legend'=>'Identificación del Titular',
                 'comprador_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'comprador_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
                 'comprador_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
                 'comprador_calle'=>array('label'=>'Calle'),
                 'comprador_numero_calle'=>array('label'=>'Número'),
@@ -76,6 +77,7 @@ class F01 extends FormSkeleton {
             array(
                 'legend'=>'Identificación del Condominio',
                 'condominiocomprador_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+                'condominiocomprador_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
                 'condominiocomprador_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
                 'condominiocomprador_calle'=>array('label'=>'Calle'),
                 'condominiocomprador_numero_calle'=>array('label'=>'Número'),

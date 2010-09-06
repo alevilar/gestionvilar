@@ -10,6 +10,12 @@
                     'empty'=>'Seleccione',
                     'class'=>'link required',
                     ));
+
+
+                    echo $this->Form->input('Customer.cuit_cuil', array(
+                         'label'=>'Ingrese CUIT o CUIL EXTRA',
+                         'after' => '<br>Este campo es para colocar el cuit o el cuil en formularios del tipo 01, 03, etc. Debe colocar directamente un texto aqui, por ejemplo:<br>"CUIT: 20-565656-2"',
+                         ));
                     ?>
                 </div>
                 <div class="span-8 last">
