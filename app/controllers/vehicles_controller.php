@@ -10,6 +10,28 @@ class VehiclesController extends AppController {
 		$this->set('vehicles', $this->paginate());
 	}
 
+        function index_forms($vehicle_id){
+            $fieldCreator =& ClassRegistry::init('FieldCreator');
+            $forms = $fieldCreator->find('list', array('fields'=>array('id','model'),'conditions'=>array('activo'=>1)));
+            
+            $vehicleForms = array();
+            foreach ($forms as $fID=>$fv ){
+                $formTal =& ClassRegistry::init($fv);
+                $dataform = $formTal->find('all', array(
+                                    'order' => array('created desc'),
+                                    'recursive' => -1,
+                                    'fields'    =>array('id','created'),
+                                    'conditions'=> array('vehicle_id'=>$vehicle_id)));
+                $vehicleForms[$fv] = $dataform;
+            }
+
+
+            $this->set('vehicle',$this->Vehicle->read(null, $vehicle_id));
+            $this->set('vehicleForms',$vehicleForms);
+            $this->set('printer', ClassRegistry::init('Printer')->find('first',array('order'=>'id')));
+
+        }
+
         function customer($customer_id) {
 		$this->Vehicle->recursive = 0;
                 $this->paginate['Vehicle'] = array(

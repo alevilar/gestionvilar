@@ -38,224 +38,27 @@ class F08 extends FormSkeleton {
 
 
     public function beforeSave($options) {
-        // modificar fechas de formato dd-mm-aa hay que poner cada dato por separado
-//         'fecha_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
-//         'fecha_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
-//         'fecha_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
-//
-        if (!empty( $this->data[$this->name]['comprador_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['comprador_dia_nacimiento'],
-                    $this->data[$this->name]['comprador_mes_nacimiento'],
-                    $this->data[$this->name]['comprador_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['comprador_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['comprador_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['comprador_dia_inscripcion'],
-                    $this->data[$this->name]['comprador_mes_inscripcion'],
-                    $this->data[$this->name]['comprador_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['comprador_fecha_inscripcion']);
-        }
+        
+        $this->__ponerXPorIdentificationType('comprador');
+        $this->__ponerXPorMaritalStatus('comprador');
+        $this->__ponerXFechaNacimiento('comprador');
+        $this->__ponerXPorFechaInscripcion('comprador');
 
-        if (!empty( $this->data[$this->name]['condominiocomprador_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['condominiocomprador_dia_nacimiento'],
-                    $this->data[$this->name]['condominiocomprador_mes_nacimiento'],
-                    $this->data[$this->name]['condominiocomprador_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['condominiocomprador_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['condominiocomprador_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['condominiocomprador_dia_inscripcion'],
-                    $this->data[$this->name]['condominiocomprador_mes_inscripcion'],
-                    $this->data[$this->name]['condominiocomprador_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['condominiocomprador_fecha_inscripcion']);
-        }
+        $this->__ponerXPorIdentificationType('condominiocomprador');
+        $this->__ponerXPorMaritalStatus('condominiocomprador');
+        $this->__ponerXFechaNacimiento('condominiocomprador');
+        $this->__ponerXPorFechaInscripcion('condominiocomprador');
 
-        if (!empty( $this->data[$this->name]['vendedor_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['vendedor_dia_nacimiento'],
-                    $this->data[$this->name]['vendedor_mes_nacimiento'],
-                    $this->data[$this->name]['vendedor_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['vendedor_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['vendedor_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['vendedor_dia_inscripcion'],
-                    $this->data[$this->name]['vendedor_mes_inscripcion'],
-                    $this->data[$this->name]['vendedor_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['vendedor_fecha_inscripcion']);
-        }
+        $this->__ponerXPorIdentificationType('vendedor');
+        $this->__ponerXPorMaritalStatus('vendedor');
+        $this->__ponerXFechaNacimiento('vendedor');
+        $this->__ponerXPorFechaInscripcion('vendedor');
 
-        if (!empty( $this->data[$this->name]['condomioniovendedor_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['condomioniovendedor_dia_nacimiento'],
-                    $this->data[$this->name]['condomioniovendedor_mes_nacimiento'],
-                    $this->data[$this->name]['condomioniovendedor_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['condomioniovendedor_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['condomioniovendedor_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['condomioniovendedor_dia_inscripcion'],
-                    $this->data[$this->name]['condomioniovendedor_mes_inscripcion'],
-                    $this->data[$this->name]['condomioniovendedor_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['condomioniovendedor_fecha_inscripcion']);
-        }
-
-
-        // COMPRADOR
-        if (!empty( $this->data[$this->name]['comprador_identification_type_id'])) {
-            switch ($this->data[$this->name]['comprador_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['comprador_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['comprador_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['comprador_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['comprador_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['comprador_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['comprador_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['comprador_identification_ci'] = 'X';
-                    breaK;
-            }
-        }       
-        switch ($this->data[$this->name]['comprador_marital_status_id']) {
-            case 1: // Casado
-                $this->data[$this->name]['comprador_casado'] = 'X';
-                break;
-            case 2: //Soltero
-                $this->data[$this->name]['comprador_soltero'] = 'X';
-                break;
-            case 3: // Viudo
-                $this->data[$this->name]['comprador_viudo'] = 'X';
-                break;
-            case 4 : // DIvorciado
-                $this->data[$this->name]['comprador_divorciado'] = 'X';
-                break;
-        }
-
-
-        // CONDOMINIO COMPRADOR
-        if (!empty( $this->data[$this->name]['condominiocomprador_identification_type_id'])) {
-            switch ($this->data[$this->name]['condominiocomprador_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['condominiocomprador_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['condominiocomprador_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['condominiocomprador_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['condominiocomprador_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['condominiocomprador_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['condominiocomprador_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['condominiocomprador_identification_ci'] = 'X';
-                    breaK;
-            }
-        }
-        if (!empty( $this->data[$this->name]['condominiocomprador_marital_status_id'])) {
-            switch ($this->data[$this->name]['condominiocomprador_marital_status_id']) {
-                case 1: // Casado
-                    $this->data[$this->name]['condominiocomprador_casado'] = 'X';
-                    break;
-                case 2: //Soltero
-                    $this->data[$this->name]['condominiocomprador_soltero'] = 'X';
-                    break;
-                case 3: // Viudo
-                    $this->data[$this->name]['condominiocomprador_viudo'] = 'X';
-                    break;
-                case 4 : // DIvorciado
-                    $this->data[$this->name]['condominiocomprador_divorciado'] = 'X';
-                    break;
-            }
-        }
-
-
-        // VENDEDOR
-        if (!empty( $this->data[$this->name]['vendedor_identification_type_id'])) {
-            switch ($this->data[$this->name]['vendedor_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['vendedor_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['vendedor_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['vendedor_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['vendedor_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['vendedor_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['vendedor_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['vendedor_identification_ci'] = 'X';
-                    breaK;
-            }
-        }
-        switch ($this->data[$this->name]['vendedor_marital_status_id']) {
-            case 1: // Casado
-                $this->data[$this->name]['vendedor_casado'] = 'X';
-                break;
-            case 2: //Soltero
-                $this->data[$this->name]['vendedor_soltero'] = 'X';
-                break;
-            case 3: // Viudo
-                $this->data[$this->name]['vendedor_viudo'] = 'X';
-                break;
-            case 4 : // DIvorciado
-                $this->data[$this->name]['vendedor_divorciado'] = 'X';
-                break;
-        }
-
-
-        // CONDOMINIO VENDEDOR
-        if (!empty( $this->data[$this->name]['condominiovendedor_identification_type_id'])) {
-            switch ($this->data[$this->name]['condominiovendedor_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['condominiovendedor_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['condominiovendedor_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['condominiovendedor_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['condominiovendedor_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['condominiovendedor_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['condominiovendedor_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['condominiovendedor_identification_ci'] = 'X';
-                    breaK;
-            }
-        }
-        switch ($this->data[$this->name]['condominiovendedor_marital_status_id']) {
-            case 1: // Casado
-                $this->data[$this->name]['condominiovendedor_casado'] = 'X';
-                break;
-            case 2: //Soltero
-                $this->data[$this->name]['condominiovendedor_soltero'] = 'X';
-                break;
-            case 3: // Viudo
-                $this->data[$this->name]['condominiovendedor_viudo'] = 'X';
-                break;
-            case 4 : // DIvorciado
-                $this->data[$this->name]['condominiovendedor_divorciado'] = 'X';
-                break;
-        }
+        $this->__ponerXPorIdentificationType('condomioniovendedor');
+        $this->__ponerXPorMaritalStatus('condomioniovendedor');
+        $this->__ponerXFechaNacimiento('condomioniovendedor');
+        $this->__ponerXPorFechaInscripcion('condomioniovendedor');        
+       
         return true;
     }
 
@@ -333,76 +136,38 @@ class F08 extends FormSkeleton {
                 'legend'=>'"I" Vendedor o Transmitente',
                 'vendedor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
                 'vendedor_name'=>array('label'=>'Apellido y Nombre o Denominación'),
-//                'vendedor_calle'=>array('label'=>'Calle'),
-//                'vendedor_numero_calle'=>array('label'=>'Número'),
-//                'vendedor_piso'=>array('label'=>'Piso'),
-//                'vendedor_depto'=>array('label'=>'Dep'),
-//                'vendedor_cp'=>array('label'=>'Código Postal'),
-//                'vendedor_localidad'=>array('label'=>'Localidad'),
-//                'vendedor_departamento'=>array('label'=>'Partido o Departamento'),
-//                'vendedor_provincia'=>array('label'=>'Provincia'),
                 'vendedor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
                 'vendedor_identification_number'=>array('label'=>'N° Documento'),
                 'vendedor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
                 'vendedor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                //'vendedor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
                 'vendedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
                 'vendedor_nupcia'=>array('label'=>'Nupcia'),
-//                'vendedor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
-//                'vendedor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
-//                'vendedor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
-//                'vendedor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
-
                 'vendedor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
                 'vendedor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge'),
                 'vendedor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
                 'vendedor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento'),
                 'vendedor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
                 'vendedor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
-
                 'vendedor_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
-//                'vendedor_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-//                'vendedor_apoderado_identification_number'=>array('label'=>'N° Documento'),
-//                'vendedor_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-//                'vendedor_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
                 'i_fecha_sello'=>array('label'=>'Fecha, Sello y firma del certificante'),
             ),
             array(
                 'legend'=>'"J" Condominio en la venta o Transmisión',
                 'condominiovendedor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
                 'condominiovendedor_name'=>array('label'=>'Apellido y Nombre o Denominación'),
-//                'condominiovendedor_calle'=>array('label'=>'Calle'),
-//                'condominiovendedor_numero_calle'=>array('label'=>'Número'),
-//                'condominiovendedor_piso'=>array('label'=>'Piso'),
-//                'condominiovendedor_depto'=>array('label'=>'Dep'),
-//                'condominiovendedor_cp'=>array('label'=>'Código Postal'),
-//                'condominiovendedor_localidad'=>array('label'=>'Localidad'),
-//                'condominiovendedor_departamento'=>array('label'=>'Partido o Departamento'),
-//                'condominiovendedor_provincia'=>array('label'=>'Provincia'),
                 'condominiovendedor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
                 'condominiovendedor_identification_number'=>array('label'=>'N° Documento'),
                 'condominiovendedor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
                 'condominiovendedor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-//                'condominiovendedor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
                 'condominiovendedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
                 'condominiovendedor_nupcia'=>array('label'=>'Nupcia'),
-//                'condominiovendedor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
-//                'condominiovendedor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
-//                'condominiovendedor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
-//                'condominiovendedor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
-
                 'condominiovendedor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
                 'condominiovendedor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge'),
                 'condominiovendedor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
                 'condominiovendedor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento'),
                 'condominiovendedor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
                 'condominiovendedor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
-
                 'condominiovendedor_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
-//                'condominiovendedor_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-//                'condominiovendedor_apoderado_identification_number'=>array('label'=>'N° Documento'),
-//                'condominiovendedor_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-//                'condominiovendedor_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
                 'j_fecha_sello'=>array('label'=>'Fecha, Sello y firma del certificante'),
             ),
              array(

@@ -1,4 +1,4 @@
-<div id="vehicle-list" class="search-content span-14 last">
+<div id="vehicle-list" class="search-content span-15 last">
     <span style="float: right">
         <?php
         $this->Paginator->options(array('update' => '#vehicle-list'));
@@ -22,7 +22,7 @@
         $i = 0;
         foreach ($vehicles as $v):
             ?>
-        <li class='hover-highlight span-14 last'>
+        <li class='hover-highlight span-15 last'>
             <span class="span-1">
                     <?
                     switch ($v['VehicleType']['id']) {
@@ -52,7 +52,7 @@
                             'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
                     ));?>
             </span>
-            <span class="span-2 last">
+            <span class="span-3 last">
                     <?
                     $pdfImg = $this->Html->image('pdf.png',array(
                             'title'=>__('Print',true)." $vehicleName",
@@ -61,7 +61,7 @@
                     ));
                     echo $this->Html->link($pdfImg, 'javascript: ;', array(
                     'escape'=>false,
-                    'class'=>'span-1  images-link-1',
+                    'class'=>'images-link-1',
                     'onclick'=>'seleccionarFormulario('. $v['Vehicle']['id'] .')',
                     ));
 
@@ -72,7 +72,16 @@
                     ));
                     echo $this->Html->link($editImg, '/vehicles/edit/'.$v['Vehicle']['id'], array(
                     'escape'=>false,
-                    'class'=>'span-1 last images-link-1'));
+                    'class'=>'images-link-1'));
+
+                    $editHist = $this->Html->image('clock.png',array(
+                            'title'=>__('Historical Forms',true),
+                            'alt'=>__('Historical Forms',true),
+                            'class'=>'span-1 last',
+                    ));
+                    echo $this->Html->link($editHist, '/vehicles/index_forms/'.$v['Vehicle']['id'], array(
+                    'escape'=>false,
+                    'class'=>'last images-link-1'));
                     ?>
             </span>
             <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none;" class="box-list-forms">

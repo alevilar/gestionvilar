@@ -253,6 +253,8 @@ label {
 
 BODY {
     background-image: url(images/background.jpg);
+    /* background-image: url(http://www.fondosypantallas.com/wp-content/uploads/2008/05/terragen___69.jpg); */
+    /* http://www.fotosyfondos.com/wp-content/uploads/2009/10/fotos-de-paisajes.jpg */
     background-repeat: repeat-x;
     background-color: black;
 }

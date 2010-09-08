@@ -83,9 +83,17 @@ class FieldCoordenatesController extends AppController {
 		}
 
                 $fieldCoordenates = $this->FieldCoordenate->find('list', array('conditions'=>array('FieldCoordenate.field_creator_id'=>$this->data['FieldCoordenate']['field_creator_id'])));
+
+                $camposUsados = $this->FieldCoordenate->find('list', array(
+                    'fields' => array('id','related_field_table'),
+                    'conditions'=>array(
+                        'FieldCoordenate.field_creator_id'=>$this->data['FieldCoordenate']['field_creator_id'],
+                        'FieldCoordenate.related_field_table IS NOT NULL',
+                        )));
+
 		$fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
 		$fieldTypes = $this->FieldCoordenate->FieldType->find('list');
-		$this->set(compact('fieldCreators', 'fieldTypes', 'fieldCoordenates'));
+		$this->set(compact('fieldCreators', 'fieldTypes', 'fieldCoordenates', 'camposUsados'));
 	}
 
 	function delete($id = null) {

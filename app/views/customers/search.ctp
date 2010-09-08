@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="column span-14 last"  id="vehicle-search-box" >
+    <div class="column span-15 last"  id="vehicle-search-box" >
         <div id="vehicle-list-header" class="column-header">
             <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
             <h2 class="center"><? __('Vehicle´s List')?></h2>

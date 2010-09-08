@@ -119,13 +119,19 @@ class FieldCreatorsController extends AppController {
 
 
         $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
-        unset($this->data[$form_model_name]['id']);
+
+        if (!empty($this->data[$form_model_name]['created'])) {
+            if ($this->data[$form_model_name]['created'] > date('Y-m-d H:i:s', strtotime('-1 hour'))) {
+                unset($this->data[$form_model_name]['id']);
+            }
+        }
 
         // meto en la vista las variables
         $modelViewVars = $this->{$form_model_name}->getViewVars();
         foreach ($modelViewVars as $varName => $varValue) {
             $this->set($varName, $varValue);
         }
+
 
         $formBlackList = $this->{$form_model_name}->fieldsBlackList;
         $formInputs = $this->{$form_model_name}->getFormImputs($this->data);
@@ -218,6 +224,11 @@ class FieldCreatorsController extends AppController {
         $this->set(compact('modelViewVars', 'debug_mode', 'page1', 'page2', 'printer'));
 
         // debug($page1);//die("terminarlo");
+    }
+
+
+    function printpdf($form_model,$form_id){
+
     }
 
 }

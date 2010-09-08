@@ -10,7 +10,7 @@
         <fieldset>
             <legend><?php __('Data'); ?></legend>
             <?php
-            echo $this->Form->input('customer_id');
+            echo $this->Form->input('customer_id', array('empty'=>'Actor Genérico'));
             echo $this->Form->input('character_type_id');
             echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
             echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));

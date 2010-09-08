@@ -22,9 +22,14 @@
 
             $modelo = ClassRegistry::init($this->data['FieldCreator']['model']);
 
+            $camposNoUtilizados = array();
+
             echo "<div class='clear letra-azul'><b>Listado de Campos posibles:</b><br>";
             foreach ($modelo->_schema as $c=>$v) {
-                echo $c." - ";
+                if (array_search($c, $camposUsados) === false){
+                    echo $c." - ";
+                    $camposNoUtilizados[] = $c;
+                }
             }
             echo "</div>";
 
@@ -32,7 +37,7 @@
             $dist = 99999999;
             $campo = '';
             $vecResult = array();
-            foreach ($modelo->_schema as $c=>$v) {
+            foreach ($camposNoUtilizados as $c) {
                 $distA = levenshtein(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );
                 if (similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) ) > 1) {
                     $distA -= similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );

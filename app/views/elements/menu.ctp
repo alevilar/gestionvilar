@@ -24,8 +24,10 @@
                     <hr />
                     <li><? echo $this->Html->link(__('List Printers',true),'/printers');?></li>
                     <hr />
-                    <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
+                    <li><? echo $this->Html->link( __('Characters',true),'/characters/index');?></li>
                     <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add_from_all');?></li>
+                    <hr />
+                    <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
                     <li><? echo $this->Html->link(__('Identification Types',true),'/identification_types/index');?></li>
                     <li><? echo $this->Html->link(__('Character Types',true),'/character_types/index');?></li>
                 </ul>

@@ -34,10 +34,8 @@ $vehicle_id = $this->data['Vehicle']['id'];
 
 
 <? //echo $this->element('vehicle_form_view', array('vehicle'=>$this->data['Vehicle']));?>
-
-
 <div class="span-24 last">
-    <?php
+<?php
     echo $this->Form->create($formName, array(
     'url'=> "/field_creators/addForm/$formName/$vehicle_id",
     'id'=> 'form-'.$formName,
@@ -80,7 +78,7 @@ $vehicle_id = $this->data['Vehicle']['id'];
     <hr class="spacer"/>
     <br />
     <h3 class="letra-marron">Formulario</h3>
-</div>
+
 
 <?php
 $i = 1;
@@ -106,7 +104,7 @@ foreach($formInputs as $inputs) {
 </div>
 <?php echo $this->Form->end();?>
 
-
+</div>
 
 <script type="text/javascript">
     mostrando = true;
@@ -115,6 +113,14 @@ foreach($formInputs as $inputs) {
 $this->Js->buffer($writeJavascript);
 ?>
 
+    $(document).ready(function(){
+      $(":input[type=reset]").click(function(){
+        
+       $('form').resetForm();
+       $('form').clearForm();
+       
+      })
+    });
 
     // Hago que se oculten los FIELDSET cuando les hago click
     $(function(){
@@ -123,7 +129,6 @@ $this->Js->buffer($writeJavascript);
                 $(this).siblings().slideUp();
                 mostrando = false;
             } else {
-
                 $(this).siblings().slideDown();
                 mostrando = true;
             }

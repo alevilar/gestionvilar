@@ -43,7 +43,7 @@ abstract class FormSkeleton extends AppModel {
     var $form_id; // este sirve para generar el PDF
     var $vehicle_id; // este sirve para generar la vista del form_add
     var $elements = array(); // array de elementos a mostrar en el formulario de carga para este formulario, justamente.
-                             // el array es dela forma: array('nombre del elemento'=>array('optiones'))
+    // el array es dela forma: array('nombre del elemento'=>array('optiones'))
 
     /**
      * Default belongs para tosos los modelos
@@ -74,10 +74,10 @@ abstract class FormSkeleton extends AppModel {
      *
      * @return integer id generado en el Insert en la tabla field_creators
      */
-    final public function getFieldCreatorId(){
+    final public function getFieldCreatorId() {
         return $this->form_id;
     }
-    
+
 
     /**
      *  Son los capos que seran renderizados en el formulario de ADD del formulario en cuestion
@@ -85,10 +85,10 @@ abstract class FormSkeleton extends AppModel {
     abstract function getFormImputs($data);
 
 
-/**
- * Array de elementos a mostrar en la vista
- */
-    public function getElements(){
+    /**
+     * Array de elementos a mostrar en la vista
+     */
+    public function getElements() {
         return $this->elements;
     }
 
@@ -109,7 +109,7 @@ abstract class FormSkeleton extends AppModel {
      )
      )
      */
-    public function setSContain(){
+    public function setSContain() {
         $this->sContain = array(
                 'Representative',
                 'Vehicle' => array(
@@ -135,12 +135,14 @@ abstract class FormSkeleton extends AppModel {
      * @param array fields array('form_id','vehicle_id')
      */
     public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null) {
-        
-        if (!empty($this->vehicle_id)) {
-            $fields['vehicle_id'] = $this->vehicle_id;
-        }
+
+
         // este es el find que usan los formularios
         if ($conditions == 'data') {
+            if (!empty($this->vehicle_id)) {
+                $fields['vehicle_id'] = $this->vehicle_id;
+            }
+
             $cond = array(
                     'conditions'=> array($this->name . '.vehicle_id'=>$fields['vehicle_id']),
                     'contain' => $this->sContain,
@@ -149,7 +151,7 @@ abstract class FormSkeleton extends AppModel {
 
             $ret =  parent::find('first', $cond);
             if (empty($ret)) {
-                if (empty($this->Vehicle)){
+                if (empty($this->Vehicle)) {
                     $this->Vehicle = ClassRegistry::init('Vehicle');
                 }
                 $ret = $this->Vehicle->find('first', array(
@@ -165,68 +167,67 @@ abstract class FormSkeleton extends AppModel {
                 $ret['Vehicle']['Customer'] = $ret['Customer'];
                 unset($ret['Customer']);
             }
-        } else {
-            $ret = parent::find($conditions, $fields, $order, $recursive);
-        }
-      
 
-        // DOMICILIO
-        $encontrado = false;
-        if (!empty($ret['Vehicle']['Customer']['CustomerHome'])) {
-            foreach ($ret['Vehicle']['Customer']['CustomerHome'] as $h) {
-                if ($h['type']== 'Legal') {
-                    foreach ($h as $k=>$v) {
-                        $ret['Vehicle']['Customer']['Home'][$k] = $v;
-                    }
-                    $encontrado = true;
-                    break;
-                }
-                if (!$encontrado) {
-                    if ($h['type']== 'Comercial') {
+            // DOMICILIO
+            $encontrado = false;
+            if (!empty($ret['Vehicle']['Customer']['CustomerHome'])) {
+                foreach ($ret['Vehicle']['Customer']['CustomerHome'] as $h) {
+                    if ($h['type']== 'Legal') {
                         foreach ($h as $k=>$v) {
                             $ret['Vehicle']['Customer']['Home'][$k] = $v;
                         }
                         $encontrado = true;
                         break;
                     }
-                }
-                if (!$encontrado) {
-                    foreach ($h as $k=>$v) {
-                        $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                    if (!$encontrado) {
+                        if ($h['type']== 'Comercial') {
+                            foreach ($h as $k=>$v) {
+                                $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                            }
+                            $encontrado = true;
+                            break;
+                        }
+                    }
+                    if (!$encontrado) {
+                        foreach ($h as $k=>$v) {
+                            $ret['Vehicle']['Customer']['Home'][$k] = $v;
+                        }
                     }
                 }
             }
-        }
 
-        // IDENTIFICACION
-         if (!empty($ret['Vehicle']['Customer']['Identification']['IdentificationType'])) {
-            $ret['Vehicle']['Customer']['identification_type'] = $ret['Vehicle']['Customer']['Identification']['IdentificationType']['name'];
-            $ret['Vehicle']['Customer']['identification_number'] = $ret['Vehicle']['Customer']['Identification']['number'];
-         }
-
-         // Actores Genericos
-         if (!empty($ret['Vehicle']['Customer']['id'])) {
-            $actoresGen = $this->Vehicle->Customer->Character->find('all', array(
-                'contain'=> array('CharacterType'),
-                'conditions'=> array(
-                    'OR' => array(
-                        'Character.customer_id'=>$ret['Vehicle']['Customer']['id'],
-                        'Character.customer_id IS NULL',
-                    )
-                )
-            ));
-            foreach ($actoresGen as $aG) {
-                $ret['Vehicle']['Customer']['Character'][] = $aG['Character'];
+            // IDENTIFICACION
+            if (!empty($ret['Vehicle']['Customer']['Identification']['IdentificationType'])) {
+                $ret['Vehicle']['Customer']['identification_type'] = $ret['Vehicle']['Customer']['Identification']['IdentificationType']['name'];
+                $ret['Vehicle']['Customer']['identification_number'] = $ret['Vehicle']['Customer']['Identification']['number'];
             }
-             //debug($actoresGen);
-         }
 
-        $this->data = $ret;
+            // Actores Genericos
+            if (!empty($ret['Vehicle']['Customer']['id'])) {
+                $actoresGen = $this->Vehicle->Customer->Character->find('all', array(
+                        'contain'=> array('CharacterType'),
+                        'conditions'=> array(
+                                'OR' => array(
+                                        'Character.customer_id'=>$ret['Vehicle']['Customer']['id'],
+                                        'Character.customer_id IS NULL',
+                                )
+                        )
+                ));
+                foreach ($actoresGen as $aG) {
+                    $ret['Vehicle']['Customer']['Character'][] = $aG['Character'];
+                }
+                //debug($actoresGen);
+            }
 
-        // AGregar nombre con CUIT si es Clicnte Juridico
-        $nombreCuit = $this->getNombreWidthCuitIfLegal('Customer');
-        $ret['Vehicle']['Customer']['name_n_cuit'] = $nombreCuit;
+            $this->data = $ret;
 
+            // AGregar nombre con CUIT si es Clicnte Juridico
+            $nombreCuit = $this->getNombreWidthCuitIfLegal('Customer');
+            $ret['Vehicle']['Customer']['name_n_cuit'] = $nombreCuit;
+            
+        } else {
+            $ret = parent::find($conditions, $fields, $order, $recursive);
+        }
         return $ret;
     }
 
@@ -275,59 +276,59 @@ abstract class FormSkeleton extends AppModel {
         // asigno los valoresque en field_coordenates ya tienen un campo en la tabla del model asignado
         $this->autoPopulateFields();
 
-       
+
     }
 
 
 
-    private function makePopulation($p){
-         if (!empty($p['FieldCoordenate']['related_field_table'])) {
-                $campo = $p['FieldCoordenate']['related_field_table'];
-                $formCampoNombre = $p['FieldCoordenate']['name'];
-                $fontSize = $p['FieldCoordenate']['font_size'];
+    private function makePopulation($p) {
+        if (!empty($p['FieldCoordenate']['related_field_table'])) {
+            $campo = $p['FieldCoordenate']['related_field_table'];
+            $formCampoNombre = $p['FieldCoordenate']['name'];
+            $fontSize = $p['FieldCoordenate']['font_size'];
 
-                if (!array_key_exists($campo, $this->data[$this->name])) {
-                        debug("no existe el campo $campo para el FieldCreator ID() ".$p['FieldCoordenate']['id']);
-                        return -1; // el campo no existe como columna del modelo
-                }
+            if (!array_key_exists($campo, $this->data[$this->name])) {
+                debug("no existe el campo $campo para el FieldCreator ID() ".$p['FieldCoordenate']['id']);
+                return -1; // el campo no existe como columna del modelo
+            }
 
-                if(!empty($p['FieldCoordenate']['continue_field_coordenate_id'])){
-                    $arrayCampos = array(
+            if(!empty($p['FieldCoordenate']['continue_field_coordenate_id'])) {
+                $arrayCampos = array(
                         'renglones'=> array(
-                            $p['FieldCoordenate']['name'],
-                            $p['FieldContinue']['name']),
+                                $p['FieldCoordenate']['name'],
+                                $p['FieldContinue']['name']),
                         'field_name'=>$this->data[$this->name][trim($campo)]);
-                    $this->meterNombreCompletoEnVariosRenglones($arrayCampos);
-                } else {
-                    $valor = $this->data[$this->name][trim($campo)];
-                    $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
-                }
-                return 1; // paso OK
-         }
-         return 0; // esta vacio el campo
+                $this->meterNombreCompletoEnVariosRenglones($arrayCampos);
+            } else {
+                $valor = $this->data[$this->name][trim($campo)];
+                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize'=>$fontSize));
+            }
+            return 1; // paso OK
+        }
+        return 0; // esta vacio el campo
     }
 
     /**
      * Segun lo ingresado en el campo "related_field_table de la tabla field:coordenates
      * voy llenando con los datos guardados en la tabla del formulario para ingresarlos automaticaente al PDF
-     * 
+     *
      */
-    function autoPopulateFields(){
+    function autoPopulateFields() {
         $fallo = false;
-        foreach ($this->fieldsPage1 as $p){
-           if ($this->makePopulation($p) <0){
-               $fallo = true;
-           }
+        foreach ($this->fieldsPage1 as $p) {
+            if ($this->makePopulation($p) <0) {
+                $fallo = true;
+            }
         }
         unset($p);
-        foreach ($this->fieldsPage2 as $p){
-           if ($this->makePopulation($p) <0){
-               $fallo = true;
-           }
+        foreach ($this->fieldsPage2 as $p) {
+            if ($this->makePopulation($p) <0) {
+                $fallo = true;
+            }
         }
 
-        if ($fallo && (Configure::read('debug') > 0)){
-                die;
+        if ($fallo && (Configure::read('debug') > 0)) {
+            die;
         }
     }
 
@@ -339,7 +340,7 @@ abstract class FormSkeleton extends AppModel {
      * @return string
      *                  EJ:  echo 'var algo=null;';
      */
-    function getJavascript(){
+    function getJavascript() {
         echo '';
     }
 
@@ -354,7 +355,7 @@ abstract class FormSkeleton extends AppModel {
         $this->FieldCoordenate = ClassRegistry::init('FieldCoordenate');
         $id = $this->getFieldCreatorId();
 
-        
+
         $this->fieldsPage1 = $this->FieldCoordenate->find('all', array(
                 'conditions'=>array(
                         'FieldCoordenate.field_creator_id'=>(int)$id,
@@ -441,7 +442,7 @@ abstract class FormSkeleton extends AppModel {
     /**
      * Me devuelve el nombre del cliente agregandole el CUIT al final, en caso de ser
      * un cliente juridico. Caso contrario devuelve el string vacio.
-     * 
+     *
      * @param string $model
      * @return string
      */
@@ -478,7 +479,7 @@ abstract class FormSkeleton extends AppModel {
      * Meto lo que venga en el string 'field_name' en distintos 'renglones'
      * lo que hace esta funcion es ir agregando palabra a palabra. opara asegurarse que
      * siempre entraran palabras completas y nunca quedaran cortadas.
-     * 
+     *
      * @param array $options
      *                  array  'renglones' => Son los field_coordenates name, en ellos se imprimiran el valor pasado
      *                  string 'field_name'=> Texto a imprimir en esos renglones
@@ -487,7 +488,7 @@ abstract class FormSkeleton extends AppModel {
         if(empty($options['field_name'])) {
             return -2;
         }
-        
+
         if(empty($options['renglones'])) {
             $this->log("en metodo meterNomvreCOmpletoEnVariosCamposn no se pasaron los paramentros correctamente");
             debug("no se pasaron los parametros correctamente");
@@ -641,13 +642,117 @@ abstract class FormSkeleton extends AppModel {
 
 
 
+    /**
+     *
+     *  Me llena el $this->data con los datos segun la identificacion
+     *  pasada en el Formulario
+     *
+     * @param string $prefijo nombre del prefijo
+     * @return boolean true si metio todo bien, false caso contrario
+     */
+    function __ponerXPorIdentificationType($prefijo) {
+        if (!empty( $this->data[$this->name][$prefijo.'_identification_type_id'])) {
+            switch ($this->data[$this->name][$prefijo.'_identification_type_id']) {
+                case 1: //DNI
+                    if ($this->data[$this->name][$prefijo.'_nationality_type_id'] == 'argentino') {
+                        $this->data[$this->name][$prefijo.'_identification_dni'] = 'X';
+                    } else {
+                        $this->data[$this->name][$prefijo.'_identification_dni_ext'] = 'X';
+                    }
+                    breaK;
+                case 6: // Pasaporte
+                    $this->data[$this->name][$prefijo.'_identification_pasap'] = 'X';
+                    breaK;
+                case 3: // LE
+                    $this->data[$this->name][$prefijo.'_identification_le'] = 'X';
+                    breaK;
+                case 4: // LC
+                    $this->data[$this->name][$prefijo.'_identification_lc'] = 'X';
+                    breaK;
+                case 5: // CI
+                    $this->data[$this->name][$prefijo.'_identification_ci'] = 'X';
+                    breaK;
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     *
+     *  Me llena el $this->data con los datos segun la identificacion
+     *  pasada en el Formulario
+     *
+     * @param string $prefijo nombre del prefijo
+     * @return boolean true si metio todo bien, false caso contrario
+     */
+    function __ponerXPorMaritalStatus($prefijo) {
+        if (!empty($this->data[$this->name][$prefijo.'_marital_status_id'])) {
+            switch ($this->data[$this->name][$prefijo.'_marital_status_id']) {
+                case 1: // Casado
+                    $this->data[$this->name][$prefijo.'_casado'] = 'X';
+                    break;
+                case 2: //Soltero
+                    $this->data[$this->name][$prefijo.'_soltero'] = 'X';
+                    break;
+                case 3: // Viudo
+                    $this->data[$this->name][$prefijo.'_viudo'] = 'X';
+                    break;
+                case 4 : // DIvorciado
+                    $this->data[$this->name][$prefijo.'_divorciado'] = 'X';
+                    break;
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     *
+     *  Me llena el $this->data con los datos segun la identificacion
+     *  pasada en el Formulario
+     *
+     * @param string $prefijo nombre del prefijo
+     * @return boolean true si metio todo bien, false caso contrario
+     */
+    function __ponerXFechaNacimiento($prefijo) {
+        if (!empty( $this->data[$this->name][$prefijo.'_fecha_nacimiento'])) {
+            list(   $this->data[$this->name][$prefijo.'_dia_nacimiento'],
+                    $this->data[$this->name][$prefijo.'_mes_nacimiento'],
+                    $this->data[$this->name][$prefijo.'_anio_nacimiento'])
+                    = split('[/.-]', $this->data[$this->name][$prefijo.'_fecha_nacimiento']);
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /**
+     *
+     *  Me llena el $this->data con los datos segun la identificacion
+     *  pasada en el Formulario
+     *
+     * @param string $prefijo nombre del prefijo
+     * @return boolean true si metio todo bien, false caso contrario
+     */
+    function __ponerXPorFechaInscripcion($prefijo) {
+        if (!empty( $this->data[$this->name][$prefijo.'_fecha_inscripcion'])) {
+            list(   $this->data[$this->name][$prefijo.'_dia_inscripcion'],
+                    $this->data[$this->name][$prefijo.'_mes_inscripcion'],
+                    $this->data[$this->name][$prefijo.'_anio_inscripcion'])
+                    = split('[/.-]', $this->data[$this->name][$prefijo.'_fecha_inscripcion']);
+            return true;
+        }
+        return false;
+    }
 
 
 
 
 
-    
- 
 
 }
 

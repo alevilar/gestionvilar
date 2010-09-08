@@ -39,15 +39,15 @@
     </div>
 
 
-    <div class="column span-14 last"  id="vehicle-search-box" >
+    <div class="column span-15 last"  id="vehicle-search-box" >
         <div id="vehicle-list-header" class="column-header">
             <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
             <h2 class="center"><? __('Vehicle´s List')?></h2>
         </div>
 
-        <div id="vehicle-header-customer" class="span-13 column-header" style="display: none;">
+        <div id="vehicle-header-customer" class="span-15 last column-header" style="display: none;">
             <?= $this->Html->image('user.png', array('height'=>'40px', 'style'=>'float:left'));?>
-            <h2 id="vehicle-customer-title" class="center span-9"></h2>
+            <h2 id="vehicle-customer-title" class="center span-12"></h2>
             <div class="span-3 last">
                 <? echo $this->Html->link('Más Info Cliente', '#', array('id'=>'btn-cliente-view'))?>
                 <br>
@@ -56,7 +56,7 @@
         </div>
 
         <span style="float: right"><a href="#" onclick="$('#vehicle-search').toggle();">Buscador</a></span>
-        <div class="column span-14 last" id="vehicle-search">
+        <div id="vehicle-search">
             <?= $this->Form->create('Vehicle', array('url'=>'/vehicles/search'));?>
             <?= $this->Form->input('Customer.name', array('label'=>'Cliente', 'div'=>array('class'=>'span-4'),'class'=>'span-4'));?>
             <?= $this->Form->input('patente', array('label'=>'N° Dominio', 'div'=>array('class'=>'span-2'),'class'=>'span-2'));?>
@@ -65,7 +65,7 @@
             <?= $this->Form->end('Buscar',array('div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
         </div>
 
-        <div class="span-14 last"  id="div-for-vehicles">
+        <div id="div-for-vehicles">
             <? echo $this->element('vehicles_from_customer', $vehicles);?>
         </div>        
     </div>
