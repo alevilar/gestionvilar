@@ -18,6 +18,8 @@ class F03 extends FormSkeleton {
     );
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
+     var $involucrados = array('acreedor', 'deudor');
+     
      var $elements = array(
           array('field_forms/customer_to_character'=> array(
                             'label'=>'El Cliente es',
@@ -32,90 +34,43 @@ class F03 extends FormSkeleton {
      var $form_id = 3;
 
 
+      var $fieldsBlackList = array('modified', 'created','deudor_porcentaje', 'acreedor_porcentaje');
+
+
+
+
+
+    public function beforeSave($options)
+    {
+        if (empty($this->data[$this->name]['i_concepto'])) {
+            $this->data[$this->name]['i_concepto_saldo'] = 'X';
+        } else {
+            $this->data[$this->name]['i_concepto_prestamo'] = 'X';
+        }
+
+        if (empty($this->data[$this->name]['i_clausula'])) {
+            $this->data[$this->name]['i_clausula_si'] = 'X';
+        } else {
+            $this->data[$this->name]['i_clausula_no'] = 'X';
+        }
+
+        return parent::beforeSave($options);
+
+     }
+
+
+     
+
+
     function getFormImputs($data) {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
          $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
          $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
 
         $coso =  array(
-            array(
-                'legend'=>'Identificación del Acreedor',
-                'acreedor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
-                'acreedor_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
-                'acreedor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
-                'acreedor_calle'=>array('label'=>'Calle'),
-                'acreedor_numero_calle'=>array('label'=>'Número'),
-                'acreedor_piso'=>array('label'=>'Piso'),
-                'acreedor_depto'=>array('label'=>'Dep'),
-                'acreedor_cp'=>array('label'=>'Código Postal'),
-                'acreedor_localidad'=>array('label'=>'Localidad'),
-                'acreedor_departamento'=>array('label'=>'Partido o Departamento'),
-                'acreedor_provincia'=>array('label'=>'Provincia'),
-                'acreedor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'acreedor_identification_number'=>array('label'=>'N° Documento'),
-                'acreedor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'acreedor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'acreedor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
-                'acreedor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
-                'acreedor_nupcia'=>array('label'=>'Nupcia'),
-                'acreedor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
-
-                'acreedor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
-                'acreedor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
-                'acreedor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
-                'acreedor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
-
-//                'acreedor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
-//                'acreedor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
-//                'acreedor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
-//                'acreedor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
-//                'acreedor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
-                ),
-            array(
-                'legend'=>'Identificación del Condominio',
-                'deudor_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
-                'deudor_cuit_cuil'=>array('label'=>'CUIT o CUIL EXTRA'),
-                'deudor_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
-                'deudor_calle'=>array('label'=>'Calle'),
-                'deudor_numero_calle'=>array('label'=>'Número'),
-                'deudor_piso'=>array('label'=>'Piso'),
-                'deudor_depto'=>array('label'=>'Dep'),
-                'deudor_cp'=>array('label'=>'Código Postal'),
-                'deudor_localidad'=>array('label'=>'Localidad'),
-                'deudor_departamento'=>array('label'=>'Partido o Departamento'),
-                'deudor_provincia'=>array('label'=>'Provincia'),
-                'deudor_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'deudor_identification_number'=>array('label'=>'N° Documento'),
-                'deudor_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'deudor_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'deudor_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
-                'deudor_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
-                'deudor_nupcia'=>array('label'=>'Nupcia'),
-                 'deudor_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
-
-                'deudor_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
-                'deudor_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
-                'deudor_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
-                'deudor_persona_fisica_o_juridica'=>array('type'=>'hidden'),
-
-//                'deudor_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge', 'type'=>'hidden'),
-//                'deudor_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'type'=>'hidden','empty'=>'Seleccione','options'=>$identificationsTypes),
-//                'deudor_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento', 'type'=>'hidden'),
-//                'deudor_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'type'=>'hidden', 'options'=>$nationalities),
-//                'deudor_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió', 'type'=>'hidden'),
-            ),
-            array(
-                'legend'=>'"G" Identificación del Automotor',
-                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-                'vehicle_patente'=> array('label'=>'Dominio','value'=>$data['Vehicle']['patente']),
-                'vehicle_brand' => array('label'=>'Marca','value'=>$data['Vehicle']['brand']),
-                'vehicle_type' => array('label'=>'Tipo','value'=>$data['Vehicle']['type']),
-                'vehicle_model' => array('label'=>'Modelo','value'=>$data['Vehicle']['model']),
-                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$data['Vehicle']['motor_brand']),
-                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
-                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
-                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),                
-            ),
+            $this->__preformTipo1('acreedor', 'Identificación del Acreedor'),
+            $this->__preformTipo1('deudor', 'Identificación del Deudor'),
+            $this->__vehiclePreform1('"G" Identificación del Automotor'),
 
             array(
                 'legend'=>'"A"',
@@ -195,137 +150,6 @@ class F03 extends FormSkeleton {
 
         return $coso;
     }
-
-
-
-
-    public function beforeSave($options) {
-
-        if (empty($this->data[$this->name]['i_concepto'])) {
-            $this->data[$this->name]['i_concepto_saldo'] = 'X';
-        } else {
-            $this->data[$this->name]['i_concepto_prestamo'] = 'X';
-        }
-
-        if (empty($this->data[$this->name]['i_clausula'])) {
-            $this->data[$this->name]['i_clausula_si'] = 'X';
-        } else {
-            $this->data[$this->name]['i_clausula_no'] = 'X';
-        }
-        
-        if (!empty( $this->data[$this->name]['acreedor_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['acreedor_dia_nacimiento'],
-                    $this->data[$this->name]['acreedor_mes_nacimiento'],
-                    $this->data[$this->name]['acreedor_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['acreedor_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['acreedor_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['acreedor_dia_inscripcion'],
-                    $this->data[$this->name]['acreedor_mes_inscripcion'],
-                    $this->data[$this->name]['acreedor_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['acreedor_fecha_inscripcion']);
-        }
-
-        if (!empty( $this->data[$this->name]['deudor_fecha_nacimiento'])) {
-            list(   $this->data[$this->name]['deudor_dia_nacimiento'],
-                    $this->data[$this->name]['deudor_mes_nacimiento'],
-                    $this->data[$this->name]['deudor_anio_nacimiento'])
-                 = split('[/.-]', $this->data[$this->name]['deudor_fecha_nacimiento']);
-            }
-        if (!empty( $this->data[$this->name]['deudor_fecha_inscripcion'])) {
-            list(   $this->data[$this->name]['deudor_dia_inscripcion'],
-                    $this->data[$this->name]['deudor_mes_inscripcion'],
-                    $this->data[$this->name]['deudor_anio_inscripcion'])
-                 = split('[/.-]', $this->data[$this->name]['deudor_fecha_inscripcion']);
-        }
-
-        // COMPRADOR
-        if (!empty( $this->data[$this->name]['acreedor_identification_type_id'])) {
-            switch ($this->data[$this->name]['acreedor_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['acreedor_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['acreedor_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['acreedor_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['acreedor_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['acreedor_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['acreedor_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['acreedor_identification_ci'] = 'X';
-                    breaK;
-            }
-        }
-        switch ($this->data[$this->name]['acreedor_marital_status_id']) {
-            case 1: // Casado
-                $this->data[$this->name]['acreedor_casado'] = 'X';
-                break;
-            case 2: //Soltero
-                $this->data[$this->name]['acreedor_soltero'] = 'X';
-                break;
-            case 3: // Viudo
-                $this->data[$this->name]['acreedor_viudo'] = 'X';
-                break;
-            case 4 : // DIvorciado
-                $this->data[$this->name]['acreedor_divorciado'] = 'X';
-                break;
-        }
-
-
-        // CONDOMINIO COMPRADOR
-        if (!empty( $this->data[$this->name]['deudor_identification_type_id'])) {
-            switch ($this->data[$this->name]['deudor_identification_type_id']) {
-                case 1: //DNI
-                    if ($this->data[$this->name]['deudor_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name]['deudor_identification_dni'] = 'X';
-                    } else {
-                        $this->data[$this->name]['deudor_identification_dni_ext'] = 'X';
-                    }
-                    breaK;
-                case 6: // Pasaporte
-                    $this->data[$this->name]['deudor_identification_pasap'] = 'X';
-                    breaK;
-                case 3: // LE
-                    $this->data[$this->name]['deudor_identification_le'] = 'X';
-                    breaK;
-                case 4: // LC
-                    $this->data[$this->name]['deudor_identification_lc'] = 'X';
-                    breaK;
-                case 5: // CI
-                    $this->data[$this->name]['deudor_identification_ci'] = 'X';
-                    breaK;
-            }
-        }
-
-        if (!empty( $this->data[$this->name]['deudor_marital_status_id'])) {
-            switch ($this->data[$this->name]['deudor_marital_status_id']) {
-                case 1: // Casado
-                    $this->data[$this->name]['deudor_casado'] = 'X';
-                    break;
-                case 2: //Soltero
-                    $this->data[$this->name]['deudor_soltero'] = 'X';
-                    break;
-                case 3: // Viudo
-                    $this->data[$this->name]['deudor_viudo'] = 'X';
-                    break;
-                case 4 : // DIvorciado
-                    $this->data[$this->name]['deudor_divorciado'] = 'X';
-                    break;
-            }
-        }
-
-        return true;
-
-     }
-
-     
 
 }
 ?>

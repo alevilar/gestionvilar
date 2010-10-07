@@ -7,6 +7,7 @@
             echo $this->Form->input('customer_id');
             echo $this->Form->input('character_type_id');
             echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
+            echo $this->Form->input('cuit_cuil', array('label'=>'CUIT o CUIL', 'after'=>'aqui se debe escribir EJ. "CUIT 30-4545654-1" y seria utilizado únicamente en aquellos formularios que requieran obligatoriamente mostrar dicho valor. Útil en Formulario 08, por ejemplo.'));
             echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));
             echo $this->Form->input('persona_fisica_o_juridica', array('options'=>array('Física'=>'Física','Jurídica'=>'Jurídica')));
             ?>

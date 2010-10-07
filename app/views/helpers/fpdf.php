@@ -15,9 +15,9 @@ class FpdfHelper extends AppHelper {
      *          if settings es String es el 'format'
      */
     function __construct($settings = array()) {
-        $orientation='P';
-        $unit='mm';
-        $format='legal';
+        $orientation= Configure::read('Fpdf.orientation');
+        $unit= Configure::read('Fpdf.unit');
+        $format= Configure::read('Fpdf.format');
         if (is_array($settings)) {
             foreach ($settings as $key => $val) {
                 switch ($key) {
@@ -42,6 +42,96 @@ class FpdfHelper extends AppHelper {
 
 
     /**
+     * imprime las paginas llenas de campos pasadas como parametro
+     *
+     * @param array $pages array de paginas que contienen los campos a imprimir
+     * @param array $options
+     *                  lasopciones posibles son:
+     *                  'Printer' es el Model leido parala imresora e indica el desplazamiento a realizar en las coordenaadas X, Y
+     *                  'debug' si esta en 'true' me muestra fondos coloreados en las celdas y multiceldas
+     *                  'output' son las distintas salidads que puede tener el Pdf vendor (ver documentacion de la libreria para mas info) default: 'i'
+     *                  'filename' nombre del archivo a escupir
+     *
+     */
+    function printPages($pages, $options){
+        if (!empty($options['debug'])) {
+            $this->fondoVerde();
+            $this->bordeRojo();
+        } else {
+            $this->fondoBlanco();
+            $this->bordeBlanco();
+        }
+
+        //inicializo configuracion de impresora
+        if (empty($options['Printer'])) {
+            $printer['Printer']['x'] = $printer['Printer']['y'] = 0;
+        } else {
+            $printer['Printer'] = $options['Printer'];
+        }
+
+        //inicializo el output
+         if (empty($options['output'])) {
+             $options['output'] = 'i';
+         }
+
+         //inicializo el nombre del archivo a fabricar
+         if (empty($options['filename'])) {
+             $options['filename'] = date('y-m-d-H-i-s');
+         }
+        
+        $this->SetFont();
+
+        $this->__meterPaginas($pages, $printer);
+
+        // show inline, descarga o muestra en browser si tiene el plugin instalado
+        return $this->output($options['filename'].'.pdf',$options['output']);
+
+    }
+
+    /**
+     * Settea cada una delaspaginas del array
+     *
+     * @param array $pages paginas a imprimir
+     * @param Model Printer $printer coordenadas x, y a desplazar segun impresora
+     */
+    private function __meterPaginas($pages, $printer){
+        foreach ($pages as $p) {
+            if (count($p)>0) {
+                $this->AddPage();
+            }
+            // meter texto para cada pagina
+            foreach ($p as $f) {
+                $this->__meterTexto($f, $printer);
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @param array fieldCoordenateData $f informacion del campo a mostrar en el pdf
+     * @param array del model Printer $printer coordenadas x,y a desplazar segun impresora
+     */
+    private function __meterTexto($f, $printer){
+        $c = $f['FieldCoordenate'];
+        $fType = $f['FieldType']['name'];
+
+        if (!empty($c['value'])) {
+            $c['x'] = (int)$c['x'] + (int)$printer['Printer']['x'];
+            $c['y'] = (int)$c['y'] + (int)$printer['Printer']['y'];
+
+            $c['txt'] = iconv('UTF-8', Configure::read('Fpdf.iconvSource'), $c['value'] );;
+            $this->SetFontSize(floatval($c['font_size']));
+            $textoImprimio = $this->printStuff($fType,$c);
+            
+            if ($textoImprimio != $c['value'] && !empty($c['FieldCoordenate'])){
+                $this->__meterTexto($c, $printer);
+            }
+        }
+    }
+
+
+    /**
      * Funcion principal que maneja todas las funciones de ésta clase.
      * es la que se llama desde la vista que usa el helper
      *
@@ -56,7 +146,7 @@ class FpdfHelper extends AppHelper {
 
 
     function Text($opts) {
-        $opts['txt'] = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $opts['txt']);
+        $opts['txt'] = $opts['txt'];
         return $this->Pdf->Text($opts['x'], $opts['y'], $opts['txt']);
     }
 
@@ -66,9 +156,9 @@ class FpdfHelper extends AppHelper {
                 $opts['w'],
                 $opts['h'],
                 empty($opts['txt'])?null:$opts['txt'],
-                empty($opts['border'])?null:$opts['border'],
+                empty($opts['border'])?true:$opts['border'],
                 empty($opts['align'])?null:$opts['align'],
-                empty($opts['fill'])?null:$opts['fill'],
+                empty($opts['fill'])?true:$opts['fill'],
                 empty($opts['renglones_max'])?null:$opts['renglones_max']
                 );
         
@@ -81,10 +171,10 @@ class FpdfHelper extends AppHelper {
                 $opts['w'],
                 $opts['h'],
                 empty($opts['txt'])?null:$opts['txt'],
-                empty($opts['border'])?null:$opts['border'],
+                empty($opts['border'])?true:$opts['border'],
                 empty($opts['ln'])?null:$opts['ln'],
                 empty($opts['align'])?null:$opts['align'],
-                empty($opts['fill'])?null:$opts['fill'],
+                empty($opts['fill'])?true:$opts['fill'],
                 empty($opts['link'])?null:$opts['link']
                 );
     }
@@ -96,25 +186,24 @@ class FpdfHelper extends AppHelper {
                 $opts['w'],
                 $opts['h'],
                 empty($opts['txt'])?null:$opts['txt'],
-                empty($opts['border'])?null:$opts['border'],
+                empty($opts['border'])?true:$opts['border'],
                 empty($opts['align'])?null:$opts['align'],
-                empty($opts['fill'])?null:$opts['fill'],
+                empty($opts['fill'])?true:$opts['fill'],
                 empty($opts['renglones_max'])?null:$opts['renglon_max']
                 );
     }
 
 
-    function xyCeldaAjustable($x, $y, $txt='', $w, $h=0, $border=0, $ln=0, $align='', $fill=0, $link='') {
+    function xyCeldaAjustable($x, $y, $txt='', $w, $h=0, $border=0, $ln=0, $align='', $fill=1, $link='') {
         $this->SetXY($opts['x'], $opts['y']);
-        $opts['txt'] = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $opts['txt']);
         return $this->Pdf->CellFit(
                 $opts['w'],
                 $opts['h'],
                 empty($opts['txt'])?null:$opts['txt'],
-                empty($opts['border'])?null:$opts['border'],
+                empty($opts['border'])?true:$opts['border'],
                 empty($opts['ln'])?null:$opts['ln'],
                 empty($opts['align'])?null:$opts['align'],
-                empty($opts['fill'])?null:$opts['fill'],
+                empty($opts['fill'])?true:$opts['fill'],
                 empty($opts['link'])?null:$opts['link'],
                 1,
                 0
@@ -142,7 +231,6 @@ class FpdfHelper extends AppHelper {
 
 
     function MultiCell($w, $h, $txt, $border=0, $align='J', $fill=true, $maxLine = 0) {
-        $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         return $this->Pdf->MultiCellMaxLine($w, $h, $txt, $border, $align, $fill,$maxLine);
     }
 
@@ -225,7 +313,10 @@ class FpdfHelper extends AppHelper {
      *
      * @param integer $size
      */
-    function SetFont($family = 'Helvetica', $style='B', $size=10) {
+    function SetFont($family = null, $style='B', $size=10) {
+        if (empty($family)) {
+            $family = Configure::read('Fpdf.fontFamily');
+        }
         return $this->Pdf->SetFont($family, $style, $size);
     }
 
@@ -238,7 +329,6 @@ class FpdfHelper extends AppHelper {
     }
 
     function GetStringWidth($s) {
-        $s = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $s);
         return $this->Pdf->GetStringWidth($s);
     }
 
@@ -277,7 +367,7 @@ class FpdfHelper extends AppHelper {
      * @param <type> $fill
      * @param <type> $link
      */
-    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill=true, $link='') {
+    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='C', $fill = true, $link='') {
         if ($w < $this->GetStringWidth($txt)) {
             // recorto el texto si sobrepasa el ancho de la celda
             $txtAuxCort = '';
@@ -289,7 +379,6 @@ class FpdfHelper extends AppHelper {
 
             $txt = $txtAux;
         }
-        $txt = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
         $this->Pdf->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
         return $txt;
     }
@@ -422,22 +511,22 @@ class FPDFCellFit extends FPDF {
     }
 
     //Cell with horizontal scaling only if necessary
-    function CellFitScale($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='') {
+    function CellFitScale($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=1, $link='') {
         $this->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, 1, 0);
     }
 
     //Cell with horizontal scaling always
-    function CellFitScaleForce($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='') {
+    function CellFitScaleForce($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=1, $link='') {
         $this->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, 1, 1);
     }
 
     //Cell with character spacing only if necessary
-    function CellFitSpace($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='') {
+    function CellFitSpace($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=1, $link='') {
         $this->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, 0, 0);
     }
 
     //Cell with character spacing always
-    function CellFitSpaceForce($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='') {
+    function CellFitSpaceForce($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=1, $link='') {
         //Same as calling CellFit directly
         $this->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, 0, 1);
     }
@@ -473,7 +562,7 @@ class FPDFCellFit extends FPDF {
      * @param <type> $align
      * @param <type> $fill
      */
-    function VCell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0) {
+    function VCell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=1) {
         //Output a cell
         $k=$this->k;
         if($this->y+$h>$this->PageBreakTrigger and !$this->InFooter and $this->AcceptPageBreak()) {
@@ -593,7 +682,7 @@ class FPDFCellFit extends FPDF {
 
 
 
-    function MultiCellMaxLine($w, $h, $txt, $border=0, $align='J', $fill=0, $maxline=0) {
+    function MultiCellMaxLine($w, $h, $txt, $border=0, $align='J', $fill=1, $maxline=0) {
         //Output text with automatic or explicit line breaks, maximum of $maxlines
         $cw=&$this->CurrentFont['cw'];
         if($w==0)

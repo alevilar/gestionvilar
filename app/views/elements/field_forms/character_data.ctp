@@ -17,8 +17,9 @@ if (empty($characters)) {
     $characters = $this->data['Vehicle']['Customer']['Character'];
 
     foreach ($characters as &$ch) {
-        $ch['fecha_nacimiento'] = date('d-m-Y',strtotime($ch['fecha_nacimiento']));
-        $ch['fecha_inscripcion'] = date('d-m-Y',strtotime($ch['fecha_inscripcion']));
+        $ch['porcentaje'] = $ch['porcentaje']. "  00";
+        $ch['fecha_nacimiento'] = date('d-m-y',strtotime($ch['fecha_nacimiento']));
+        $ch['fecha_inscripcion'] = date('d-m-y',strtotime($ch['fecha_inscripcion']));
     }
     
     $finalCharacters = array();

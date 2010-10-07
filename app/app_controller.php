@@ -44,7 +44,7 @@ class AppController extends Controller {
 
         $this->Auth->logoutRedirect='/users/login';
 
-        //$this->Auth->allow('login','logout');
+        $this->Auth->allow('login','logout');
         //$this->Auth->allow('*');
         //$this->Auth->allowedActions('*');
         //$this->Auth->allow('home','login','logout');

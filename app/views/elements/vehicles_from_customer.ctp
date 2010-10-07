@@ -84,20 +84,7 @@
                     'class'=>'last images-link-1'));
                     ?>
             </span>
-            <div id="formulario-de-<?= $v['Vehicle']['id']?>" style="display: none;" class="box-list-forms">
-                <h2>Seleccionar Formulario para</h2>
-                <h3><?= $vehicleName?></h3>
-                    <? $formus = ClassRegistry::init('FieldCreator');
-                        $ff = $formus->find('all', array('conditions'=>array('activo'=>true)));
-                        $i = 0;
-                        foreach ($ff as $f) {
-                            echo $this->Html->link($f['FieldCreator']['name'], '/field_creators/addForm/'.$f['FieldCreator']['model'].'/'.$v['Vehicle']['id']);
-                            $i++;
-                            echo ($i%4 == 0)? '<br>' : '';
-                        }
-                    ?>
-
-            </div>
+            <?php echo $this->element('vehicle_avaliable_forms', array('vehicleName'=>$vehicleName, 'v'=>$v));?>
         </li><?
         endforeach;
         ?>

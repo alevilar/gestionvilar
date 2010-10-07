@@ -100,20 +100,7 @@ class F04 extends FormSkeleton {
                     'd7_cambio_domicilio_provincia' => array('label'=>'Provincia',  'div'=> array('class'=>'tipo_de_tramite_7')),
                     ),
             
-            
-            array(
-                'legend'=>'"E" Automotor',
-                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-                'vehicle_patente'=> array('label'=>'Dominio','value'=>$data['Vehicle']['patente']),
-                'vehicle_brand' => array('label'=>'Marca','value'=>$data['Vehicle']['brand']),
-                'vehicle_type' => array('label'=>'Tipo','value'=>$data['Vehicle']['type']),
-                'vehicle_model' => array('label'=>'Modelo','value'=>$data['Vehicle']['model']),
-                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$data['Vehicle']['motor_brand']),
-                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
-                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
-                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),
-            ),
-
+            $this->__vehiclePreform1('"E" Automotor'),
              array(
                 'legend'=>'"G" Deudas y gravámenes declarados por el Titular',
                 'ocupa-todoel-ancho' => true,
@@ -126,7 +113,6 @@ class F04 extends FormSkeleton {
                  'g2_importe'  => array('label'=>'Importe',  'div'=> array('style'=>'float:left; clear: none; margin-left: 10px;')),
                  'g2_acreedor'  => array('label'=>'Acreedor',  'div'=> array('style'=>'float:left; clear: right; margin-left: 10px;'), 'class'=>'span-10'),
              ),
-
             array(
                 'legend' => '"H" Firma de Acreedor Prendario 1',
                 'acprendario1_name' => array('label'=>'Apellido y Nombres del Acreedor Prendario'),
@@ -144,43 +130,8 @@ class F04 extends FormSkeleton {
                 'acprendario2_apoderado_identification_auth' => array('label'=>'Autoridad (o País) que lo expidió'),
             ),
 
-
-            array(
-                'legend'=>'"I" Propietario',
-                'propietario_name'=>array('label'=>'Apellido y Nombre o Denominación'),
-                'propietario_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'propietario_identification_number'=>array('label'=>'N° Documento'),
-                'propietario_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'propietario_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'propietario_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
-                'propietario_nupcia'=>array('label'=>'Nupcia'),
-                'propietario_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
-                'propietario_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge'),
-                'propietario_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'propietario_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento'),
-                'propietario_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'propietario_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'propietario_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
-                'i_fecha_sello'=>array('label'=>'Fecha, Sello y firma del certificante'),
-            ),
-            array(
-                'legend'=>'"J" Condominio en la Propiedad',
-                'condominiopropietario_name'=>array('label'=>'Apellido y Nombre o Denominación'),
-                'condominiopropietario_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'condominiopropietario_identification_number'=>array('label'=>'N° Documento'),
-                'condominiopropietario_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'condominiopropietario_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'condominiopropietario_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
-                'condominiopropietario_nupcia'=>array('label'=>'Nupcia'),
-                'condominiopropietario_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
-                'condominiopropietario_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge'),
-                'condominiopropietario_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
-                'condominiopropietario_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento'),
-                'condominiopropietario_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
-                'condominiopropietario_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
-                'condominiopropietario_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
-                'j_fecha_sello'=>array('label'=>'Fecha, Sello y firma del certificante'),
-            ),
+            $this->__preformTipo2('propietario', '"I" Propietario'),
+            $this->__preformTipo2('condominiopropietario', '"J" Condominio en la Propiedad'),
 
             array(
                  'legend'=>'"K" Observaciones',
@@ -198,7 +149,6 @@ class F04 extends FormSkeleton {
 
         return $coso;
     }
-
 
 
 
@@ -220,11 +170,7 @@ class F04 extends FormSkeleton {
 
 
             $("legend").click(function(){
-                //if (!mostrando) {
                      mostrarInputsCorrectos();
-                     
-                //}
-
             });
 
     ';

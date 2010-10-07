@@ -75,24 +75,7 @@ class F02 extends FormSkeleton {
             });
 
 
-";
-    function setSContain() {
-        $this->sContain = array(
-                'Character',
-                'Representative',
-                'Spouse',
-                'Vehicle' => array(
-                        'Customer'=>array(
-                                'Character'=>array('CharacterType'),
-                                'Representative',
-                                'CustomerLegal',
-                                'CustomerNatural'=>array('Spouse'),
-                                'CustomerHome',
-                                'Identification'=>array('IdentificationType')
-                        )
-                )
-        );
-    }
+        ";
 
     }
 

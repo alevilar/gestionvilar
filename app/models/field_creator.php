@@ -13,10 +13,6 @@ class FieldCreator extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-                'model' => array(
-                            'notempty' => array(
-                                    'rule' => array('notempty'),
-                                ))
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

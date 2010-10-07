@@ -60,6 +60,16 @@ abstract class FormSkeleton extends AppModel {
     var $fieldsBlackList = array('modified', 'created');
 
 
+    /**
+     * Son los nombres de los personajes involucrados en el formulario
+     * el array es del tipo key -> value donde el key es el string que lo identifica
+     * y el value es un titulo o nombre mas legible
+     * Ej
+     * array('vendedor'=>'Titular vendedor')
+     */
+    var $involucrados = array();
+
+
     function __construct($id = false, $table = null, $ds = null) {
         parent::__construct($id, $table, $ds);
         $this->setSContain();
@@ -265,13 +275,16 @@ abstract class FormSkeleton extends AppModel {
      *
      * @param integer $fxx_id id del formulario que quiero cargar la data
      */
-    public function generateDataWithFields($fxx_id) {
+    public function generateDataWithFields($fxx_id, $data = null) {
 
         // levanto los campos de este tipo de formulario de la tabla de coordenadas
         $this->loadFields();
 
         // levanto la data del Formulario
-        $this->loadFormData($fxx_id);
+        if (empty($data))
+            $this->loadFormData($fxx_id);
+        else
+            $this->data = $data;
 
         // asigno los valoresque en field_coordenates ya tienen un campo en la tabla del model asignado
         $this->autoPopulateFields();
@@ -484,7 +497,7 @@ abstract class FormSkeleton extends AppModel {
      *                  array  'renglones' => Son los field_coordenates name, en ellos se imprimiran el valor pasado
      *                  string 'field_name'=> Texto a imprimir en esos renglones
      */
-    function  meterNombreCompletoEnVariosRenglones($options) {
+    function  meterNombreCompletoEnVariosRenglones($options) {        
         if(empty($options['field_name'])) {
             return -2;
         }
@@ -492,24 +505,30 @@ abstract class FormSkeleton extends AppModel {
         if(empty($options['renglones'])) {
             $this->log("en metodo meterNomvreCOmpletoEnVariosCamposn no se pasaron los paramentros correctamente");
             debug("no se pasaron los parametros correctamente");
-            debug($options);
             return -1;
         }
 
         // preparo el texto en array para recorrerlo y calcular su tamaño
         $vec = explode(" ",$options['field_name']);
+        //limpio caracteres nulos
+        $newVec = array();
+        foreach ($vec as $v){
+            if (!empty($v)){
+                $newVec[] = $v;
+            }
+        }
+        $vec = $newVec;
 
         // inicializo el FPDF para luego verificar el tamaño de la celda
         App::import('Vendor','fpdf/fpdf');
-        $orientation='P';
-        $unit='mm';
-        $format='legal';
+        $orientation= Configure::read('Fpdf.orientation');
+        $unit= Configure::read('Fpdf.unit');
+        $format= Configure::read('Fpdf.format');
         $fpdfAux = new FPDF();
         $fpdfAux->FPDF($orientation, $unit, $format);
         $fpdfAux->AddPage();
-        // Fuente
-        $fpdfAux->SetFont('Courier','',10);
-        $field_coord = ClassRegistry::init('FieldCoordenate');
+        
+        $field_coord =& ClassRegistry::init('FieldCoordenate');
         foreach($options['renglones'] as $r) {
             $coordenada = $field_coord->find('first', array(
                     'conditions'=>array(
@@ -518,6 +537,9 @@ abstract class FormSkeleton extends AppModel {
             )));
             $texto = '';
 
+            // Fuente
+            $fpdfAux->SetFont(Configure::read('Fpdf.fontFamily'),'',$coordenada['FieldCoordenate']['font_size']);
+     
             // si oes multicell entonces meto todo el string de una saque eso lo maneja el propio metodo Multicell
             if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
                 $texto = implode(" ", $vec);
@@ -535,9 +557,9 @@ abstract class FormSkeleton extends AppModel {
                     $texto = implode(" ", $vec);
                     $vec = array(); // vacio el array
                 }
-                if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth(iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $texto." " . $palabra))) {
+                if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth($texto." " . $palabra)) {
                     $texto .= " " . $palabra;
-                } else {
+                } else {                    
                     array_unshift($vec,$palabra);
                     break;
                 }
@@ -672,6 +694,12 @@ abstract class FormSkeleton extends AppModel {
                 case 5: // CI
                     $this->data[$this->name][$prefijo.'_identification_ci'] = 'X';
                     breaK;
+                case 2: // CUIT
+                    $this->data[$this->name][$prefijo.'_identification_cuit'] = 'X';
+                    breaK;
+                case 7: // CUIL
+                    $this->data[$this->name][$prefijo.'_identification_cuil'] = 'X';
+                    breaK;
             }
             return true;
         }
@@ -750,6 +778,164 @@ abstract class FormSkeleton extends AppModel {
     }
 
 
+//    function __ponerPorcentajeConEnteroYDecimal($inv) {
+//         if (!empty( $this->data[$this->name][$prefijo.'_porcentaje'])) {
+//             $porcentaje = $this->data[$this->name][$prefijo.'_porcentaje'];
+//             $tEntero = (int)$porcentaje;
+//             $tDecimal = (int)(($porcentaje-$tEntero)*100);
+//             $this->data[$this->name][$prefijo.'_dia_inscripcion'],
+//             $this->data[$this->name][$prefijo.'_dia_inscripcion'],
+//         }
+//    }
+
+
+    function __autoCompletarElFormData() {
+        if (!empty($this->involucrados)) {
+            foreach ($this->involucrados as $invTitle) {
+                $this->__ponerXPorIdentificationType($invTitle);
+                $this->__ponerXPorMaritalStatus($invTitle);
+                $this->__ponerXFechaNacimiento($invTitle);
+                $this->__ponerXPorFechaInscripcion($invTitle);
+            }
+        } else {
+            debug('No hay INVOLUCRADOS EN ESTE FORMULARIO !!');
+        }
+    }
+
+
+
+    public function beforeSave($options) {
+        $this->__autoCompletarElFormData();
+        return parent::beforeSave($options);
+    }
+    
+
+
+
+    public function __preformTipo1($involucrado , $legend = null){
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+        $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+        $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+         
+        $legenda = empty($legend)? $this->involucrados[$involucrado] : $legend;
+
+        return array(
+               'legend'=> $legenda,
+               $involucrado.'_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+               $involucrado.'_cuit_cuil'=>array('label'=>'CUIT o CUIL'),
+               $involucrado.'_name'=>array('label'=>'Apellido y Nombre o Denominación', 'class'=>'nombre_con_cuit'),
+               $involucrado.'_calle'=>array('label'=>'Calle'),
+               $involucrado.'_numero_calle'=>array('label'=>'Número'),
+               $involucrado.'_piso'=>array('label'=>'Piso'),
+               $involucrado.'_depto'=>array('label'=>'Dep'),
+               $involucrado.'_cp'=>array('label'=>'Código Postal'),
+               $involucrado.'_localidad'=>array('label'=>'Localidad'),
+               $involucrado.'_departamento'=>array('label'=>'Partido o Departamento'),
+               $involucrado.'_provincia'=>array('label'=>'Provincia'),
+               $involucrado.'_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+               $involucrado.'_identification_number'=>array('label'=>'N° Documento'),
+               $involucrado.'_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+               $involucrado.'_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+               $involucrado.'_fecha_nacimiento'=>array('label'=>'Fecha de Nacimiento','type'=>'text'),
+               $involucrado.'_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+               $involucrado.'_nupcia'=>array('label'=>'Nupcia'),
+               $involucrado.'_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
+
+               $involucrado.'_personeria_otorgada'=>array('label'=>'personeria otorgada por'),
+               $involucrado.'_inscripcion'=>array('label'=>'N° o datos de inscripción o creación'),
+               $involucrado.'_fecha_inscripcion'=>array('label'=>'Fecha de inscripción o creación','type'=>'text'),
+               $involucrado.'_persona_fisica_o_juridica'=>array('type'=>'hidden'),
+                );
+    }
+
+
+
+    public function __preformTipo2($involucrado , $legend = null){
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+        $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+        $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+
+        $legenda = empty($legend)? $this->involucrados[$involucrado] : $legend;
+        return array(
+               'legend'=> $legenda,
+               $involucrado.'_porcentaje'=>array('label'=>array('text'=>'Porcentaje (%) ','style'=>'float:left; margin-top: 6px;')),
+               $involucrado.'_name'=>array('label'=>'Apellido y Nombre o Denominación'),
+               $involucrado.'_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+               $involucrado.'_identification_number'=>array('label'=>'N° Documento'),
+               $involucrado.'_nationality_type_id'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+               $involucrado.'_identification_authority'=>array('label'=>'Autoridad (o país) que lo expidió'),
+               $involucrado.'_marital_status_id'=>array('label'=>'Estado Civil', 'options'=>$maritalStatus, 'empty'=>'Seleccione'),
+               $involucrado.'_nupcia'=>array('label'=>'Nupcia'),
+               $involucrado.'_conyuge'=>array('label'=>'Apellido y nombres del cónyuge'),
+               $involucrado.'_conyuge_apoderado_name'=>array('label'=>'Apellido y nombres del cónyuge'),
+               $involucrado.'_conyuge_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación','empty'=>'Seleccione','options'=>$identificationsTypes),
+               $involucrado.'_conyuge_apoderado_identification_number'=>array('label'=>'N° Documento'),
+               $involucrado.'_conyuge_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+               $involucrado.'_conyuge_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
+               $involucrado.'_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
+               $involucrado.'_fecha_sello'=>array('label'=>'Fecha, Sello y firma del certificante'),
+            );
+    }
+
+
+    public function __representativePreform($involucrado , $legend = null){
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+        $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+
+        $legenda = empty($legend)? $this->involucrados[$involucrado] : $legend;       
+
+        return  array(
+                'legend'=> $legenda,
+                $involucrado.'_apoderado_name'=>array('label'=>'Apellido y nombres del Apoderado'),
+                $involucrado.'_apoderado_identification_type_id'=>array('label'=>'Tipo de identificación', 'empty'=>'Seleccione','options'=>$identificationsTypes),
+                $involucrado.'_apoderado_identification_number'=>array('label'=>'N° Documento',),
+                $involucrado.'_apoderado_nationality_type'=>array('label'=>'Nacionalidad', 'options'=>$nationalities),
+                $involucrado.'_apoderado_identification_auth'=>array('label'=>'Autoridad (o país) que lo expidió'),
+                $involucrado.'_fecha_sello',
+            );
+    }
+
+
+    function __vehiclePreform1($legend = null){
+        $legenda = empty($legend)? __('Vehicle',true) : $legend;
+
+        return array(
+                'legend'=>'"F" Vehículo que se tansfiere',
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$this->data['Vehicle']['id']),
+                'vehicle_patente'=> array('label'=>'Dominio','value'=>$this->data['Vehicle']['patente']),
+                'vehicle_brand' => array('label'=>'Marca','value'=>$this->data['Vehicle']['brand']),
+                'vehicle_type' => array('label'=>'Tipo','value'=>$this->data['Vehicle']['type']),
+                'vehicle_model' => array('label'=>'Modelo','value'=>$this->data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$this->data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$this->data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$this->data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$this->data['Vehicle']['chasis_number']),
+                'vehicle_use' => array('label'=>'N° de Chasis','value'=>$this->data['Vehicle']['use']),
+            );
+    }
+
+    function __vehiclePreform2($legend = null){
+        $legenda = empty($legend)? __('Vehicle',true) : $legend;
+
+        return array(
+                'legend'=> $legenda,
+                'vehicle_id' => array('type'=>'hidden', 'value'=>$this->data['Vehicle']['id']),
+                'vehicle_patente'=> array('label'=>'Dominio','value'=>$this->data['Vehicle']['patente']),
+                'vehicle_brand' => array('label'=>'Marca','value'=>$this->data['Vehicle']['brand']),
+                'vehicle_type' => array('label'=>'Tipo','value'=>$this->data['Vehicle']['type']),
+                'vehicle_model' => array('label'=>'Modelo','value'=>$this->data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$this->data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$this->data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$this->data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$this->data['Vehicle']['chasis_number']),
+                'vehicle_use' => array('label'=>'N° de Chasis','value'=>$this->data['Vehicle']['use']),
+                'vehicle_adquisition_value' => array('label'=>'Valor de adquisición','value'=>$this->data['Vehicle']['adquisition_value']),
+                'vehicle_adquisition_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime($this->data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime($this->data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime($this->data['Vehicle']['adquisition_date']))),
+                'vehicle_adquisition_evidence_element' => array('label'=>'Elemento provatorio de la adquisición','value'=>$this->data['Vehicle']['adquisition_evidence_element']),
+            );
+    }
 
 
 

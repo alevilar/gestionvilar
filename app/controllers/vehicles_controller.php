@@ -16,13 +16,15 @@ class VehiclesController extends AppController {
             
             $vehicleForms = array();
             foreach ($forms as $fID=>$fv ){
-                $formTal =& ClassRegistry::init($fv);
-                $dataform = $formTal->find('all', array(
-                                    'order' => array('created desc'),
-                                    'recursive' => -1,
-                                    'fields'    =>array('id','created'),
-                                    'conditions'=> array('vehicle_id'=>$vehicle_id)));
-                $vehicleForms[$fv] = $dataform;
+                if(!empty($fv)) {
+                    $formTal =& ClassRegistry::init($fv);
+                    $dataform = $formTal->find('all', array(
+                                        'order' => array('created desc'),
+                                        'recursive' => -1,
+                                        'fields'    =>array('id','created'),
+                                        'conditions'=> array('vehicle_id'=>$vehicle_id)));
+                    $vehicleForms[$fv] = $dataform;
+                }
             }
 
 

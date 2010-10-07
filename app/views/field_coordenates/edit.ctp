@@ -13,10 +13,12 @@
         echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array(1=>1,2=>2)));
         echo $this->Form->input('w', array('default'=>0, 'after'=>'Ancho en milimetros. Si queda en cero, el ancho no importa'));
         echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
-        echo $this->Form->input('renglones_max', array('label'=>'Máxima cantidad de renglones', 'after'=>'Éste parámetro es útil cuando se selecciona MultiCell (múltiples renglones)'));
+        echo $this->Form->input('renglones_max', array('label'=>'Máxima cantidad de renglones', 'default'=>0, 'after'=>'Éste parámetro es útil cuando se selecciona MultiCell (múltiples renglones)'));
+        
+        echo $this->Form->input('test_print_text',array('label'=>'Texto a imprimir para realizar pruebas de impresión', 'value'=> $this->data['FieldCoordenate']['test_print_text'],'before'=>'Lo que se escriba a continuación será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+
+        
         echo "<hr>";
-
-
         // solo mi usuario puede ver esto
         if ($session->read('Auth.User.username') == 'alevilar') :
 
@@ -63,7 +65,7 @@
             if (empty($this->data['FieldCoordenate']['test_print_text']) || (trim($this->data['FieldCoordenate']['test_print_text']) == 'Lalalal Lalalala Lala')) {
                 $this->data['FieldCoordenate']['test_print_text'] = $this->data['FieldCoordenate']['name'];
             }
-            echo $this->Form->input('test_print_text',array('label'=>'Texto a imprimir para realizar pruebas de impresión', 'value'=> $this->data['FieldCoordenate']['test_print_text'],'before'=>'Lo que se escriba aca será utilizado en la impresión de prueba del formulario. O sea, cuando se mprima un ejemplo para conocer cmo quedaria, el ejemlo se imprime con este texto.'));
+           
 
             echo $this->Form->input('continue_field_coordenate_id', array('empty'=>'Ninguno (si no entra, escribir solo el texto que entra y listo)','label'=>'¿En que campo continuar escribiendo?','after'=>'Indicar donde continuar escribiendo, en caso de que el texto no entrara en solo este campo del formulario. (hay veces en que uno desea seguir escribiendo en el reverso de la hoja, por ejemplo)','options'=>$fieldCoordenates));
             echo "<hr>";
