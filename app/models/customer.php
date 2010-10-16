@@ -125,8 +125,6 @@ class Customer extends AppModel {
         return 1;
     }
 
-
-
    
 }
 ?>

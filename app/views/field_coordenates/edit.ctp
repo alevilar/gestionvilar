@@ -19,8 +19,15 @@
 
         
         echo "<hr>";
+
+        if (empty($this->data['FieldCreator']['model'])) {
+            echo $this->Form->input('related_field_table', array(
+                'label'=>'Nombre del campo en Base de Datos',
+                'before'=>'AVAZADO -.Según el nombre quie le ponga aeste campo se insertarámn automáticamente campos como por ejemplo "customer_name"'));
+        }
+
         // solo mi usuario puede ver esto
-        if ($session->read('Auth.User.username') == 'alevilar') :
+        if ($session->read('Auth.User.username') == 'alevilar' && !empty($this->data['FieldCreator']['model'])) :
 
             $modelo = ClassRegistry::init($this->data['FieldCreator']['model']);
 

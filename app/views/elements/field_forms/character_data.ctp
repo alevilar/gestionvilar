@@ -14,7 +14,13 @@ if (empty ($field_prefix)) {
 
 // armo el JSON de Apoderados o Represetatives
 if (empty($characters)) {
-    $characters = $this->data['Vehicle']['Customer']['Character'];
+    if (!empty($this->data['Vehicle']['Customer']['Character'])) {
+        $characters = $this->data['Vehicle']['Customer']['Character'];
+    } elseif (!empty($this->data['Customer']['Character'])) {
+        $characters = $this->data['Vehicle']['Customer']['Character'];
+    } else {
+        return '';
+    }
 
     foreach ($characters as &$ch) {
         $ch['porcentaje'] = $ch['porcentaje']. "  00";

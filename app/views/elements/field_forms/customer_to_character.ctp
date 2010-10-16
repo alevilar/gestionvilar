@@ -1,6 +1,10 @@
 <?php
 $random = rand(1, 989898);
 
+if (empty($formName)) {
+    $formName = 'NoName';
+}
+
 if (empty ($label)) {
     $label = __('Customer is',true);
 }
@@ -17,6 +21,9 @@ if (empty ($field)) {
 if (empty($customer)) {
     $d = $this->data;
     //$customer = $this->data['Vehicle']['Customer'];
+    if (!empty($d['Customer'])) {
+        $d['Vehicle']['Customer'] = $d['Customer'];
+    }
 
     $customer['porcentaje'] = '';
     $customer['name'] = $d['Vehicle']['Customer']['name'];
@@ -63,12 +70,14 @@ if (empty($customer)) {
             $inscription_date = date('d-m-y',strtotime($this->data['Vehicle']['Customer']['CustomerLegal']['inscription_date']));
         }
         $customer['persona_fisica_o_juridica'] = 'juridica';
-        $customer['personeria_otorgada'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_entity'];
-        $customer['inscripcion'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_number'];
-        $customer['anio_inscripcion'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-        $customer['mes_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-        $customer['dia_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-        $customer['fecha_inscripcion'] = $inscription_date;
+        if (!empty($d['Vehicle']["Customer"]['CustomerLegal'])) {
+            $customer['personeria_otorgada'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_entity'];
+            $customer['inscripcion'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_number'];
+            $customer['anio_inscripcion'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+            $customer['mes_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+            $customer['dia_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+            $customer['fecha_inscripcion'] = $inscription_date;
+        }
     }
 
     // IDENTIFICACION
@@ -106,6 +115,8 @@ if (empty($customer)) {
 //    $customer['fecha_inscripcion'] = date('d-m-Y',strtotime($customer['fecha_inscripcion']));
 
     $customer = json_encode($customer);
+
+    
 }
 ?>
 

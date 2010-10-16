@@ -3,6 +3,7 @@ class FieldCoordenatesController extends AppController {
 
 	var $name = 'FieldCoordenates';
 
+
 	function index() {
             $condiciones = array();
             $limit = 30;
@@ -108,5 +109,8 @@ class FieldCoordenatesController extends AppController {
 		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Field coordenate'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+
+
 }
 ?>

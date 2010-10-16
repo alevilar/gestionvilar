@@ -108,6 +108,8 @@ class FieldCoordenate extends AppModel {
                 ),
 	);
 
+        var $hasMany = array('FieldFormField');
+
 
         function norepe(){
             $this->recursive = -1;
@@ -122,6 +124,23 @@ class FieldCoordenate extends AppModel {
             } else {
                 return true;
             }
+        }
+
+
+        /**
+         *  Me devuelve todas las coordenadas para un formulario en especial y una pagina en concreto
+         * @param integer $field_creator_id
+         * @param integer $page
+         * @return array find all
+         */
+        function getCoorFrom($field_creator_id, $page) {
+            return $this->find('all', array(
+                'conditions'=>array(
+                        'FieldCoordenate.field_creator_id'=>(int)$field_creator_id,
+                        'FieldCoordenate.page'=>$page,
+                ),
+                'contain'=>array('FieldType','FieldContinue')
+            ));
         }
 }
 ?>

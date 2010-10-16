@@ -25,6 +25,14 @@
             Sistema Gestión de Formularios Online
             <?php echo $title_for_layout; ?>
         </title>
+
+
+        <script src="http://www.google.com/jsapi?key=ABQIAAAAErkyFeQ8Jgi7dGtuUm-4NRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxSq5q8AeA0IXY0-a3IRWti3SYTIBw" type="text/javascript"></script>
+
+        <!-- ONLINE
+        <script src="http://www.google.com/jsapi?key=ABQIAAAAErkyFeQ8Jgi7dGtuUm-4NRTu_qIQxv8He_1EOq-W7S0AA_D05BQ4fwaRVSb5zQycCg3yhvLjM-wCTA" type="text/javascript"></script>
+        -->
+
         <?php
         echo $this->Html->meta('icon');
 
@@ -40,6 +48,7 @@
         <?
         echo $this->Html->css('blueprint/plugins/fancy-type/screen');
         echo $this->Html->css('blueprint/plugins/buttons/screen');
+        echo $this->Html->css('jqueryuithemes/pepper-grinder/custom');
         ////////////////////////////////////////////////////////
 
 
@@ -58,6 +67,7 @@
             'jquery.cakeFormFill',
             'jquery.populate',
             'default',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js',
         ));
         echo $this->Html->css(array('datePicker.css'));
         // DatePicker end

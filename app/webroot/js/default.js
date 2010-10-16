@@ -12,7 +12,16 @@ function populateCampos(modelName, formName, fieldPrefix, integerValue) {
         var Coso =  jQuery.parseJSON(seleccionado.attr('json'));
         for (property in Coso) {
             inputName = "data["+formName+"]["+fieldPrefix+"_"+property+"]";
-            $('[name="'+inputName+'"]').val(Coso[property]);
+            var elementoFormInput = $('[name="'+inputName+'"]');
+            if (elementoFormInput.length > 0) {
+                elementoFormInput.val(Coso[property]);
+            } else {
+                var elementoElement = $("#"+fieldPrefix+"_"+property);
+                if(elementoElement.length > 0) {
+                    elementoElement.val(Coso[property]);
+                }
+            }
+
         }
     } else {
         $('input[name^="'+inputName+'"]').val('');
