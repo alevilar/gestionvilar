@@ -154,10 +154,10 @@ abstract class FormSkeleton extends AppModel
 //                $nombreCuit = $this->getNombreWidthCuitIfLegal('Customer');
 //                $ret['Vehicle']['Customer']['name_n_cuit'] = $nombreCuit;
             }
+            $this->data = $ret;
         } else {
             $ret = parent::find($conditions, $fields, $order, $recursive);
         }
-        $this->data = $ret;
         return $ret;
     }
 

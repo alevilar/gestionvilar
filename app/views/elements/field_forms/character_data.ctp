@@ -12,6 +12,10 @@ if (empty ($field_prefix)) {
     $field_prefix = 'character';
 }
 
+if (empty($formName)) {
+    $formName = 'FormNoName';
+}
+
 // armo el JSON de Apoderados o Represetatives
 if (empty($characters)) {
     if (!empty($this->data['Vehicle']['Customer']['Character'])) {
@@ -38,7 +42,7 @@ if (empty($characters)) {
     $characters = $finalCharacters;
 }
 
-    
+    debug("'Character','$formName','$field_prefix',$random");
 
 ?>
 

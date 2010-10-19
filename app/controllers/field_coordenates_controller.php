@@ -30,6 +30,17 @@ class FieldCoordenatesController extends AppController {
 	}
 
 
+        function update() {
+            $this->FieldCoordenate->id = $this->params['form']['field_coordenate_id'];
+            if ($this->FieldCoordenate->saveField($this->params['form']['field'],$this->params['form']['newvalue'])) {
+                echo $this->params['form']['newvalue'];
+            } else {
+                echo "error al guardar";
+            }
+            exit;
+        }
+
+
         function mapear(){
            // $cond = array ('FieldCoordenate.field_creator_id'=>$field_creator_id);
             $res = $this->FieldCoordenate->find('all', array(

@@ -92,6 +92,10 @@ class FieldCreatorsController extends AppController {
             $this->{$form_model_name}->vehicle_id = $vehicle_id;
             
             if (!empty($this->data)) {
+                //debug($this->data);
+                unset($this->{$form_model_name}->data);
+               // debug($this->{$form_model_name});
+
                 if (!$this->{$form_model_name}->save($this->data[$this->{$form_model_name}->name])) {
                     $this->Session->setFlash("no pudo guardarse el formulario $form_model_name");
                     debug($this->{$form_model_name}->validationErrors);
@@ -126,7 +130,6 @@ class FieldCreatorsController extends AppController {
                 $this->set($varName, $varValue);
             }
 
-
             $this->set('formBlackList', $this->{$form_model_name}->fieldsBlackList);
             $this->set('formInputs'   , $this->{$form_model_name}->getFormImputs($this->data));
             $this->set('formName'     , $form_model_name);
@@ -146,24 +149,12 @@ class FieldCreatorsController extends AppController {
             $this->set(compact('printers', 'forms'));
         } else {
             $this->layout = 'pdf/default';
-            $page1 = $this->FieldCreator->FieldCoordenate->find('all', array(
-                        'conditions' => array(
-                            'FieldCoordenate.field_creator_id' => $this->data['FieldCreator']['form_id'],
-                            'FieldCoordenate.page' => 1,
-                        )
-                    ));
-
+            $page1 = $this->FieldCreator->FieldCoordenate->getCoorFrom($this->data['FieldCreator']['form_id'],1);
             foreach ($page1 as &$c) {
                 $c['FieldCoordenate']['value'] = $c['FieldCoordenate']['test_print_text'];
             }
 
-            $page2 = $this->FieldCreator->FieldCoordenate->find('all', array(
-                        'conditions' => array(
-                            'FieldCoordenate.field_creator_id' => $this->data['FieldCreator']['form_id'],
-                            'FieldCoordenate.page' => 2,
-                        )
-                    ));
-
+            $page2 = $this->FieldCreator->FieldCoordenate->getCoorFrom($this->data['FieldCreator']['form_id'],1);
             foreach ($page2 as &$c) {
                 $c['FieldCoordenate']['value'] = $c['FieldCoordenate']['test_print_text'];
             }

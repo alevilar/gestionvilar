@@ -1,3 +1,21 @@
+<?php
+echo $this->Html->script('jquery.jeditable.mini', false);
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+     $('.edit').editable('<?php echo $this->Html->url('/field_coordenates/update')?>', {
+         name : 'newvalue',
+         submitdata: function(){
+             return {
+                 field: $(this).attr('field'),
+                 field_coordenate_id: $(this).attr('field_coordenate_id')
+             }
+         }
+     });
+ });
+</script>
+
 <div class="fieldCoordenates index">
 	<h2><?php __('Field Coordenates');?></h2>
 
@@ -12,7 +30,6 @@ echo $this->Form->end('Buscar');
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('field_creator_id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('page');?></th>
 			<th><?php echo $this->Paginator->sort('field_type_id');?></th>
@@ -32,22 +49,19 @@ echo $this->Form->end('Buscar');
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($fieldCoordenate['FieldCreator']['name'], array('controller' => 'field_creators', 'action' => 'view', $fieldCoordenate['FieldCreator']['id'])); ?>
-		</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['name']; ?>&nbsp;</td>
+		<td><?php echo $fieldCoordenate['FieldCoordenate']['id']; ?></td>
+		
+		<td class="edit" field="name" field_coordenate_id="<?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['name']; ?></td>
 		<td><?php echo $fieldCoordenate['FieldCoordenate']['page']; ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($fieldCoordenate['FieldType']['name'], array('controller' => 'field_types', 'action' => 'view', $fieldCoordenate['FieldType']['id'])); ?>
 		</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['x']; ?>&nbsp;</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['y']; ?>&nbsp;</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['w']; ?>&nbsp;</td>
-		<td><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?>&nbsp;</td>
+		<td class="edit" field="x" field_coordenate_id="<?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['x']; ?></td>
+		<td class="edit" field="y" field_coordenate_id="<?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['y']; ?></td>
+		<td class="edit" field="w" field_coordenate_id="<?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['w']; ?></td>
+		<td class="edit" field="font_size" field_coordenate_id="<?php echo $fieldCoordenate['FieldCoordenate']['id']; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?></td>
                 <td title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?>" style="cursor: help"><?php echo empty($fieldCoordenate['FieldCoordenate']['related_field_table'])?'':'ver'?></td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCoordenate['FieldCoordenate']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCoordenate['FieldCoordenate']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $fieldCoordenate['FieldCoordenate']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $fieldCoordenate['FieldCoordenate']['id'])); ?>
 		</td>

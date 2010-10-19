@@ -114,7 +114,7 @@ class FpdfHelper extends AppHelper {
      */
     private function __meterTexto($f, $printer){
         $c = $f['FieldCoordenate'];
-        $fType = $f['FieldType']['name'];
+        $fType = $f['FieldType']['function'];
 
         if (!empty($c['value'])) {
             $c['x'] = (int)$c['x'] + (int)$printer['Printer']['x'];
