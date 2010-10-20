@@ -194,7 +194,7 @@ class FpdfHelper extends AppHelper {
     }
 
 
-    function xyCeldaAjustable($x, $y, $txt='', $w, $h=0, $border=0, $ln=0, $align='', $fill=1, $link='') {
+    function xyCeldaAjustable($opts) {
         $this->SetXY($opts['x'], $opts['y']);
         return $this->Pdf->CellFit(
                 $opts['w'],
@@ -207,6 +207,20 @@ class FpdfHelper extends AppHelper {
                 empty($opts['link'])?null:$opts['link'],
                 1,
                 0
+                );
+    }
+
+
+    function xyVCell($opts){
+        $this->SetXY($opts['x'], $opts['y']);
+        return $this->Pdf->VCell(
+                $opts['w'],
+                $opts['h'],
+                empty($opts['txt'])?null:$opts['txt'],
+                empty($opts['border'])?true:$opts['border'],
+                0, //ln
+                empty($opts['align'])?null:$opts['align'],
+                empty($opts['fill'])?true:$opts['fill']
                 );
     }
 

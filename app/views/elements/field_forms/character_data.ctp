@@ -42,8 +42,6 @@ if (empty($characters)) {
     $characters = $finalCharacters;
 }
 
-    debug("'Character','$formName','$field_prefix',$random");
-
 ?>
 
 <div id="element-character-<?php echo $random?>" class="span-5 element">

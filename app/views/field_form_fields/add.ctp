@@ -28,9 +28,15 @@
             <?php
                 echo $this->element('field_forms/customer_to_character', array(
                             'label'=>'Clientes',
-                            'options'=>array('customer'=>'Insertar datos del Cliente')));
+                            'formName' => 'FieldFormFieldAddForm',
+                            'options'=>array('
+                                customer'=>'Insertar datos del Cliente'
+                                )
+                    ));
 
-                echo $this->element('field_forms/character_data');
+                echo $this->element('field_forms/character_data', array(
+                    'formName' => 'FieldFormFieldAddForm',
+                    ));
             ?>
         </div>
 

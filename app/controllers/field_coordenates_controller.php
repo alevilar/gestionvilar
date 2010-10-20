@@ -25,15 +25,17 @@ class FieldCoordenatesController extends AppController {
                     'order'=>'FieldCoordenate.id ASC',
                 );
                 $fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
-                $this->set(compact('fieldCreators'));
+                $fieldTypes = $this->FieldCoordenate->FieldType->find('list');
+                $this->set(compact('fieldCreators','fieldTypes'));
 		$this->set('fieldCoordenates', $this->paginate());
 	}
 
 
         function update() {
             $this->FieldCoordenate->id = $this->params['form']['field_coordenate_id'];
-            if ($this->FieldCoordenate->saveField($this->params['form']['field'],$this->params['form']['newvalue'])) {
-                echo $this->params['form']['newvalue'];
+            if ($this->FieldCoordenate->saveField($this->params['form']['field'],$this->params['form']['value'])) {
+                $txtShow = (!empty($this->params['form']['text']))? $this->params['form']['text'] : $this->params['form']['value'];
+                echo $txtShow;
             } else {
                 echo "error al guardar";
             }
