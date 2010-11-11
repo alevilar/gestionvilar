@@ -164,7 +164,7 @@ class AuthComponent extends Object {
 	var $loginRedirect = null;
 
 /**
- * The the default action to redirect to after the user is logged out.  While AuthComponent does
+ * The default action to redirect to after the user is logged out.  While AuthComponent does
  * not handle post-logout redirection, a redirect URL will be returned from AuthComponent::logout().
  * Defaults to AuthComponent::$loginAction.
  *
@@ -469,7 +469,7 @@ class AuthComponent extends Object {
 			'loginAction' => array(
 				'controller' => Inflector::underscore(Inflector::pluralize($model)),
 				'action' => 'login',
-				'plugin' => $plugin,
+				'plugin' => Inflector::underscore($plugin),
 			),
 			'sessionKey' => 'Auth.' . $model,
 			'logoutRedirect' => $this->loginAction,
@@ -958,4 +958,3 @@ class AuthComponent extends Object {
 		}
 	}
 }
-?>

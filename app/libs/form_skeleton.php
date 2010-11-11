@@ -695,15 +695,11 @@ abstract class FormSkeleton extends AppModel
 
     function __autoCompletarElFormData()
     {
-        if (!empty($this->involucrados)) {
-            foreach ($this->involucrados as $invTitle) {
-                $this->__ponerXPorIdentificationType($invTitle);
-                $this->__ponerXPorMaritalStatus($invTitle);
-                $this->__ponerXFechaNacimiento($invTitle);
-                $this->__ponerXPorFechaInscripcion($invTitle);
-            }
-        } else {
-            debug('No hay INVOLUCRADOS EN ESTE FORMULARIO !!');
+        foreach ($this->involucrados as $invTitle) {
+            $this->__ponerXPorIdentificationType($invTitle);
+            $this->__ponerXPorMaritalStatus($invTitle);
+            $this->__ponerXFechaNacimiento($invTitle);
+            $this->__ponerXPorFechaInscripcion($invTitle);
         }
     }
 
@@ -817,11 +813,12 @@ abstract class FormSkeleton extends AppModel
     function __vehiclePreform2($legend = null)
     {
         $legenda = empty($legend) ? __('Vehicle', true) : $legend;
-
+ 
         return array(
             'legend' => $legenda,
             'vehicle_id' => array('type' => 'hidden', 'value' => $this->data['Vehicle']['id']),
             'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->data['Vehicle']['patente']),
+            'vehicle_fabrication_certificate' => array('label' => 'Certificado de fabricación', 'value' => $this->data['Vehicle']['fabrication_certificate']),
             'vehicle_brand' => array('label' => 'Marca', 'value' => $this->data['Vehicle']['brand']),
             'vehicle_type' => array('label' => 'Tipo', 'value' => $this->data['Vehicle']['type']),
             'vehicle_model' => array('label' => 'Modelo', 'value' => $this->data['Vehicle']['model']),

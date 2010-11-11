@@ -42,17 +42,34 @@ class F03 extends FormSkeleton {
 
     public function beforeSave($options)
     {
-        if (empty($this->data[$this->name]['i_concepto'])) {
-            $this->data[$this->name]['i_concepto_saldo'] = 'X';
-        } else {
-            $this->data[$this->name]['i_concepto_prestamo'] = 'X';
+        if (!empty($this->data[$this->name]['i_concepto'])) {
+            switch ($this->data[$this->name]['i_concepto']) {
+                case 'saldo':
+                    $this->data[$this->name]['i_concepto_saldo'] = 'X';
+                    break;
+                case 'prestamo':
+                    $this->data[$this->name]['i_concepto_prestamo'] = 'X';
+                    break;
+                case 'garantiapago':
+                    $this->data[$this->name]['i_concepto_saldo'] = 'GARANTIA DE PAGO';
+                    break;
+                default:
+                    break;
+            }
         }
 
-        if (empty($this->data[$this->name]['i_clausula'])) {
-            $this->data[$this->name]['i_clausula_si'] = 'X';
-        } else {
-            $this->data[$this->name]['i_clausula_no'] = 'X';
-        }
+        if (!empty($this->data[$this->name]['i_clausula'])) {
+            switch ($this->data[$this->name]['i_clausula']) {
+                case 'si':
+                    $this->data[$this->name]['i_clausula_si'] = 'X';
+                    break;
+                case 'no':
+                    $this->data[$this->name]['i_clausula_no'] = 'X';
+                    break;
+                default:
+                    break;
+            }  
+        } 
 
         return parent::beforeSave($options);
 
@@ -84,10 +101,10 @@ class F03 extends FormSkeleton {
             array(
                 'legend'=>'"I" Modalidades del Contrato',
                 'i_grado' => array('label'=>'Grado N°'),
-                'i_clausula' => array('options'=>array(0=>'SI', 1=>'NO'), 'label'=>'Cláusula de actualización'),
+                'i_clausula' => array('options'=>array('si'=>'SI', 'no'=>'NO'), 'label'=>'Cláusula de actualización', 'empty'=>'Seleccione'),
                 'i_clausula_si'=> array('type'=>'hidden'),
                 'i_clausula_no'=> array('type'=>'hidden')	,
-                'i_concepto' => array('options'=>array(0=>'Saldo de Precio', 1=>'Préstamo'), 'label'=>'Concepto'),
+                'i_concepto' => array('options'=>array('saldo'=>'Saldo de Precio', 'prestamo'=>'Préstamo','garantiapago'=>'Garantia de Pago'), 'label'=>'Concepto'),
                 'i_concepto_saldo'=> array('type'=>'hidden'),
                 'i_concepto_prestamo'=> array('type'=>'hidden'),
                 

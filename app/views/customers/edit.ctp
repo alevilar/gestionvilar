@@ -1,4 +1,56 @@
 
+
+<script type="text/javascript">
+
+     $(document).ready(mostrarDireccionesLegales);
+     $('#CustomerType').change(mostrarDireccionesLegales);
+
+    function mostrarDireccionesLegales(){
+           if ($('#CustomerType').val() == 'legal') {
+               $('.direcciones-legales').show();
+           } else {
+               $('.direcciones-legales').hide();
+           }
+    }
+
+    /**
+     * Form Wizard
+     */
+    $(function(){
+        $("#Customer<?= Inflector::camelize($this->action)?>Form").formwizard({ //wizard settings
+            formPluginEnabled: false, //Ajax is used to post the form to the server
+            validationEnabled : true, //The Validation plugin is used for validating the form at each step
+            focusFirstInput : true, // puts focus at the first input on each step
+            textSubmit: 'Guardar',
+            textNext: 'Siguiente',
+            textBack: 'Regresar'
+        },
+        {
+            // aca van oppciones de jquery.validator pero yo no quiero cambiar nada
+        },
+        {
+            resetForm: true
+        }
+    );
+    });
+
+
+    $(function(){
+        $("select#CustomerHomeStateId").change(function(){
+            $.getJSON("<?= $this->Html->url('/cities/from_state.json') ?>",{state_id: $(this).val(), ajax: 'true'}, function(j){
+                var options = '';
+                for (var i = 0; i < j.length; i++) {
+                    options += '<option value="' + j[i]['City'].id + '">' + j[i]['City'].name + '</option>';
+                }
+                $("select#CustomerHomeCityId").html(options);
+            });
+        })
+    })
+
+
+</script>
+
+
 <div class="customers form span-18 prepend-3">
     <?php echo $this->Form->create('Customer');?>
     <div id="fieldWrapper">
@@ -15,20 +67,16 @@
                     'class'=>'link required',
                     ));
 
-                     echo $this->Form->input('Customer.cuit_cuil', array(
-                         'label'=>'Ingrese CUIT o CUIL EXTRA',
-                         'after' => '<br>Este campo es para colocar el cuit o el cuil en formularios del tipo 01, 03, etc. Debe colocar directamente un texto aqui, por ejemplo:<br>"CUIT: 20-565656-2"',
-                         ));
+                     
                     ?>
                 </div>
                 <div class="span-8 last">
                     <?
-                    if (!empty($this->data['Identification']['id'])) {
-                        echo $this->Form->input('Identification.id');
-                    }
-                    echo $this->Form->input('Identification.identification_type_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('Identification.number');
-                    echo $this->Form->input('Identification.authority_name');
+
+                    echo $this->Form->input('Customer.cuit_cuil', array(
+                         'label'=>'Ingrese CUIT o CUIL EXTRA',
+                         'after' => '<br>Este campo es para colocar el cuit o el cuil en formularios del tipo 01, 03, etc. Debe colocar directamente un texto aqui, por ejemplo:<br>"CUIT: 20-565656-2"',
+                         ));
                     ?>
                 </div>
             </fieldset>
@@ -50,12 +98,22 @@
                 </div>
                 <div class="span-8 last">
                     <?
-                    echo $this->Form->input('CustomerNatural.marital_status_id', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerNatural.nuptials');
+                    echo $this->Form->input('CustomerNatural.marital_status_id', array(
+                        'empty'=>'Seleccione',
+                        'div'=>array('class'=>'span-3'),
+                        ));
+                    echo $this->Form->input('CustomerNatural.nuptials', array('div'=>array('class'=>'span-5 last')));
 
-                    echo $this->Form->input('CustomerNatural.nationality_type', array('empty'=>'Seleccione'));
-                    echo $this->Form->input('CustomerNatural.nationality');
-                    //echo $this->Form->input('CustomerNatural.spouse');
+                    echo $this->Form->input('CustomerNatural.nationality_type', array('empty'=>'Seleccione', 'div'=>array('class'=>'span-3')));
+                    echo $this->Form->input('CustomerNatural.nationality', array('div'=>array('class'=>'span-5 last')));
+                   
+
+                    if (!empty($this->data['Identification']['id'])) {
+                        echo $this->Form->input('Identification.id');
+                    }
+                    echo $this->Form->input('Identification.identification_type_id', array('empty'=>'Seleccione', 'div'=>array('class'=>'span-3')));
+                    echo $this->Form->input('Identification.number', array('div'=>array('class'=>'span-5 last')));
+                    echo $this->Form->input('Identification.authority_name');
                     ?>
                     <input type="hidden" class="link" value="CustomerHome" />
                 </div>
@@ -184,54 +242,3 @@
 
 
 
-
-
-<script type="text/javascript">
-
-     $(document).ready(mostrarDireccionesLegales);
-     $('#CustomerType').change(mostrarDireccionesLegales);
-
-    function mostrarDireccionesLegales(){
-           if ($('#CustomerType').val() == 'legal') {
-               $('.direcciones-legales').show();
-           } else {
-               $('.direcciones-legales').hide();
-           }
-    }
-    
-    /**
-     * Form Wizard
-     */
-    $(function(){
-        $("#Customer<?= Inflector::camelize($this->action)?>Form").formwizard({ //wizard settings
-            formPluginEnabled: false, //Ajax is used to post the form to the server
-            validationEnabled : true, //The Validation plugin is used for validating the form at each step
-            focusFirstInput : true, // puts focus at the first input on each step
-            textSubmit: 'Enviar',
-            textNext: 'Siguiente',
-            textBack: 'Regresar'
-        },
-        {
-            // aca van oppciones de jquery.validator pero yo no quiero cambiar nada
-        },
-        {
-            resetForm: true
-        }
-    );
-    });
-
-
-    $(function(){
-        $("select#CustomerHomeStateId").change(function(){
-            $.getJSON("<?= $this->Html->url('/cities/from_state.json') ?>",{state_id: $(this).val(), ajax: 'true'}, function(j){
-                var options = '';
-                for (var i = 0; i < j.length; i++) {
-                    options += '<option value="' + j[i]['City'].id + '">' + j[i]['City'].name + '</option>';
-                }
-                $("select#CustomerHomeCityId").html(options);
-            });
-        })
-    })
-
-
-</script>

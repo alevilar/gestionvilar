@@ -179,6 +179,20 @@ class FpdfHelper extends AppHelper {
                 );
     }
 
+    function xySquares($opts) {
+          $chars = str_split (empty($opts['txt'])?null:$opts['txt']);
+
+          $max = empty($opts['renglones_max'])?99999999:$opts['renglones_max'];
+          $x = $opts['x'];
+          $cont = 0;
+        foreach ($chars as $c) {
+            if ($cont >= $max) { return 0; } // ya no se pueden colocar mas caracteres prque se alacanzo elmaximo
+            $this->Pdf->Text($x, $opts['y'], $c);
+            $x += $opts['w'];
+            $cont++;
+        }
+        return 1;
+    }
 
     function xyLetra($opts) {
         $this->SetXY($opts['x'], $opts['y']);
@@ -405,7 +419,11 @@ class FpdfHelper extends AppHelper {
 
     /**
      * Allows you to control how the pdf is returned to the user, most of the time in CakePHP you probably want the string
-     *
+     * I: send the file inline to the browser. The plug-in is used if available.
+            The name given by name is used when one selects the "Save as" option on the link generating the PDF.
+         D: send to the browser and force a file download with the name given by name.
+         F: save to a local file with the name given by name.
+         S: return the document as a string. name is ignored.
      * @param string $name name of the file.
      * @param string $destination where to send the document values: I, D, F, S
      * @return string if the $destination is S
@@ -485,7 +503,6 @@ class FPDFCellFit extends FPDF {
     function CellFit($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $scale=0, $force=1) {
         //Get string width
         $str_width=$this->GetStringWidth($txt);
-
         //Calculate ratio to fit cell
         if($w==0)
             $w=$this->w-$this->rMargin-$this->x;
@@ -493,6 +510,7 @@ class FPDFCellFit extends FPDF {
 
         $fit=($ratio < 1 || ($ratio > 1 && $force == 1));
         if ($fit) {
+            
             switch ($scale) {
 
                 //Character spacing
@@ -515,7 +533,11 @@ class FPDFCellFit extends FPDF {
             //Override user alignment (since text will fill up cell)
             $align='';
         }
-        
+        debug($this->MBGetStringLength($txt));
+        debug($this->pages);
+        debug($this->GetStringWidth($txt));
+        debug($this->buffer);
+        die("arreglar ancho");
         //Pass on to Cell method
         $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
 
@@ -773,7 +795,10 @@ class FPDFCellFit extends FPDF {
                         $this->_out(sprintf('%.3f Tw', $this->ws*$this->k));
                     }
                     if ($nl == $maxline) {// si es la ultima linea que escriba todo y que lo comprima con FitScale
-                        $this->CellFitScale($w, $h, substr($s, $j), $b, 2, $align, $fill);
+                        //$this->CellFitScale($w, $h, substr($s, $j), $b, 2, $align, $fill);
+                        //debug($this);
+                        $this->AutosizeText(substr($s, $j), $w);
+                        //$this->Cell($w, $h, substr($s, $j, $sep-$j), $b, 2, $align, $fill);
                     } else {
                         $this->Cell($w, $h, substr($s, $j, $sep-$j), $b, 2, $align, $fill);
                     }
@@ -804,6 +829,25 @@ class FPDFCellFit extends FPDF {
         $this->Cell($w, $h, substr($s, $j, $i-$j), $b, 2, $align, $fill);
         $this->x=$this->lMargin;
         return '';
+    }
+
+
+        /*-- DIRECTW --*/
+    // Added adaptation of shaded_box = AUTOSIZE-TEXT
+    // Label and number of invoice/estimate
+    function AutosizeText($text,$w,$font = null,$style = '',$szfont=72) {
+	$text = trim($text);
+        $font = empty($font)? Configure::read('Fpdf.fontFamily') : $font;
+	//$width = $this->ConvertSize($w);
+	$loop   = 0;
+	while ( $loop == 0 ) {
+		$this->SetFont($font,$style,$szfont);
+		$sz = $this->GetStringWidth( $text );
+		if ( $sz > $w ) { $szfont --; }
+		else { $loop ++; }
+	}
+ 	$this->SetFont($font,$style,$szfont);
+	$this->Cell($w, 0, $text, 0, 0, "C");
     }
 
 

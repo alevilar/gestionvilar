@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2010-09-07 23:23-0300\n"
-"PO-Revision-Date: 2010-09-07 23:50-0300\n"
+"POT-Creation-Date: 2010-11-09 22:36-0300\n"
+"PO-Revision-Date: 2010-11-09 22:37-0300\n"
 "Last-Translator: Ale Vilar <alevilar@gmail.com>\n"
 "Language-Team: Ale Vilar <alevilar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,28 +16,32 @@ msgstr ""
 
 #: /controllers/agents_controller.php:13;35
 #: /controllers/character_types_controller.php:13;33
-#: /controllers/characters_controller.php:13;69
+#: /controllers/characters_controller.php:13;51
 #: /controllers/customer_homes_controller.php:13;36
 #: /controllers/customers_controller.php:38
-#: /controllers/field_coordenates_controller.php:46;70
-#: /controllers/field_creators_controller.php:22;42
+#: /controllers/field_coordenates_controller.php:60;84
+#: /controllers/field_creators_controller.php:20;40
+#: /controllers/field_form_fields_controller.php:20;119
+#: /controllers/field_forms_controller.php:13;35
 #: /controllers/identification_types_controller.php:13;33
 #: /controllers/identifications_controller.php:13;36
 #: /controllers/marital_statuses_controller.php:13;33
 #: /controllers/printers_controller.php:13;33
 #: /controllers/representatives_controller.php:13;47
 #: /controllers/users_controller.php:13;33
-#: /controllers/vehicles_controller.php:49;87
+#: /controllers/vehicles_controller.php:51;89
 msgid "Invalid %s"
 msgstr "%s inválido"
 
 #: /controllers/agents_controller.php:23;40
 #: /controllers/character_types_controller.php:23;38
-#: /controllers/characters_controller.php:24;49;74
+#: /controllers/characters_controller.php:25;56
 #: /controllers/customer_homes_controller.php:23;41
 #: /controllers/customers_controller.php:85
-#: /controllers/field_coordenates_controller.php:56;75
-#: /controllers/field_creators_controller.php:32;47
+#: /controllers/field_coordenates_controller.php:70;89
+#: /controllers/field_creators_controller.php:30;45
+#: /controllers/field_form_fields_controller.php:124
+#: /controllers/field_forms_controller.php:23;40
 #: /controllers/identification_types_controller.php:23;38
 #: /controllers/identifications_controller.php:23;41
 #: /controllers/marital_statuses_controller.php:23;38
@@ -45,17 +49,19 @@ msgstr "%s inválido"
 #: /controllers/representatives_controller.php:30;52
 #: /controllers/spouses_controller.php:13;46
 #: /controllers/users_controller.php:23;38
-#: /controllers/vehicles_controller.php:68;92
+#: /controllers/vehicles_controller.php:70;94
 msgid "The %s has been saved"
 msgstr "%s ha sido guardado"
 
 #: /controllers/agents_controller.php:26;48
 #: /controllers/character_types_controller.php:26;41
-#: /controllers/characters_controller.php:27;52;82
+#: /controllers/characters_controller.php:31;64
 #: /controllers/customer_homes_controller.php:26;44
 #: /controllers/customers_controller.php:61;65;70;75;80
-#: /controllers/field_coordenates_controller.php:59;78
-#: /controllers/field_creators_controller.php:35;50
+#: /controllers/field_coordenates_controller.php:73;92
+#: /controllers/field_creators_controller.php:33;48
+#: /controllers/field_form_fields_controller.php:38;42;127
+#: /controllers/field_forms_controller.php:26;43
 #: /controllers/identification_types_controller.php:26;41
 #: /controllers/identifications_controller.php:26;44
 #: /controllers/marital_statuses_controller.php:26;41
@@ -63,17 +69,19 @@ msgstr "%s ha sido guardado"
 #: /controllers/representatives_controller.php:33;55
 #: /controllers/spouses_controller.php:16;51
 #: /controllers/users_controller.php:26;41
-#: /controllers/vehicles_controller.php:73;95
+#: /controllers/vehicles_controller.php:75;97
 msgid "The %s could not be saved. Please, try again."
 msgstr "%s con errores al guardar. Intente nuevamente"
 
 #: /controllers/agents_controller.php:68
 #: /controllers/character_types_controller.php:51
-#: /controllers/characters_controller.php:99
+#: /controllers/characters_controller.php:81
 #: /controllers/customer_homes_controller.php:57
 #: /controllers/customers_controller.php:124
-#: /controllers/field_coordenates_controller.php:93
-#: /controllers/field_creators_controller.php:60
+#: /controllers/field_coordenates_controller.php:115
+#: /controllers/field_creators_controller.php:58
+#: /controllers/field_form_fields_controller.php:141
+#: /controllers/field_forms_controller.php:55
 #: /controllers/identification_types_controller.php:51
 #: /controllers/identifications_controller.php:57
 #: /controllers/marital_statuses_controller.php:51
@@ -81,17 +89,19 @@ msgstr "%s con errores al guardar. Intente nuevamente"
 #: /controllers/representatives_controller.php:69
 #: /controllers/spouses_controller.php:63
 #: /controllers/users_controller.php:51
-#: /controllers/vehicles_controller.php:108
+#: /controllers/vehicles_controller.php:110
 msgid "Invalid id for %s"
 msgstr "Id inválido para %s"
 
 #: /controllers/agents_controller.php:72
 #: /controllers/character_types_controller.php:55
-#: /controllers/characters_controller.php:103
+#: /controllers/characters_controller.php:85
 #: /controllers/customer_homes_controller.php:61
 #: /controllers/customers_controller.php:128
-#: /controllers/field_coordenates_controller.php:97
-#: /controllers/field_creators_controller.php:64
+#: /controllers/field_coordenates_controller.php:119
+#: /controllers/field_creators_controller.php:62
+#: /controllers/field_form_fields_controller.php:145
+#: /controllers/field_forms_controller.php:59
 #: /controllers/identification_types_controller.php:55
 #: /controllers/identifications_controller.php:61
 #: /controllers/marital_statuses_controller.php:55
@@ -99,17 +109,19 @@ msgstr "Id inválido para %s"
 #: /controllers/representatives_controller.php:76
 #: /controllers/spouses_controller.php:70
 #: /controllers/users_controller.php:55
-#: /controllers/vehicles_controller.php:112
+#: /controllers/vehicles_controller.php:114
 msgid "%s deleted"
 msgstr "%s eliminado"
 
 #: /controllers/agents_controller.php:75
 #: /controllers/character_types_controller.php:58
-#: /controllers/characters_controller.php:106
+#: /controllers/characters_controller.php:88
 #: /controllers/customer_homes_controller.php:64
 #: /controllers/customers_controller.php:131
-#: /controllers/field_coordenates_controller.php:100
-#: /controllers/field_creators_controller.php:67
+#: /controllers/field_coordenates_controller.php:122
+#: /controllers/field_creators_controller.php:65
+#: /controllers/field_form_fields_controller.php:148
+#: /controllers/field_forms_controller.php:62
 #: /controllers/identification_types_controller.php:58
 #: /controllers/identifications_controller.php:64
 #: /controllers/marital_statuses_controller.php:58
@@ -117,9 +129,22 @@ msgstr "%s eliminado"
 #: /controllers/representatives_controller.php:78
 #: /controllers/spouses_controller.php:72
 #: /controllers/users_controller.php:58
-#: /controllers/vehicles_controller.php:115
+#: /controllers/vehicles_controller.php:117
 msgid "%s was not deleted"
-msgstr "%S no pudo ser eliminado"
+msgstr "%s no pudo ser eliminado"
+
+#: /controllers/characters_controller.php:25;31;56;64
+#: /views/character_types/add.ctp:17
+#: /views/character_types/edit.ctp:19
+#: /views/character_types/index.ctp:47
+#: /views/character_types/view.ctp:24;115
+#: /views/characters/add.ctp:44
+#: /views/characters/edit.ctp:39
+#: /views/characters/view.ctp:2;109;110;112
+#: /views/customers/view.ctp:274;279
+#: /views/elements/field_forms/character_data.ctp:5
+msgid "Character"
+msgstr "Actor"
 
 #: /controllers/customers_controller.php:89
 msgid "Error saving the customer"
@@ -135,8 +160,7 @@ msgstr "Cliente"
 #: /views/customer_homes/edit.ctp:25
 #: /views/customer_homes/index.ctp:63
 #: /views/customer_homes/view.ctp:34;54
-#: /views/customers/add.ctp:6
-#: /views/customers/edit.ctp:7
+#: /views/customers/edit.ctp:59
 #: /views/customers/index.ctp:52
 #: /views/elements/customer_form_view.ctp:3
 #: /views/identifications/add.ctp:22
@@ -165,11 +189,12 @@ msgstr "Tipo de cliente inválido"
 msgid "Invalid %s ID."
 msgstr "ID inválido para %s"
 
-#: /controllers/vehicles_controller.php:108
+#: /controllers/vehicles_controller.php:70;75;94;97;110
 msgid "vehicle"
 msgstr "vehículo"
 
-#: /controllers/vehicles_controller.php:112;115
+#: /controllers/vehicles_controller.php:114;117
+#: /libs/form_skeleton.php:796;815
 #: /views/customers/index.ctp:62
 #: /views/vehicles/add.ctp:6
 #: /views/vehicles/edit.ctp:5
@@ -193,12 +218,19 @@ msgstr "Vehículo"
 #: /views/customer_homes/view.ctp:47
 #: /views/customers/index.ctp:11;50
 #: /views/field_coordenates/add.ctp:38
-#: /views/field_coordenates/edit.ctp:73
-#: /views/field_coordenates/index.ctp:24;72
+#: /views/field_coordenates/edit.ctp:87
+#: /views/field_coordenates/index.ctp:59;109
 #: /views/field_coordenates/view.ctp:52
 #: /views/field_creators/edit.ctp:15
 #: /views/field_creators/index.ctp:9;47
 #: /views/field_creators/view.ctp:17;41
+#: /views/field_form_fields/edit.ctp:15
+#: /views/field_form_fields/index.ctp:9;51
+#: /views/field_form_fields/view.ctp:27
+#: /views/field_forms/add.ctp:12
+#: /views/field_forms/edit.ctp:13
+#: /views/field_forms/index.ctp:9;49
+#: /views/field_forms/view.ctp:27;48
 #: /views/identification_types/add.ctp:12
 #: /views/identification_types/edit.ctp:13
 #: /views/identification_types/index.ctp:7;43
@@ -238,12 +270,19 @@ msgstr "Acciones"
 #: /views/customer_homes/view.ctp:51;53;55
 #: /views/customers/index.ctp:53;55;57;59;61
 #: /views/field_coordenates/add.ctp:41;42;44
-#: /views/field_coordenates/edit.ctp:77;78;80
-#: /views/field_coordenates/index.ctp:75;77
+#: /views/field_coordenates/edit.ctp:91;92;94
+#: /views/field_coordenates/index.ctp:112;114
 #: /views/field_coordenates/view.ctp:56;58;60
 #: /views/field_creators/edit.ctp:19;20
 #: /views/field_creators/index.ctp:50
 #: /views/field_creators/view.ctp:21;23
+#: /views/field_form_fields/edit.ctp:19;20;22
+#: /views/field_form_fields/index.ctp:54;56
+#: /views/field_form_fields/view.ctp:31;33;35
+#: /views/field_forms/add.ctp:15;16;18
+#: /views/field_forms/edit.ctp:17;18;20
+#: /views/field_forms/index.ctp:52;54
+#: /views/field_forms/view.ctp:31;33;35
 #: /views/identification_types/add.ctp:15;16
 #: /views/identification_types/edit.ctp:17;18
 #: /views/identification_types/index.ctp:46
@@ -288,7 +327,7 @@ msgstr "Gestores"
 #: /views/identifications/index.ctp:56
 #: /views/identifications/view.ctp:38
 msgid "Identification Types"
-msgstr "Tipos de Identificaciones"
+msgstr "Identificaciones"
 
 #: /views/agents/add.ctp:7
 #: /views/agents/edit.ctp:7
@@ -305,12 +344,19 @@ msgstr "Tipos de Identificaciones"
 #: /views/customer_homes/view.ctp:52;54;56
 #: /views/customers/index.ctp:52;54;56;58;60;62
 #: /views/field_coordenates/add.ctp:43;45
-#: /views/field_coordenates/edit.ctp:79;81
-#: /views/field_coordenates/index.ctp:74;76;78;80
+#: /views/field_coordenates/edit.ctp:93;95
+#: /views/field_coordenates/index.ctp:111;113;115;117
 #: /views/field_coordenates/view.ctp:57;59;61
 #: /views/field_creators/edit.ctp:21
 #: /views/field_creators/index.ctp:49;51
 #: /views/field_creators/view.ctp:22;24;73
+#: /views/field_form_fields/edit.ctp:21;23
+#: /views/field_form_fields/index.ctp:53;55;57
+#: /views/field_form_fields/view.ctp:32;34;36
+#: /views/field_forms/add.ctp:17;19
+#: /views/field_forms/edit.ctp:19;21
+#: /views/field_forms/index.ctp:51;53;55
+#: /views/field_forms/view.ctp:32;34;36;75
 #: /views/identification_types/add.ctp:17
 #: /views/identification_types/edit.ctp:19
 #: /views/identification_types/index.ctp:45;47
@@ -346,16 +392,17 @@ msgstr "Nuevo %s"
 #: /views/identifications/index.ctp:57
 #: /views/identifications/view.ctp:9;39
 msgid "Identification Type"
-msgstr "Tipo de Identificación"
+msgstr "Identificación"
 
 #: /views/agents/add.ctp:15
 #: /views/agents/edit.ctp:15
 #: /views/character_types/add.ctp:4
 #: /views/customer_homes/add.ctp:4
-#: /views/customers/add.ctp:6;33;57
-#: /views/customers/edit.ctp:39;66
+#: /views/customers/edit.ctp:87;124
 #: /views/elements/menu.ctp:28
 #: /views/field_coordenates/add.ctp:4
+#: /views/field_form_fields/add.ctp:5
+#: /views/field_forms/add.ctp:4
 #: /views/identification_types/add.ctp:4
 #: /views/identifications/add.ctp:4
 #: /views/marital_statuses/add.ctp:4
@@ -392,14 +439,15 @@ msgstr ""
 #: /views/agents/edit_ajax.ctp:30
 #: /views/character_types/add.ctp:9
 #: /views/character_types/edit.ctp:10
-#: /views/characters/add.ctp:69
-#: /views/characters/add_from_all.ctp:68
-#: /views/characters/edit.ctp:77
 #: /views/customer_homes/add.ctp:15
 #: /views/customer_homes/edit.ctp:16
 #: /views/field_coordenates/add.ctp:35
-#: /views/field_coordenates/edit.ctp:70
+#: /views/field_coordenates/edit.ctp:84
 #: /views/field_creators/edit.ctp:12
+#: /views/field_form_fields/add.ctp:58
+#: /views/field_form_fields/edit.ctp:12
+#: /views/field_forms/add.ctp:9
+#: /views/field_forms/edit.ctp:10
 #: /views/identification_types/add.ctp:9
 #: /views/identification_types/edit.ctp:10
 #: /views/identifications/add.ctp:12
@@ -421,15 +469,18 @@ msgstr "Enviar"
 #: /views/agents/view.ctp:89
 #: /views/character_types/edit.ctp:4
 #: /views/character_types/view.ctp:19
-#: /views/characters/edit.ctp:6
 #: /views/characters/view.ctp:109
 #: /views/customer_homes/edit.ctp:4
 #: /views/customer_homes/view.ctp:49
-#: /views/customers/view.ctp:191;224;256
+#: /views/customers/view.ctp:191;234;274
 #: /views/field_coordenates/edit.ctp:4
 #: /views/field_coordenates/view.ctp:54
 #: /views/field_creators/edit.ctp:4
 #: /views/field_creators/view.ctp:19
+#: /views/field_form_fields/edit.ctp:4
+#: /views/field_form_fields/view.ctp:29
+#: /views/field_forms/edit.ctp:4
+#: /views/field_forms/view.ctp:29
 #: /views/identification_types/edit.ctp:4
 #: /views/identification_types/view.ctp:19
 #: /views/identifications/edit.ctp:4
@@ -449,7 +500,7 @@ msgstr "Editar %s"
 
 #: /views/agents/index.ctp:17
 #: /views/customers/index.ctp:58
-#: /views/customers/view.ctp:63;232;262
+#: /views/customers/view.ctp:62;248;286
 #: /views/identification_types/add.ctp:17
 #: /views/identification_types/edit.ctp:19
 #: /views/identification_types/index.ctp:47
@@ -464,12 +515,13 @@ msgstr "Identificación"
 #: /views/agents/index.ctp:40
 #: /views/character_types/index.ctp:21
 #: /views/character_types/view.ctp:104
-#: /views/characters/index.ctp:28
 #: /views/customer_homes/index.ctp:37
 #: /views/customers/index.ctp:28
-#: /views/field_coordenates/index.ctp:50
 #: /views/field_creators/index.ctp:25
 #: /views/field_creators/view.ctp:62
+#: /views/field_form_fields/index.ctp:29
+#: /views/field_forms/index.ctp:27
+#: /views/field_forms/view.ctp:64
 #: /views/identification_types/index.ctp:21
 #: /views/identification_types/view.ctp:54
 #: /views/identifications/index.ctp:31
@@ -483,13 +535,18 @@ msgstr "Ver"
 #: /views/agents/index.ctp:41
 #: /views/character_types/index.ctp:22
 #: /views/character_types/view.ctp:105
+#: /views/characters/edit.ctp:39
 #: /views/characters/index.ctp:29
 #: /views/customer_homes/index.ctp:38
 #: /views/customers/index.ctp:29
+#: /views/customers/view.ctp:193;236;276
 #: /views/elements/vehicles_from_customer.ctp:69;70
-#: /views/field_coordenates/index.ctp:51
+#: /views/field_coordenates/index.ctp:87
 #: /views/field_creators/index.ctp:26
 #: /views/field_creators/view.ctp:63
+#: /views/field_form_fields/index.ctp:30
+#: /views/field_forms/index.ctp:28
+#: /views/field_forms/view.ctp:65
 #: /views/identification_types/index.ctp:22
 #: /views/identification_types/view.ctp:55
 #: /views/identifications/index.ctp:32
@@ -509,11 +566,17 @@ msgstr "Editar"
 #: /views/customer_homes/edit.ctp:22
 #: /views/customer_homes/index.ctp:39
 #: /views/customers/index.ctp:30
-#: /views/field_coordenates/edit.ctp:76
-#: /views/field_coordenates/index.ctp:52
+#: /views/customers/view.ctp:197;241;281
+#: /views/field_coordenates/edit.ctp:90
+#: /views/field_coordenates/index.ctp:89
 #: /views/field_creators/edit.ctp:18
 #: /views/field_creators/index.ctp:27
 #: /views/field_creators/view.ctp:64
+#: /views/field_form_fields/edit.ctp:18
+#: /views/field_form_fields/index.ctp:31
+#: /views/field_forms/edit.ctp:16
+#: /views/field_forms/index.ctp:29
+#: /views/field_forms/view.ctp:66
 #: /views/identification_types/edit.ctp:16
 #: /views/identification_types/index.ctp:23
 #: /views/identification_types/view.ctp:56
@@ -540,12 +603,18 @@ msgstr "Borrar"
 #: /views/customer_homes/index.ctp:39
 #: /views/customer_homes/view.ctp:50
 #: /views/customers/index.ctp:30
-#: /views/field_coordenates/edit.ctp:76
-#: /views/field_coordenates/index.ctp:52
+#: /views/field_coordenates/edit.ctp:90
+#: /views/field_coordenates/index.ctp:89
 #: /views/field_coordenates/view.ctp:55
 #: /views/field_creators/edit.ctp:18
 #: /views/field_creators/index.ctp:27
 #: /views/field_creators/view.ctp:20;64
+#: /views/field_form_fields/edit.ctp:18
+#: /views/field_form_fields/index.ctp:31
+#: /views/field_form_fields/view.ctp:30
+#: /views/field_forms/edit.ctp:16
+#: /views/field_forms/index.ctp:29
+#: /views/field_forms/view.ctp:30;66
 #: /views/identification_types/edit.ctp:16
 #: /views/identification_types/index.ctp:23
 #: /views/identification_types/view.ctp:20;56
@@ -571,8 +640,10 @@ msgstr "¿Está seguro de que quiere borrar # %s?"
 #: /views/characters/index.ctp:38
 #: /views/customer_homes/index.ctp:47
 #: /views/customers/index.ctp:38
-#: /views/field_coordenates/index.ctp:60
+#: /views/field_coordenates/index.ctp:97
 #: /views/field_creators/index.ctp:35
+#: /views/field_form_fields/index.ctp:39
+#: /views/field_forms/index.ctp:37
 #: /views/identification_types/index.ctp:31
 #: /views/identifications/index.ctp:41
 #: /views/marital_statuses/index.ctp:31
@@ -587,8 +658,10 @@ msgstr "Página %page% de %pages%, mostrando %current% resultados de %count% en 
 #: /views/characters/index.ctp:43
 #: /views/customer_homes/index.ctp:52
 #: /views/customers/index.ctp:43
-#: /views/field_coordenates/index.ctp:65
+#: /views/field_coordenates/index.ctp:102
 #: /views/field_creators/index.ctp:40
+#: /views/field_form_fields/index.ctp:44
+#: /views/field_forms/index.ctp:42
 #: /views/identification_types/index.ctp:36
 #: /views/identifications/index.ctp:46
 #: /views/marital_statuses/index.ctp:36
@@ -603,8 +676,10 @@ msgstr "anterior"
 #: /views/characters/index.ctp:46
 #: /views/customer_homes/index.ctp:55
 #: /views/customers/index.ctp:46
-#: /views/field_coordenates/index.ctp:68
+#: /views/field_coordenates/index.ctp:105
 #: /views/field_creators/index.ctp:43
+#: /views/field_form_fields/index.ctp:47
+#: /views/field_forms/index.ctp:45
 #: /views/identification_types/index.ctp:39
 #: /views/identifications/index.ctp:49
 #: /views/marital_statuses/index.ctp:39
@@ -620,6 +695,8 @@ msgstr "siguiente"
 #: /views/customer_homes/view.ctp:4
 #: /views/field_coordenates/view.ctp:4
 #: /views/field_creators/view.ctp:4;32
+#: /views/field_form_fields/view.ctp:4
+#: /views/field_forms/view.ctp:4;44
 #: /views/identification_types/view.ctp:4;32
 #: /views/identifications/view.ctp:4
 #: /views/marital_statuses/view.ctp:4;32
@@ -634,7 +711,7 @@ msgid "First Name"
 msgstr "Primer Nombre"
 
 #: /views/agents/view.ctp:14
-#: /views/customers/view.ctp:82;230
+#: /views/customers/view.ctp:81;246
 #: /views/marital_statuses/view.ctp:36
 #: /views/representatives/view.ctp:15
 msgid "Surname"
@@ -646,11 +723,10 @@ msgid "Identification Number"
 msgstr "Número de identificación"
 
 #: /views/agents/view.ctp:29
-#: /views/characters/add.ctp:16
-#: /views/characters/add_from_all.ctp:15
-#: /views/characters/edit.ctp:22
+#: /views/characters/add.ctp:56
+#: /views/characters/edit.ctp:51
 #: /views/customer_homes/view.ctp:9
-#: /views/customers/view.ctp:163
+#: /views/customers/view.ctp:162
 #: /views/elements/customer_form_view.ctp:30
 msgid "Address"
 msgstr "Calle"
@@ -672,7 +748,7 @@ msgstr "departamento"
 #: /views/customer_homes/edit.ctp:27
 #: /views/customer_homes/index.ctp:65
 #: /views/customer_homes/view.ctp:39;56
-#: /views/customers/view.ctp:161
+#: /views/customers/view.ctp:160
 #: /views/elements/customer_form_view.ctp:34
 msgid "City"
 msgstr "Localidad"
@@ -694,6 +770,7 @@ msgid "State"
 msgstr "Provincia"
 
 #: /views/agents/view.ctp:74
+#: /views/field_forms/view.ctp:19
 #: /views/marital_statuses/view.ctp:44
 #: /views/printers/view.ctp:29
 #: /views/vehicles/view.ctp:79
@@ -701,6 +778,7 @@ msgid "Modified"
 msgstr "Modificado"
 
 #: /views/agents/view.ctp:79
+#: /views/field_forms/view.ctp:14
 #: /views/marital_statuses/view.ctp:43
 #: /views/printers/view.ctp:24
 #: /views/vehicles/view.ctp:74
@@ -711,9 +789,11 @@ msgstr "Creado"
 #: /views/character_types/view.ctp:20
 #: /views/characters/view.ctp:110
 #: /views/customer_homes/view.ctp:50
-#: /views/customers/view.ctp:192;226;258
+#: /views/customers/view.ctp:195;239;279
 #: /views/field_coordenates/view.ctp:55
 #: /views/field_creators/view.ctp:20
+#: /views/field_form_fields/view.ctp:30
+#: /views/field_forms/view.ctp:30
 #: /views/identification_types/view.ctp:20
 #: /views/identifications/view.ctp:35
 #: /views/marital_statuses/view.ctp:20
@@ -745,27 +825,14 @@ msgstr "Tipos de Actores"
 #: /views/character_types/view.ctp:23;28
 #: /views/characters/index.ctp:2
 #: /views/characters/view.ctp:111
-#: /views/customers/view.ctp:246
+#: /views/customers/view.ctp:262
 #: /views/elements/menu.ctp:27
 msgid "Characters"
 msgstr "Actores"
 
-#: /views/character_types/add.ctp:17
-#: /views/character_types/edit.ctp:19
-#: /views/character_types/index.ctp:47
-#: /views/character_types/view.ctp:24;115
-#: /views/characters/add.ctp:5
-#: /views/characters/add_from_all.ctp:4
-#: /views/characters/edit.ctp:6
-#: /views/characters/view.ctp:2;109;110;112
-#: /views/customers/view.ctp:256;258
-#: /views/elements/field_forms/character_data.ctp:5
-msgid "Character"
-msgstr "Actor"
-
 #: /views/character_types/view.ctp:9;34
 #: /views/characters/view.ctp:14
-#: /views/customers/view.ctp:77;119;228;260
+#: /views/customers/view.ctp:76;118;244;284
 #: /views/field_coordenates/view.ctp:14
 #: /views/field_creators/view.ctp:9;34
 #: /views/identification_types/view.ctp:9
@@ -777,6 +844,7 @@ msgstr "Nombre"
 
 #: /views/character_types/view.ctp:28
 #: /views/field_creators/view.ctp:28
+#: /views/field_forms/view.ctp:40
 #: /views/identification_types/view.ctp:28
 #: /views/marital_statuses/view.ctp:28
 msgid "Related %s"
@@ -909,54 +977,46 @@ msgstr "Persona física o jurídica"
 msgid "Character Type Id"
 msgstr "Id de tipo de actor"
 
-#: /views/characters/add.ctp:19
-#: /views/characters/add_from_all.ctp:18
-#: /views/characters/edit.ctp:25
+#: /views/characters/add.ctp:44
+msgid "Add"
+msgstr "Añadir"
+
+#: /views/characters/add.ctp:59
+#: /views/characters/edit.ctp:54
 #: /views/customer_homes/view.ctp:14
-#: /views/customers/view.ctp:165
+#: /views/customers/view.ctp:164
 #: /views/elements/customer_form_view.ctp:32
 #: /views/identification_types/view.ctp:34
 #: /views/identifications/view.ctp:14
 msgid "Number"
 msgstr "Número"
 
-#: /views/characters/add.ctp:22
-#: /views/characters/add_from_all.ctp:21
-#: /views/characters/edit.ctp:28
+#: /views/characters/add.ctp:62
+#: /views/characters/edit.ctp:57
 #: /views/customer_homes/view.ctp:29
-#: /views/customers/view.ctp:171
+#: /views/customers/view.ctp:170
 msgid "Postal Code"
 msgstr "Código Postal"
 
-#: /views/characters/add.ctp:29
-#: /views/characters/add_from_all.ctp:28
-#: /views/characters/edit.ctp:35
+#: /views/characters/add.ctp:74;116
+#: /views/characters/edit.ctp:69;111
 msgid "Extra Information"
 msgstr "Información extra"
 
-#: /views/characters/add.ctp:43;47
-#: /views/characters/add_from_all.ctp:42;46
-#: /views/characters/edit.ctp:49;53
+#: /views/characters/add.ctp:85;89
+#: /views/characters/edit.ctp:80;84
 #: /views/marital_statuses/view.ctp:39
 #: /views/spouses/add.ctp:6
 #: /views/spouses/edit.ctp:6
 msgid "Spouse"
 msgstr "Cónyuge"
 
-#: /views/characters/add_from_all.ctp:4
-msgid "Add"
-msgstr "Añadir"
-
-#: /views/characters/edit.ctp:11
-msgid "Data"
-msgstr "Datos"
-
 #: /views/characters/view.ctp:59
 msgid "Identification Id"
 msgstr "Id de la identificación"
 
 #: /views/characters/view.ctp:69;116
-#: /views/customers/view.ctp:97
+#: /views/customers/view.ctp:96
 #: /views/marital_statuses/add.ctp:4
 #: /views/marital_statuses/edit.ctp:4
 #: /views/marital_statuses/index.ctp:45
@@ -1002,7 +1062,7 @@ msgstr "Direcciónes del Cliente"
 #: /views/customer_homes/index.ctp:2
 #: /views/customer_homes/view.ctp:51
 #: /views/customers/index.ctp:53
-#: /views/customers/view.ctp:150
+#: /views/customers/view.ctp:149
 msgid "Customer Homes"
 msgstr "Direcciones del Cliente"
 
@@ -1014,28 +1074,26 @@ msgid "Cities"
 msgstr "Departamentos"
 
 #: /views/customer_homes/view.ctp:19
-#: /views/customers/view.ctp:167
+#: /views/customers/view.ctp:166
 msgid "Floor"
 msgstr "Piso"
 
 #: /views/customer_homes/view.ctp:24
-#: /views/customers/view.ctp:169
+#: /views/customers/view.ctp:168
 msgid "Apartment"
 msgstr "Depto"
 
-#: /views/customers/add.ctp:33
-#: /views/customers/edit.ctp:39
+#: /views/customers/edit.ctp:59
+msgid "%s"
+msgstr ""
+
+#: /views/customers/edit.ctp:87
 msgid "Natural Person"
 msgstr "Persona natural"
 
-#: /views/customers/add.ctp:57
-#: /views/customers/edit.ctp:66
+#: /views/customers/edit.ctp:124
 msgid "Legal Person"
 msgstr "Persona jurídica"
-
-#: /views/customers/edit.ctp:7
-msgid "%s"
-msgstr ""
 
 #: /views/customers/index.ctp:55
 #: /views/marital_statuses/add.ctp:16
@@ -1066,7 +1124,7 @@ msgid "Identifications"
 msgstr "Identificaciones"
 
 #: /views/customers/index.ctp:59
-#: /views/customers/view.ctp:214
+#: /views/customers/view.ctp:222
 #: /views/representatives/index.ctp:2
 msgid "Representatives"
 msgstr "Apoderados"
@@ -1107,57 +1165,57 @@ msgstr "Notas"
 msgid "Customer %s: %s"
 msgstr "Cliente %s: %s"
 
-#: /views/customers/view.ctp:68
+#: /views/customers/view.ctp:67
 #: /views/identification_types/view.ctp:35
 #: /views/identifications/view.ctp:19
 msgid "Authority Name"
 msgstr "Autoridad"
 
-#: /views/customers/view.ctp:89;124
+#: /views/customers/view.ctp:88;123
 msgid "Born"
 msgstr "fecha nacimiento"
 
-#: /views/customers/view.ctp:102
+#: /views/customers/view.ctp:101
 #: /views/marital_statuses/view.ctp:38
 msgid "Nuptials"
 msgstr "Nupcias"
 
-#: /views/customers/view.ctp:108
+#: /views/customers/view.ctp:107
 msgid "Nationality Type"
 msgstr "Nacionalidad"
 
-#: /views/customers/view.ctp:113;234
+#: /views/customers/view.ctp:112;250
 msgid "Nationality"
 msgstr "nacionalidad"
 
-#: /views/customers/view.ctp:129
+#: /views/customers/view.ctp:128
 #: /views/marital_statuses/view.ctp:40
 msgid "Inscription Entity"
 msgstr "Personeria otorgada por"
 
-#: /views/customers/view.ctp:134
+#: /views/customers/view.ctp:133
 #: /views/marital_statuses/view.ctp:41
 msgid "Inscription Number"
 msgstr "Número de inscripción"
 
-#: /views/customers/view.ctp:139
+#: /views/customers/view.ctp:138
 #: /views/marital_statuses/view.ctp:42
 msgid "Inscription Date"
 msgstr "Fecha de inscripción"
 
-#: /views/customers/view.ctp:185
+#: /views/customers/view.ctp:184
 msgid "Spouses"
 msgstr "Cónyuges"
 
-#: /views/customers/view.ctp:193
+#: /views/customers/view.ctp:201
 msgid "Spouse Name"
 msgstr "Nombre del cónyuge"
 
-#: /views/customers/view.ctp:198
+#: /views/customers/view.ctp:206
 msgid "Spouse Identification"
 msgstr "identificación del cónyuge"
 
-#: /views/customers/view.ctp:236
+#: /views/customers/view.ctp:252
 msgid "Country"
 msgstr "País"
 
@@ -1207,12 +1265,15 @@ msgstr "Avanzado"
 
 #: /views/elements/menu.ctp:39
 #: /views/field_coordenates/add.ctp:41
-#: /views/field_coordenates/edit.ctp:77
-#: /views/field_coordenates/index.ctp:2
+#: /views/field_coordenates/edit.ctp:91
+#: /views/field_coordenates/index.ctp:36
 #: /views/field_coordenates/view.ctp:56
 #: /views/field_creators/edit.ctp:20
 #: /views/field_creators/index.ctp:50
 #: /views/field_creators/view.ctp:23;28
+#: /views/field_form_fields/edit.ctp:22
+#: /views/field_form_fields/index.ctp:56
+#: /views/field_form_fields/view.ctp:35
 msgid "Field Coordenates"
 msgstr "Campos de Coordenadas"
 
@@ -1224,6 +1285,14 @@ msgstr "Mapeo de Campos"
 msgid "Test Fields"
 msgstr "Probar campos"
 
+#: /views/elements/menu.ctp:46
+msgid "System Version"
+msgstr "Versión del Sistema"
+
+#: /views/elements/menu.ctp:46
+msgid "release date"
+msgstr "fecha de actualización"
+
 #: /views/elements/vehicles_from_customer.ctp:58;59
 msgid "Print"
 msgstr "Imprimir"
@@ -1232,7 +1301,7 @@ msgstr "Imprimir"
 msgid "Historical Forms"
 msgstr "Formularios Históricos"
 
-#: /views/elements/field_forms/customer_to_character.ctp:5
+#: /views/elements/field_forms/customer_to_character.ctp:9
 msgid "Customer is"
 msgstr "Id del Cliente"
 
@@ -1249,44 +1318,55 @@ msgstr ""
 
 #: /views/field_coordenates/add.ctp:4
 #: /views/field_coordenates/edit.ctp:4
-#: /views/field_coordenates/index.ctp:74
+#: /views/field_coordenates/index.ctp:111
 #: /views/field_coordenates/view.ctp:2;54;55;57
 #: /views/field_creators/edit.ctp:21
 #: /views/field_creators/index.ctp:51
 #: /views/field_creators/view.ctp:24;73
+#: /views/field_form_fields/edit.ctp:23
+#: /views/field_form_fields/index.ctp:57
+#: /views/field_form_fields/view.ctp:14;36
 msgid "Field Coordenate"
 msgstr "Campo de coordenada"
 
 #: /views/field_coordenates/add.ctp:42
-#: /views/field_coordenates/edit.ctp:78
-#: /views/field_coordenates/index.ctp:75
+#: /views/field_coordenates/edit.ctp:92
+#: /views/field_coordenates/index.ctp:112
 #: /views/field_coordenates/view.ctp:58
 #: /views/field_creators/edit.ctp:19
 #: /views/field_creators/index.ctp:2
 #: /views/field_creators/view.ctp:21
+#: /views/field_forms/add.ctp:16
+#: /views/field_forms/edit.ctp:18
+#: /views/field_forms/index.ctp:52
+#: /views/field_forms/view.ctp:33
 msgid "Field Creators"
 msgstr "Creador de campos"
 
 #: /views/field_coordenates/add.ctp:43
-#: /views/field_coordenates/edit.ctp:79
-#: /views/field_coordenates/index.ctp:76
+#: /views/field_coordenates/edit.ctp:93
+#: /views/field_coordenates/index.ctp:113
 #: /views/field_coordenates/view.ctp:9;59
 #: /views/field_creators/edit.ctp:4
 #: /views/field_creators/index.ctp:49
 #: /views/field_creators/view.ctp:2;19;20;22
+#: /views/field_forms/add.ctp:17
+#: /views/field_forms/edit.ctp:19
+#: /views/field_forms/index.ctp:53
+#: /views/field_forms/view.ctp:9;34
 msgid "Field Creator"
 msgstr "Creados del campo"
 
 #: /views/field_coordenates/add.ctp:44
-#: /views/field_coordenates/edit.ctp:80
-#: /views/field_coordenates/index.ctp:77
+#: /views/field_coordenates/edit.ctp:94
+#: /views/field_coordenates/index.ctp:114
 #: /views/field_coordenates/view.ctp:60
 msgid "Field Types"
 msgstr "Tipo de campos"
 
 #: /views/field_coordenates/add.ctp:45
-#: /views/field_coordenates/edit.ctp:81
-#: /views/field_coordenates/index.ctp:78;80
+#: /views/field_coordenates/edit.ctp:95
+#: /views/field_coordenates/index.ctp:115;117
 #: /views/field_coordenates/view.ctp:24;61
 msgid "Field Type"
 msgstr "Tipo de campo"
@@ -1319,10 +1399,12 @@ msgid "H"
 msgstr ""
 
 #: /views/field_creators/add_form.ctp:46;105
+#: /views/field_form_fields/add.ctp:7
 msgid "Download PDF"
 msgstr "Descargar PDF"
 
 #: /views/field_creators/add_form.ctp:47
+#: /views/field_form_fields/add.ctp:8
 msgid "Reset"
 msgstr "resetear"
 
@@ -1333,6 +1415,60 @@ msgstr "ID del creados de campos"
 #: /views/field_creators/view.ctp:36
 msgid "Field Type Id"
 msgstr "Id del tipo de campo"
+
+#: /views/field_form_fields/add.ctp:5
+#: /views/field_form_fields/edit.ctp:4
+#: /views/field_form_fields/index.ctp:53
+#: /views/field_form_fields/view.ctp:2;29;30;32
+#: /views/field_forms/add.ctp:19
+#: /views/field_forms/edit.ctp:21
+#: /views/field_forms/index.ctp:55
+#: /views/field_forms/view.ctp:36;75
+msgid "Field Form Field"
+msgstr "Campo del Formulario"
+
+#: /views/field_form_fields/edit.ctp:19
+#: /views/field_form_fields/index.ctp:2
+#: /views/field_form_fields/view.ctp:31
+#: /views/field_forms/add.ctp:18
+#: /views/field_forms/edit.ctp:20
+#: /views/field_forms/index.ctp:54
+#: /views/field_forms/view.ctp:35;40
+msgid "Field Form Fields"
+msgstr "Campo de formularios"
+
+#: /views/field_form_fields/edit.ctp:20
+#: /views/field_form_fields/index.ctp:54
+#: /views/field_form_fields/view.ctp:33
+#: /views/field_forms/add.ctp:15
+#: /views/field_forms/edit.ctp:17
+#: /views/field_forms/index.ctp:2
+#: /views/field_forms/view.ctp:31
+msgid "Field Forms"
+msgstr "Formulrarios"
+
+#: /views/field_form_fields/edit.ctp:21
+#: /views/field_form_fields/index.ctp:55
+#: /views/field_form_fields/view.ctp:9;34
+#: /views/field_forms/add.ctp:4
+#: /views/field_forms/edit.ctp:4
+#: /views/field_forms/index.ctp:51
+#: /views/field_forms/view.ctp:2;29;30;32
+msgid "Field Form"
+msgstr "Formulario"
+
+#: /views/field_form_fields/view.ctp:19
+#: /views/field_forms/view.ctp:47
+msgid "Value"
+msgstr "Valor"
+
+#: /views/field_forms/view.ctp:45
+msgid "Field Form Id"
+msgstr ""
+
+#: /views/field_forms/view.ctp:46
+msgid "Field Coordenate Id"
+msgstr ""
 
 #: /views/marital_statuses/view.ctp:34
 #: /views/vehicles/view.ctp:24
@@ -1425,6 +1561,8 @@ msgstr "Elemento probatorio"
 msgid "Debug setting does not allow access to this url."
 msgstr "La configuración de debug no permite acceder a esta url."
 
+#~ msgid "Data"
+#~ msgstr "Datos"
 #~ msgid "Site down for maintenance"
 #~ msgstr "Página en mantenimiento"
 #~ msgid "Attachments"

@@ -1,6 +1,5 @@
 <div id="menu">
     <ul class="menu">
-
         <li>
             <? echo $this->Html->link(
             sprintf('<span>%s</span>',__('Customers',true)),
@@ -25,7 +24,7 @@
                     <li><? echo $this->Html->link(__('List Printers',true),'/printers');?></li>
                     <hr />
                     <li><? echo $this->Html->link( __('Characters',true),'/characters/index');?></li>
-                    <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add_from_all');?></li>
+                    <li><? echo $this->Html->link(sprintf(__('Add %s',true), __('Generic Character',true)),'/characters/add');?></li>
                     <hr />
                     <li><? echo $this->Html->link(__('Agents',true),'/agents/index');?></li>
                     <li><? echo $this->Html->link(__('Identification Types',true),'/identification_types/index');?></li>
@@ -43,4 +42,10 @@
             </div>
         </li>
     </ul>
+    <div id="gestaform_data">
+                    <?php echo sprintf('%s: %s %s '. GESTAFORM_VERSION_DAY,
+                            __('System Version', true),
+                            $html->link(GESTAFORM_VERSION,'/pages/notas_de_version',array('escape'=>false, 'title'=>'version details', 'class'=>'version_details')),
+                            __('release date',true))?>
+    </div>
 </div> <!-- End Menu -->

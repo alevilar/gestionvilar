@@ -373,3 +373,43 @@ A.images-link-1{
     border:none;
     color:white;
 }
+
+#gestaform_data{
+    color:silver;
+    margin-top:34px;
+    float: right;
+}
+
+.btn-edit {
+    text-indent: -1000px;
+    background-image: url(images/btn-edit.png);
+    background-repeat: no-repeat;
+    display: block;
+    clear: none;
+    width: 20px;
+    float: left;
+    height: 20px;
+}
+
+.btn-del {
+    text-indent: -1000px;
+    background-image: url(images/btn-del.png);
+    background-repeat: no-repeat;
+    display: block;
+    clear: right;
+    width: 20px;
+    height: 20px;
+    margin-left:30px;
+}
+
+
+A.version_details{
+    color: #06B3E1;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+A.version_details:HOVER{
+    color: #c73e14;
+    text-decoration: underline;
+}

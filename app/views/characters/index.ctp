@@ -25,7 +25,7 @@
 			<?php echo $this->Html->link($character['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $character['Customer']['id'])); ?>
 		</td>
 		<td class="actions span-5 last">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $character['Character']['id'])); ?>
+			<?php //echo $this->Html->link(__('View', true), array('action' => 'view', $character['Character']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $character['Character']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $character['Character']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $character['Character']['id'])); ?>
 		</td>

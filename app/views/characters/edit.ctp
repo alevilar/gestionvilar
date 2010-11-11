@@ -1,21 +1,49 @@
+<script type="text/javascript">
+
+
+    /**
+     * Form Wizard
+     */
+    $(function(){
+        $("#CharacterEditForm").formwizard({ //wizard settings
+            formPluginEnabled: false, //Ajax is used to post the form to the server
+            validationEnabled : true, //The Validation plugin is used for validating the form at each step
+            focusFirstInput : true, // puts focus at the first input on each step
+            textSubmit: 'Guardar',
+            textNext: 'Siguiente',
+            textBack: 'Regresar'
+        },
+        {
+            // aca van oppciones de jquery.validator pero yo no quiero cambiar nada
+        },
+        {
+            resetForm: true
+        }
+    );
+    });
+
+</script>
+
 <? $rand = (int)rand(10, 989898) ?>
 <div class="characters form" id="edit-character-div-<?php echo $rand?>">
     <h1>Cliente: <?= $customer['Customer']['name']?></h1>
     <?php echo $this->Form->create('Character');?>
-    <fieldset>
-        <legend><?php printf(__('Edit %s', true), __('Character', true)); ?></legend>
+   
         <?php
         echo $this->Form->input('id');
         ?>
-        <fieldset>
-            <legend><?php __('Data'); ?></legend>
+
+
+        <div id="first" class="step">
+	<fieldset>
+            <legend><?php echo __('Edit',true). ' '.__('Character',true); ?></legend>
             <?php
-            echo $this->Form->input('customer_id', array('empty'=>'Actor Genérico'));
+            echo $this->Form->input('customer_id', array('empty'=>'Éste Actor se puede utilizar con todos los clientes'));
             echo $this->Form->input('character_type_id');
             echo $this->Form->input('porcentaje',array('after'=>'Si el número va con decimal hay que poner punto en lugar de la coma Ej:45.32 '));
             echo $this->Form->input('cuit_cuil', array('label'=>'CUIT o CUIL', 'after'=>'aqui se debe escribir EJ. "CUIT 30-4545654-1" y seria utilizado únicamente en aquellos formularios que requieran obligatoriamente mostrar dicho valor. Útil en Formulario 08, por ejemplo.'));
             echo $this->Form->input('name', array('after'=>'Generalmente aqui se deba escribir Apellido y Nombre'));
-            echo $this->Form->input('persona_fisica_o_juridica', array('options'=>array('Física'=>'Física','Jurídica'=>'Jurídica')));
+            echo $this->Form->input('persona_fisica_o_juridica', array('options'=>array('Física'=>'Física','Jurídica'=>'Jurídica'), 'class'=>'link'));
             ?>
         </fieldset>
 
@@ -32,6 +60,11 @@
             echo $this->Form->input('provincia');
             ?>
         </fieldset>
+    </div>
+
+
+    <div id="Física" class="step submit_step">
+
         <fieldset>
             <legend><?php  __('Extra Information'); ?></legend>
             <?
@@ -40,9 +73,6 @@
             echo $this->Form->input('nationality_type_id');
             echo $this->Form->input('identification_authority');
             echo $this->Jqform->date('fecha_nacimiento');
-            echo $this->Form->input('personeria_otorgada');
-            echo $this->Form->input('inscripcion', array('label'=>'Inscripción'));
-            echo $this->Jqform->date('fecha_inscripcion');
             ?>
         </fieldset>
 
@@ -53,7 +83,7 @@
             echo $this->Form->input('nupcia');
             echo $this->Form->input('conyuge', array('label'=>__('Spouse',true)));
             ?>
-            <h4>Apoderado del Cónyuge</h4>
+            <h2>Apoderado del Cónyuge</h2>
               <?
            echo $this->Form->input('conyuge_apoderado_name', array('label'=>'Apellido y Nombre del Apoderado'));
             echo $this->Form->input('conyuge_apoderado_identification_type_id', array('label'=>'Tipo de Doc.', 'options'=>$identificationTypes,'empty'=>'Seleccione'));
@@ -62,6 +92,30 @@
             echo $this->Form->input('conyuge_apoderado_identification_auth', array('label'=>'Autoridad (o país) que lo expidió', 'after'=>'completar sólo, si el apoderado es extranjero'));
               ?>
         </fieldset>
+
+        <fieldset>
+            <legend>Apoderado</legend>
+            <?
+            echo $this->Form->input('apoderado_name', array('label'=>'Apellido y Nombre del Apoderado'));
+            echo $this->Form->input('apoderado_identification_type_id', array('label'=>'Tipo de Doc.', 'options'=>$identificationTypes,'empty'=>'Seleccione'));
+            echo $this->Form->input('apoderado_identification_number', array('label'=>'N° Doc.'));
+            echo $this->Form->input('apoderado_nationality_type', array('label'=>'Nacionalidad', 'options'=>$nationalityTypes,'empty'=>'Seleccione'));
+            echo $this->Form->input('apoderado_identification_auth', array('label'=>'Autoridad (o país) que lo expidió', 'after'=>'completar sólo, si el apoderado es extranjero'));
+            ?>
+        </fieldset>
+    </div>
+
+    <div id="Jurídica" class="step submit_step">
+
+        <fieldset>
+            <legend><?php  __('Extra Information'); ?></legend>
+            <?
+            echo $this->Form->input('personeria_otorgada');
+            echo $this->Form->input('inscripcion', array('label'=>'Inscripción'));
+            echo $this->Jqform->date('fecha_inscripcion');
+            ?>
+        </fieldset>
+
 
         <fieldset>
             <legend>Apoderado del Actor</legend>
@@ -73,9 +127,15 @@
             echo $this->Form->input('apoderado_identification_auth', array('label'=>'Autoridad (o país) que lo expidió', 'after'=>'completar sólo, si el apoderado es extranjero'));
             ?>
         </fieldset>
-    </fieldset>
+    </div>
 
-    <?php echo $this->Js->submit(__('Submit', true), array('url'=> array('action'=>'edit'), 'update' => '#edit-character-div-'.$rand));?>
+    <div id="formNavigation">
+        <input class="navigation_button" value="Regresar" type="reset">
+        <input class="navigation_button" value="Siguiente" type="submit">
+    </div>
+        
+
+    <?php //echo $this->Js->submit(__('Submit', true), array('url'=> array('action'=>'edit'), 'update' => '#edit-character-div-'.$rand));?>
     <?php echo $this->Form->end();?>
 </div>
 

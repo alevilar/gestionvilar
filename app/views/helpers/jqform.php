@@ -28,6 +28,7 @@ class JqformHelper extends FormHelper {
         $htmlAttributes = $this->domId($options);
         $divOptions['class'] = 'date';
         $options['type'] = 'date';
+        $options['empty'] = true;
         $options['div']['class'] = 'date';
         $options['dateFormat'] = 'DMY';
         $options['minYear'] = isset($options['minYear']) ? $options['minYear'] : (date('Y') - 100);
@@ -36,7 +37,7 @@ class JqformHelper extends FormHelper {
         $options['after'] = $this->Html->image('calendar.png', array('id'=> $htmlAttributes['id'],'style'=>'cursor:pointer'));
         
         if (isset($options['empty'])) {
-            $options['after'] .= $this->Html->image('b_drop.png', array('id'=> $htmlAttributes['id']."_drop",'style'=>'cursor:pointer'));
+            $options['after'] .= $this->Html->image('comment_cancel_icon.png', array('id'=> $htmlAttributes['id']."_drop",'style'=>'cursor:pointer'));
         }
         $output = $this->input($fieldName, $options);
         $output .= $this->Html->scriptBlock("datepick('" . $htmlAttributes['id'] . "','01/01/" . $options['minYear'] . "','31/12/" . $options['maxYear'] . "');");

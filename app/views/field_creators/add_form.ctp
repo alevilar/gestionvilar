@@ -11,7 +11,7 @@ $vehicle_id = $this->data['Vehicle']['id'];
 </style>
 
 <div class="span-12">
-    <h3><?php echo empty($this->data['Vehicle']['notes'])?'Sin ':''?>Notas sobre el <?php echo $html->link('Vehiculo', '/vehicles/edit/'.$this->data['Vehicle']['id'])?></h3>
+    <h3><?php echo empty($this->data['Vehicle']['notes'])?'Sin ':''?>Notas sobre el <?php echo $html->link('Vehículo', '/vehicles/edit/'.$this->data['Vehicle']['id'])?></h3>
     <p>
         <?php
         echo $this->data['Vehicle']['notes']
@@ -23,8 +23,10 @@ $vehicle_id = $this->data['Vehicle']['id'];
     <h3><?php echo empty($this->data['Vehicle']['Customer']['notes'])?'Sin ':''?>Notas sobre el <?php echo $html->link('Cliente', '/customers/view/'.$this->data['Vehicle']['Customer']['id'])?></h3>
     <p>
         <?php
+        if (!empty($this->data['Vehicle']['Customer']['CustomerNatural']['ocupation']))
+            echo "<b>Ocupación:</b> ".$this->data['Vehicle']['Customer']['CustomerNatural']['ocupation']."<br />";
         echo $this->data['Vehicle']['Customer']['notes']
-                ?>
+        ?>
     </p>
 </div>
 <div class="clear"></div>

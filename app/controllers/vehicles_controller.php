@@ -67,12 +67,12 @@ class VehiclesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Vehicle->create();
 			if ($this->Vehicle->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'vehicle'));
+				$this->Session->setFlash(sprintf(__('The %s has been saved', true), __('vehicle',true)));
                                 if (!$continue_adding) {
                                     $this->redirect(array('controller'=>'customers','action' => 'search'));
                                 }
 			} else {
-				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'vehicle'));
+				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true),  __('vehicle',true)));
 			}
 		} else {
                     if (!empty($customer_id)){
@@ -91,10 +91,10 @@ class VehiclesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Vehicle->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'vehicle'));
+				$this->Session->setFlash(sprintf(__('The %s has been saved', true),  __('vehicle',true)));
 				$this->redirect('/');
 			} else {
-				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'vehicle'));
+				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true),  __('vehicle',true)));
 			}
 		}
 		if (empty($this->data)) {

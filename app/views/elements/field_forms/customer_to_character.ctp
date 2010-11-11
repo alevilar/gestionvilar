@@ -88,17 +88,18 @@ if (empty($customer)) {
     }
 
     // CONYUGE
-    if (!empty($d['Vehicle']['Customer']['Spouse'])) {
-        $customer['conyuge'] = $d['Vehicle']['Customer']['Spouse'][0]['name'];
-        $customer['conyuge_apoderado_name'] = $d['Vehicle']['Customer']['Spouse'][0]['name'];
-        $customer['conyuge_apoderado_identification_type_id'] = $d['Vehicle']['Customer']['Spouse'][0]['identification_type_id'];
-        $customer['conyuge_apoderado_identification_number'] = $d['Vehicle']['Customer']['Spouse'][0]['identification_number'];
-        if (empty($d['Vehicle']['Customer']['Spouse']['identification_autority'])){
+    if (!empty($d['Vehicle']['Customer']['CustomerNatural']['Spouse'])) {
+        $spouse = $d['Vehicle']['Customer']['CustomerNatural']['Spouse'];
+        $customer['conyuge'] = $spouse[0]['name'];
+        $customer['conyuge_apoderado_name'] = $spouse[0]['name'];
+        $customer['conyuge_apoderado_identification_type_id'] = $spouse[0]['identification_type_id'];
+        $customer['conyuge_apoderado_identification_number'] = $spouse[0]['identification_number'];
+        if (empty($spouse['identification_autority'])){
             $customer['conyuge_apoderado_nationality_type'] = 'argentino';
         } else {
             $customer['conyuge_apoderado_nationality_type'] = 'extranjero';
         }        
-        $customer['conyuge_apoderado_identification_auth'] = $d['Vehicle']['Customer']['Spouse'][0]['identification_autority'];
+        $customer['conyuge_apoderado_identification_auth'] = $spouse[0]['identification_autority'];
     }
 
     // APODERADO

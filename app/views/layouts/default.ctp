@@ -98,7 +98,7 @@
         
         <div id="container" class="container">
             <div id="header" class="span-24 last">
-                <div class="span-10">
+                <div class="span-24 last">
                     <?php echo $this->element('menu'); ?>
                 </div>
                 <div id="mensajero" class="span-11 last">

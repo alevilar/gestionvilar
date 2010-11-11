@@ -4,7 +4,7 @@ class FieldCreatorsController extends AppController {
 
     var $name = 'FieldCreators';
     var $uses = array('FieldCreator', 'FieldCoordenate', 'Printer');
-    var $helpers = array('Fpdf');
+    var $helpers = array('Fpdf', 'Mpdf');
 
     function test() {
         

@@ -77,7 +77,7 @@ div#menu li:hover>div {
     visibility: visible;
 }
 
-div#menu a {
+div#menu ul a {
     position: relative;
     z-index: 10;
     height: 50px;
@@ -106,7 +106,7 @@ div#menu span {
 }
 
 /* menu::level1 */
-div#menu a {
+div#menu ul a {
     padding: 0 10px 0 0;
     line-height: 50px;
     height: 52px;
@@ -115,10 +115,10 @@ div#menu a {
     background: none;
     text-transform: uppercase;
 }
-div#menu a:hover {
+div#menu ul a:hover {
     background:  url(images/menu/selected-right-sub.png)  no-repeat right -1px;
 }
-div#menu a:hover span {
+div#menu ul a:hover span {
     background: url(images/menu/selected-left-sub.png) no-repeat 0 -3px;
 }
 div#menu li.current a,

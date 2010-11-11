@@ -49,10 +49,9 @@
             $class = ' class="altrow"';?>
 
             <?php if (!empty($customer['Customer']['cuit_cuil'])) { ?>
-            <dt<?php if ($i % 2 == 0) echo $class;?>>CUIT o CUIL EXTRA</dt>
+            <dt<?php if ($i % 2 == 0) echo $class;?>>CUIT o CUIL</dt>
             <dd<?php if ($i++ % 2 == 0) echo $class;?>>
                         <?php echo $customer['Customer']['cuit_cuil']; ?>
-                <br><cite>Este dato seria utilizado en formularios del tipo 01, 03, etc, y va colocado, usualmente, cerca del nombre.</cite>
             </dd>
             <?php } ?>
 
@@ -188,8 +187,17 @@
                 if (count($customer['CustomerNatural']['Spouse'] > 0)):
                     foreach ($customer['CustomerNatural']['Spouse'] as $s):
                         ?>
-            <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),'/spouses/edit/'.$s['id']) ?></dt>
-            <dt<?php if ($i % 2 == 0) echo $class;?>><?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),'/spouses/delete/'.$s['id'],null, 'Desea eliminar cónyuge: '.$s['name']) ?></dt>
+            <dt>
+            <?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Cónyuge'),
+                    '/spouses/edit/'.$s['id'],
+                    array('class'=>'btn-edit', 'title'=>__('Edit',true))
+                    ) ?>
+            <?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Cónyuge'),
+                    '/spouses/delete/'.$s['id'],
+                    array('class'=>'btn-del', 'title'=>__('Delete',true)),
+                    'Desea eliminar cónyuge: '.$s['name']) ?>
+            </dt>
+            
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Spouse Name'); ?></dt>
             <dd<?php if ($i++ % 2 == 0) echo $class;?>>
                             <?php echo $s['name']; ?>
@@ -221,10 +229,18 @@
                     }
                     ?>
         <dl>
-            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Apoderado'),'/representatives/edit/'.$representative['id']) ?></dt>
-            <dt><?php echo $this->Html->link(
+            <dt>
+                    <?php echo $this->Html->link(
+                            sprintf(__('Edit %s',true), 'Apoderado'),
+                            '/representatives/edit/'.$representative['id'],
+                            array('class'=>'btn-edit', 'title'=>__('Edit',true))
+                            ) ?>
+                    <?php echo $this->Html->link(
                             sprintf(__('Delete %s',true), 'Apoderado'),
-                            '/representatives/delete/'.$representative['id'], null,"¿Desea eliminar al apoderado: ".$representative['name'].' '.$representative['surname'].'?'); ?></dt>
+                            '/representatives/delete/'.$representative['id'], 
+                            array('class'=>'btn-del', 'title'=>__('Delete',true)),
+                            "¿Desea eliminar al apoderado: ".$representative['name'].' '.$representative['surname'].'?'); ?>
+            </dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $representative['name']?></dd>
             <dt><?php __('Surname'); ?></dt>
@@ -253,10 +269,18 @@
                     }
                     ?>
         <dl>
-            <dt><?php echo $this->Html->link(sprintf(__('Edit %s',true), __('Character',true)),'/characters/edit/'.$character['id']) ?></dt>
-            <dt><?php echo $this->Html->link(
+            <dt>
+                <?php echo $this->Html->link(
+                        sprintf(__('Edit %s',true), __('Character',true)),
+                        '/characters/edit/'.$character['id'],
+                        array('class'=>'btn-edit', 'title'=>__('Edit',true))
+                        ) ?>
+                <?php echo $this->Html->link(
                             sprintf(__('Delete %s',true), __('Character',true)),
-                            '/characters/delete/'.$character['id'], null,"¿Desea eliminar al condominio: ".$character['name'].'?'); ?></dt>
+                            '/characters/delete/'.$character['id'],
+                            array('class'=>'btn-del', 'title'=>__('Delete',true)),
+                            "¿Desea eliminar al condominio: ".$character['name'].'?'); ?>
+            </dt>
             <dt><?php __('Name'); ?></dt>
             <dd><?= $character['name']?></dd>
             <dt><?php __('Identification'); ?></dt>
