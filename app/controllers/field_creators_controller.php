@@ -80,14 +80,14 @@ class FieldCreatorsController extends AppController {
             }
 
             // aegurarse que llego el vehiculo como parámetro. Caso contrario,redirigir y mostrar error.
-            if (empty($vehicle_id)) {
-                if (empty($this->data[$form_model_name]['vehicle_id'])) {
-                    $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del vehículo');
-                    $this->redirect('/');
-                } else {
-                    $vehicle_id = $this->data[$form_model_name]['vehicle_id'];
-                }
-            }
+//            if (empty($vehicle_id)) {
+//                if (empty($this->data[$form_model_name]['vehicle_id'])) {
+//                    $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del vehículo');
+//                    $this->redirect('/');
+//                } else {
+//                    $vehicle_id = $this->data[$form_model_name]['vehicle_id'];
+//                }
+//            }
             // settear el id del vehiculo
             $this->{$form_model_name}->vehicle_id = $vehicle_id;
             
@@ -255,6 +255,25 @@ class FieldCreatorsController extends AppController {
 
                 // si falta alguun campo, entyonces hay que hacer el alter table
 
+        }
+
+
+        function model_creation($id){
+            /* @var $session SessionComponent */
+                $session =& $this->Session;
+            if (empty($id)) {                
+                $session->setFlash('debe pasar un ID como parámetro');
+                $this->redirect('/');
+            }
+            
+            if ($this->FieldCreator->crearTabla($id) > 0) {
+                $mensaje = 'Se ha creado la tabla correctamente';
+                
+            } else {
+                $mensaje = 'Error al crear la tabla';
+            }
+            $session->setFlash($mensaje);
+            $this->redirect('index');
         }
 
 }

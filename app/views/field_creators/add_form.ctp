@@ -53,9 +53,9 @@ $vehicle_id = $this->data['Vehicle']['id'];
     );
 
 
-    if (!empty($this->data[$formName]['id'])) {
-        echo $this->Form->input('id');
-    }
+//    if (!empty($this->data[$formName]['id'])) {
+//        echo $this->Form->input('id');
+//    }
     echo $this->Form->hidden('vehicle_id', array('value'=>$vehicle_id));
 
     ?>

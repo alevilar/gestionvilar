@@ -35,7 +35,6 @@ class VehiclesController extends AppController {
         }
 
         function customer($customer_id) {
-		$this->Vehicle->recursive = 0;
                 $this->paginate['Vehicle'] = array(
                     'conditions' => array('Vehicle.customer_id'=>$customer_id),
                     'contain' => array('Customer', 'VehicleType'),

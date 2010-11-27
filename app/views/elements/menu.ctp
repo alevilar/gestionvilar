@@ -36,7 +36,7 @@
             <div>
                 <ul>
                     <li><? echo $this->Html->link(__('Field Coordenates',true),'/field_coordenates');?></li>
-                    <li><? echo $this->Html->link(__('Field Map',true),'/field_coordenates/mapear');?></li>
+                    <li><? echo $this->Html->link(__('Forms',true),'/field_creators/index');?></li>
                     <li><? echo $this->Html->link(__('Test Fields',true),'/field_creators/testForm');?></li>
                 </ul>
             </div>

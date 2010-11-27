@@ -11,13 +11,21 @@ class FieldCoordenatesController extends AppController {
                     $condiciones = array("FieldCoordenate.field_creator_id"=>$this->passedArgs['field_creator_id']);
                     $limit = 999999;
                 }
+                
                 if (!empty($this->data['FieldCoordenate'])){
                     foreach ($this->data['FieldCoordenate'] as $campo=>$buscar){
                         $condiciones = array("FieldCoordenate.$campo"=>$buscar);
+                        $this->Session->write("FieldCoordenate.$campo", $buscar);
                         $limit = 999999;
                         $this->passedArgs = array_merge($this->passedArgs,array($campo=>$buscar));
                     }
+                } else {
+                    if ($fcId = $this->Session->read('FieldCoordenate.field_creator_id')) {
+                        $condiciones['FieldCoordenate.field_creator_id'] = $fcId;
+                    }
+                    $this->data['FieldCoordenate']['field_creator_id'] = $fcId;
                 }
+                
 		$this->FieldCoordenate->recursive = 0;
                 $this->paginate = array(
                     'limit'=>$limit,
@@ -43,15 +51,21 @@ class FieldCoordenatesController extends AppController {
         }
 
 
-        function mapear(){
+        function mapear($field_creator_id){
            // $cond = array ('FieldCoordenate.field_creator_id'=>$field_creator_id);
-            $res = $this->FieldCoordenate->find('all', array(
 
-                'order' => array(
-                    'FieldCoordenate.field_creator_id',
-                    "RPAD(FieldCoordenate.name,1,'?')",
-                    'FieldCoordenate.id'),
-                ));
+            //$this->FieldCoordenate->FieldCreator->recursive = 0;
+            $res = $this->FieldCoordenate->FieldCreator->read(null, $field_creator_id);
+
+//            $res = $this->FieldCoordenate->find('all', array(
+//                'conditions' => array(
+//                    'FieldCoordenate.field_creator_id' => $field_creator_id,
+//                    ),
+//                'order' => array(
+//                    'FieldCoordenate.field_creator_id',
+//                    "RPAD(FieldCoordenate.name,1,'?')",
+//                    'FieldCoordenate.id'),
+//                ));
             $this->set('res', $res);
         }
 
@@ -73,6 +87,13 @@ class FieldCoordenatesController extends AppController {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'field coordenate'));
 			}
 		}
+
+
+                if ($fcId = $this->Session->read('FieldCoordenate.field_creator_id')) {
+                        $condiciones['FieldCoordenate.field_creator_id'] = $fcId;
+                }
+                $this->data['FieldCoordenate']['field_creator_id'] = $fcId;
+
 		$fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
                 $fieldCoordenates = $this->FieldCoordenate->find('list', array('field'=>array('FieldCoordenate.id','CONCAT(FieldCoordenate.name, " ",FieldCoordenate.field_creator_id)')));
 		$fieldTypes = $this->FieldCoordenate->FieldType->find('list');

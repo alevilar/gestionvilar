@@ -22,9 +22,11 @@
                 <td><?php echo $fieldCreator['FieldCreator']['model']; ?>&nbsp;</td>
                 <td><?php echo $fieldCreator['FieldCreator']['activo']; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCreator['FieldCreator']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCreator['FieldCreator']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $fieldCreator['FieldCreator']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $fieldCreator['FieldCreator']['id'])); ?>
+                    <?php echo $this->Html->link(__('View', true), array('action' => 'view', $fieldCreator['FieldCreator']['id'])); ?>
+                    <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCreator['FieldCreator']['id'])); ?>
+                    <?php echo $this->Html->link(__('Code', true), array('controller'=>'FieldCoordenates','action' => 'mapear', $fieldCreator['FieldCreator']['id'])); ?>
+                    <?php echo $this->Html->link(__('Create Model', true), array('action' => 'model_creation', $fieldCreator['FieldCreator']['id']), null, __('Are you sure? this will delete historical data from curren form?', true)); ?>
+                    <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $fieldCreator['FieldCreator']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $fieldCreator['FieldCreator']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

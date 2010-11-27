@@ -141,7 +141,10 @@ abstract class FormSkeleton extends AppModel
             }
 
             $cond = array(
-                'conditions' => array($this->name . '.vehicle_id' => $fields['vehicle_id']),
+                'conditions' => array(
+                    $this->name . '.vehicle_id' => $fields['vehicle_id'],
+                    $this->name . '.vehicle_id <>' => 0,
+                    ),
                 'contain' => $this->sContain,
                 'order' => array($this->name . '.created DESC')
             );
@@ -793,10 +796,10 @@ abstract class FormSkeleton extends AppModel
 
     function __vehiclePreform1($legend = null)
     {
-        $legenda = empty($legend) ? __('Vehicle', true) : $legend;
+        $legenda = empty($legend) ? '"F" Vehículo que se tansfiere' : $legend;
 
         return array(
-            'legend' => '"F" Vehículo que se tansfiere',
+            'legend' => $legenda,
             'vehicle_id' => array('type' => 'hidden', 'value' => $this->data['Vehicle']['id']),
             'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->data['Vehicle']['patente']),
             'vehicle_brand' => array('label' => 'Marca', 'value' => $this->data['Vehicle']['brand']),

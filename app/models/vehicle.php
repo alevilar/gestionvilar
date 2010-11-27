@@ -37,6 +37,7 @@ class Vehicle extends AppModel
         )
     );
 
+
     /**
      * es el find de cake pero para definir segun cada formulario
      * @param string data si es data entonces en fields le paso 1ero el Id del
@@ -46,6 +47,13 @@ class Vehicle extends AppModel
      */
     public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null)
     {
+        if (!empty($fields['conditions']['Vehicle.id <>'])){
+            $fields['conditions']['Vehicle.id NOT'][] = $fields['conditions']['Vehicle.id'];
+            $fields['conditions']['Vehicle.id NOT'][] = 0;
+        } else {
+            $fields['conditions']['Vehicle.id <>'] = 0;
+        }
+
         // hacer el FIND tipico
         if ($conditions != 'data') {
             return parent::find($conditions, $fields, $order, $recursive);
@@ -56,7 +64,9 @@ class Vehicle extends AppModel
                 $fields['vehicle_id'] = $this->id;
             }
             $ret = $this->find('first', array(
-                        'conditions' => array('Vehicle.id' => $fields['vehicle_id']),
+                        'conditions' => array(
+                            'Vehicle.id' => $fields['vehicle_id']
+                            ),
                         'contain' => $this->sContain,
                     ));
             if (!empty($ret['Vehicle']['Customer'])) {

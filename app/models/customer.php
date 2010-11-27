@@ -44,7 +44,7 @@ class Customer extends AppModel {
             'CustomerHome'=>array('dependent' => true,),
             'Representative' => array('dependent' => true),
             'Character' => array('dependent' => true),
-            'Vehicle' => array('dependent' => true),
+            'Vehicle' => array('dependent' => true, 'conditions' => array('Vehicle.id >' => 0),),
     );
 
     /*
