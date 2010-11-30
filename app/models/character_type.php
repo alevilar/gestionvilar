@@ -2,6 +2,7 @@
 class CharacterType extends AppModel {
 	var $name = 'CharacterType';
 	var $displayField = 'name';
+        var $order = array('name');
 	var $validate = array(
 		'name' => array(
 			'notempty' => array(

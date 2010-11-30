@@ -16,6 +16,10 @@
 
         echo "<hr>";
 
+       echo $this->Form->input('character_type', array('options'=>$character_types, 'empty'=>'Seleccione'));
+        echo $this->Form->input('related_field_table_select', array('label'=>'Nombre del campo en Base de Datos', 'options'=>$fieldTableList, 'empty'=>'Seleccione el dato que desea mostrar'));
+
+
         // solo mi usuario puede ver esto
         if ($session->read('Auth.User.username') == 'alevilar') :
 

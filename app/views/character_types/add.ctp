@@ -4,6 +4,7 @@
  		<legend><?php printf(__('Add %s', true), __('Character Type', true)); ?></legend>
 	<?php
 		echo $this->Form->input('name');
+                echo $this->Form->input('field_name');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

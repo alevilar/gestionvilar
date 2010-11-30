@@ -21,6 +21,8 @@
         echo "<hr>";
 
         if (empty($this->data['FieldCreator']['model'])) {
+            echo $this->Form->input('character_type_id');
+            
             echo $this->Form->input('related_field_table', array(
                 'label'=>'Nombre del campo en Base de Datos',
                 'before'=>'AVAZADO -.Según el nombre quie le ponga aeste campo se insertarámn automáticamente campos como por ejemplo "customer_name"'));
@@ -28,46 +30,9 @@
 
         // solo mi usuario puede ver esto
         if ($session->read('Auth.User.username') == 'alevilar' && !empty($this->data['FieldCreator']['model'])) :
-
-            $modelo = ClassRegistry::init($this->data['FieldCreator']['model']);
-
-            $camposNoUtilizados = array();
-
-            echo "<div class='clear letra-azul'><b>Listado de Campos posibles:</b><br>";
-            foreach ($modelo->_schema as $c=>$v) {
-                if (array_search($c, $camposUsados) === false){
-                    echo $c." - ";
-                    $camposNoUtilizados[] = $c;
-                }
-            }
-            echo "</div>";
-
-            $camposMostrar = "<div class='letra-marron bold' style='font-size: 14pt'><u>".$this->data['FieldCoordenate']['name']."</u><br>";
-            $dist = 99999999;
-            $campo = '';
-            $vecResult = array();
-            foreach ($camposNoUtilizados as $c) {
-                $distA = levenshtein(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );
-                if (similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) ) > 1) {
-                    $distA -= similar_text(strtolower($this->data['FieldCoordenate']['name']), strtolower($c) );
-                    $vecResult[$distA][] = $c;
-                }
-            }
-
-            ksort(&$vecResult);
-            $cont = 0;
-            foreach ($vecResult as $res) {
-                $camposMostrar .= implode(" - ", $res)." - ";
-                if ($cont == 4) {
-                    break;
-                }
-                $cont++;
-            }
-            //$camposMostrar .= implode(",", $vecResult)."</div><br>";
-
-
-
-            echo $this->Form->input('related_field_table', array('label'=>'Nombre del campo en Base de Datos','after'=>$camposMostrar,'before'=>'AVAZADO - Aca se deberá escribir el nombre del campo en la tabla de la base de datos que hace referencia a este campo. Si no se escribe nada quiere decir que el campo merece un tratamiento especial yserá intercepatado y tatado desde la prograamación del código fuente.'));
+            echo "(nombre del campo creado automáticamente related_field_table::: ".$this->data['FieldCoordenate']['related_field_table'].")";
+            echo $this->Form->input('character_type', array('options'=>$character_types, 'empty'=>'Seleccione'));
+            echo $this->Form->input('related_field_table_select', array('label'=>'Nombre del campo en Base de Datos', 'options'=>$fieldTableList, 'empty'=>'Seleccione el dato que desea mostrar'));
 
             if (empty($this->data['FieldCoordenate']['test_print_text']) || (trim($this->data['FieldCoordenate']['test_print_text']) == 'Lalalal Lalalala Lala')) {
                 $this->data['FieldCoordenate']['test_print_text'] = $this->data['FieldCoordenate']['name'];
