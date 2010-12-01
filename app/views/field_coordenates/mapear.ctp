@@ -1,5 +1,27 @@
 
 <?php
+
+$formId = $res['FieldCreator']['id'];
+$formModel = $res['FieldCreator']['model'];
+
+$elementosCustomer= array();
+foreach ($actoresInvolucrados as $a){
+    if (empty($a)) continue;
+    $ac = ucwords(strtolower($a));
+    $elementosCustomer[] = "$a => $ac";
+}
+
+
+$elementosActores = array();
+foreach ($actoresInvolucrados as $a){
+    $ac = ucwords(strtolower($a));
+    if (empty($a)) continue;
+    $elementosActores[] = "array('field_forms/character_data'=> array('field_prefix'=>$a, 'label'=>\"Actor Como $ac\"))";
+}
+
+
+
+
 echo "<hr>";
 echo "<h2>Form" . $res['FieldCreator']['name'] . " (ID: ".$res['FieldCreator']['id'].")</h2>";
 ?>
@@ -10,24 +32,36 @@ echo "
 App::import('Lib', 'FormSkeleton');
 
 
-class F13ba extends FormSkeleton {
+class $formModel extends FormSkeleton {
 
-    //var \$belongsTo = array('Vehicle','Character','Spouse', 'Representative');
+    var \$form_id = $formId;
 
-    var \$form_id = 9;
+    var \$involucrados = array(";
 
-    var \$involucrados = array('titular', 'condominio');
+echo implode(',
+                              ',$actoresInvolucrados);
+
+
+echo ");
 
     var \$elements = array(
-          array('field_forms/customer_to_character'=> array(
+         array('field_forms/customer_to_character'=> array(
                             'label'=>'El Cliente es',
-                            'options'=>array(
-                                'comprador'=>'Titular',
-                                'condominiocomprador'=>'Condominio',
-                                ))),
-          array('field_forms/character_data'=> array('field_prefix'=>'comprador', 'label'=>'Actor Como \"Titular\"')),
-          array('field_forms/character_data'=> array('field_prefix'=>'condominiocomprador', 'label'=>'Actor Como \"Condominio\"')),
-    );
+                            'options'=>array(";
+
+echo implode(',
+                                             ',$elementosCustomer);
+
+echo ")
+               )
+         ),
+         ";
+
+echo implode(',
+         ',$elementosActores);
+
+echo "
+         );
 
 
 
@@ -46,6 +80,8 @@ class F13ba extends FormSkeleton {
                  ),
             \$this->__representativePreform('comprador', 'Apoderado del Titular'),
             \$this->__representativePreform('condominiocomprador', 'Apoderado del Condominio'),
+
+            \$this->__vehiclePreform1('Vehículo que se tansfiere'),
 
             array(
                 'legend' => 'TITULO LEYENDA',

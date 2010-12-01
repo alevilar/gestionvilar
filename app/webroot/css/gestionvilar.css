@@ -413,3 +413,9 @@ A.version_details:HOVER{
     color: #c73e14;
     text-decoration: underline;
 }
+
+.edit:HOVER, .edit_field_types:HOVER{
+    border: greenyellow groove solid;
+    background-color: #FFFFE0;
+    cursor: crosshair;
+}

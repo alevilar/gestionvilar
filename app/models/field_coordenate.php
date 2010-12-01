@@ -111,6 +111,39 @@ class FieldCoordenate extends AppModel {
         var $hasMany = array('FieldFormField');
 
 
+        public function beforeSave($options = array())
+        {
+            parent::beforeSave($options);
+
+             /**
+             * usa el this->data para llenar elcampo 'related_field_table
+             * segun el character_type_id y el select del campo 'related_field_table_select
+             */
+
+             if ( empty($this->data['FieldCoordenate']['character_type']) ) {
+                $character_type = $this->field('character_type');
+             } else {
+                $character_type = $this->data['FieldCoordenate']['character_type'];
+             }
+
+             if ( empty($this->data['FieldCoordenate']['related_field_table_select']) ) {
+                $related_field_table_select = $this->field('related_field_table_select');
+                if ( empty($related_field_table_select) ) {
+                    return true; // guardar, pero no nodificar el campo related_field_table
+                }
+             } else {
+                $related_field_table_select = $this->data['FieldCoordenate']['related_field_table_select'];
+             }
+
+             if (!empty($character_type)) {
+                 $character_type  = $character_type.'_';
+             }
+             $this->data['FieldCoordenate']['related_field_table'] = $character_type.$related_field_table_select;
+            
+             return true;
+
+        }
+
         function norepe(){
             $this->recursive = -1;
             $trajo = $this->find('count', array(

@@ -17,7 +17,6 @@ echo $this->Html->script('jquery.jeditable.mini', false);
      });
 
 
-
      $('.edit_field_types').editable('<?php echo $this->Html->url('/field_coordenates/update')?>', {
          data: function() {return $(this).attr('options_types')},
          type: 'select',
@@ -51,6 +50,7 @@ echo $this->Form->end('Buscar');
 ?>
         <table cellpadding="0" cellspacing="0" class="span-24 last">
 	<tr>
+            <th><?php echo $this->Paginator->sort('character_type');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('page');?></th>
 			<th><?php echo $this->Paginator->sort('field_type_id');?></th>
@@ -60,7 +60,7 @@ echo $this->Form->end('Buscar');
                         <th><?php echo $this->Paginator->sort('h');?></th>
                         <th><?php echo $this->Paginator->sort('Max Reng.','renglones_max');?></th>
 			<th><?php echo $this->Paginator->sort('Font','font_size');?></th>
-                        <th><?php echo $this->Paginator->sort('Campo Relación','related_field_table');?></th>
+                        <th><?php echo $this->Paginator->sort('Campo Relación','related_field_table_select');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -74,7 +74,10 @@ echo $this->Form->end('Buscar');
                 $fId = $fieldCoordenate['FieldCoordenate']['id'];
 	?>
 	<tr<?php echo $class;?>>
-		
+
+                <td  class="edit_field_types" options_types='<?php print json_encode($character_types) ?>' field="character_type" field_coordenate_id="<?php echo $fId; ?>">
+                        <?php echo $fieldCoordenate['FieldCoordenate']['character_type']?>
+                </td>
 		<td class="edit" field="name" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['name']; ?></td>
 		<td class="edit" field=page" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['page']; ?></td>
 		<td class="edit_field_types" options_types='<?php print json_encode($fieldTypes) ?>' field="field_type_id" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldType']['name'];?></td>
@@ -84,11 +87,13 @@ echo $this->Form->end('Buscar');
                 <td class="edit" field="h" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['h']; ?></td>
                 <td class="edit" field="renglones_max" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['renglones_max']; ?></td>
 		<td class="edit" field="font_size" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?></td>
-                <td>
-                    <div class="edit_field_types" options_types='<?php print json_encode($character_types) ?>' field="character_type" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['character_type']?></div>
-                   <!--
-                   <div  class="edit" field="related_field_table" field_coordenate_id="<?php echo $fId; ?>" title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?>" style="cursor: help"><?php echo ucwords(strtolower($fieldCoordenate['FieldCoordenate']['related_field_table']))?></div>
-                   -->
+                <td title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table'];?>">
+                    <?php
+                    echo $fieldCoordenate['FieldCoordenate']['related_field_table_select'];
+                    if ($session->read('Auth.User.username') == 'alevilar') {
+                        ?>
+                    <div class="edit_field_types" options_types='<?php print json_encode($related_field_table_selects) ?>' field="related_field_table_select" field_coordenate_id="<?php echo $fId; ?>" title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']; ?>""><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']?></div>
+                    <?php } ?>
                 </td>
 		<td class="actions">
 			<?php

@@ -2,6 +2,8 @@
 class FieldCreator extends AppModel {
 	var $name = 'FieldCreator';
 	var $displayField = 'name';
+        var $order = array('FieldCreator.name');
+        
 	var $validate = array(
 		'name' => array(
 			'notempty' => array(
@@ -45,9 +47,9 @@ class FieldCreator extends AppModel {
             foreach ($fc['FieldCoordenate'] as $f) {
 
                 if (!empty($f['related_field_table'])) {
-                    $campoNom = $f['related_field_table'];
+                    $campoNom = Inflector::slug($f['related_field_table']);
                 } else {
-                    $campoNom = "`".utf8_encode(Inflector::tableize($f['name']))."`";
+                    $campoNom = "`".utf8_encode(Inflector::slug($f['name']))."`";
                 }
 
                 $tipoField = 'varchar(110) default NULL';
@@ -74,7 +76,7 @@ class FieldCreator extends AppModel {
 
             $ini_query = "
                 CREATE TABLE IF NOT EXISTS $tableName(
-                    id int(11) NOT NULL auto_increment,
+                    id int(11) NOT NULL auto_increment PRIMARY KEY,
                     vehicle_id int(11),
                     representative_id int(11),
             ";
@@ -87,8 +89,7 @@ class FieldCreator extends AppModel {
             $ini_query .=
             "
                     created timestamp NULL default NULL,
-                    modified timestamp NULL default NULL,
-                    PRIMARY KEY  (id)
+                    modified timestamp NULL default NULL
                 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
             ";
 

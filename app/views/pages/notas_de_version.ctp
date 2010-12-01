@@ -3,6 +3,16 @@
 <h3>Versión <?php echo GESTAFORM_VERSION?></h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<ul>
+    <li>Nuevo Campo "Cuadraditos" Que permite insertar datos en los formularios y que estos imprima cada carácter en un cuadradito. Se realizó este trabajo específicamente para los formularios 13</li>
+    <li>Nuevas pantallas de acdministración de campos de coordenadas. Se ha llegado a la fase final de la página que permitirá realizar modificaciones en las coordenadas, asi como se podrá agregar nuevos "datos" a los formularios de forma automática y simple. Sólo creando un campo con un nombre, su posición y la relación con el campo en la base de datos, se podrá crear un nuevo valor en el PDF.</li>
+    <li>Primera versión de los formularios 13 para Bs As y CABA</li>
+</ul>
+
+    
+<h3>Versiones Anteriores</h3>
+<h4>Versión 1.8.1 (8 Nov 2010)</h4>
 <ul>
     <li>Ahora se guarda correctamente el CUIT y CUIL de los Actores</li>
     <li>Ahora aparece la ocupacioón del cliente, cuando éste es del tipo Cliente Físico.
@@ -17,3 +27,14 @@
     <li>El nombre del cónyuge ahora aparece en el formulario ya sea para los Actores como para los Clientes Naturales</li>
     <li>Ahora se coloca el texto "GARANTIA DE PAGO" en el Formulario 03 sección "Modalidad de Contrato"</li>
 </ul>
+
+
+<h4>Versiones Intermedias</h4>
+<p>Sin relevar información sobre actualizaciones realizadas</p>
+
+
+<h4>Version Inicial:: Versión 0.0.1 (6 Julio 2010)</h4>
+<ul>
+    <li>Primera versión de los formularios: 02, 11, 12 y 59M</li>
+</ul>
+
