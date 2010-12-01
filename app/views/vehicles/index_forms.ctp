@@ -26,7 +26,16 @@ foreach ($vehicleForms as $name=>$mas) {
     if (!empty($mas)) {
         echo "<p><b>$name:</b> ";
         foreach($mas as $form) {
-            echo $html->link(date('d/m/Y h:m A',strtotime($form[$name]['created'])), "/field_creators/generar_pdf/".$printer['Printer']['id']."/$name/".$form[$name]['id'].".pdf");
+            $fecha = date('d/m/Y h:m A',strtotime($form[$name]['created']));
+            echo $html->link($fecha, "/field_creators/generar_pdf/".$printer['Printer']['id']."/$name/".$form[$name]['id'].".pdf");
+            echo "   <cite>[ ";
+            echo $this->Html->link(
+            strtolower(__('Delete',true)),
+                    '/field_creators/deleteForm/'.$name.'/'.$form[$name]['id'],
+                    array('title'=>__('Delete',true)),
+                     "¿Desea eliminar el histórico del formulario $name, con fecha $fecha?"
+                    );
+            echo " ]</cite>";
             echo " ----  ";
             $cant++;
         }

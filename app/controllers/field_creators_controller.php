@@ -66,6 +66,25 @@ class FieldCreatorsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+
+
+    function deleteForm($form = null,$id = null) {
+        if (!$id || !$form) {
+            $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'éste formulario'));
+        }
+        if ($formName =& ClassRegistry::init($form)) {
+            if ($formName->delete($id)) {
+                $this->Session->setFlash(sprintf(__('%s deleted', true), 'Formulario'));
+            } else {
+                $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'El Formulario'));
+            }
+        } else {
+            $this->Session->setFlash("El formulario '$form' no existe");
+        }
+        $this->redirect($this->referer());
+    }
+    
+
     /**
      *
      * @param string $form_model_name modelo del formulario Ej: F02, F12, etc
