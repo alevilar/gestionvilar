@@ -31,8 +31,23 @@ if (empty($customer)) {
 
     // domicilio
     if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {
+
         foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
             if ($h['type']== 'Legal') {
+                $customer['calle'] = $h["address"] ;
+                $customer['numero_calle'] =  $h["number"] ;
+                $customer['piso'] = $h["floor"];
+                $customer['depto'] = $h["apartment"];
+                $customer['cp'] = $h["postal_code"];
+                $customer['localidad'] = $h["city"];
+                $customer['departamento'] = $h["county"] ;
+                $customer['provincia'] = $h["state"];
+            }
+        }
+
+        // si existe guarda habitual, sobreescribir la otra
+        foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
+            if ($h['type']== 'Guarda Habitual') {
                 $customer['calle'] = $h["address"] ;
                 $customer['numero_calle'] =  $h["number"] ;
                 $customer['piso'] = $h["floor"];

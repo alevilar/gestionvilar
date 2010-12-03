@@ -88,11 +88,18 @@ echo "
 ";
 
 $ant = 0;
+$prefixAnt  = '';
 foreach ($res['FieldCoordenate'] as $r) {
-echo "
-                 '".$r['related_field_table']."' => array('label' => '".$r['name']."'),";
-}
+    
+    if ( !empty($r['related_field_table']) ) {
 
+        echo "
+                         '".$r['related_field_table']."' => array('label' => '".$r['name']."'),";
+    } else {
+        echo "
+                         '".Inflector::slug($r['name'])."' => array('label' => '".$r['name']."'),";
+    }
+}
 
 echo "
            )
