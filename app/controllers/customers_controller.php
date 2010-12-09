@@ -167,13 +167,14 @@ class CustomersController extends AppController {
         );
         $this->set('customers', $this->paginate('Customer'));
 
-//        $this->paginate['Vehicle'] = array(
-//                'limit'=>10,
-//                'contain'=> array('VehicleType','Customer'),
-//                'conditions'=> $conditions,
-//                'page'=> $pageVehicle,
-//        );
-       // $this->set('vehicles', $this->paginate('Vehicle'));
+
+
+        $this->paginate['Vehicle'] = array(
+                'contain'=> array('VehicleType','Customer'),
+                'conditions'=> $conditions,
+                'page'=> $pageVehicle,
+        );
+        $this->set('vehicles', $this->paginate('Vehicle'));
         
     }
 }

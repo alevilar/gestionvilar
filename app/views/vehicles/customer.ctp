@@ -5,7 +5,7 @@
     var customer = <?php echo json_encode($customer['Customer'])?>;
 </script>
 
-<? echo $this->element('vehicles_from_customer', $vehicles);?>
+<? echo $this->element('vehicles_from_customer', array('vehicles' =>$vehicles, 'customer'=>$customer['Customer']));?>
 
 <?
 if (count($vehicles) == 0) {

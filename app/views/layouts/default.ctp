@@ -81,8 +81,6 @@
         <!--[if IE]><?= $this->Html->script( 'jquery.bgiframe'); ?><![endif]-->
         <?
 
-
-
         echo $this->Html->css('gestionvilar');
 
         // echo $this->Javascript->link('jquery');
@@ -94,8 +92,6 @@
 
     </head>
     <body>
-        
-        
         <div id="container" class="container">
             <div id="header" class="span-24 last">
                 <div class="span-24 last">

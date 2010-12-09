@@ -252,7 +252,7 @@ label {
 }
 
 BODY {
-    background-image: url(images/background.jpg);
+    background-image: url(images/background2.jpg);
     /* background-image: url(http://www.fondosypantallas.com/wp-content/uploads/2008/05/terragen___69.jpg); */
     /* http://www.fotosyfondos.com/wp-content/uploads/2009/10/fotos-de-paisajes.jpg */
     background-repeat: repeat-x;
@@ -418,4 +418,19 @@ A.version_details:HOVER{
     border: greenyellow groove solid;
     background-color: #FFFFE0;
     cursor: crosshair;
+}
+
+
+#vehicle-search{
+    background-color: silver;
+    margin-bottom: 5px;
+}
+
+#vehicle-search LABEL{
+    float: left;
+    margin: 7px 10px;
+}
+
+#vehicle-search input[type=submit]{
+    margin: 3px 20px 0px 20px;
 }

@@ -51,7 +51,7 @@ class F03 extends FormSkeleton {
                     $this->data[$this->name]['i_concepto_prestamo'] = 'X';
                     break;
                 case 'garantiapago':
-                    $this->data[$this->name]['i_concepto_saldo'] = 'GARANTIA DE PAGO';
+                    $this->data[$this->name]['i_concepto_sgtia_pago'] = 'GARANTIA DE PAGO';
                     break;
                 default:
                     break;

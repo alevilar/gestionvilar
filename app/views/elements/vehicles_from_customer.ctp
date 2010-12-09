@@ -1,3 +1,27 @@
+<?php
+
+if ( empty($customer)) {
+?>
+<div id="vehicle-list-header" class="column-header">
+    <?= $this->Html->image('playlist.png', array('height'=>'40px', 'style'=>'float:left'));?>
+    <h2 class="center"><? __('Vehicle´s List')?></h2>
+</div>
+<?php } else {?>
+<div id="vehicle-header-customer" class="span-13 column-header"">
+    <?= $this->Html->image('user.png', array('height'=>'40px', 'style'=>'float:left'));?>
+    <h2 id="vehicle-customer-title" class="center span-9">
+        <?php echo $customer['name'] ?>
+    </h2>
+    <div class="span-3 last">
+        <? echo $this->Html->link('Más Info Cliente', '/customers/view/'.$customer['id'], array('id'=>'btn-cliente-view'))?>
+        <br>
+        <? echo $this->Html->link('Agregar Vehiculo', '/vehicles/add/'.$customer['id'], array('id'=>'btn-add-vehicle'))?>
+    </div>
+</div>
+<?php }?>
+
+
+
 <div id="vehicle-list" class="search-content span-15 last">
     <span style="float: right">
         <?php
@@ -7,25 +31,23 @@
         echo $this->Paginator->next(' Siguiente »', null, null, array('class' => 'disabled'));
         ?>
     </span>
-    <span style="float: right"><a href="#" onclick="$('#vehicle-search').toggle();">Buscador</a></span>
-    <div class="column span-14 last" id="vehicle-search" style="display:none">
-        <?= $this->Form->create('Vehicle', array('url'=>'/vehicles/search'));?>
-        <?= $this->Form->input('Customer.name', array('label'=>'Cliente', 'div'=>array('class'=>'span-4'),'class'=>'span-4'));?>
-        <?= $this->Form->input('patente', array('label'=>'N° Dominio', 'div'=>array('class'=>'span-2'),'class'=>'span-2'));?>
-        <?= $this->Form->input('chasis_number', array('label'=>'N° Chasis', 'div'=>array('class'=>'span-3'),'class'=>'span-3'));?>
-        <? //= $this->Js->submit('Buscar',array('update'=>'vehicle-list','div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
-        <?= $this->Form->end('Buscar',array('div'=>array('class'=>'span-2 last prepend-top'),'class'=>'span-2 last'));?>
-    </div>
-
+ 
     <ul class="simple-list">
         <?php
         $i = 0;
         foreach ($vehicles as $v):
+            if ( empty($v['Vehicle']) ) continue;
             ?>
         <li class='hover-highlight span-15 last'>
             <span class="span-1">
                     <?
-                    switch ($v['VehicleType']['id']) {
+                    $vehicle_type_id = 0;
+                    if ( !empty($v['Vehicle']['VehicleType']['id']) ) {
+                        $vehicle_type_id = $v['Vehicle']['VehicleType']['id'];
+                    } elseif ( !empty($v['VehicleType']['id']) ) {
+                        $vehicle_type_id = $v['VehicleType']['id'];
+                    }
+                    switch ($vehicle_type_id) {
                         case 1 : // es Moto
                             $img = 'motorcycle.gif';
                             break;
