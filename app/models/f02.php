@@ -27,28 +27,6 @@ class F02 extends FormSkeleton {
             20 => 'Otros trámites',
     );
 
-    var $validate = array(
-            'type' => array(
-                            'notempty' => array(
-                                            'rule' => array('notempty'),
-                                            'message' => 'Debe seleccionar un valor.',
-                            ),
-                            'numeric' => array(
-                                            'rule' => array('numeric'),
-                                            'message'=>'Debe ingresar una valor numérico en este campo'
-                            ),
-            ),
-            'vehicle_id' => array(
-                            'notempty' => array(
-                                            'rule' => array('notempty'),
-                                            'message' => 'Debe seleccionar un valor.',
-                            ),
-                            'numeric' => array(
-                                            'rule' => array('numeric'),
-                                            'message'=>'Debe ingresar una valor numérico en este campo'
-                            ),
-            ),
-    );
 
 
     var $belongsTo = array('Vehicle','Representative');
@@ -143,7 +121,7 @@ class F02 extends FormSkeleton {
             ),
             array(
                 'legend'=> ' "F" Solicitante',
-                'solicitante' => array('value'=>$this->data['Vehicle']['Customer']['name']),
+                'solicitante' => array('value'=>@$this->data['Vehicle']['Customer']['name']),
                 'representative_id' => array('type'=>'hidden'),
                 'representative_name' => array('label'=>'Nombre'),
                 'representative_nationality_type' => array('label'=>'Nacionalidad', 'options'=>$nationalities, 'empty'=>'Seleccione'),
@@ -154,15 +132,15 @@ class F02 extends FormSkeleton {
             ),
             array(
                 'legend'=> '"H" Vehículo',
-                'vehicle_id' => array('type'=>'hidden', 'value'=>$data['Vehicle']['id']),
-                'vehicle_patente'=> array('label'=>'Dominio','value'=>$data['Vehicle']['patente']),
-                'vehicle_brand' => array('label'=>'Marca','value'=>$data['Vehicle']['brand']),
-                'vehicle_type' => array('label'=>'Tipo','value'=>$data['Vehicle']['type']),
-                'vehicle_model' => array('label'=>'Modelo','value'=>$data['Vehicle']['model']),
-                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>$data['Vehicle']['motor_brand']),
-                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>$data['Vehicle']['motor_number']),
-                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>$data['Vehicle']['chasis_brand']),
-                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>$data['Vehicle']['chasis_number']),
+                'vehicle_id' => array('type'=>'hidden', 'value'=>@$data['Vehicle']['id']),
+                'vehicle_patente'=> array('label'=>'Dominio','value'=>@$data['Vehicle']['patente']),
+                'vehicle_brand' => array('label'=>'Marca','value'=>@$data['Vehicle']['brand']),
+                'vehicle_type' => array('label'=>'Tipo','value'=>@$data['Vehicle']['type']),
+                'vehicle_model' => array('label'=>'Modelo','value'=>@$data['Vehicle']['model']),
+                'vehicle_motor_brand' => array('label'=>'Marca del Motor','value'=>@$data['Vehicle']['motor_brand']),
+                'vehicle_motor_number' => array('label'=>'N° de Motor','value'=>@$data['Vehicle']['motor_number']),
+                'vehicle_chasis_brand' => array('label'=>'Marca del Chasis','value'=>@$data['Vehicle']['chasis_brand']),
+                'vehicle_chasis_number' => array('label'=>'N° de Chasis','value'=>@$data['Vehicle']['chasis_number']),
             ),
 
 //        titular_name

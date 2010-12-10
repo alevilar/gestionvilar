@@ -31,6 +31,23 @@ function populateCampos(modelName, formName, fieldPrefix, integerValue) {
 
     
 
+function seleccionarFormulario(vehicle_id){
+        $.blockUI({
+            message: $('#formulario-de-'+vehicle_id),
+            overlayCSS:  {
+                backgroundColor: '#000',
+                opacity:         0.6
+            }
+        });
+
+
+        $('.blockOverlay').attr('title','Click para cerrar ventana').click($.unblockUI);
+
+
+
+        setTimeout($.unblockUI, 10000);
+        return false;
+    }
 
         
 // PageLoad function

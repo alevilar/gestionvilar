@@ -376,8 +376,6 @@ A.images-link-1{
 
 #gestaform_data{
     color:silver;
-    margin-top:34px;
-    float: right;
 }
 
 .btn-edit {
@@ -450,8 +448,16 @@ img#background {
 
 
 #header{
+    margin-top: 10px;
     background-color: black;
     padding: 20px 0px;
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-top-right-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-topright: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border: 2px solid black;
 }
 
 .bborder {

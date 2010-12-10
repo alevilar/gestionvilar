@@ -193,7 +193,11 @@ class VehiclesController extends AppController {
             $cant = count($this->Vehicle->Customer->find('list', $this->paginate['Customer']));
             //debug( $this->params['paging']);
             $this->params['paging']['Customer']['count'] = $cant;
+            $limit = empty($this->paginate['limit']) ? 20 : $this->paginate['limit'];
+            $pageCount = round($cant/$limit)+1;
+            $this->params['paging']['Customer']['pageCount'] = $pageCount;
 
+            
             $this->paginate['Vehicle'] = array(
                 'contain'=>array('VehicleType','Customer'),
                 'conditions'=>$conditionsCustomer+$conditionsVehicle,

@@ -1,3 +1,10 @@
+
+<?php
+
+/* @var $this View */
+$this;
+
+?>
 <div id="customer-index" class="column span-9">
     <div class="span-9 column-header">
         <?= $this->Html->image('playlist.png', array('height' => '40px', 'style' => 'float:left')); ?>
