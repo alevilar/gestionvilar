@@ -389,6 +389,7 @@ A.images-link-1{
     width: 20px;
     float: left;
     height: 20px;
+    overflow:hidden;
 }
 
 .btn-del {
@@ -400,6 +401,7 @@ A.images-link-1{
     width: 20px;
     height: 20px;
     margin-left:30px;
+    overflow:hidden;
 }
 
 

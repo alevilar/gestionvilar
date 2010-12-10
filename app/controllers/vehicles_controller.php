@@ -3,6 +3,8 @@ class VehiclesController extends AppController {
 
 	var $name = 'Vehicles';
 
+        var $paginate = array('limit' => 30);
+
 	function index() {
                 $this->paginate = array(
                     'contain'=> array('VehicleType'),
@@ -35,6 +37,9 @@ class VehiclesController extends AppController {
         }
 
         function customer($customer_id) {
+
+                $this->passedArgs['Customer.id'] = $customer_id;
+
                 $this->paginate['Vehicle'] = array(
                     'conditions' => array('Vehicle.customer_id'=>$customer_id),
                     'contain' => array('Customer', 'VehicleType'),
@@ -121,20 +126,48 @@ class VehiclesController extends AppController {
             $conditions = $conditionsCustomer = $conditionsVehicle = array();
             if (!empty($this->data['Customer']['name'])) {
                 $conditionsCustomer['Customer.name LIKE'] = "%" . $this->data['Customer']['name'] . "%";
+                 $this->passedArgs['Customer.name'] = $this->data['Customer']['name'];
+            }
+            if (!empty($this->data['Customer']['id'])) {
+                $conditionsCustomer['Customer.id'] = $this->data['Customer']['id'];
+                 $this->passedArgs['Customer.id'] = $this->data['Customer']['id'];
             }
             if (!empty($this->data['Vehicle']['patente'])) {
                 $conditionsVehicle['Vehicle.patente LIKE'] = "%" . $this->data['Vehicle']['patente'] . "%";
+                $this->passedArgs['Vehicle.patente'] = $this->data['Vehicle']['patente'];
             }
             if (!empty($this->data['Vehicle']['chasis_number'])) {
                 $conditionsVehicle['Vehicle.chasis_number LIKE'] = "%" . $this->data['Vehicle']['chasis_number'] . "%";
+                $this->passedArgs['Vehicle.chasis_number'] = $this->data['Vehicle']['chasis_number'];
             }
             if (!empty($this->data['Vehicle']['motor_number'])) {
                 $conditionsVehicle['Vehicle.motor_number LIKE'] = "%" . $this->data['Vehicle']['motor_number'] . "%";
+                $this->passedArgs['Vehicle.motor_number'] = $this->data['Vehicle']['motor_number'];
             }
+
+
+            if (!empty($this->passedArgs['Customer.name'])) {
+                $conditionsCustomer['Customer.name LIKE'] = "%" . $this->passedArgs['Customer.name'] . "%";
+            }
+            if (!empty($this->passedArgs['Vehicle.patente'])) {
+                $conditionsVehicle['Vehicle.patente LIKE'] = "%" . $this->passedArgs['Vehicle.patente'] . "%";
+            }
+            if (!empty($this->passedArgs['Vehicle.chasis_number'])) {
+                $conditionsVehicle['Vehicle.chasis_number LIKE'] = "%" . $this->passedArgs['Vehicle.chasis_number'] . "%";
+            }
+            if (!empty($this->passedArgs['Vehicle.motor_number'])) {
+                $conditionsVehicle['Vehicle.motor_number LIKE'] = "%" . $this->passedArgs['Vehicle.motor_number'] . "%";
+            }
+            if (!empty($this->passedArgs['Customer.id'])) {
+                $conditionsCustomer['Customer.id'] = $this->passedArgs['Customer.id'];
+                $customer = $this->Vehicle->Customer->read(null, $this->passedArgs['Customer.id']);
+                $this->set('customer', $customer['Customer']);
+            }
+            
             $conditions = array_merge($conditionsCustomer, $conditionsVehicle);
+            
+           // if ( empty($conditions) && empty($this->passedArgs) )  $this->redirect('/customers/search');
 
-
-            if ( empty($conditions) ) $this->redirect('/customers/search');
             
             $this->paginate['Customer'] = array(
                 'joins' => array(
@@ -154,8 +187,12 @@ class VehiclesController extends AppController {
                 'contain'=>array('Vehicle.VehicleType'),
                 'conditions'=>$conditionsCustomer+$conditionsVehicle,
                 'group' => 'Customer.id',
+                'order' => 'Customer.name',
             );
             $customers = $this->paginate('Customer');
+            $cant = count($this->Vehicle->Customer->find('list', $this->paginate['Customer']));
+            //debug( $this->params['paging']);
+            $this->params['paging']['Customer']['count'] = $cant;
 
             $this->paginate['Vehicle'] = array(
                 'contain'=>array('VehicleType','Customer'),
@@ -165,6 +202,18 @@ class VehiclesController extends AppController {
             
             $this->set('vehicles', $vehicles);
             $this->set('customers', $customers);
+
+            if ( !empty($this->passedArgs['redirect']) ) {
+                switch ($this->passedArgs['redirect']) {
+                    case 'VehicleIndex':
+                        $this->render('ajax/index');
+                        break;
+                    case 'CustomerIndex':
+                        $this->render('/customers/ajax/index');
+                    default:
+                        break;
+                }
+            }               
         }
 }
 ?>

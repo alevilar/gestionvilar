@@ -60,7 +60,7 @@ $(document).ready(function(){
     $.history.init(pageload);
 
     // set onlick event for buttons
-    $("a[rel='history']").click(function(){
+    $("a[rel='history']").live('click',function(){
         //
         var hash = this.href;
         hash = hash.replace(/^.*#/, '');

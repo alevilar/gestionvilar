@@ -1,5 +1,7 @@
 <?
 /* @var $this View */
+
+
 ?>
 <script type="text/javascript">
     var customer = <?php echo json_encode($customer['Customer'])?>;

@@ -37,6 +37,7 @@ class Customer extends AppModel {
             'Vehicle' => array('dependent' => true, 'conditions' => array('Vehicle.id >' => 0),),
     );
 
+
     /*
     function  __construct() {
         $this->types = array('fisica'=>__('Natural', true),'juridica'=>__('Legal', true));

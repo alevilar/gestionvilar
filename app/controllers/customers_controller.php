@@ -3,6 +3,8 @@ class CustomersController extends AppController {
 
     var $name = 'Customers';
 
+    var $paginate = array('limit' => 30);
+
 
     function edit_notes($id = null){
         $this->layout = 'ajax';
@@ -17,7 +19,6 @@ class CustomersController extends AppController {
 
     function index() {
         $this->paginate['Customer'] = array(
-                'limit'=>10,
                 'contain'=> array(
                         'Identification' => array('IdentificationType'),
                         'CustomerLegal',
@@ -30,7 +31,12 @@ class CustomersController extends AppController {
         foreach ($cus as &$c) {
             $c['Customer']['type'] = $this->Customer->types[$c['Customer']['type']];
         }
+        
         $this->set('customers', $cus);
+
+        if ($this->RequestHandler->isAjax()) {
+            $this->render('ajax/index');
+        }
     }
 
     function view($id = null) {
@@ -134,10 +140,8 @@ class CustomersController extends AppController {
 
     function clist() {
         $conditions = array();
-        die("putasa");
 
         $this->paginate['Customer'] = array(
-                'limit'=>10,
                 'contain'=> array('Vehicle'=>array('VehicleType')),
                 'conditions'=> $conditions,
         );
