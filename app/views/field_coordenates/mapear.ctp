@@ -94,10 +94,10 @@ foreach ($res['FieldCoordenate'] as $r) {
     if ( !empty($r['related_field_table']) ) {
 
         echo "
-                         '".$r['related_field_table']."' => array('label' => '".$r['name']."'),";
+                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."'),";
     } else {
         echo "
-                         '".Inflector::slug($r['name'])."' => array('label' => '".$r['name']."'),";
+                         '".Inflector::slug(low($r['name']))."' => array('label' => '".$r['name']."'),";
     }
 }
 

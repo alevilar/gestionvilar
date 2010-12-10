@@ -252,9 +252,6 @@ label {
 }
 
 BODY {
-    background-image: url(images/background2.jpg);
-    /* background-image: url(http://www.fondosypantallas.com/wp-content/uploads/2008/05/terragen___69.jpg); */
-    /* http://www.fotosyfondos.com/wp-content/uploads/2009/10/fotos-de-paisajes.jpg */
     background-repeat: repeat-x;
     background-color: black;
 }
@@ -264,9 +261,10 @@ BODY {
 }
 
 #content{
-    margin-top:1.5em;
     min-height: 36em;
     border-radius: 5px;
+    background-color: #E5ECF9;
+    padding-top: 20px;
 }
 
 .cake-sql-log{
@@ -274,7 +272,7 @@ BODY {
 }
 
 .transparent-low {
-    opacity: 0.9;
+    opacity: 0.95;
 
 }
 .transparent-mid {
@@ -299,8 +297,10 @@ li.li-hover {
 
 
 }
-.li-hover A:HOVER {
-    color: black;
+.li-hover A:HOVER, .li-hover A:ACTIVE, .li-hover A:FOCUS {
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#BDD5E1));
+    background-image: -moz-linear-gradient(top, #ffffff, #BDD5E1);
+    background-color: #06B3E1;
 }
 
 /* SIMPLE LIST */
@@ -435,4 +435,29 @@ A.version_details:HOVER{
 
 #vehicle-search input[type=submit]{
     margin: 3px 20px 0px 20px;
+}
+
+
+img#background {
+    min-height:700px;
+    min-width:940px;
+    color:white;
+    height:100%;
+    position:fixed;
+    width:100%;
+    z-index:-1;
+}
+
+
+#header{
+    background-color: black;
+    padding: 20px 0px;
+}
+
+.bborder {
+    border: 2px solid black;
+}
+
+.hover-highlight{
+    margin-left: 3px;
 }

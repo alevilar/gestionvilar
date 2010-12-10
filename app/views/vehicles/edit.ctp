@@ -1,7 +1,7 @@
 
 <div class="vehicles form span-24 last">
     <?php echo $this->Form->create('Vehicle');?>
-    <fieldset class="span-24 last">
+    <fieldset>
         <legend><?php printf(__('Edit %s', true), __('Vehicle', true)); ?></legend>
         <div class="span-6">
 <?php
@@ -38,7 +38,7 @@
         </div>
 
 
-        <div class="span-6 last">
+        <div class="span-5 last">
             <?
             echo $this->Form->input('adquisition_evidence_element');
             echo $this->Form->input('motor_brand');

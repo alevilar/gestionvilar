@@ -47,9 +47,9 @@ class FieldCreator extends AppModel {
             foreach ($fc['FieldCoordenate'] as $f) {
 
                 if (!empty($f['related_field_table'])) {
-                    $campoNom = Inflector::slug($f['related_field_table']);
+                    $campoNom = Inflector::slug(low($f['related_field_table']));
                 } else {
-                    $campoNom = "`".utf8_encode(Inflector::slug($f['name']))."`";
+                    $campoNom = "`".utf8_encode(Inflector::slug(low($f['name'])))."`";
                 }
 
                 $tipoField = 'varchar(110) default NULL';

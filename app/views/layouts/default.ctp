@@ -92,7 +92,8 @@
 
     </head>
     <body>
-        <div id="container" class="container">
+        <?php echo $this->Html->image('background.jpg', array('id'=>'background'))?>
+        <div id="container" class="container bborder">
             <div id="header" class="span-24 last">
                 <div class="span-24 last">
                     <?php echo $this->element('menu'); ?>
@@ -105,7 +106,7 @@
                 </div>
             </div> <!-- End Header -->
 
-            <div id="content" class="span-24 last box transparent-low">
+            <div id="content" class="span-24 last transparent-low">
                 <?php echo $content_for_layout; ?>
             </div>
 

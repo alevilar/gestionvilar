@@ -29,15 +29,6 @@ $this->Paginator->options(array(
        // $('#div-for-vehicles').load("<?= $this->Html->url('/vehicles'); ?>")
     });
 
-
-
-    function updateVehicleHeader(){
-        $('#vehicle-list-header').hide();
-        $('#vehicle-header-customer').show();
-        $('#vehicle-customer-title').html(customer.name);
-        $('#btn-cliente-view').attr('href','<?php echo $this->Html->url('/customers/view/')?>'+customer.id);
-        $('#btn-add-vehicle').attr('href','<?php echo $this->Html->url('/vehicles/add/')?>'+customer.id);
-    };
 </script>
 
 

@@ -7,9 +7,9 @@
             <h2 class="center"><? __('Vehicle´s List') ?></h2>
     </div>
 <?php } else { ?>
-    <div id="vehicle-header-customer" class="span-13 column-header"">
+    <div id="vehicle-header-customer" class="span-15 column-header"">
 <?= $this->Html->image('user.png', array('height' => '40px', 'style' => 'float:left')); ?>
-             <h2 id="vehicle-customer-title" class="center span-9">
+             <h2 id="vehicle-customer-title" class="center span-11">
 <?php echo $customer['name'] ?>
             </h2>
             <div class="span-3 last">
