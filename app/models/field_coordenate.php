@@ -166,12 +166,13 @@ class FieldCoordenate extends AppModel {
          * @param integer $page
          * @return array find all
          */
-        function getCoorFrom($field_creator_id, $page) {
+        function getCoorFrom($field_creator_id, $page = null) {
+            $cond['FieldCoordenate.field_creator_id'] = (int)$field_creator_id;
+            
+            if (!empty($page)) $cond['FieldCoordenate.page'] = $page;
+            
             return $this->find('all', array(
-                'conditions'=>array(
-                        'FieldCoordenate.field_creator_id'=>(int)$field_creator_id,
-                        'FieldCoordenate.page'=>$page,
-                ),
+                'conditions'=>$cond,
                 'contain'=>array('FieldType','FieldContinue')
             ));
         }

@@ -54,15 +54,6 @@
                             __('release date',true))?>
         </div>
 
-        <?php
-//        echo $html->link('PROBÁ LA VERSIÓN 1.0 beta','http://gestion.z-a.com.ar/gestionvilar/', array(
-//        'style'=> 'color: #DEC944;',
-//        ))
-                ?>
-
-        <?php echo $html->link('Volver a la version 0.9','http://gestion.z-a.com.ar/', array(
-        'style'=> 'color: #DEC944;',
-        ))?>
         
     </div>
     

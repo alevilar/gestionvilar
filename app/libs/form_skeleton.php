@@ -72,7 +72,8 @@ abstract class FormSkeleton extends AppModel
     }
 
     /**
-     *
+     * getter de $form_id
+     * 
      * @return integer id generado en el Insert en la tabla field_creators
      */
     final public function getFieldCreatorId()
@@ -663,6 +664,30 @@ abstract class FormSkeleton extends AppModel
             return true;
         }
         return false;
+    }
+
+
+
+    /**
+     *  Es un atajo para el $this->data['Model']['field'] con esta funcion me aseguro
+     * que si el Model o el field no existen, que no me tire un error PHP de INVALID KEY
+     * 
+     * @param string $model
+     * @param string $field
+     * @return String
+     */
+    function getDataFromField($model, $field){
+        $retu = "";
+        
+        if ( !empty($this->data[$model][$field]) ) {
+            $retu = $this->data[$model][$field];
+        }
+
+        if ( empty($retu) && !empty($this->data[$this->name][$field]) ) {
+            $retu = $this->data[$model][$field];
+        }
+
+        return $retu;
     }
 
     /**

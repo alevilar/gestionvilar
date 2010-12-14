@@ -96,6 +96,7 @@ class FieldCreatorsController extends AppController {
             // verifico que el modelo herede de la clase FormSkeleton
             if (get_parent_class($this->{$form_model_name}) != 'FormSkeleton') {
                 debug("ERROR !!!!! ::::::: La clase del formulario no extiende de FormSkeleton !!!! por eso es que se ven errores");
+                die('Error: El formulario debe extender de FormSkeleton');
             }
 
             // aegurarse que llego el vehiculo como parámetro. Caso contrario,redirigir y mostrar error.
@@ -109,15 +110,13 @@ class FieldCreatorsController extends AppController {
 //            }
             // settear el id del vehiculo
             $this->{$form_model_name}->vehicle_id = $vehicle_id;
-            
+         
             if (!empty($this->data)) {
                 //debug($this->data);
                 unset($this->{$form_model_name}->data);
                // debug($this->{$form_model_name});
-
                 if (!$this->{$form_model_name}->save($this->data[$this->{$form_model_name}->name])) {
                     $this->Session->setFlash("no pudo guardarse el formulario $form_model_name");
-                    debug($this->{$form_model_name}->validationErrors);
                 } else {
                     // GENERO EL PDF
                     $this->redirect('generar_pdf/' . $this->data[$form_model_name]['printer_id'] . '/' . $form_model_name . '/' . $this->{$form_model_name}->id . '.pdf');
@@ -170,19 +169,19 @@ class FieldCreatorsController extends AppController {
             $this->layout = 'pdf/default';
             $page1 = $this->FieldCreator->FieldCoordenate->getCoorFrom($this->data['FieldCreator']['form_id'],1);
             foreach ($page1 as &$c) {
-                $c['FieldCoordenate']['value'] = $c['FieldCoordenate']['test_print_text'];
+                $c['FieldCoordenate']['value'] = empty($c['FieldCoordenate']['test_print_text']) ? $c['FieldCoordenate']['name'] : $c['FieldCoordenate']['test_print_text'];
             }
 
-            $page2 = $this->FieldCreator->FieldCoordenate->getCoorFrom($this->data['FieldCreator']['form_id'],1);
+            $page2 = $this->FieldCreator->FieldCoordenate->getCoorFrom($this->data['FieldCreator']['form_id'],2);
             foreach ($page2 as &$c) {
-                $c['FieldCoordenate']['value'] = $c['FieldCoordenate']['test_print_text'];
+                $c['FieldCoordenate']['value'] = empty($c['FieldCoordenate']['test_print_text']) ? $c['FieldCoordenate']['name'] : $c['FieldCoordenate']['test_print_text'];
             }
 
             $modelViewVars = array();
             $printer = $this->Printer->read(null, $this->data['FieldCreator']['printer_id']);
 
             $pages = array($page1, $page2);
-
+            //debug($pages);
             $this->set('form_name', 'formulario_de_prueba');
             $this->set('vehicle_domain', '');
             $this->set('debug_mode', $this->data['FieldCreator']['debug']);
@@ -212,9 +211,6 @@ class FieldCreatorsController extends AppController {
         $fxx = ClassRegistry::init($form_model_name);
         $fxx->generateDataWithFields($fxx_id);
 
-//        debug($fxx->data);
-//        debug($fxx->fieldsPage1);
-
         $debug_mode = false;
         if (!empty($this->passedArgs['debug'])) {
             $debug_mode = true;
@@ -228,7 +224,6 @@ class FieldCreatorsController extends AppController {
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);
         $this->set(compact('modelViewVars', 'debug_mode', 'pages', 'printer'));
 
-        // debug($page1);//die("terminarlo");
     }
 
 

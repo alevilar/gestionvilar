@@ -45,11 +45,13 @@ class FieldCreator extends AppModel {
             $fc = $this->read();
             $count = 0;
             foreach ($fc['FieldCoordenate'] as $f) {
-
+                
+                $campoNom = '';
                 if (!empty($f['related_field_table'])) {
                     $campoNom = Inflector::slug(low($f['related_field_table']));
                 } else {
-                    $campoNom = "`".utf8_encode(Inflector::slug(low($f['name'])))."`";
+                    $nomAux = utf8_encode(Inflector::slug(low($f['name'])));
+                    if ( ! empty($nomAux)) $campoNom = "`".$nomAux."`";
                 }
 
                 $tipoField = 'varchar(110) default NULL';
@@ -61,8 +63,8 @@ class FieldCreator extends AppModel {
                     // es FK clave forania
                     $tipoField = 'int(11) default NULL';
                 }
-
-                $setDeCampos[$campoNom] = $tipoField;
+                if (!empty($campoNom) && !empty($tipoField)) $setDeCampos[$campoNom] = $tipoField;
+                
                 $count++;
             }
             
@@ -83,6 +85,8 @@ class FieldCreator extends AppModel {
 
             foreach ($setDeCampos as $campo=>$tipoCampo) {
                 $ini_query .= $campo.' '.$tipoCampo.',';
+                $ini_query .= '
+                    ';
             }
             
 

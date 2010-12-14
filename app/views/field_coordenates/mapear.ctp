@@ -92,9 +92,13 @@ $prefixAnt  = '';
 foreach ($res['FieldCoordenate'] as $r) {
     
     if ( !empty($r['related_field_table']) ) {
-
-        echo "
-                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."'),";
+        if (!empty($r['related_field_table_select']) || !empty($r['character_type'])){
+            echo "
+                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."', 'value' => \$this->getDatafromField('".  Inflector::camelize($r['character_type'])."','".$r['related_field_table_select']."')),";
+        } else {
+            echo "
+                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."',";
+        }
     } else {
         echo "
                          '".Inflector::slug(low($r['name']))."' => array('label' => '".$r['name']."'),";
