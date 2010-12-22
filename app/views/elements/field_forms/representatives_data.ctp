@@ -12,6 +12,7 @@ if (empty ($field_prefix)) {
     $field_prefix = 'representative';
 }
 
+
 // armo el JSON de Apoderados o Represetatives
 if (empty($representatives)) {
     $representatives = $this->data['Vehicle']['Customer']['Representative'];
@@ -44,7 +45,7 @@ if (empty($representatives)) {
     function meterRepresentative(){
         var modelName = '<?php echo 'Representative' ?>';
         var formName = '<?php echo $formName?>';
-        var prefix = 'representative';
+        var prefix = '<?php echo $field_prefix ?>';
         var randomNumber = <?php echo $random?>;
 
         if (modelName && formName && randomNumber) {

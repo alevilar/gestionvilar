@@ -91,6 +91,11 @@ class FieldCreatorsController extends AppController {
      * @param integer $vehicle_id id del viehiculo a imprimir
      */
     function addForm($form_model_name, $vehicle_id = null) {
+        $vehicleName = '';
+        $this->FieldCreator->recursive = -1;
+        $modelName = $this->FieldCreator->findByModel($form_model_name);
+        
+
         if ($this->{$form_model_name} = ClassRegistry::init($form_model_name)) {
 
             // verifico que el modelo herede de la clase FormSkeleton
@@ -147,7 +152,9 @@ class FieldCreatorsController extends AppController {
             foreach ($modelViewVars as $varName => $varValue) {
                 $this->set($varName, $varValue);
             }
-
+            
+            @$vehicleName = '::[ '.$this->data['Vehicle']['patente']. ' ] '.$this->data['Vehicle']['Customer']['name'];
+            $this->set('title_for_layout', 'F '.$modelName['FieldCreator']['name'].$vehicleName);
             $this->set('formBlackList', $this->{$form_model_name}->fieldsBlackList);
             $this->set('formInputs'   , $this->{$form_model_name}->getFormImputs($this->data));
             $this->set('formName'     , $form_model_name);

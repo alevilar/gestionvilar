@@ -38,7 +38,10 @@ class AppController extends Controller {
     //var $components = array( 'Auth' , 'RequestHandler');
     var $components = array('RequestHandler','Session','Auth');
 
+  
+
     function beforeFilter() {
+        
         $this->Auth->loginError ='Usuario o Password Incorrectos';
         $this->Auth->authError = 'No tiene permisos para acceder aquí';
 
@@ -50,6 +53,9 @@ class AppController extends Controller {
         //$this->Auth->allow('home','login','logout');
 
         $this->Auth->authorize = 'controller';
+
+
+        $this->set('title_for_layout', 'Sistema Gestión de Formularios Online');
 
         /*
               * Esto hace que cuando se auna peticion ajax, vaya  a buscar la vista den

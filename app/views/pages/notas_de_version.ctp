@@ -5,14 +5,24 @@
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
 
 <ul>
-    <li>Nuevo Diseño</li>
-    <li>Posibilidad de imprimir Formularios Rápidos, sin necesidad de crear clientes ni vehículos</li>
-    <li>Nuevo buscador con mejores posibilidades de búsqueda</li>
+    <li>F12, 03 y 02, ya no aparecen las fechas del dia actual por defecto</li>
+    <li>Se eliminaron las fechas de nacimiento que estaban de más en Actores del tipo Persona Jurídica</li>
+    <li>Ahora aparece el nombre del formulario en el que estoy como titulo de la pantalla. Principalmente útil cuando quiero abrir varios formularios en varias solapas</li>
+    <li>F03, la cláusula de actualización ahora por defecto aparece en "NO"</li>
 </ul>
 
 
     
 <h3>Versiones Anteriores</h3>
+
+<h4>Versión 1.0 Beta (10 Dic 2010)</h4>
+<ul>
+    <li>¡¡Nuevo Diseño mas ágil, dinámico y alegre!!</li>
+    <li>Posibilidad de imprimir Formularios Rápidos, sin necesidad de crear clientes ni vehículos</li>
+    <li>Nuevo buscador con mejores posibilidades de filtrado</li>
+</ul>
+
+
 <h4>Versión 0.9 (1 Dic 2010)</h4>
 <ul>
     <li>Ahora se pueden eliminar formularios historicos desde la misma pantalla que los muestra, precionando sobre la "X" que aparece al lado</li>

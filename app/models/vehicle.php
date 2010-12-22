@@ -4,6 +4,7 @@ class Vehicle extends AppModel
 {
 
     var $name = 'Vehicle';
+    var $order = array('Vehicle.customer_id', 'Vehicle.patente');
     var $validate = array(
         'customer_id' => array(
             'numeric' => array(

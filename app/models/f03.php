@@ -80,9 +80,9 @@ class F03 extends FormSkeleton {
 
             array(
                 'legend'=>'"A"',
-                'a_dia'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
-                'a_mes'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
-                'a_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
+                'a_dia'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día'),
+                'a_mes'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
+                'a_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
                 'a_monto' =>array('label'=>'Monto del contrato'),
                
             ) ,
@@ -90,10 +90,16 @@ class F03 extends FormSkeleton {
             array(
                 'legend'=>'"I" Modalidades del Contrato',
                 'i_grado' => array('label'=>'Grado N°'),
-                'i_clausula' => array('options'=>array('si'=>'SI', 'no'=>'NO'), 'label'=>'Cláusula de actualización', 'empty'=>'Seleccione'),
+                'i_clausula' => array('options'=>array('si'=>'SI', 'no'=>'NO'), 'label'=>'Cláusula de actualización', 'empty'=>'Seleccione', 'default'=>'no'),
                 'i_clausula_si'=> array('type'=>'hidden'),
                 'i_clausula_no'=> array('type'=>'hidden')	,
-                'i_concepto' => array('options'=>array('saldo'=>'Saldo de Precio', 'prestamo'=>'Préstamo','garantiapago'=>'Garantia de Pago'), 'label'=>'Concepto'),
+                'i_concepto' => array(
+                    'options'=>array(
+                        'saldo'=>'Saldo de Precio',
+                        'prestamo'=>'Préstamo','garantiapago'=>'Garantia de Pago'
+                        ),
+                    'label'=>'Concepto',
+                    'empty' => 'Seleccione'),
                 'i_concepto_saldo'=> array('type'=>'hidden'),
                 'i_concepto_prestamo'=> array('type'=>'hidden'),
                 
@@ -147,7 +153,7 @@ class F03 extends FormSkeleton {
                 'o_traslado_dia' =>array('label'=>'trslado día'),
                 'o_traslado_mes' =>array('label'=>'traslado mes'),
                 'o_traslado_anio' =>array('label'=>'traslado año'),
-                'o_se_tomo_nota' =>array('label'=>'se tomó nota'),
+                'o_se_tomo_nota' =>array('label'=>'se tomó nota', 'type' => 'textarea'),
                 'o_n' =>array('label'=>'n°'),
             ),
              

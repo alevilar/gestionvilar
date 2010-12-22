@@ -1,5 +1,5 @@
 <?
-die("aca");
+
 $options = array(
             'debug' => Configure::read('debug'),
             'Printer' => $printer['Printer'],

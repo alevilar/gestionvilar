@@ -36,7 +36,6 @@ class F12 extends FormSkeleton {
 
     function getFormImputs($data)
     {
-
         $obs = array(
                 'Sin Texto',
                 'Texto 1',
@@ -61,14 +60,14 @@ class F12 extends FormSkeleton {
                 'texto_de_la_observacion'=> array('label'=>'Seleccione el texto dela observación','options'=>$obs, 'id'=>'textobs', 'after'=>'(recuede retocar la observación)'),
                 'observaciones'=> array('type'=>'textarea'),
                 'lugar',
-                'fecha_dia'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día', 'value'=> date('d',strtotime('now'))),
-                'fecha_mes'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes', 'value'=> date('m',strtotime('now'))),
-                'fecha_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año', 'value'=> date('y',strtotime('now'))),
+                'fecha_dia'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día'),
+                'fecha_mes'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
+                'fecha_anio'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
             ),
             array(
                 'legend'=>'Datos del Solicitante',
                 'nombre' => array('label'=>'Apellido y Nombre', 'value'=>$data['Vehicle']['Customer']['name']),
-                'tipoynrodoc'=>array('label'=>'N° y tipo de documento', 'value'=>$data['Vehicle']['Customer']['identification_type']. " ".$data['Vehicle']['Customer']['identification_number']),
+                'tipoynrodoc'=>array('label'=>'N° y tipo de documento', 'value'=> $this->getTipoYNumero()),
                 'domicilio' => array('value'=>$data['Vehicle']['Customer']['Home']['address']),
                 'numero' => array('value'=>$data['Vehicle']['Customer']['Home']['number']),
                 'localidad' => array('value'=>$data['Vehicle']['Customer']['Home']['city']),

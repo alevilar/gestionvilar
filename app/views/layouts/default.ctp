@@ -22,7 +22,6 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>
-            Sistema Gestión de Formularios Online
             <?php echo $title_for_layout; ?>
         </title>
 

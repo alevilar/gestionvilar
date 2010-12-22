@@ -667,6 +667,19 @@ abstract class FormSkeleton extends AppModel
     }
 
 
+    function getTipoYNumero() {
+        $model = 'Vehicle.Customer.Identification';
+        $tipo = $this->getDataFromField($model, 'identification_type');
+        $numero = $this->getDataFromField($model, 'identification_number');
+        if (!empty($tipo) && !empty($numero)) {
+           $tyn =   $tipo.' '.$numero;
+        } else {
+            $tyn = $this->getDataFromField('Vehicle.Customer', 'cuit_cuil');
+        }
+        return $tyn;
+    }
+
+
 
     /**
      *  Es un atajo para el $this->data['Model']['field'] con esta funcion me aseguro
@@ -678,15 +691,23 @@ abstract class FormSkeleton extends AppModel
      */
     function getDataFromField($model, $field){
         $retu = "";
-        
-        if ( !empty($this->data[$model][$field]) ) {
-            $retu = $this->data[$model][$field];
+        $vData = $this->data;
+        $modelsss = explode('.', $model);
+        $model = end($modelsss);
+
+        foreach ($modelsss as $m ) {
+            $vData = $vData[$m];
+        }
+        if ( !empty($vData[$field]) ) {
+            $retu = $vData[$field];
         }
 
-        if ( empty($retu) && !empty($this->data[$this->name][$field]) ) {
-            $retu = $this->data[$model][$field];
+        if ( empty($retu) && !empty($vData[$this->name][$field]) ) {
+            $retu = $vData[$field];
+            
         }
 
+        if (empty ($retu)) debug("no existe modelo $model campo $field");
         return $retu;
     }
 

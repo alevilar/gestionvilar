@@ -22,6 +22,9 @@ class F08 extends FormSkeleton {
                                 'condominiocomprador'=>'Condominio en la Compra',
                                 'condominiovendedor'=>'Condominio en la Venta',
                                 ))),
+//        array('field_forms/representatives_data'=> array('field_prefix'=>'repcomprador', 'label'=>'Apoderado del Comprador')),
+//        array('field_forms/representatives_data'=> array('field_prefix'=>'repcondominiocomprador', 'label'=>'Apoderado del Condominio')),
+
           array('field_forms/character_data'=> array('field_prefix'=>'comprador', 'label'=>'Comprador')),
           array('field_forms/character_data'=> array('field_prefix'=>'condominiocomprador', 'label'=>'Condominio en la Compra')),
           array('field_forms/character_data'=> array('field_prefix'=>'vendedor', 'label'=>'Vendedor')),
@@ -47,8 +50,8 @@ class F08 extends FormSkeleton {
                 'a_precio_compra'=>array('label'=>'Precio de compra (en caso de omisión, sucesión, premio, etc. escribir el concepto)'),
                 ),
             $this->__vehiclePreform1('"F" Vehículo que se tansfiere'),
-            $this->__representativePreform('comprador', '"K" Comprador o Adquiriente'),
-            $this->__representativePreform('condominiocomprador', '"L" Condominio en la compra o adquisición'),
+            $this->__representativePreform('repcomprador', '"K" Comprador o Adquiriente'),
+            $this->__representativePreform('repcondominiocomprador', '"L" Condominio en la compra o adquisición'),
             array(
                 'legend'=>'"M" Observaciones',
                 'observaciones'=>array('label'=>false),
