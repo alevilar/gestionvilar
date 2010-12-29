@@ -22,7 +22,7 @@
 
         if (empty($this->data['FieldCreator']['model'])) {
             echo $this->Form->input('character_type_id');
-            
+            echo $this->Form->input('related_field_table_select', array('options'=>$fieldSelectNames,'empty'=>'Seleccione'));
             echo $this->Form->input('related_field_table', array(
                 'label'=>'Nombre del campo en Base de Datos',
                 'before'=>'AVAZADO -.Según el nombre quie le ponga aeste campo se insertarámn automáticamente campos como por ejemplo "customer_name"'));
@@ -32,7 +32,14 @@
         if ($session->read('Auth.User.username') == 'alevilar' && !empty($this->data['FieldCreator']['model'])) :
             echo "(nombre del campo creado automáticamente related_field_table::: ".$this->data['FieldCoordenate']['related_field_table'].")";
             echo $this->Form->input('character_type', array('options'=>$character_types, 'empty'=>'Seleccione'));
-            echo $this->Form->input('related_field_table_select', array('label'=>'Nombre del campo en Base de Datos', 'options'=>$fieldTableList, 'empty'=>'Seleccione el dato que desea mostrar'));
+            echo $this->Form->input('related_field_table_select', array(
+                'label'=>'Nombre del campo dato',
+                'options'=>$fieldTableList,
+                'empty'=>'Seleccione el dato que desea mostrar'));
+            echo $this->Form->input('related_field_table', array(
+                'label'=>'Nombre del campo en Base de Datos',
+                'after'=>'SI este valor queda vacio, entonces se completa con lo que haya colocado en "Nombre del campo dato", y "tipo de actor"',
+                'before'=>'AVAZADO -.Según el nombre quie le ponga aeste campo se insertarámn automáticamente campos como por ejemplo "customer_name"'));
 
             if (empty($this->data['FieldCoordenate']['test_print_text']) || (trim($this->data['FieldCoordenate']['test_print_text']) == 'Lalalal Lalalala Lala')) {
                 $this->data['FieldCoordenate']['test_print_text'] = $this->data['FieldCoordenate']['name'];

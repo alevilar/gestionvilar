@@ -96,13 +96,11 @@ class F03 extends FormSkeleton {
                 'i_concepto' => array(
                     'options'=>array(
                         'saldo'=>'Saldo de Precio',
-                        'prestamo'=>'Préstamo','garantiapago'=>'Garantia de Pago'
+                        'prestamo'=>'Préstamo',
+                        'garantiapago'=>'Garantia de Pago'
                         ),
                     'label'=>'Concepto',
-                    'empty' => 'Seleccione'),
-                'i_concepto_saldo'=> array('type'=>'hidden'),
-                'i_concepto_prestamo'=> array('type'=>'hidden'),
-                
+                    'empty' => 'Seleccione'),                
             ),
             
             array(

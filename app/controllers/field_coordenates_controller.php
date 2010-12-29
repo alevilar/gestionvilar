@@ -250,7 +250,9 @@ class FieldCoordenatesController extends AppController
         $fieldCreators = $this->FieldCoordenate->FieldCreator->find('list');
         $fieldTypes = $this->FieldCoordenate->FieldType->find('list');
 
-        $this->set(compact('fieldTableList', 'fieldCreators', 'fieldTypes', 'fieldCoordenates', 'camposUsados', 'character_types'));
+        $fieldSelectNames = $this->fieldNames;
+
+        $this->set(compact('fieldTableList', 'fieldCreators', 'fieldTypes', 'fieldCoordenates', 'camposUsados', 'character_types','fieldSelectNames'));
     }
 
     function delete($id = null)

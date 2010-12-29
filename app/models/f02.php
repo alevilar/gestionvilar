@@ -112,7 +112,7 @@ class F02 extends FormSkeleton {
         return array(
             array(
                 'legend' => '"D" Solicitud De',
-                'd_tipo' => array('label'=>false,'options'=>$this->types, 'class'=>'span-11'),
+                'd_tipo' => array('label'=>false,'options'=>$this->types, 'class'=>'span-11','empty'=>'Seleccione'),
             ),
             array(
                 'legend'=>'"E" Declaraciones',

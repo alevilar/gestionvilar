@@ -60,7 +60,7 @@ echo $this->Form->end('Buscar');
                         <th><?php echo $this->Paginator->sort('h');?></th>
                         <th><?php echo $this->Paginator->sort('Max Reng.','renglones_max');?></th>
 			<th><?php echo $this->Paginator->sort('Font','font_size');?></th>
-                        <th><?php echo $this->Paginator->sort('Campo Relación','related_field_table_select');?></th>
+                        <th><?php echo $this->Paginator->sort('Campo Dato','related_field_table_select');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -91,6 +91,7 @@ echo $this->Form->end('Buscar');
                     <?php
                     echo $fieldCoordenate['FieldCoordenate']['related_field_table_select'];
                     if ($session->read('Auth.User.username') == 'alevilar') {
+                        echo "(related field table: ".$fieldCoordenate['FieldCoordenate']['related_field_table'].')';
                         ?>
                     <div class="edit_field_types" options_types='<?php print json_encode($related_field_table_selects) ?>' field="related_field_table_select" field_coordenate_id="<?php echo $fId; ?>" title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']; ?>""><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']?></div>
                     <?php } ?>
