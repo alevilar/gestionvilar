@@ -65,33 +65,32 @@ if (empty($customer)) {
         
 
     // PERSONA FÍSICA
-    $born_date = null;
-    if (!empty($this->data['Vehicle']['Customer']['CustomerNatural']['born'])) {
-        $born_date = date('d-m-y',strtotime($this->data['Vehicle']['Customer']['CustomerNatural']['born']));
-    }
     if (!empty($d['Vehicle']['Customer']['CustomerNatural'])) {
         $customer['persona_fisica_o_juridica'] = 'fisica';
         $customer['nationality_type_id'] =  $d['Vehicle']['Customer']['CustomerNatural']['nationality_type'] ;
-        $customer['anio_nacimiento'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
-        $customer['mes_nacimiento']  = date('m',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born']));
-        $customer['dia_nacimiento']  = date('d',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
-        $customer['fecha_nacimiento'] = $born_date ;
+
+        if (!empty($d['Vehicle']['Customer']['CustomerNatural']['born'])) {
+            $customer['anio_nacimiento'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
+            $customer['mes_nacimiento']  = date('m',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born']));
+            $customer['dia_nacimiento']  = date('d',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born'])) ;
+            $customer['fecha_nacimiento'] = date('d-m-y',strtotime($d['Vehicle']['Customer']['CustomerNatural']['born']));
+        }
+        
         $customer['marital_status_id']  =  $d['Vehicle']["Customer"]['CustomerNatural']['marital_status_id'];
         $customer['nupcia'] = $d['Vehicle']["Customer"]['CustomerNatural']['nuptials'] ;
     } else {
     // PERSONA JURIDICA
-        $inscription_date = null;
-        if (!empty($this->data['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) {
-            $inscription_date = date('d-m-y',strtotime($this->data['Vehicle']['Customer']['CustomerLegal']['inscription_date']));
-        }
         $customer['persona_fisica_o_juridica'] = 'juridica';
         if (!empty($d['Vehicle']["Customer"]['CustomerLegal'])) {
             $customer['personeria_otorgada'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_entity'];
             $customer['inscripcion'] = $d['Vehicle']["Customer"]['CustomerLegal']['inscription_number'];
-            $customer['anio_inscripcion'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-            $customer['mes_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-            $customer['dia_inscripcion']  = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
-            $customer['fecha_inscripcion'] = $inscription_date;
+
+            if (!empty($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) {
+                $customer['anio_inscripcion'] = date('y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+                $customer['mes_inscripcion']  = date('m',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+                $customer['dia_inscripcion']  = date('d',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date'])) ;
+                $customer['fecha_inscripcion'] = date('d-m-y',strtotime($d['Vehicle']['Customer']['CustomerLegal']['inscription_date']));
+            }
         }
     }
 

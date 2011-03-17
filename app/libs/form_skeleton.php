@@ -37,9 +37,14 @@ abstract class FormSkeleton extends AppModel
      * @var integer
      */
     var $form_id; // este sirve para generar el PDF
-    var $vehicle_id; // este sirve para generar la vista del form_add
-    var $elements = array(); // array de elementos a mostrar en el formulario de carga para este formulario, justamente.
+
+    // este sirve para generar la vista del form_add
+    var $vehicle_id;
+
+    // array de elementos a mostrar en el formulario de carga para este formulario, justamente.
     // el array es dela forma: array('nombre del elemento'=>array('optiones'))
+    var $elements = array(); 
+    
     /**
      * Default belongs para tosos los modelos
      * @var array
@@ -222,7 +227,7 @@ abstract class FormSkeleton extends AppModel
             $fontSize = $p['FieldCoordenate']['font_size'];
 
             if (!array_key_exists($campo, $this->data[$this->name])) {
-                debug("no existe el campo $campo para el FieldCreator ID() " . $p['FieldCoordenate']['id']);
+                $this->log("no existe el campo $campo para el FieldCreator ID() " . $p['FieldCoordenate']['id']);
                 return -1; // el campo no existe como columna del modelo
             }
 
@@ -249,21 +254,23 @@ abstract class FormSkeleton extends AppModel
      */
     function autoPopulateFields()
     {
-        $fallo = false;
+        $campoFallo = array();
         foreach ($this->fieldsPage1 as $p) {
             if ($this->makePopulation($p) < 0) {
-                $fallo = true;
+                $campoFallo[] = $p;
             }
         }
         unset($p);
         foreach ($this->fieldsPage2 as $p) {
             if ($this->makePopulation($p) < 0) {
-                $fallo = true;
+                $campoFallo[] = $p;
             }
         }
 
-        if ($fallo && (Configure::read('debug') > 0)) {
-            die;
+        if (count($campoFallo) > 0) {
+            foreach ($campoFallo as $c)
+            $this->log('fallo al intertar campo en funcion autoPopulateFields');
+            debug("el campo <b>".$c['FieldCoordenate']['name']."</b> no existe:");
         }
     }
 
@@ -667,6 +674,37 @@ abstract class FormSkeleton extends AppModel
     }
 
 
+    /**
+     * Devuelve un array con el domicilio pedido como parametro
+     * @param string $homeType
+     * @return array devuelve los datos del model Home
+     */
+    function getCustomerHome($field,$homeType = null) {
+        $homes = $this->getDataFromField('CustomerHome');
+
+        foreach ($homes as $h) {
+            if ($h['type'] == $homeType){
+                return $h[$field];
+            }
+
+            if ($h['type'] == 'Guarda Habitual') {
+                return $h[$field];
+            }
+
+            if ($h['type'] == 'Legal') {
+                debug($h);
+                return $h[$field];
+            }
+
+            return $h[$field];
+        }
+    }
+    
+
+    /**
+     * Devuelve el tipo y numero de documento concatenadaos en un string
+     * @return string
+     */
     function getTipoYNumero() {
         $model = 'Vehicle.Customer.Identification';
         $tipo = $this->getDataFromField($model, 'identification_type');
@@ -689,27 +727,41 @@ abstract class FormSkeleton extends AppModel
      * @param string $field
      * @return String
      */
-    function getDataFromField($model, $field){
+    function getDataFromField($model, $field = null){
         $retu = "";
         $vData = $this->data;
+        
+        if (strstr($model, 'Vehicle') === false && empty($vData[$model])) {
+            $model = 'Vehicle.Customer.'.$model;
+            
+        }
+        
         $modelsss = explode('.', $model);
         $model = end($modelsss);
-
+        
         foreach ($modelsss as $m ) {
+            if (empty($vData[$m])) break;
             $vData = $vData[$m];
         }
-        if ( !empty($vData[$field]) ) {
-            $retu = $vData[$field];
+        if (empty($field)) return $vData;
+
+        if (empty ($field)) {
+            return $vData[$model];
+        }
+        
+        if ( empty($retu) && !empty($vData[$field]) ) {
+            return $vData[$field];
         }
 
         if ( empty($retu) && !empty($vData[$this->name][$field]) ) {
-            $retu = $vData[$field];
-            
+            return $vData[$this->name][$field];
         }
 
-        if (empty ($retu)) debug("no existe modelo $model campo $field");
-        return $retu;
+        if ( empty($retu) && !empty($vData[$model][$field]) ) {
+            return $vData[$model][$field];
+        }
     }
+
 
     /**
      *
@@ -781,7 +833,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_provincia' => array('label' => 'Provincia'),
             $involucrado . '_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_identification_number' => array('label' => 'N° Documento'),
-            $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities),
+            $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
             $involucrado . '_identification_authority' => array('label' => 'Autoridad (o país) que lo expidió'),
             $involucrado . '_fecha_nacimiento' => array('label' => 'Fecha de Nacimiento', 'type' => 'text'),
             $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
@@ -807,7 +859,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_name' => array('label' => 'Apellido y Nombre o Denominación'),
             $involucrado . '_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_identification_number' => array('label' => 'N° Documento'),
-            $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities),
+            $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
             $involucrado . '_identification_authority' => array('label' => 'Autoridad (o país) que lo expidió'),
             $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
             $involucrado . '_nupcia' => array('label' => 'Nupcia'),
@@ -815,7 +867,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_conyuge_apoderado_name' => array('label' => 'Apellido y nombres del cónyuge'),
             $involucrado . '_conyuge_apoderado_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_conyuge_apoderado_identification_number' => array('label' => 'N° Documento'),
-            $involucrado . '_conyuge_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities),
+            $involucrado . '_conyuge_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
             $involucrado . '_conyuge_apoderado_identification_auth' => array('label' => 'Autoridad (o país) que lo expidió'),
             $involucrado . '_apoderado_name' => array('label' => 'Apellido y nombres del Apoderado'),
             $involucrado . '_fecha_sello' => array('label' => 'Fecha, Sello y firma del certificante'),
@@ -834,7 +886,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_apoderado_name' => array('label' => 'Apellido y nombres del Apoderado'),
             $involucrado . '_apoderado_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_apoderado_identification_number' => array('label' => 'N° Documento',),
-            $involucrado . '_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities),
+            $involucrado . '_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
             $involucrado . '_apoderado_identification_auth' => array('label' => 'Autoridad (o país) que lo expidió'),
             $involucrado . '_fecha_sello',
         );

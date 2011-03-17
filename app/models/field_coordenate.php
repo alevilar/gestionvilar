@@ -138,7 +138,9 @@ class FieldCoordenate extends AppModel {
              if (!empty($character_type)) {
                  $character_type  = $character_type.'_';
              }
-             $this->data['FieldCoordenate']['related_field_table'] = $character_type.$related_field_table_select;
+             if (empty($this->data['FieldCoordenate']['related_field_table'])) {
+                $this->data['FieldCoordenate']['related_field_table'] = $character_type.$related_field_table_select;
+             }
             
              return true;
 

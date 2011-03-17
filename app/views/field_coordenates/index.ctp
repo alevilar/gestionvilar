@@ -89,12 +89,15 @@ echo $this->Form->end('Buscar');
 		<td class="edit" field="font_size" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['font_size']; ?></td>
                 <td title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table'];?>">
                     <?php
-                    echo $fieldCoordenate['FieldCoordenate']['related_field_table_select'];
                     if ($session->read('Auth.User.username') == 'alevilar') {
-                        echo "(related field table: ".$fieldCoordenate['FieldCoordenate']['related_field_table'].')';
+                        
                         ?>
-                    <div class="edit_field_types" options_types='<?php print json_encode($related_field_table_selects) ?>' field="related_field_table_select" field_coordenate_id="<?php echo $fId; ?>" title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']; ?>""><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']?></div>
-                    <?php } ?>
+                    <div style="background-color: silver" title="Related field table" class="edit" field="related_field_table" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table']; ?></div>
+                    <div  style="background-color: pink" title="field Select" class="edit_field_types" options_types='<?php print json_encode($related_field_table_selects) ?>' field="related_field_table_select" field_coordenate_id="<?php echo $fId; ?>" title="<?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']; ?>""><?php echo $fieldCoordenate['FieldCoordenate']['related_field_table_select']?></div>
+                    <?php } else {
+                      echo $fieldCoordenate['FieldCoordenate']['related_field_table_select'];
+                    }
+                    ?>
                 </td>
 		<td class="actions">
 			<?php

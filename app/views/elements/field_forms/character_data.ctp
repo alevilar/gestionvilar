@@ -28,8 +28,20 @@ if (empty($characters)) {
 
     foreach ($characters as &$ch) {
         $ch['porcentaje'] = $ch['porcentaje']. "  00";
-        $ch['fecha_nacimiento'] = date('d-m-y',strtotime($ch['fecha_nacimiento']));
-        $ch['fecha_inscripcion'] = date('d-m-y',strtotime($ch['fecha_inscripcion']));
+
+        if (!empty($ch['fecha_nacimiento'])) {
+            $ch['fecha_nacimiento'] = date('d-m-y',strtotime($ch['fecha_nacimiento']));
+            $ch['anio_nacimiento'] = date('y',strtotime($ch['fecha_nacimiento'])) ;
+            $ch['mes_nacimiento']  = date('m',strtotime($ch['fecha_nacimiento']));
+            $ch['dia_nacimiento']  = date('d',strtotime($ch['fecha_nacimiento'])) ;
+        }
+
+        if (!empty($ch['fecha_inscripcion'])) {
+            $ch['fecha_inscripcion'] = date('d-m-y',strtotime($ch['fecha_inscripcion']));
+            $ch['anio_inscripcion'] = date('y',strtotime($ch['fecha_inscripcion'])) ;
+            $ch['mes_inscripcion']  = date('m',strtotime($ch['fecha_inscripcion'])) ;
+            $ch['dia_inscripcion']  = date('d',strtotime($ch['fecha_inscripcion'])) ;
+        }
     }
     
     $finalCharacters = array();

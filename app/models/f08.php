@@ -29,6 +29,9 @@ class F08 extends FormSkeleton {
           array('field_forms/character_data'=> array('field_prefix'=>'condominiocomprador', 'label'=>'Condominio en la Compra')),
           array('field_forms/character_data'=> array('field_prefix'=>'vendedor', 'label'=>'Vendedor')),
           array('field_forms/character_data'=> array('field_prefix'=>'condominiovendedor', 'label'=>'Condominio en la Venta')),
+
+          array('field_forms/representatives_data'=> array('field_prefix'=>'repcomprador_apoderado','label'=>'Apoderado del Titular')),
+          array('field_forms/representatives_data'=> array('field_prefix'=>'repcondominiocomprador_apoderado','label'=>'Apoderado del Condominio')),
     );
 
     
@@ -38,7 +41,7 @@ class F08 extends FormSkeleton {
          $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
          $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
          $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
-         
+   
         $coso =  array(
             $this->__preformTipo1('comprador'           ,'"D" Comprador o Adquiriente'),
             $this->__preformTipo1('condominiocomprador' ,'"E" Condominio en la Compra o Adquisición'),

@@ -56,7 +56,7 @@ class F13aba extends FormSkeleton {
 
                          'titular_name' => array('label' => 'Apellido y Nombre o Razon Social', 'value' => $this->getDatafromField('Titular','name')),
                          'titular_identification_number' => array('label' => 'Doc Identidad N° Personas Juridicas Numero', 'value' => $this->getDatafromField('Titular','identification_number')),
-                         'titular_identification_type_id' => array('label' => 'Doc Identidad N° Personas Juridicas Tipo', 'value' => $this->getDatafromField('Titular','identification_type_id')),
+                         'titular_identification_type_id' => array('label' => 'Doc Identidad N° Personas Juridicas Tipo', 'value' => $this->getDatafromField('Titular','identification_type_id'), 'options'=> $identificationsTypes),
                          'titular_cp' => array('label' => 'Fiscal Codigo Postal', 'value' => $this->getDatafromField('Titular','cp')),
                          'titular_localidad' => array('label' => 'Fiscal Localidad', 'value' => $this->getDatafromField('Titular','localidad')),
                          'titular_calle' => array('label' => 'Fiscal Calle', 'value' => $this->getDatafromField('Titular','calle')),

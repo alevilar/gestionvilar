@@ -1,13 +1,12 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2010-11-09 22:36-0300\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-02-03 10:10-0300\n"
+"Last-Translator: Ale Vilar <alevilar@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -31,7 +30,7 @@ msgstr ""
 #: /controllers/users_controller.php:13;33
 #: /controllers/vehicles_controller.php:51;89
 msgid "Invalid %s"
-msgstr ""
+msgstr "%s Inválido"
 
 #: /controllers/agents_controller.php:23;40
 #: /controllers/character_types_controller.php:23;38

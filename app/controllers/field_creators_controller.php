@@ -194,24 +194,22 @@ class FieldCreatorsController extends AppController {
             $this->set('debug_mode', $this->data['FieldCreator']['debug']);
             $this->set(compact('modelViewVars', 'pages', 'printer'));
 
-            //  render($action = null, $layout = null, $file = null)
             $this->render(null, null, 'pdf/generar_pdf');
         }
     }
 
     function generar_pdf($printer_id, $form_model_name, $fxx_id = null) {
-
         $this->Printer->id = $printer_id;
         $printer = $this->Printer->read();
-
+        
         if (empty($form_model_name)) {
             $this->Session->setFlash('Formulario inválido. Se debe pasar como 1er parámetro el formulario Ej: "F02"');
-            $this->redirect('/');
+           // $this->redirect('/');
         }
 
         if (empty($fxx_id)) {
             $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del formulario');
-            $this->redirect('/');
+         //   $this->redirect('/');
         }
 
         /* @var $fxx FormSkeleton */

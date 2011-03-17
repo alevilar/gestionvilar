@@ -21,8 +21,11 @@ class F01 extends FormSkeleton {
                                 ))),
           array('field_forms/character_data'=> array('field_prefix'=>'comprador', 'label'=>'Actor Como "Titular"')),
           array('field_forms/character_data'=> array('field_prefix'=>'condominiocomprador', 'label'=>'Actor Como "Condominio"')),
+          array('field_forms/representatives_data'=> array('field_prefix'=>'comprador_apoderado','label'=>'Apoderado del Titular')),
+          array('field_forms/representatives_data'=> array('field_prefix'=>'condominiocomprador_apoderado','label'=>'Apoderado del Condominio')),
     );
 
+    var $fieldsBlackList = array('created', 'modified', 'vehicle_patente');
 
 
     function getFormImputs($data) {
