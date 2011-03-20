@@ -11,6 +11,7 @@ class FieldCoordenatesController extends AppController
         'Personas' => array(
             'porcentaje' => 'porcentaje',
             'name' => 'name',
+            'ocupation' => 'ocupation',
             'cuit_cuil' => 'cuit_cuil',
             'calle' => 'calle',
             'numero_calle' => 'numero_calle',
@@ -45,7 +46,7 @@ class FieldCoordenatesController extends AppController
             "apoderado_identification_type_id" => "apoderado_identification_type_id",
             "apoderado_identification_number" => "apoderado_identification_number",
             "apoderado_nationality_type" => "apoderado_nationality_type",
-            "apoderado_identification_auth" => "apoderado_identification_auth",
+            "apoderado_nationality" => "apoderado_nationality",
             "customer_id" => "customer_id",
             "persona_fisica_o_juridica" => "persona_fisica_o_juridica",
             "character_type_id" => "character_type_id",
@@ -67,7 +68,7 @@ class FieldCoordenatesController extends AppController
             'apoderado_identification_type_id' => 'apoderado_identification_type_id',
             'apoderado_identification_number' => 'apoderado_identification_number',
             'apoderado_nationality_type' => 'apoderado_nationality_type',
-            'apoderado_identification_auth' => 'apoderado_identification_auth',
+            'apoderado_nationality' => 'apoderado_nationality',
         ),
         'Vehículo' => array(
             'patente' => 'patente',
@@ -97,16 +98,25 @@ class FieldCoordenatesController extends AppController
         }
 
         if (!empty($this->passedArgs['field_creator_id'])) {
-            $condiciones = array("FieldCoordenate.field_creator_id" => $this->passedArgs['field_creator_id']);
+            $condiciones["FieldCoordenate.field_creator_id"] = $this->passedArgs['field_creator_id'];
         }
 
         if ( !empty($this->passedArgs['page'])) {
             $this->Session->write("FieldCoordenate.page", $this->passedArgs['page']);
         }
 
+        if (!empty($this->passedArgs['FieldCoordenate.name'])) {
+            $condiciones["FieldCoordenate.name LIKE"] = '%'.$this->passedArgs['FieldCoordenate.name'].'%';
+        }
+
         if (!empty($this->data['FieldCoordenate'])) {
             foreach ($this->data['FieldCoordenate'] as $campo => $buscar) {
-                $condiciones = array("FieldCoordenate.$campo" => $buscar);
+                $schema = $this->FieldCoordenate->schema();
+                if ($schema[$campo]['type'] == 'string'){
+                    $condiciones["FieldCoordenate.$campo LIKE"] = "%$buscar%";
+                } else {
+                    $condiciones["FieldCoordenate.$campo"] = $buscar;
+                }
                 $this->Session->write("FieldCoordenate.$campo", $buscar);
                 $this->passedArgs = array_merge($this->passedArgs, array($campo => $buscar));
             }
@@ -126,7 +136,7 @@ class FieldCoordenatesController extends AppController
     
         $this->FieldCoordenate->recursive = 0;
         $this->paginate = array(
-            'page' => 2,
+            'page' => 1,
             'conditions' => $condiciones,
             'order' => 'FieldCoordenate.id ASC',
         );

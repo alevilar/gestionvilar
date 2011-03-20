@@ -67,6 +67,7 @@ if (empty($customer)) {
     // PERSONA FÍSICA
     if (!empty($d['Vehicle']['Customer']['CustomerNatural'])) {
         $customer['persona_fisica_o_juridica'] = 'fisica';
+         $customer['ocupation'] = $d['Vehicle']['Customer']['CustomerNatural']['ocupation'] ;
         $customer['nationality_type_id'] =  $d['Vehicle']['Customer']['CustomerNatural']['nationality_type'] ;
 
         if (!empty($d['Vehicle']['Customer']['CustomerNatural']['born'])) {
@@ -119,10 +120,11 @@ if (empty($customer)) {
     // APODERADO
     if (!empty($d['Vehicle']['Customer']['Representative'])) {
         $customer['apoderado_name'] = $d['Vehicle']['Customer']['Representative'][0]['surname'].' '.$d['Vehicle']['Customer']['Representative'][0]['first_name'];
-        $customer['apoderado_identification_type_id'] = $d['Vehicle']['Customer']['Representative'][0]['identification_type_id'] ;
-        $customer['apoderado_identification_number'] = $d['Vehicle']['Customer']['Representative'][0]['identification_number'] ;
-        $customer['apoderado_nationality_type'] = $d['Vehicle']['Customer']['Representative'][0]['nationality_type'];
-        $customer['apoderado_identification_auth'] = $d['Vehicle']['Customer']['Representative'][0]['nationality'];
+        foreach ( $d['Vehicle']['Customer']['Representative'] as $r) {
+            foreach ($r as $key => $val) {
+                $customer["apoderado_".$key] = $val;
+            }
+        }
     }
 
 

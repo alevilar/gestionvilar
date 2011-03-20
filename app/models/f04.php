@@ -46,6 +46,9 @@ class F04 extends FormSkeleton {
                                 ))),
           array('field_forms/character_data'=> array('field_prefix'=>'propietario', 'label'=>'Propietario')),
           array('field_forms/character_data'=> array('field_prefix'=>'condominiopropietario', 'label'=>'Condominio en la Propiedad')),
+
+          array('field_forms/representatives_data'=> array('field_prefix'=>'propietario_apoderado','label'=>'Apoderado del Propietario')),
+         array('field_forms/representatives_data'=> array('field_prefix'=>'condominiopropietario_apoderado','label'=>'Apoderado del Condominio')),
     );
 
 

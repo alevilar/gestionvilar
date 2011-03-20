@@ -55,8 +55,6 @@
             </dd>
             <?php } ?>
 
-            
-
             <?php if (!empty($customer['Identification'])):?>
                 <?php if (!empty($customer['Identification']['IdentificationType'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>
@@ -91,6 +89,12 @@
                 &nbsp;
             </dd>
 
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Ocupation'); ?></dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                <?php echo $customer['CustomerNatural']['ocupation']; ?>
+                &nbsp;
+            </dd>
+
             
                 <?php if ( !empty($customer['CustomerNatural']['MaritalStatus'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Marital Status'); ?></dt>
@@ -104,14 +108,20 @@
                 &nbsp;
             </dd>
                 <?php endif; ?>
+
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality Type'); ?></dt>
             <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $nationalities[$customer['CustomerNatural']['nationality_type']]; ?>
+                    <?php
+                    if(strtolower($nationalities[$customer['CustomerNatural']['nationality_type']]) != 'argentino') {
+                        echo $customer['CustomerNatural']['nationality'];
+                    } else {
+                        echo $nationalities[$customer['CustomerNatural']['nationality_type']];
+                    }
+                    ?>
                 &nbsp;
-            </dd>
-            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nationality'); ?></dt>
-            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
-                    <?php echo $customer['CustomerNatural']['nationality']; ?>
+
+
+           
                 &nbsp;
             </dd>
             <?php else:?>

@@ -10,7 +10,7 @@ class F08 extends FormSkeleton {
     var $form_id = 6;
 
 
-    var $involucrados = array('comprador','vendedor', 'condominiocomprador', 'condominiovendedor');
+    var $involucrados = array('comprador','vendedor', 'condominiocomprador', 'condominiovendedor', 'comprador_apoderado', 'condominiocomprador_apoderado');
 
 
     var $elements = array(
@@ -30,8 +30,8 @@ class F08 extends FormSkeleton {
           array('field_forms/character_data'=> array('field_prefix'=>'vendedor', 'label'=>'Vendedor')),
           array('field_forms/character_data'=> array('field_prefix'=>'condominiovendedor', 'label'=>'Condominio en la Venta')),
 
-          array('field_forms/representatives_data'=> array('field_prefix'=>'repcomprador_apoderado','label'=>'Apoderado del Titular')),
-          array('field_forms/representatives_data'=> array('field_prefix'=>'repcondominiocomprador_apoderado','label'=>'Apoderado del Condominio')),
+          array('field_forms/representatives_data'=> array('field_prefix'=>'comprador_apoderado','label'=>'Apoderado del Titular')),
+          array('field_forms/representatives_data'=> array('field_prefix'=>'condominiocomprador_apoderado','label'=>'Apoderado del Condominio')),
     );
 
     
@@ -53,8 +53,8 @@ class F08 extends FormSkeleton {
                 'a_precio_compra'=>array('label'=>'Precio de compra (en caso de omisión, sucesión, premio, etc. escribir el concepto)'),
                 ),
             $this->__vehiclePreform1('"F" Vehículo que se tansfiere'),
-            $this->__representativePreform('repcomprador', '"K" Comprador o Adquiriente'),
-            $this->__representativePreform('repcondominiocomprador', '"L" Condominio en la compra o adquisición'),
+            $this->__representativePreform('comprador', '"K" Comprador o Adquiriente'),
+            $this->__representativePreform('condominiocomprador', '"L" Condominio en la compra o adquisición'),
             array(
                 'legend'=>'"M" Observaciones',
                 'observaciones'=>array('label'=>false),

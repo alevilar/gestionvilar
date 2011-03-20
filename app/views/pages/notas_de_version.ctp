@@ -5,6 +5,39 @@
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
 
 <ul>
+    <li>F03: en la Secci{on "A" la fecha aparece autom{aticamente sólo cuando ese formulario ya ha sido impreso. En ese caso muesta la última información que se imprimió. Esto se realizó de esa manera debido a que se piensa acelerar los tiempos, suponiendo quela mayoria delos campos a reeimprimir continuarán siendo los mismos que la vez impres anteriormente.
+        <br>
+        Para ser mas claros:  si ayer imprimí este mismo formulario, supongo que hoy, lo que imprima será casi todo igual SALVO algunos campitos en particulares. Por ello es que se muestran los datos pre-cargados de los formularios anteriores impresos para el mismo vehiculo.
+        </li>
+
+        <li>
+            En elF01 se eliminó el Dominio cuando van los datos del automotor. No era requerido por este formulario y, por ende, molestaba.
+        </li>
+        <li>
+            F01, F03, F04 y F08: El apoderado ahora se puede elegir.
+        </li>
+        <lI>
+            F01, F03 y F08: Se agregó el campo "PROFESION" en el 3er renglon donde deberia ir el nombre.
+        </lI>
+        <li>
+            Se solucionó el problema que aparecian fechas del 31/12/69 automaticamente cuando no se cargaba ninguna fecha.
+        </li>
+        <li>
+            F08 y F03: Se solucionó el problema que habia ocaciones en que RNP se repetia para el apoderado y para el cliente, o para la esposa y algún actor.
+        </li>
+        <li>
+            F08: El Apoderado no se completaba correctamente en la seccion "K" y "L"
+        </li>
+
+
+</ul>
+
+
+<h3>Versión 1.1</h3>
+
+<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<ul>
     <li>F12, 03 y 02, ya no aparecen las fechas del dia actual por defecto</li>
     <li>Se eliminaron las fechas de nacimiento que estaban de más en Actores del tipo Persona Jurídica</li>
     <li>Ahora aparece el nombre del formulario en el que estoy como titulo de la pantalla. Principalmente útil cuando quiero abrir varios formularios en varias solapas</li>

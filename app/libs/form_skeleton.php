@@ -823,6 +823,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_porcentaje' => array('label' => array('text' => 'Porcentaje (%) ', 'style' => 'float:left; margin-top: 6px;')),
             $involucrado . '_cuit_cuil' => array('label' => 'CUIT o CUIL'),
             $involucrado . '_name' => array('label' => 'Apellido y Nombre o Denominación', 'class' => 'nombre_con_cuit'),
+            $involucrado . '_ocupation' => array('label' => 'Profesión'),
             $involucrado . '_calle' => array('label' => 'Calle'),
             $involucrado . '_numero_calle' => array('label' => 'Número'),
             $involucrado . '_piso' => array('label' => 'Piso'),
@@ -887,7 +888,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_apoderado_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_apoderado_identification_number' => array('label' => 'N° Documento',),
             $involucrado . '_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
-            $involucrado . '_apoderado_identification_auth' => array('label' => 'Autoridad (o país) que lo expidió'),
+            $involucrado . '_apoderado_nationality' => array('label' => 'Autoridad (o país) que lo expidió'),
             $involucrado . '_fecha_sello',
         );
     }

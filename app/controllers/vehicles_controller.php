@@ -124,6 +124,34 @@ class VehiclesController extends AppController {
 
         function search($customer_id = 0) {
             $conditions = $conditionsCustomer = $conditionsVehicle = array();
+            if ( empty($this->data) && empty($this->passedArgs)) {
+                $cName = $this->Session->read('Customer.name');
+                if ( !empty($cName) ) {
+                    $conditionsCustomer['Customer.name LIKE'] = "%" . $cName . "%";
+                    $this->passedArgs['Customer.name'] = $cName;
+                }
+                $cId = $this->Session->read('Customer.id');
+                if (!empty($cId)) {
+                    $conditionsCustomer['Customer.id'] = $cId;
+                     $this->passedArgs['Customer.id'] = $cId;
+                }
+                $vPatente = $this->Session->read('Vehicle.patente');
+                if (!empty($vPatente)) {
+                    $conditionsVehicle['Vehicle.patente LIKE'] = "%" . $vPatente . "%";
+                    $this->passedArgs['Vehicle.patente'] = $vPatente;
+                }
+                $vChasisN = $this->Session->read('Vehicle.chasis_number');
+                if (!empty($vChasisN)) {
+                    $conditionsVehicle['Vehicle.chasis_number LIKE'] = "%" . $vChasisN . "%";
+                    $this->passedArgs['Vehicle.chasis_number'] = $vChasisN;
+                }
+                $vMotorN = $this->Session->read('Vehicle.motor_number');
+                if (!empty($vMotorN)) {
+                    $conditionsVehicle['Vehicle.motor_number LIKE'] = "%" . $vMotorN . "%";
+                    $this->passedArgs['Vehicle.motor_number'] = $vMotorN;
+                }
+            }
+
             if (!empty($this->data['Customer']['name'])) {
                 $conditionsCustomer['Customer.name LIKE'] = "%" . $this->data['Customer']['name'] . "%";
                  $this->passedArgs['Customer.name'] = $this->data['Customer']['name'];
@@ -148,18 +176,23 @@ class VehiclesController extends AppController {
 
             if (!empty($this->passedArgs['Customer.name'])) {
                 $conditionsCustomer['Customer.name LIKE'] = "%" . $this->passedArgs['Customer.name'] . "%";
+                $this->Session->write('Customer.name', $this->passedArgs['Customer.name']);
             }
             if (!empty($this->passedArgs['Vehicle.patente'])) {
                 $conditionsVehicle['Vehicle.patente LIKE'] = "%" . $this->passedArgs['Vehicle.patente'] . "%";
+                $this->Session->write('Vehicle.patente', $this->passedArgs['Vehicle.patente']);
             }
             if (!empty($this->passedArgs['Vehicle.chasis_number'])) {
                 $conditionsVehicle['Vehicle.chasis_number LIKE'] = "%" . $this->passedArgs['Vehicle.chasis_number'] . "%";
+                $this->Session->write('Vehicle.chasis_number', $this->passedArgs['Vehicle.chasis_number']);
             }
             if (!empty($this->passedArgs['Vehicle.motor_number'])) {
                 $conditionsVehicle['Vehicle.motor_number LIKE'] = "%" . $this->passedArgs['Vehicle.motor_number'] . "%";
+                $this->Session->write('Vehicle.motor_number', $this->passedArgs['Vehicle.motor_number']);
             }
             if (!empty($this->passedArgs['Customer.id'])) {
                 $conditionsCustomer['Customer.id'] = $this->passedArgs['Customer.id'];
+                $this->Session->write('Customer.id', $this->passedArgs['Customer.id']);
                 $customer = $this->Vehicle->Customer->read(null, $this->passedArgs['Customer.id']);
                 $this->set('customer', $customer['Customer']);
             }

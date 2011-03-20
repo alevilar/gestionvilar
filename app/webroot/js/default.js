@@ -7,13 +7,15 @@
 function populateCampos(modelName, formName, fieldPrefix, integerValue) {
     var seleccionado = $('#Form'+modelName+'Id-'+integerValue+'  option:selected');
     var inputName = "data["+formName+"]["+fieldPrefix;
-    
+
     if (seleccionado.val()){
         var Coso =  jQuery.parseJSON(seleccionado.attr('json'));
+//        window.console.debug(Coso);
         for (property in Coso) {
-            inputName = "data["+formName+"]["+fieldPrefix+"_"+property+"]";
+            inputName = "data["+formName+"]["+fieldPrefix+"_"+property+"]";            
             var elementoFormInput = $('[name="'+inputName+'"]');
             if (elementoFormInput.length > 0) {
+                
                 elementoFormInput.val(Coso[property]);
             } else {
                 var elementoElement = $("#"+fieldPrefix+"_"+property);
