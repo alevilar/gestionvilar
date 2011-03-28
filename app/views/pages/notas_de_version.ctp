@@ -1,9 +1,16 @@
-<h2>Resumen de cambios</h2>
+<h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
+
 
 <h3>Versión <?php echo GESTAFORM_VERSION?></h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
 
+<ul>
+    <li>Se incorporó el formulario 13A de la Ciudad Autónoma de Bs. As.</li>
+</ul>
+
+
+<h3>Versión 1.25</h3>
 <ul>
     <li>F03: en la Secci{on "A" la fecha aparece autom{aticamente sólo cuando ese formulario ya ha sido impreso. En ese caso muesta la última información que se imprimió. Esto se realizó de esa manera debido a que se piensa acelerar los tiempos, suponiendo quela mayoria delos campos a reeimprimir continuarán siendo los mismos que la vez impres anteriormente.
         <br>
@@ -34,9 +41,6 @@
 
 
 <h3>Versión 1.1</h3>
-
-<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
-
 <ul>
     <li>F12, 03 y 02, ya no aparecen las fechas del dia actual por defecto</li>
     <li>Se eliminaron las fechas de nacimiento que estaban de más en Actores del tipo Persona Jurídica</li>

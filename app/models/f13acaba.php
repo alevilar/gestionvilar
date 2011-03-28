@@ -1,6 +1,5 @@
 <?php
 
-
 App::import('Lib', 'FormSkeleton');
 
 
@@ -19,60 +18,75 @@ class F13acaba extends FormSkeleton {
          array('field_forms/character_data'=> array('field_prefix'=>'titular', 'label'=>"Actor Como 'titular'"))
          );
 
+    var $types = array(
+            1  => 'Inscripción Inicial',
+            2  => 'Subastados y Armados Fuera de Fábrica',
+            3  => 'Cambio de radicación',
+            4  => 'Recupero de Robo o hurto',
+        );
+
+
+    public function beforeSave($options) {
+        parent::beforeSave($options);
+
+        if (!empty($this->data[$this->name]['tipo_tramite_id'])) {
+            $numTipo = $this->data[$this->name]['tipo_tramite_id'];
+            $this->data[$this->name]['tipo_tramite_'.$numTipo] = 'X';
+        }
+
+        return true;
+    }
 
 
     function getFormImputs($data) {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
         $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
-
+        
         $coso =  array(
 
             array(
-                'legend' => 'Titular',
-                         //'titular_identification_number' => array('label' => 'Numero de Documento del Titular', 'value' => $this->getDataFromField('Titular','identification_number')),
-                         'titular_identification_type_id' => array('label' => 'Numero', 'options' => $identificationsTypes, 'empty' => 'Seleccione'),
-                         'titular_cuit_cuil' => array('label' => 'Numero (para Empresas Nro de C.U.I.T o D.N.R.', 'value' => $this->getTipoYNumero()),
-                         'datos_del_titular' => array('label' => 'Datos del Titular'),
-                         'titular_name' => array('label' => 'Apellido y Nombres o Denominacion', 'value' => $this->getDataFromField('Titular','name')),
-                         'titular_localidad' => array('label' => 'Domicilio fiscal - Leyenda Calle - Localidad', 'value' => $this->getDataFromField('Titular','localidad')),
-                         'titular_numero_calle' => array('label' => 'Nro Puerta', 'value' => $this->getDataFromField('Titular','numero_calle')),
-                         'titular_piso' => array('label' => 'Piso', 'value' => $this->getDataFromField('Titular','piso')),
-                         'titular_depto' => array('label' => 'Dpto', 'value' => $this->getDataFromField('Titular','depto')),
-                         'titular_cp' => array('label' => 'Cod Postal', 'value' => $this->getDataFromField('Titular','cp')),
-                         'titular_calle' => array('label' => 'Domicilio Postal - Leyenda Calle - Localidad', 'value' => $this->getDataFromField('Titular','calle')),
-                         'titular_numero_calle' => array('label' => '2 Nro Puerta', 'value' => $this->getDataFromField('Titular','numero_calle')),
-                         'titular_piso' => array('label' => '2 Piso', 'value' => $this->getDataFromField('Titular','piso')),
-                         'titular_depto' => array('label' => '2 Dpto', 'value' => $this->getDataFromField('Titular','depto')),
-                         'titular_cp' => array('label' => '2 Cod Postal', 'value' => $this->getDataFromField('Titular','cp')),
-           ),
+                'legend'=>'Tipo de Trámite',
+                'tipo_tramite_id' => array('options'=>$this->types, 'label'=>'Seleccione tipo de trámite'),
+                 ),
+             array(
+                'legend' => 'Observaciones (reverso)',
+                    'observaciones' => array('label' => false,),
+                ),
             array(
-                'legend' => 'Vehículo',
-                        'datos_del_automotor' => array('label' => 'Datos del Automotor'),
-                         'fecha_vencimiento' => array('label' => 'Fecha Vencimiento'),
-                         'ca_m' => array('label' => 'CA/m'),
-                         'fecha_alta' => array('label' => 'Fecha - Alta'),
-                         'planilla_nro' => array('label' => 'Planilla - Nro'),
-                         'let' => array('label' => 'Let'),
-                         'numero' => array('label' => 'Numero'),
-                         'd_v' => array('label' => 'D.V'),
-                         's_f' => array('label' => 'S/F'),
-                         'rubro' => array('label' => 'Rubro'),
-                         'categ' => array('label' => 'Categ/'),
-                         'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDataFromField('Vehicle','brand')),
-                         'codigo_de_marca' => array('label' => 'Codigo de Marca'),
-                         'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDataFromField('Vehicle','model')),
-                         'or' => array('label' => 'Or'),
-                         'cu' => array('label' => 'Cu'),
-                         'peso_cilin' => array('label' => 'Peso/Cilin'),
-                         'vehicle_motor_number' => array('label' => 'Numero de Motor', 'value' => $this->getDataFromField('Vehicle','motor_number')),
-                         'constancia_de_documentos_exhibidos' => array('label' => 'Constancia de Documentos Exhibidos'),
-                         'titulo_de_propiedad_fotocopia' => array('label' => 'Titulo de Propiedad Fotocopia'),
-                         'factura_de_compra_fotocopia' => array('label' => 'Factura de Compra Fotocopia'),
-                         'constancia_de_pago_del_gravamen_ingresos_brut' => array('label' => 'Constancia de Pago del Gravamen Ingresos Brut'),
-                         'certificado_de_aduana_vehiculos_importados' => array('label' => 'Certificado de Aduana (Vehiculos Importados) '),
-                         'observaciones' => array('label' => 'Observaciones'),
+              'legend' => 'Datos del titular',
+                'titular_identification_number' => array('label' => 'Numero de Documento del Titular', 'value' => $this->getDatafromField('Titular','identification_number')),
+                'titular_identification_type_id' => array('label' => 'Tipo Documento', 'options' => $identificationsTypes, 'empty' => 'Seleccione'),
+                 'titular_cuit_cuil' => array('label' => 'Numero (para Empresas Nro de C.U.I.T o D.N.R.', 'value' => $this->getDatafromField('Titular','cuit_cuil')),
+                 'titular_name' => array('label' => 'Apellido y Nombres o Denominacion', 'value' => $this->getDatafromField('Titular','name')),
+                 'titular_localidad' => array('label' => 'Domicilio fiscal - Leyenda Calle - Localidad', 'value' => $this->getDatafromField('Titular','localidad')),
+                 'titular_numero_calle' => array('label' => 'Dom Fiscal. Nro Puerta', 'value' => $this->getDatafromField('Titular','numero_calle')),
+                 'titular_piso' => array('label' => 'Dom Fiscal. Piso', 'value' => $this->getDatafromField('Titular','piso')),
+                 'titular_depto' => array('label' => 'Dom Fiscal. Dpto', 'value' => $this->getDatafromField('Titular','depto')),
+                 'titular_localidad' => array('label' => 'Domicilio Fiscal Localidad Barrio', 'value' => $this->getDatafromField('Titular','localidad')),
+                 'titular_cp' => array('label' => 'Dom Fiscal. Cod Postal', 'value' => $this->getDatafromField('Titular','cp')),
+                 'titular_provincia' => array('label' => 'Domicilio Fiscal Provincia', 'value' => $this->getDatafromField('Titular','provincia')),
+                 'titular_dompostal_calle' => array('label' => 'Domicilio Postal - Leyenda Calle - Localidad', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_numero_calle' => array('label' => 'Domicilio Postal - Nro Puerta', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_piso' => array('label' => 'Domicilio Postal - Piso', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_depto' => array('label' => 'Domicilio Postal - Dpto', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_localidad' => array('label' => 'Domicilio Postal localidad barrio', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_cp' => array('label' => 'Domicilio Postal - Cod Postal', 'value' => $this->getDatafromField('Titular','')),
+                 'titular_dompostal_provincia' => array('label' => 'Domicilio Postal Provincia', 'value' => $this->getDatafromField('Titular','')),
+                ),
+            array(
+              'legend' => 'Datos del Automotor',
+                 'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->getDatafromField('Vehicle','patente')),
+                 'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle','brand')),
+                 'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle','model')),
+                 'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle','type')),
+                 'vehicle_adquisition_anio' => array('label' => 'Modelo Año', 'value' => $this->getDatafromField('Vehicle','model')),
+                 'vehicle_motor_brand' => array('label' => 'Marca De Motor', 'value' => $this->getDatafromField('Vehicle','motor_brand')),
+                 'vehicle_motor_number' => array('label' => 'Numero de Motor', 'value' => $this->getDatafromField('Vehicle','motor_number')),
+                 'vehicle_chasis_brand' => array('label' => 'Marca de Chasis', 'value' => $this->getDatafromField('Vehicle','chasis_brand')),
+                 'vehicle_chasis_number' => array('label' => 'Numero de Chasis', 'value' => $this->getDatafromField('Vehicle','chasis_number')),
             ),
+           
         );
 
 
