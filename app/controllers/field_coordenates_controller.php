@@ -73,6 +73,7 @@ class FieldCoordenatesController extends AppController
         'Vehículo' => array(
             'patente' => 'patente',
             'type' => 'type',
+            'use' => 'use',
             'number' => 'number',
             'motor_number' => 'motor_number',
             'motor_brand' => 'motor_brand',
@@ -89,7 +90,11 @@ class FieldCoordenatesController extends AppController
         ),
     );
 
-    function index()
+    /**
+     *
+     * @param string $simpleView  if "advanced" then renders index_advanced for having a moore complicated UI
+     */
+    function index($simpleView = 'index')
     {
         $condiciones = array();
 
@@ -150,6 +155,10 @@ class FieldCoordenatesController extends AppController
         }
         $this->set(compact('fieldCreators', 'fieldTypes', 'related_field_table_selects'));
         $this->set('fieldCoordenates', $this->paginate());
+
+        if ( $simpleView != 'index') {
+            $this->render('index_advanced');
+        }
     }
 
     function update()

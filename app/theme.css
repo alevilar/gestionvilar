@@ -1,0 +1,447 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Elimina el margen default de los navegadores */
+* {
+margin: 0;
+padding: 0;
+border: 0;
+}
+
+#receta {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	color: #381B00;
+	background-color: #333333;
+	background-image: url(img/cocina.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#wrapper {
+
+}
+
+a {
+	text-decoration: none;
+	color: #381b00;
+}
+
+h1 {
+	font-family: Helvetica, sans-serif;
+	text-align: center;
+	color: #381b00;
+	font-size: x-large;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+h2 {
+	font-family: Helvetica, sans-serif;
+	text-align: center;
+	color: #381b00;
+	font-size: x-large;
+	font-weight: bold;
+}
+
+h2 a {
+	text-decoration: none;
+	color: #7C0101;
+	text-align: center;
+}
+
+h2 a:hover {
+	text-decoration: underline;
+	text-shadow: 1px 1px 1px #848484;
+}
+
+#header {
+	top: 0px;
+	position: relative;
+	width: 100%;
+	height: 120px;
+	background-image: url(img/header.png);
+
+}
+
+#tradicional {
+	float: left;
+	width: auto;
+	position: relative;
+	height: auto;
+	margin-right: 10px;
+}
+
+#paxa {
+	float: left;
+	width: auto;
+	position: relative;
+	height: auto;
+	margin-top: 25px;
+}
+	
+
+#logos {
+	margin-left: 10%;
+	width: 53%;
+	max-width: 500px;
+	float: left;
+	position: relative;
+	top: 15px;
+	height: 100px;
+	z-index: 1;
+}
+
+
+#menu {
+	width: 33%;
+	height:	auto;
+	float: right;
+	position: relative;
+	margin-top: 70px;
+	margin-right: 3%;
+	text-transform: uppercase;
+}
+
+#menu-suc {
+	height: 40px;
+	width: 400px;
+	position: relative;
+	margin-left: 33%;
+	margin-top: 65px;
+	text-transform: uppercase;
+}
+
+#bienve {
+	width: 400px;
+	height: 20px;
+	margin-left: 33%;
+	margin-right: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	font-weight: 400;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+#content {
+	height: auto;
+	position: relative;
+	width: 800px;
+	left: 50%;
+	clip: rect(auto,auto,auto,-390px);
+	margin-left: -390px;
+	margin-top: 30px;
+}
+
+#general {
+	height: 100%;
+	width: 800px;
+	background-image: url(img/bgcont.jpg);
+	position: relative;
+	float: left;
+	padding-bottom: 10px;
+	min-height: 550px;
+	margin-bottom: 20px;
+}
+
+#continfo {
+	height: auto;
+	width: auto;
+	position: relative;
+	margin-top: 15px;
+	margin-right: 5px;
+	margin-left: 10px;
+	margin-bottom: 0;
+	padding-bottom: 10px;
+}
+
+#barraizq {
+	position: absolute;
+	height: 100%;
+	width: 10px;
+	background-color: #353535;
+	/*Para firefox*/
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	/*Para crome*/	
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	left: -10px;
+	top: 0px;
+}
+
+#barrader {
+	position: absolute;
+	height: 100%;
+	width: 10px;
+	background-color: #353535;
+	/*Para firefox*/
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	/*Para crome*/	
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	right: -10px;
+	top: 0px;
+}
+
+.paging {
+	position: absolute;
+	right: 25px;
+	bottom: 0px;
+}
+
+.node-type-receta {
+	height: auto;
+	width: 730px;
+	min-height: 145px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	position: relative;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-image: url(img/sep.png);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-top: 15px;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 20px;
+}
+
+.node-type-receta IMG{
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	height: 120px;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	border-top-width: thin;
+	border-left-width: thin;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+
+.fotoreceta {
+	float: left;
+	position: relative;
+	margin-right: 10px;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	border-top-width: thin;
+	border-left-width: thin;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.recetadetalle {
+	color: #381b00;
+	font-size: medium;
+}
+
+.ingredientes {
+	color: #000000;
+	font-size: 17px;
+	font-weight: 200;
+}
+
+.titulo {
+	color: #381b00;
+	font-size: large;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+
+a.linkreceta {
+	text-decoration:none;
+	color: #7c0101;
+	font-weight: bold;
+	font-size: small;
+	text-transform: uppercase;
+}
+
+
+#footer {
+	position: relative;
+	height: 28px;
+	background-image: url(img/footer.png);
+	width: 100%;
+	clear: both;
+	margin-top: 15px;
+	bottom: 0;
+}
+
+#footertext {
+	color: #FFFFFF;
+	text-align: center;
+	font-size: small;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	height: auto;
+	padding-top: 7px;
+}
+
+a.linkf {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.fotofinal {
+	height: auto;
+	width: auto;
+	position: absolute;
+	top: 80px;
+	right: 80px;
+}
+
+	/*MENU!*/
+
+.sf-menu
+{
+	font-family: "Times New Roman", Times, serif;
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	padding: 0;
+	text-indent: 0;
+	font-weight: bold;
+	font-size: large;
+}
+
+.sf-menu li
+{
+	padding: 0;
+	display: inline;
+	font-size: large;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0px;
+}
+
+.sf-menu li a
+{
+	letter-spacing: 0px;
+	text-decoration: none;
+	color: #FFFFFF;
+	padding: 0 11px;
+}
+
+.sf-menu li a:hover,#navlist a#current
+{
+	color: #dbcaac;
+	 box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -o-box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -moz-box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+	/*Para firefox*/
+	-moz-border-radius: 5px; 
+}
+
+.sf-menu a#current {
+	color: #dbcaac;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 4px rgba(255,255,255,0.2), inset 0 2px 10px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -o-box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 4px rgba(255,255,255,0.2), inset 0 5px 10px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 5px 40px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 10px 10px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+   	/*Para firefox*/
+	-moz-border-radius: 5px; 
+	
+}
+
+
+
+
+	/* SECCION SUCURSALES */
+
+
+#sucursales {
+	background-color: #333333;
+	overflow: hidden;
+}
+
+
+#delmar-suc {
+	height: auto;
+	width: 100%;
+	position: relative;
+	margin-top: 5%;
+}
+
+#tradicional-suc {
+	height: auto;
+	width: 100%;
+	position: relative;
+	margin-top: 4%;
+}
+
+
+
+#logodelmar {
+	background-image: url(img/logopaxa.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+#logotradicional {
+	background-image: url(img/logotrad.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointer;
+}
+
+.gris {
+	background-color: #333333;
+	height: 152px;
+	width: 300px;
+	opacity: 0.95;
+	filter: alpha(opacity=95);
+	margin-right: auto;
+	margin-left: auto;
+	position: absolute;
+	z-index: 5;
+	left: 36%;
+	box-shadow: -7px 0 15px -7px #000000;
+	-webkit-box-shadow: -7px 0 15px -5px #000000;
+	-moz-box-shadow: -7px 0 15px -5px #000000;
+	cursor: pointer;
+}
+
+.shadowright {
+	float: right;
+	height: 100%;
+	width: 15px;
+	position: relative;
+	box-shadow: 7px 0 15px -7px #000000;
+	-webkit-box-shadow: 7px 0 15px -5px #000000;
+	-moz-box-shadow: 7px 0 15px -5px #000000;
+}
+
+.jMyCarousel {
+	box-shadow: 0 0 35px -10px black;
+	-webkit-box-shadow: 0 0 17px -1px black;
+	-moz-box-shadow: 0 0 20px -1px #000000;
+}
+

@@ -36,6 +36,7 @@ class FieldCreator extends AppModel {
 
 
         function crearTabla($id){
+            $prefixesInsertados = array();
             $this->id = $id;
             $setDeCampos = array();
             
@@ -64,6 +65,16 @@ class FieldCreator extends AppModel {
                     $tipoField = 'int(11) default NULL';
                 }
                 if (!empty($campoNom) && !empty($tipoField)) $setDeCampos[$campoNom] = $tipoField;
+
+
+                // meto indentification_type_id como FK si es que hay algun campo DNI; PASS, CI, etc
+                if (strpos($campoNom, '_identification_') !== false){
+                    $prefix = strstr($campoNom, '_identification', true);
+                    if ( !in_array($prefix, $prefixesInsertados) ) {
+                         $prefixesInsertados[] = $prefix;
+                         $setDeCampos[$prefix."_identification_type_id"] = 'int(11) default NULL';
+                    }
+                }
                 
                 $count++;
             }

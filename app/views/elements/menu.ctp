@@ -82,6 +82,7 @@
                     <li><? echo $this->Html->link(__('Field Coordenates',true),'/field_coordenates');?></li>
                     <li><? echo $this->Html->link(__('Forms',true),'/field_creators/index');?></li>
                     <li><? echo $this->Html->link(__('Test Fields',true),'/field_creators/testForm');?></li>
+                    <li><? echo $this->Html->link(__('Advanced Coordenates',true),'/field_coordenates/advanced');?></li>
                 </ul>
             </div>
         </li>

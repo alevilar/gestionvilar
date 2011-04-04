@@ -223,7 +223,7 @@ abstract class FormSkeleton extends AppModel
     {
         if (!empty($p['FieldCoordenate']['related_field_table'])) {
             $campo = $p['FieldCoordenate']['related_field_table'];
-            $formCampoNombre = $p['FieldCoordenate']['name'];
+            //$formCampoNombre = $p['FieldCoordenate']['name'];
             $fontSize = $p['FieldCoordenate']['font_size'];
 
             if (!array_key_exists($campo, $this->data[$this->name])) {
@@ -239,8 +239,12 @@ abstract class FormSkeleton extends AppModel
                     'field_name' => $this->data[$this->name][trim($campo)]);
                 $this->meterNombreCompletoEnVariosRenglones($arrayCampos);
             } else {
-                $valor = $this->data[$this->name][trim($campo)];
-                $this->populateFieldWithValue($formCampoNombre, $valor, array('fontSize' => $fontSize));
+                if (!empty($this->data[$this->name][$campo])) {
+                    $valor = $this->data[$this->name][$campo];
+                } else {
+                    $valor = $this->data[$this->name][trim($campo)];
+                }
+                $this->populateFieldWithValue($p['FieldCoordenate']['id'], $valor, array('fontSize' => $fontSize));
             }
             return 1; // paso OK
         }
@@ -319,7 +323,7 @@ abstract class FormSkeleton extends AppModel
     /**
      * Dado un campo por su nombre, me introduce el valor en el array fields
      *
-     * @param string $fieldname es el campo "name" de la tabla field_coordenates. Es el campo al cual yo quiero ponerle un valor
+     * @param string $fieldCoordenateId es el ID de la tabla field_coordenates. Es el campo al cual yo quiero ponerle un valor
      * @param string $value el valor que quiero que se muestre en el PDF
      * @param array $options
      *                      ['fontSize'] tamaño de la fuente por defaul en 10pt
@@ -327,27 +331,27 @@ abstract class FormSkeleton extends AppModel
      * @return integer pagina donde fue encontrada (1 o 2) retorna 0 si no encuentra nada
      *
      */
-    function populateFieldWithValue($fieldname, $value, $options = array('fontSize' => 10))
+    function populateFieldWithValue($fieldCoordenateId, $value, $options = array('fontSize' => 10))
     {
-        if (empty($fieldname))
+        if (empty($fieldCoordenateId))
             return -1;
 
         foreach ($this->fieldsPage1 as &$f) {
-            if (($f['FieldCoordenate']['name'] == $fieldname)) {
+            if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
                 $f['FieldCoordenate']['value'] = $value;
                 $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
                 return 1;
             }
         }
         foreach ($this->fieldsPage2 as &$f) {
-            if (($f['FieldCoordenate']['name'] == $fieldname)) {
+            if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
                 $f['FieldCoordenate']['value'] = $value;
                 $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
                 return 2;
             }
         }
-        debug("<br>El campo '$fieldname' para el valor '$value' no fué encontrado<br>");
-        $this->log("$this->name PopulateFieldWidthValue::: El campo '$fieldname' para el valor '$value' no fué encontrado.", 'field_coordenates');
+        debug("<br>El campo ID de field_coodenates'$fieldCoordenateId' para el valor '$value' no fué encontrado<br>");
+        $this->log("$this->name PopulateFieldWidthValue::: El campo ID de field_coordenats n°'$fieldCoordenateId', para el valor '$value' no fué encontrado");
         return 0;
     }
 
@@ -420,7 +424,7 @@ abstract class FormSkeleton extends AppModel
         }
 
         if (empty($options['renglones'])) {
-            $this->log("en metodo meterNomvreCOmpletoEnVariosCamposn no se pasaron los paramentros correctamente");
+            $this->log("en metodo meterNombreCompletoEnVariosRenglones no se pasaron los paramentros correctamente");
             debug("no se pasaron los parametros correctamente");
             return -1;
         }
@@ -460,7 +464,7 @@ abstract class FormSkeleton extends AppModel
             // si oes multicell entonces meto todo el string de una saque eso lo maneja el propio metodo Multicell
             if ($coordenada['FieldCoordenate']['field_type_id'] == 3) { // Multicell
                 $texto = implode(" ", $vec);
-                $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
+                $this->populateFieldWithValue($coordenada['FieldCoordenate']['id'], $texto);
                 return 1;
             }
 
@@ -481,7 +485,7 @@ abstract class FormSkeleton extends AppModel
                     break;
                 }
             }
-            $this->populateFieldWithValue($coordenada['FieldCoordenate']['name'], $texto);
+            $this->populateFieldWithValue($coordenada['FieldCoordenate']['id'], $texto);
             $texto = ''; // lo vuelvo a inicializar
             if (count($vec) == 0)
                 break; // salgo del For renglones
@@ -490,95 +494,7 @@ abstract class FormSkeleton extends AppModel
         return 2;
     }
 
-    /**
-     *
-     * @param string $nationality argentino, extranjero o null es lo que puede venir
-     * @param integer $id_type es el id de la tabla identification_types
-     * @param array $fieldNames es un array con los nombres de los campos a imprimir
-     *                          cargados en la tabla field_coordenates
-     *                  las posibilidades son
-     *      $fieldNames[argentino|extranjero][dni]
-     *                                       [cuit]
-     *                                       [le]
-     *                                       [lc]
-     *                                       [ci]
-     *                                       [pasaporte]
-     */
-    function populateIdentifications($nationality, $id_type, $fieldNames)
-    {
-        switch ($id_type) {
-            case 1: // DNI
-                $this->populateFieldWithValue($fieldNames[$nationality]['dni'], 'X');
-                break;
-            case 2: // CUIT
-                $this->populateFieldWithValue($fieldNames[$nationality]['cuit'], 'X');
-                break;
-            case 3: // LE
-                $this->populateFieldWithValue($fieldNames[$nationality]['le'], 'X');
-                break;
-            case 4: // LC
-                $this->populateFieldWithValue($fieldNames[$nationality]['lc'], 'X');
-                break;
-            case 5: // CI
-                $this->populateFieldWithValue($fieldNames[$nationality]['ci'], 'X');
-                break;
-            case 6: // Pasaporte
-                $this->populateFieldWithValue($fieldNames[$nationality]['pasaporte'], 'X');
-                break;
-        }
-    }
-
-    /**
-     *
-     * @param integer $marital_status_id
-     * @param array $fields
-     *                      ['casado']
-     *                      ['soltero']
-     *                      ['viudo']
-     *                      ['divorciado']
-     */
-    function populateMaritalStatuses($marital_status_id, $fields)
-    {
-        switch ($marital_status_id) {
-            case 1: // Casado
-                $this->populateFieldWithValue($fields['casado'], 'X');
-                break;
-            case 2: //Soltero
-                $this->populateFieldWithValue($fields['soltero'], 'X');
-                break;
-            case 3: // Viudo
-                $this->populateFieldWithValue($fields['viudo'], 'X');
-                break;
-            case 4 : // DIvorciado
-                $this->populateFieldWithValue($fields['divorciado'], 'X');
-                break;
-        }
-    }
-
-    /**
-     *
-     * @param string $date date value de la base de datos, un DATETIME, o TIMESTAMP
-     * @param array $fields
-     *                       ['dia']
-     *                       ['mes']
-     *                       ['año']
-     */
-    function populateDayMonthYear($date, $fields = null)
-    {
-        if (empty($date)) {
-            return -1;
-        }
-        if (empty($fields)) {
-            $fields = array(
-                'dia' => 'dia',
-                'mes' => 'mes',
-                'año' => 'año',
-            );
-        }
-        $this->populateFieldWithValue($fields['dia'], date('d', strtotime($date)));
-        $this->populateFieldWithValue($fields['mes'], date('m', strtotime($date)));
-        $this->populateFieldWithValue($fields['año'], date('y', strtotime($date)));
-    }
+    
 
     /**
      *
@@ -593,10 +509,14 @@ abstract class FormSkeleton extends AppModel
         if (!empty($this->data[$this->name][$prefijo . '_identification_type_id'])) {
             switch ($this->data[$this->name][$prefijo . '_identification_type_id']) {
                 case 1: //DNI
-                    if ($this->data[$this->name][$prefijo . '_nationality_type_id'] == 'argentino') {
-                        $this->data[$this->name][$prefijo . '_identification_dni'] = 'X';
+                    if (!empty($this->data[$this->name][$prefijo . '_nationality_type_id'])) {
+                        if ($this->data[$this->name][$prefijo . '_nationality_type_id'] == 'argentino') {
+                            $this->data[$this->name][$prefijo . '_identification_dni'] = 'X';
+                        } else {
+                            $this->data[$this->name][$prefijo . '_identification_dni_ext'] = 'X';
+                        }
                     } else {
-                        $this->data[$this->name][$prefijo . '_identification_dni_ext'] = 'X';
+                        $this->data[$this->name][$prefijo . '_identification_dni'] = 'X';
                     }
                     breaK;
                 case 6: // Pasaporte
