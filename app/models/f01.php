@@ -29,6 +29,7 @@ class F01 extends FormSkeleton {
 
 
     function getFormImputs($data) {
+        $this->data = $data;
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
          $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
          $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');

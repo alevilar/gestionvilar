@@ -84,12 +84,12 @@ class F13aba extends FormSkeleton {
                  'titular_numero_calle' => array('label' => 'Fiscal Numero', 'value' => $this->getDatafromField('Titular','numero_calle')),
                  'titular_piso' => array('label' => 'Fiscal Piso', 'value' => $this->getDatafromField('Titular','piso')),
                  'titular_depto' => array('label' => 'Fiscal Dpto', 'value' => $this->getDatafromField('Titular','depto')),
-                 'titular_dompostal_cp' => array('label' => 'Postal Codigo Postal', 'value' => $this->getDatafromField('Titular','cp')),
-                 'titular_dompostal_localidad' => array('label' => 'Postal Localidad', 'value' => $this->getDatafromField('Titular','localidad')),
-                 'titular_dompostal_calle' => array('label' => 'Postal Calle', 'value' => $this->getDatafromField('Titular','calle')),
-                 'titular_dompostal_numero_calle' => array('label' => 'Postal Numero', 'value' => $this->getDatafromField('Titular','numero_calle')),
-                 'titular_dompostal_piso' => array('label' => 'Postal Piso', 'value' => $this->getDatafromField('Titular','piso')),
-                 'titular_dompostal_depto' => array('label' => 'Postal Dpto', 'value' => $this->getDatafromField('Titular','depto')),
+                 'titular_postal_cp' => array('label' => 'Postal Codigo Postal', 'value' => $this->getDatafromField('Titular','cp')),
+                 'titular_postal_localidad' => array('label' => 'Postal Localidad', 'value' => $this->getDatafromField('Titular','localidad')),
+                 'titular_postal_calle' => array('label' => 'Postal Calle', 'value' => $this->getDatafromField('Titular','calle')),
+                 'titular_postal_numero_calle' => array('label' => 'Postal Numero', 'value' => $this->getDatafromField('Titular','numero_calle')),
+                 'titular_postal_piso' => array('label' => 'Postal Piso', 'value' => $this->getDatafromField('Titular','piso')),
+                 'titular_postal_depto' => array('label' => 'Postal Dpto', 'value' => $this->getDatafromField('Titular','depto')),
             ),
 
             array(

@@ -10,6 +10,23 @@ class FieldCreatorsController extends AppController {
         
     }
 
+
+    function campos_repetidos() {
+        $query = "
+            SELECT f.name, a.related_field_table, b.id , a.*
+            FROM field_coordenates a, field_coordenates b
+            left join field_creators f on f.id = b.field_creator_id
+            WHERE
+            a.field_creator_id = b.field_creator_id
+            and a.related_field_table <> ''
+            AND a.related_field_table = b.related_field_table
+            AND a.id <> b.id
+            order by a.field_creator_id, a.related_field_table;
+            ";
+        ;
+        $this->set('res', $this->FieldCreator->query($query) );
+    }
+
     function index() {
         $this->FieldCreator->recursive = 0;
         $this->set('fieldCreators', $this->paginate());
@@ -24,22 +41,10 @@ class FieldCreatorsController extends AppController {
     }
 
     function add() {
-        if (!empty($this->data)) {
-            $this->FieldCreator->create();
-            if ($this->FieldCreator->save($this->data)) {
-                $this->Session->setFlash(sprintf(__('The %s has been saved', true), 'field creator'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'field creator'));
-            }
-        }
+       $this->redirect('edit');
     }
 
     function edit($id = null) {
-        if (!$id && empty($this->data)) {
-            $this->Session->setFlash(sprintf(__('Invalid %s', true), 'field creator'));
-            $this->redirect(array('action' => 'index'));
-        }
         if (!empty($this->data)) {
             if ($this->FieldCreator->save($this->data)) {
                 $this->Session->setFlash(sprintf(__('The %s has been saved', true), 'field creator'));
@@ -73,7 +78,7 @@ class FieldCreatorsController extends AppController {
             $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'éste formulario'));
         }
         if ($formName =& ClassRegistry::init($form)) {
-            if ($formName->delete($id)) {
+            if ($formName->delete($id, false)) {
                 $this->Session->setFlash(sprintf(__('%s deleted', true), 'Formulario'));
             } else {
                 $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'El Formulario'));
@@ -136,8 +141,7 @@ class FieldCreatorsController extends AppController {
                         'form_id' => $this->{$form_model_name}->id,
                         'vehicle_id' => $vehicle_id)
             );
-
-
+//debug($this->data);
             $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
             // si el formulario fue creado hace menos de1 hora, en vez de hacer un INSERT quiero un UPDATE
             // para ello elimino el ID del formulario
@@ -295,6 +299,19 @@ class FieldCreatorsController extends AppController {
             $this->redirect('index');
         }
 
+        function model_update($id){
+            $res = $this->FieldCreator->actualizarTabla($id);
+            if ( count($res) > 0) {
+                $sacados = $agregados = '';
+                if (!empty($res['added'])) $agregados = 'Agregados: '.implode(', ',$res['added']);
+                if (!empty($res['dropped'])) $sacados = 'Sacados: '.implode(', ',$res['dropped']);
+                $mensaje = "Se ha actualizado la tabla correctamente. <br>$sacados<br> $agregados";
+
+            } else {
+                $mensaje = 'Error al actualizar la tabla';
+            }
+            $this->flash($mensaje, 'index');
+        }
 }
 
 ?>

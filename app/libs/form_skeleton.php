@@ -2,7 +2,6 @@
 
 abstract class FormSkeleton extends AppModel
 {
-
     /**
      * Este dato se llena de la tabla field_coordenates de acuerdo al tipo
      * de formulario que se solicite. EL tipo de formulario esta en la tabla field-creators
@@ -74,6 +73,8 @@ abstract class FormSkeleton extends AppModel
         if (empty($this->form_id)) {
             debug("No se declaró el ID del formulario, no se puede continuar");
         }
+
+        $this->_findMethods['data'] = true;
     }
 
     /**
@@ -131,44 +132,45 @@ abstract class FormSkeleton extends AppModel
         );
     }
 
-    /**
-     * es el find de cake pero para definir segun cada formulario
-     * @param string data si es data entonces en fields le paso 1ero el Id del
-     * formulario, si no lo encuentra porque aun no esta creado, entonces uso el id del vehiculo
-     *
-     * @param array fields array('form_id','vehicle_id')
-     */
-    public function find($conditions = 'data', $fields = array(), $order = null, $recursive = null)
-    {
-        // este es el find que usan los formularios
-        if ($conditions == 'data') {
-            if (!empty($this->vehicle_id)) {
-                $fields['vehicle_id'] = $this->vehicle_id;
-            }
 
-            $cond = array(
-                'conditions' => array(
-                    $this->name . '.vehicle_id' => $fields['vehicle_id'],
-                    $this->name . '.vehicle_id <>' => 0,
-                    ),
-                'contain' => $this->sContain,
-                'order' => array($this->name . '.created DESC')
-            );
-            $ret = parent::find('first', $cond);
-            if (empty($ret)) {
-                $ret = $this->Vehicle->find('data', $fields, $order, $recursive);
-            } else {
-                $ret = $this->Vehicle->acomodarDatosTraidos($ret);
-  // AGregar nombre con CUIT si es Clicnte Juridico
-//                $nombreCuit = $this->getNombreWidthCuitIfLegal('Customer');
-//                $ret['Vehicle']['Customer']['name_n_cuit'] = $nombreCuit;
-            }
-            $this->data = $ret;
-        } else {
-            $ret = parent::find($conditions, $fields, $order, $recursive);
-        }
-        return $ret;
-    }
+    /**
+     * Trae l data u yo quera e un modelo
+     *
+     * @param string $state Either "before" or "after"
+     * @param array $query
+     * @param array $data
+     * @return array
+     * @access protected
+     * @see Model::find()
+     */
+	function _findData($state, $query, $results = array()) {
+		if ($state == 'before') {
+			if (!empty($this->vehicle_id)) {
+                            $query['conditions']['vehicle_id'] = $this->vehicle_id;
+                        }
+
+                        $cond = array(
+                            'conditions' => array(
+                                $this->name . '.vehicle_id' => $query['conditions']['vehicle_id'],
+                                $this->name . '.vehicle_id <>' => 0,
+                                ),
+                            'contain' => $this->sContain,
+                            'order' => array($this->name . '.created DESC')
+                        );
+                        $cond = array_merge($cond, $query);
+                        
+			return $cond;
+		} elseif ($state == 'after') {
+                    if (empty($results)) {
+                        $results = $this->Vehicle->find('data', $query);
+                    } else {
+                        $results = $this->Vehicle->acomodarDatosTraidos($results);
+                        $results = $results[0];
+                    }
+                    $this->data = $results;
+                    return $results;
+		}
+	}
 
     /**
      *
@@ -182,7 +184,9 @@ abstract class FormSkeleton extends AppModel
      */
     private function loadFormData($id)
     {
-        $conditions = array($this->name . '.id' => $id);
+        $conditions = array(
+            $this->name . '.id' => $id,
+            );
         $this->data = $this->find('first', array(
                     'conditions' => $conditions,
                     'contain' => $this->sContain,
@@ -259,15 +263,24 @@ abstract class FormSkeleton extends AppModel
     function autoPopulateFields()
     {
         $campoFallo = array();
-        foreach ($this->fieldsPage1 as $p) {
+        foreach ($this->fieldsPage1 as &$p) {
             if ($this->makePopulation($p) < 0) {
                 $campoFallo[] = $p;
             }
+            // o fallo, o esta vacio, por lo tanto no lo quiero.
+            if ($this->makePopulation($p) < 1) {
+                unset ($p);
+            }
         }
-        unset($p);
-        foreach ($this->fieldsPage2 as $p) {
-            if ($this->makePopulation($p) < 0) {
-                $campoFallo[] = $p;
+        
+        foreach ($this->fieldsPage2 as &$q) {
+            if ($this->makePopulation($q) < 0) {
+                $campoFallo[] = $q;
+            }
+
+            // o fallo, o esta vacio, por lo tanto no lo quiero.
+            if ($this->makePopulation($q) < 1) {
+                unset ($q);
             }
         }
 
@@ -703,16 +716,6 @@ abstract class FormSkeleton extends AppModel
         return false;
     }
 
-//    function __ponerPorcentajeConEnteroYDecimal($inv) {
-//         if (!empty( $this->data[$this->name][$prefijo.'_porcentaje'])) {
-//             $porcentaje = $this->data[$this->name][$prefijo.'_porcentaje'];
-//             $tEntero = (int)$porcentaje;
-//             $tDecimal = (int)(($porcentaje-$tEntero)*100);
-//             $this->data[$this->name][$prefijo.'_dia_inscripcion'],
-//             $this->data[$this->name][$prefijo.'_dia_inscripcion'],
-//         }
-//    }
-
 
     function __autoCompletarElFormData()
     {
@@ -756,6 +759,59 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_identification_number' => array('label' => 'N° Documento'),
             $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
             $involucrado . '_identification_authority' => array('label' => 'Autoridad (o país) que lo expidió'),
+            $involucrado . '_fecha_nacimiento' => array('label' => 'Fecha de Nacimiento', 'type' => 'text'),
+            $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
+            $involucrado . '_nupcia' => array('label' => 'Nupcia'),
+            $involucrado . '_conyuge' => array('label' => 'Apellido y nombres del cónyuge'),
+            $involucrado . '_personeria_otorgada' => array('label' => 'personeria otorgada por'),
+            $involucrado . '_inscripcion' => array('label' => 'N° o datos de inscripción o creación'),
+            $involucrado . '_fecha_inscripcion' => array('label' => 'Fecha de inscripción o creación', 'type' => 'text'),
+            $involucrado . '_persona_fisica_o_juridica' => array('type' => 'hidden'),
+        );
+    }
+
+    public function __preform2011Tipo1($involucrado, $legend = null)
+    {
+        $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
+        $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
+        $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+
+        $legenda = empty($legend) ? $this->involucrados[$involucrado] : $legend;
+
+        return array(
+            'legend' => $legenda,
+            $involucrado . '_porcentaje' => array('label' => array('text' => 'Porcentaje (%) ', 'style' => 'float:left; margin-top: 6px;')),
+            $involucrado . '_name' => array('label' => 'Apellido y Nombre o Denominación', 'class' => 'nombre_con_cuit'),
+            $involucrado . '_email' => array('label' => 'e-mail'),
+            $involucrado . '_phone_number' => array('label' => 'Teléfono'),
+
+            $involucrado . '_calle' => array('label' => 'Calle'),
+            $involucrado . '_numero_calle' => array('label' => 'Número'),
+            $involucrado . '_piso' => array('label' => 'Piso'),
+            $involucrado . '_depto' => array('label' => 'Dep'),
+            $involucrado . '_cp' => array('label' => 'Código Postal'),
+            $involucrado . '_localidad' => array('label' => 'Localidad'),
+            $involucrado . '_departamento' => array('label' => 'Partido o Departamento'),
+            $involucrado . '_provincia' => array('label' => 'Provincia'),
+
+            $involucrado . '_real_calle' => array('label' => 'Calle'),
+            $involucrado . '_real_numero_calle' => array('label' => 'Número'),
+            $involucrado . '_real_piso' => array('label' => 'Piso'),
+            $involucrado . '_real_depto' => array('label' => 'Dep'),
+            $involucrado . '_real_cp' => array('label' => 'Código Postal'),
+            $involucrado . '_real_localidad' => array('label' => 'Localidad'),
+            $involucrado . '_real_departamento' => array('label' => 'Partido o Departamento'),
+            $involucrado . '_real_provincia' => array('label' => 'Provincia'),
+
+            $involucrado . '_ocupation' => array('label' => 'Profesión'),
+            
+            $involucrado . '_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
+            $involucrado . '_identification_number' => array('label' => 'N° Documento'),
+            $involucrado . '_nationality_type_id' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
+            $involucrado . '_identification_authority' => array('label' => 'Autoridad (o país) que lo expidió'),
+            
+            $involucrado . '_cuit_cuil' => array('label' => 'CUIT o CUIL'),
+            $involucrado . '_born_place' => array('label' => 'Lugar de Nacimiento'),
             $involucrado . '_fecha_nacimiento' => array('label' => 'Fecha de Nacimiento', 'type' => 'text'),
             $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
             $involucrado . '_nupcia' => array('label' => 'Nupcia'),
@@ -828,14 +884,14 @@ abstract class FormSkeleton extends AppModel
             'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->data['Vehicle']['motor_number']),
             'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->data['Vehicle']['chasis_brand']),
             'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['chasis_number']),
-            'vehicle_use' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['use']),
+            'vehicle_use' => array('label' => 'Uso', 'value' => $this->data['Vehicle']['use']),
         );
     }
 
     function __vehiclePreform2($legend = null)
     {
         $legenda = empty($legend) ? __('Vehicle', true) : $legend;
- 
+        
         return array(
             'legend' => $legenda,
             'vehicle_id' => array('type' => 'hidden', 'value' => $this->data['Vehicle']['id']),

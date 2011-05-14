@@ -57,7 +57,7 @@ class F13caba extends FormSkeleton {
                  'titular_postal_numero_calle' => array('label' => 'Domicilio Postal - Nro Puerta', 'value' => $this->getDatafromField('Titular','numero_calle')),
                  'titular_postal_piso' => array('label' => 'Domicilio Postal - Piso', 'value' => $this->getDatafromField('Titular','piso')),
                  'titular_postal_depto' => array('label' => 'Domicilio Postal - Dpto', 'value' => $this->getDatafromField('Titular','depto')),
-                 'titular_postal_piso' => array('label' => 'Domicilio Postal - Torre', 'value' => $this->getDatafromField('Titular','piso')),
+                 'titular_postal_torre' => array('label' => 'Domicilio Postal - Torre', 'value' => $this->getDatafromField('Titular','piso')),
                  'titular_postal_monob' => array('label' => 'Domicilio Postal - Monob.', 'value' => $this->getDatafromField('Titular','')),
                  'titular_postal_nudo' => array('label' => 'Domicilio Postal - Nudo', 'value' => $this->getDatafromField('Titular','')),
                  'titular_postal_tira' => array('label' => 'Domicilio Postal - Tira', 'value' => $this->getDatafromField('Titular','')),

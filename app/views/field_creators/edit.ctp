@@ -3,7 +3,9 @@
 	<fieldset>
  		<legend><?php printf(__('Edit %s', true), __('Field Creator', true)); ?></legend>
 	<?php
-		echo $this->Form->input('id');
+                if ( !empty($this->data['FieldCreator']['id'] )) {
+                    echo $this->Form->input('id');
+                }
 		echo $this->Form->input('name');
                 echo $this->Form->input('model');
                 echo $this->Form->input('activo');

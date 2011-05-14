@@ -1,10 +1,19 @@
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
-
 <h3>Versión <?php echo GESTAFORM_VERSION?></h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
 
+<ul>
+    <li>Se incorporó el NUEVO formulario 08 (denominado en el sistema "F08 bis"</li>
+    <li>Se agragaron los nuevos datos del cliente: email y teléfono.</li>
+    <li>Se eliminaron apartados "K", "L", "M" y "N" del formulario 03, por pedido de Norberto</li>
+    <li>Se agregó el texto "Buenos Aires", para ser mostrado por default en el formulario 12</li>
+    <li>Cuando se guarda un nuevo vehículo, aparece como información el número de chasis para saber cual fue el último cargado</li>
+</ul>
+
+
+<h3>Versión 1.26</h3>
 <ul>
     <li>Se incorporó el formulario 13A de la Ciudad Autónoma de Bs. As.</li>
 </ul>

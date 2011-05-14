@@ -26,6 +26,7 @@
                     <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $fieldCreator['FieldCreator']['id'])); ?>
                     <?php echo $this->Html->link(__('Code', true), array('controller'=>'FieldCoordenates','action' => 'mapear', $fieldCreator['FieldCreator']['id'])); ?>
                     <?php echo $this->Html->link(__('Create Model', true), array('action' => 'model_creation', $fieldCreator['FieldCreator']['id']), null, __('Are you sure? this will delete historical data from curren form?', true)); ?>
+                    <?php echo $this->Html->link(__('Update Model', true), array('action' => 'model_update', $fieldCreator['FieldCreator']['id'])); ?>
                     <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $fieldCreator['FieldCreator']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $fieldCreator['FieldCreator']['id'])); ?>
 		</td>
 	</tr>
@@ -48,7 +49,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Creator', true)), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Creator', true)), array('action' => 'edit')); ?></li>
 		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Field Coordenates', true)), array('controller' => 'field_coordenates', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Field Coordenate', true)), array('controller' => 'field_coordenates', 'action' => 'add')); ?> </li>
 	</ul>

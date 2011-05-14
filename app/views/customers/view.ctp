@@ -55,6 +55,21 @@
             </dd>
             <?php } ?>
 
+            <?php if (!empty($customer['Customer']['email'])) { ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>>e-mail</dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php echo $customer['Customer']['email']; ?>
+            </dd>
+            <?php } ?>
+
+            <?php if (!empty($customer['Customer']['phone_number'])) { ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>>Teléfono</dt>
+            <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php echo $customer['Customer']['phone_number']; ?>
+            </dd>
+            <?php } ?>
+
+
             <?php if (!empty($customer['Identification'])):?>
                 <?php if (!empty($customer['Identification']['IdentificationType'])):?>
             <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Identification'); ?></dt>

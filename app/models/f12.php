@@ -59,7 +59,7 @@ class F12 extends FormSkeleton {
                 'legend'=>'Observaciones y/o constancias',
                 'texto_de_la_observacion'=> array('label'=>'Seleccione el texto dela observación','options'=>$obs, 'id'=>'textobs', 'after'=>'(recuede retocar la observación)'),
                 'observaciones'=> array('type'=>'textarea'),
-                'lugar',
+                'lugar' => array('default' => 'Buenos Aires'),
                 'fecha_dia'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día'),
                 'fecha_mes'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
                 'fecha_anio'=> array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),

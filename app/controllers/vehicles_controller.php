@@ -71,7 +71,7 @@ class VehiclesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Vehicle->create();
 			if ($this->Vehicle->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('The %s has been saved', true), __('vehicle',true)));
+				$this->Session->setFlash(sprintf(__('The %s has been saved', true), __('vehicle',true)).".<br> Con el N° de Chasis: ".$this->data['Vehicle']['chasis_number']);
                                 if (!$continue_adding) {
                                     $this->redirect(array('controller'=>'customers','action' => 'search'));
                                 }
