@@ -55,7 +55,7 @@ class FieldCreator extends AppModel {
                     if ( ! empty($nomAux)) $campoNom = "`".$nomAux."`";
                 }
 
-                $tipoField = 'varchar(110) default NULL';
+                $tipoField = 'varchar(32) default NULL';
                 if ($f['field_type_id'] == 3) {
                     // es Multi Celda
                     $tipoField = 'text default NULL';
@@ -140,7 +140,7 @@ class FieldCreator extends AppModel {
                     if ( ! empty($nomAux)) $campoNom = "`".$nomAux."`";
                 }
 
-                $tipoField = 'varchar(110) default NULL';
+                $tipoField = 'varchar(32) default NULL';
                 if ($f['field_type_id'] == 3) {
                     // es Multi Celda
                     $tipoField = 'text default NULL';
@@ -200,24 +200,13 @@ class FieldCreator extends AppModel {
 
             $i = 0;
             $tot = count($schema);
-//            foreach ($schema as $campo=>$demas) {
-//                if (in_array($campo, $noDrop)) {continue;}
-//
-//                if (empty($setDeCampos[$campo])) {
-//                    if ($primera) {
-//                        $primera = false;
-//                    } else {
-//                        $ini_query .= ',
-//                            ';
-//                    }
-//                    $arrayres['dropped'][] = $campo;
-//                    $ini_query .= 'DROP COLUMN '.$campo;
-//                }
-//            }
 
              $ini_query .= ';';
-             
+
+            $this->query($ini_query);
+
             Cache::clear();
+            $this->querytxt = $ini_query;
             return $arrayres;
         }
 

@@ -2,9 +2,10 @@
 $formName;
 $customer = empty($this->data['Vehicle']['Customer']['name'])?'':$this->data['Vehicle']['Customer']['name'];
 $vehicle_id = $this->data['Vehicle']['id'];
+
 ?>
 
-<style>
+<style type="text/css">
     LEGEND{
         cursor: pointer;
     }
@@ -20,7 +21,8 @@ $vehicle_id = $this->data['Vehicle']['id'];
 </div>
 
 <div class="span-12 last">
-    <h3><?php echo empty($this->data['Vehicle']['Customer']['notes'])?'Sin ':''?>Notas sobre el <?php echo $html->link('Cliente', '/customers/view/'.$this->data['Vehicle']['Customer']['id'])?></h3>
+    <h3><?php echo empty($this->data['Vehicle']['Customer']['notes'])?'Sin ':''?>Notas sobre el <?php echo $html->link('Cliente', '/customers/view/'.$this->data['Vehicle']['Customer']['id']);?></h3>
+    <?php echo "<strong>\"$customer\"</strong>"?>
     <p>
         <?php
         if (!empty($this->data['Vehicle']['Customer']['CustomerNatural']['ocupation']))
@@ -83,6 +85,17 @@ $vehicle_id = $this->data['Vehicle']['id'];
 
 
 <?php
+
+// reset maxlength que le pone cake automaticamente basado en los modelos
+//foreach ($formInputs as &$i) {
+//    foreach ($i as $k=>&$field) {
+//        if ( strtolower( $k ) != 'legend' ) {
+//            $field['maxlength'] = null;
+//        }
+//    }
+////}
+//debug($formInputs);
+
 $i = 1;
 foreach($formInputs as $inputs) {
     $last = ($i % 2 != 0) ? '': 'last';

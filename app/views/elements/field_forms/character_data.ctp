@@ -29,6 +29,16 @@ if (empty($characters)) {
     foreach ($characters as &$ch) {
         $ch['porcentaje'] = $ch['porcentaje']. "  00";
 
+        $ch['home_address'] = $ch['calle'];
+        $ch['home_number'] = $ch['numero_calle'];
+        $ch['home_floor'] = $ch['piso'];
+        $ch['home_apartment'] = $ch['depto'];
+        $ch['home_postal_code'] = $ch['cp'];
+        $ch['home_city'] = $ch['localidad'];
+        $ch['home_county'] = $ch['departamento'];
+        $ch['home_state'] = $ch['provincia'];
+
+
         if (!empty($ch['fecha_nacimiento'])) {
             $ch['fecha_nacimiento'] = date('d-m-y',strtotime($ch['fecha_nacimiento']));
             $ch['anio_nacimiento'] = date('y',strtotime($ch['fecha_nacimiento'])) ;

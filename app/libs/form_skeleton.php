@@ -155,17 +155,20 @@ abstract class FormSkeleton extends AppModel
                                 $this->name . '.vehicle_id <>' => 0,
                                 ),
                             'contain' => $this->sContain,
-                            'order' => array($this->name . '.created DESC')
+                            'order' => array($this->name . '.created DESC'),
+                            'limit' => 1,
                         );
                         $cond = array_merge($cond, $query);
                         
 			return $cond;
-		} elseif ($state == 'after') {
+		}
+                elseif ($state == 'after') {
                     if (empty($results)) {
                         $results = $this->Vehicle->find('data', $query);
                     } else {
-                        $results = $this->Vehicle->acomodarDatosTraidos($results);
-                        $results = $results[0];
+                        $aux = $results[0][$this->name];
+                        $results = $this->Vehicle->acomodarDatosTraidos($results[0]);
+                        $results[$this->name] = $aux;
                     }
                     $this->data = $results;
                     return $results;
@@ -770,6 +773,41 @@ abstract class FormSkeleton extends AppModel
         );
     }
 
+
+    public function __preformDomicilios($involucrados, $customerHomeType = ''){
+        $campo = $involucrados.'_home_';
+        if ($customerHomeType !== '') {
+            $campo .= strtolower($customerHomeType).'_';
+        }
+        $vRes =  array(
+            'legend' => 'Domicilio '.$customerHomeType,
+            $campo . 'address' => array('label' => 'Calle'),
+            $campo . 'number' => array('label' => 'Número'),
+            $campo . 'floor' => array('label' => 'Piso'),
+            $campo . 'apartment' => array('label' => 'Dep'),
+            $campo . 'postal_code' => array('label' => 'Código Postal'),
+            $campo . 'city' => array('label' => 'Localidad'),
+            $campo . 'county' => array('label' => 'Partido o Departamento'),
+            $campo . 'state' => array('label' => 'Provincia'),
+            );
+
+        
+        if ($customerHomeType != '' && !empty($this->data['Vehicle']['Customer']['CustomerHome'])) {
+            foreach ($this->data['Vehicle']['Customer']['CustomerHome'] as $ch) {
+                if ( strtolower($ch['type']) == strtolower($customerHomeType )) {
+                    foreach ($ch as $cname=>$val) {
+                        $key = $campo."_".$cname;
+                        if (!empty($vRes[$key])){
+                            $this->data[$this->name][$key] = $val;
+                            $vRes[$key]['value'] = $val;
+                        }
+                    }
+                }
+            }
+        }
+        return $vRes;
+    }
+
     public function __preform2011Tipo1($involucrado, $legend = null)
     {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
@@ -784,24 +822,6 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_name' => array('label' => 'Apellido y Nombre o Denominación', 'class' => 'nombre_con_cuit'),
             $involucrado . '_email' => array('label' => 'e-mail'),
             $involucrado . '_phone_number' => array('label' => 'Teléfono'),
-
-            $involucrado . '_calle' => array('label' => 'Calle'),
-            $involucrado . '_numero_calle' => array('label' => 'Número'),
-            $involucrado . '_piso' => array('label' => 'Piso'),
-            $involucrado . '_depto' => array('label' => 'Dep'),
-            $involucrado . '_cp' => array('label' => 'Código Postal'),
-            $involucrado . '_localidad' => array('label' => 'Localidad'),
-            $involucrado . '_departamento' => array('label' => 'Partido o Departamento'),
-            $involucrado . '_provincia' => array('label' => 'Provincia'),
-
-            $involucrado . '_real_calle' => array('label' => 'Calle'),
-            $involucrado . '_real_numero_calle' => array('label' => 'Número'),
-            $involucrado . '_real_piso' => array('label' => 'Piso'),
-            $involucrado . '_real_depto' => array('label' => 'Dep'),
-            $involucrado . '_real_cp' => array('label' => 'Código Postal'),
-            $involucrado . '_real_localidad' => array('label' => 'Localidad'),
-            $involucrado . '_real_departamento' => array('label' => 'Partido o Departamento'),
-            $involucrado . '_real_provincia' => array('label' => 'Provincia'),
 
             $involucrado . '_ocupation' => array('label' => 'Profesión'),
             
@@ -904,7 +924,7 @@ abstract class FormSkeleton extends AppModel
             'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->data['Vehicle']['motor_number']),
             'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->data['Vehicle']['chasis_brand']),
             'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['chasis_number']),
-            'vehicle_use' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['use']),
+            'vehicle_use' => array('label' => 'Uso', 'value' => $this->data['Vehicle']['use']),
             'vehicle_adquisition_value' => array('label' => 'Valor de adquisición', 'value' => $this->data['Vehicle']['adquisition_value']),
             'vehicle_adquisition_dia' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Día', 'value' => date('d', strtotime($this->data['Vehicle']['adquisition_date']))),
             'vehicle_adquisition_mes' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Mes', 'value' => date('m', strtotime($this->data['Vehicle']['adquisition_date']))),

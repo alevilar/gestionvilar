@@ -48,10 +48,17 @@ class F008 extends FormSkeleton {
          $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
          $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
          $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
-   
+      
         $coso =  array(
             $this->__preform2011Tipo1('comprador'           ,'"D" Comprador o Adquiriente'),
             $this->__preform2011Tipo1('condominiocomprador' ,'"E" Condominio en la Compra o Adquisición'),
+
+            $this->__preformDomicilios('comprador'),
+            $this->__preformDomicilios('condominiocomprador'),
+
+            $this->__preformDomicilios('comprador', 'real'),
+            $this->__preformDomicilios('condominiocomprador','real'),
+            
             $this->__preformTipo2('vendedor'            ,'"I" Vendedor o Transmitente'),
             $this->__preformTipo2('condominiovendedor'  ,'"J" Condominio en la venta o Transmisión'),
              array(
@@ -81,8 +88,12 @@ class F008 extends FormSkeleton {
                 'o_tipo_y_num_doc'=>array('label'=>'Tipo de documento y N°'),
                 'o_recibi_tit'=>array('label'=>'recibí título y cédula de identificación'),
             ),
-        );
 
+            array(
+                'legend'=>'"EXTRAS"',
+                'ceta'=>array(),
+                )
+        );
 
         return $coso;
     }

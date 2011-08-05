@@ -9,6 +9,9 @@
             <?= $this->Html->link('Eliminar Cliente', '/customers/delete/'.$customer['Customer']['id'],null,'Esto eliminará al cliente y sus vehículos.\n¿Seguro que desea proseguir?') ?>
         </li>
         <li>
+            <?= $this->Html->link('Agregar Dirección', '/customer_homes/add/'.$customer['Customer']['id']) ?>
+        </li>
+        <li>
             <?= $this->Html->link('Agregar Vehículo', '/vehicles/add/'.$customer['Customer']['id']) ?>
         </li>
         <?php if ($customer['Customer']['type'] == 'natural'):?>
@@ -181,6 +184,17 @@
                     }
                     ?>
             <b><?= 'Dirección: '.$customerHome['type']?></b>
+
+             <?php echo $this->Html->link(sprintf(__('Edit %s',true), 'Home'),
+                    '/customer_homes/edit/'.$customerHome['id'],
+                    array('class'=>'btn-edit', 'title'=>__('Edit',true))
+                    ) ?>
+            <?php echo $this->Html->link(sprintf(__('Delete %s',true), 'Home'),
+                    '/customer_homes/delete/'.$customerHome['id'],
+                    array('class'=>'btn-del', 'title'=>__('Delete',true)),
+                    'Desea eliminar ésta dirección: ') ?>
+
+
             <dl>
                 <dt><?php __('City'); ?></dt>
                 <dd><?= $customerHome['city']?></dd>

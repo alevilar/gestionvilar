@@ -25,6 +25,10 @@ if (empty($customer)) {
         $d['Vehicle']['Customer'] = $d['Customer'];
     }
 
+    foreach ($d['Vehicle']['Customer'] as $field=>$fval) {
+            $customer[$field] = $fval;
+        }
+
     $customer['porcentaje'] = '';
     $customer['name'] = $d['Vehicle']['Customer']['name'];
     $customer['cuit_cuil'] = $d['Vehicle']['Customer']["cuit_cuil"] ;
@@ -32,7 +36,28 @@ if (empty($customer)) {
     // domicilio
     if (!empty($d['Vehicle']['Customer']['CustomerHome'])) {
 
+        // si existe COmercial, sobreescribir las otras
         foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
+
+            if ($h['type']== 'Comercial') {
+                $customer['calle'] = $h["address"] ;
+                $customer['numero_calle'] =  $h["number"] ;
+                $customer['piso'] = $h["floor"];
+                $customer['depto'] = $h["apartment"];
+                $customer['cp'] = $h["postal_code"];
+                $customer['localidad'] = $h["city"];
+                $customer['departamento'] = $h["county"] ;
+                $customer['provincia'] = $h["state"];
+
+                foreach ($h as $k=>$v) {
+                    $customer['home_'.$k] = $v;
+                }
+            }
+        }
+
+        // si existe legal, sobreescribir las otras
+        foreach ($d['Vehicle']['Customer']['CustomerHome'] as $h) {
+            
             if ($h['type']== 'Legal') {
                 $customer['calle'] = $h["address"] ;
                 $customer['numero_calle'] =  $h["number"] ;
@@ -42,6 +67,10 @@ if (empty($customer)) {
                 $customer['localidad'] = $h["city"];
                 $customer['departamento'] = $h["county"] ;
                 $customer['provincia'] = $h["state"];
+
+                foreach ($h as $k=>$v) {
+                    $customer['home_'.$k] = $v;
+                }
             }
         }
 
@@ -56,8 +85,22 @@ if (empty($customer)) {
                 $customer['localidad'] = $h["city"];
                 $customer['departamento'] = $h["county"] ;
                 $customer['provincia'] = $h["state"];
+
+                foreach ($h as $k=>$v) {
+                    $customer['home_'.$k] = $v;
+                }
             }
         }
+
+        
+
+
+        foreach ($d['Vehicle']['Customer']['CustomerHome'] as $home) {
+            foreach ($home as $h=>$val){
+                $prefix = 'home_'.strtolower($home['type']).'_';
+                $customer[$prefix.$h] = $val;
+            }
+       }
     }
 
 
@@ -132,8 +175,7 @@ if (empty($customer)) {
 //    $customer['fecha_inscripcion'] = date('d-m-Y',strtotime($customer['fecha_inscripcion']));
 
     $customer = json_encode($customer);
-
-    
+ 
 }
 ?>
 

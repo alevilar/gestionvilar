@@ -47,6 +47,7 @@ $paginator->options(array('url' => $this->passedArgs));
 echo $this->Form->create('FieldCoordenate',array('url'=>'index/advanced'));
 echo $this->Form->input('field_creator_id');
 echo $this->Form->input('name');
+echo $this->Form->input('related_field_table');
 echo $this->Form->end('Buscar');
 ?>
         <table cellpadding="0" cellspacing="0" class="span-24 last">

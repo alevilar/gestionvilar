@@ -13,17 +13,42 @@ class FieldCoordenatesController extends AppController
             'name' => 'name',
             'ocupation' => 'ocupation',
             'cuit_cuil' => 'cuit_cuil',
-            'calle' => 'calle',
             'email' => 'email',
             'phone_number' => 'phone_number',
             'born_place' => 'born_place',
-            'numero_calle' => 'numero_calle',
-            'piso' => 'piso',
-            'depto' => 'depto',
-            'cp' => 'cp',
-            'localidad' => 'localidad',
-            'departamento' => 'departamento',
-            'provincia' => 'provincia',
+            "id" => "id",
+            "customer_id" => "customer_id",
+            "persona_fisica_o_juridica" => "persona_fisica_o_juridica",
+        ),
+        'Personas Físicas' => array(
+            "character_type_id" => "character_type_id",
+            "nationality_type_id" => "nationality_type_id",
+            "fecha_nacimiento" => "fecha_nacimiento",
+            'anio_nacimiento' => 'anio_nacimiento',
+            'mes_nacimiento' => 'mes_nacimiento',
+            'dia_nacimiento' => 'dia_nacimiento',
+            'fecha_inscripcion' => 'fecha_inscripcion',
+            "marital_status_id" => "marital_status_id",
+            "casado" => "casado",
+            "soltero" => "soltero",
+            "viudo" => "viudo",
+            "divorciado" => "divorciado",
+            "nupcia" => "nupcia",
+        ),
+        'Personas Jurídicas' => array(
+            'personeria_otorgada' => 'personeria_otorgada',
+            'inscripcion' => 'inscripcion',
+            'anio_inscripcion' => 'anio_inscripcion',
+            'mes_inscripcion' => 'mes_inscripcion',
+            'dia_inscripcion' => 'dia_inscripcion',
+            'fecha_inscripcion' => 'fecha_inscripcion',
+            "apoderado_name" => "apoderado_name",
+            "apoderado_identification_type_id" => "apoderado_identification_type_id",
+            "apoderado_identification_number" => "apoderado_identification_number",
+            "apoderado_nationality_type" => "apoderado_nationality_type",
+            "apoderado_nationality" => "apoderado_nationality",
+        ),
+        'Identificacion' => array(
             "identification_authority" => "identification_authority",
             'identification_auth' => 'identification_auth',
             'identification_type_id' => 'identification_type_id',
@@ -34,29 +59,6 @@ class FieldCoordenatesController extends AppController
             'identification_le' => 'identification_le',
             'identification_pasap' => 'identification_pasap',
             'identification_number' => 'identification_number',
-            'persona_fisica_o_juridica' => 'persona_fisica_o_juridica',
-            'personeria_otorgada' => 'personeria_otorgada',
-            'inscripcion' => 'inscripcion',
-            'anio_inscripcion' => 'anio_inscripcion',
-            'mes_inscripcion' => 'mes_inscripcion',
-            'dia_inscripcion' => 'dia_inscripcion',
-            'fecha_inscripcion' => 'fecha_inscripcion',
-            "id" => "id",
-            "personeria_otorgada" => "personeria_otorgada",
-            "inscripcion" => "inscripcion",
-            "fecha_inscripcion" => "fecha_inscripcion",
-            "apoderado_name" => "apoderado_name",
-            "apoderado_identification_type_id" => "apoderado_identification_type_id",
-            "apoderado_identification_number" => "apoderado_identification_number",
-            "apoderado_nationality_type" => "apoderado_nationality_type",
-            "apoderado_nationality" => "apoderado_nationality",
-            "customer_id" => "customer_id",
-            "persona_fisica_o_juridica" => "persona_fisica_o_juridica",
-            "character_type_id" => "character_type_id",
-            "nationality_type_id" => "nationality_type_id",
-            "fecha_nacimiento" => "fecha_nacimiento",
-            "marital_status_id" => "marital_status_id",
-            "nupcia" => "nupcia",
         ),
         'Personas -> Cónyuge' => array(
             "conyuge" => "conyuge",
@@ -72,6 +74,15 @@ class FieldCoordenatesController extends AppController
             'apoderado_identification_number' => 'apoderado_identification_number',
             'apoderado_nationality_type' => 'apoderado_nationality_type',
             'apoderado_nationality' => 'apoderado_nationality',
+            
+            "apoderado_identification_authority" => "identification_authority",
+            'apoderado_identification_auth' => 'identification_auth',
+            'apoderado_identification_dni' => 'identification_dni',
+            'apoderado_identification_ci' => 'identification_ci',
+            'apoderado_identification_dni_ext' => 'identification_dni_ext',
+            'apoderado_identification_lc' => 'identification_lc',
+            'apoderado_identification_le' => 'identification_le',
+            'apoderado_identification_pasap' => 'identification_pasap',
         ),
         'Vehículo' => array(
             'patente' => 'patente',
@@ -91,7 +102,45 @@ class FieldCoordenatesController extends AppController
             'adquisition_anio' => 'adquisition_anio',
             'adquisition_evidence_element' => 'adquisition_evidence_element',
         ),
+        'Domicilios DEFAULT' => array(
+            'home_address' => 'calle',
+            'home_number' => 'numero_calle',
+            'home_floor' => 'piso',
+            'home_apartment' => 'depto',
+            'home_postal_code' => 'cp',
+            'home_city' => 'localidad',
+            'home_county' => 'departamento',
+            'home_state' => 'provincia',
+        ),
     );
+    
+    
+    function beforeFilter()
+    {
+        parent::beforeFilter();
+        
+        $home = ClassRegistry::init('CustomerHome');
+        
+        $tiposHomes = $home->find('list', array(
+            'group' => array('type'),
+            'fields' => array('type'),
+            'recursive' => -1
+        ));
+        
+        foreach ($tiposHomes as $t ) {
+            $t = strtolower($t);
+            $this->fieldNames["Domicilios -> $t"] = array(
+                "home_".$t."_address" => 'calle',
+                "home_".$t."_number" => 'numero_calle',
+                "home_".$t."_floor" => 'piso',
+                "home_".$t."_apartment" => 'depto',
+                "home_".$t."_postal_code" => 'cp',
+                "home_".$t."_city" => 'localidad',
+                "home_".$t."_county" => 'departamento',
+                "home_".$t."_state" => 'provincia',
+            );
+        }
+    }
 
     /**
      *
@@ -152,8 +201,8 @@ class FieldCoordenatesController extends AppController
         $fieldTypes = $this->FieldCoordenate->FieldType->find('list');
         $related_field_table_selects = $this->fieldNames;
         foreach ($this->fieldNames as $title => $opsG) {
-            foreach ($opsG as $campillo) {
-                $related_field_table_selects[$campillo] = $title . ": " . $campillo;
+            foreach ($opsG as $campillo=>$nombre) {
+                $related_field_table_selects[$campillo] = $title . ": " . $nombre;
             }
         }
         $this->set(compact('fieldCreators', 'fieldTypes', 'related_field_table_selects'));

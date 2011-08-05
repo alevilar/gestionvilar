@@ -109,15 +109,6 @@ class FieldCreatorsController extends AppController {
                 die('Error: El formulario debe extender de FormSkeleton');
             }
 
-            // aegurarse que llego el vehiculo como parámetro. Caso contrario,redirigir y mostrar error.
-//            if (empty($vehicle_id)) {
-//                if (empty($this->data[$form_model_name]['vehicle_id'])) {
-//                    $this->Session->setFlash('Id inválido. Se debe pasar como parámetro el Id del vehículo');
-//                    $this->redirect('/');
-//                } else {
-//                    $vehicle_id = $this->data[$form_model_name]['vehicle_id'];
-//                }
-//            }
             // settear el id del vehiculo
             $this->{$form_model_name}->vehicle_id = $vehicle_id;
          
@@ -306,9 +297,11 @@ class FieldCreatorsController extends AppController {
                 if (!empty($res['added'])) $agregados = 'Agregados: '.implode(', ',$res['added']);
                 if (!empty($res['dropped'])) $sacados = 'Sacados: '.implode(', ',$res['dropped']);
                 $mensaje = "Se ha actualizado la tabla correctamente. <br>$sacados<br> $agregados";
+                $mensaje .= "<br>";
+                $mensaje .= $this->FieldCreator->querytxt;
 
             } else {
-                $mensaje = 'Error al actualizar la tabla';
+                $mensaje = 'La tabla no se actualizó. No hay campos que actualizar';
             }
             $this->flash($mensaje, 'index');
         }
