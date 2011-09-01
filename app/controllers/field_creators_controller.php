@@ -110,7 +110,9 @@ class FieldCreatorsController extends AppController {
             }
 
             // settear el id del vehiculo
-            $this->{$form_model_name}->vehicle_id = $vehicle_id;
+            if (!empty($vehicle_id)){
+                $this->{$form_model_name}->vehicle_id = $vehicle_id;
+            }
          
             if (!empty($this->data)) {
                 //debug($this->data);
@@ -128,12 +130,17 @@ class FieldCreatorsController extends AppController {
                 $this->{$form_model_name}->id = $this->data[$form_model_name]['id'];
             }
 
-            $this->data = $this->{$form_model_name}->find('data', array(
-                        'form_id' => $this->{$form_model_name}->id,
-                        'vehicle_id' => $vehicle_id)
-            );
 //debug($this->data);
-            $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
+            if (!empty($vehicle_id)){
+                
+                 $this->data = $this->{$form_model_name}->find('data', array(
+                            'form_id' => $this->{$form_model_name}->id,
+                            'vehicle_id' => $vehicle_id)
+                );
+
+                $this->data[$form_model_name]['vehicle_id'] = $this->data['Vehicle']['id'];
+                
+            }
             // si el formulario fue creado hace menos de1 hora, en vez de hacer un INSERT quiero un UPDATE
             // para ello elimino el ID del formulario
             if (!empty($this->data[$form_model_name]['created'])) {

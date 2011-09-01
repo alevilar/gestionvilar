@@ -45,7 +45,7 @@ class F13caba extends FormSkeleton {
                          'vehicle_motor_number' => array('label' => 'Motor Numero', 'value' => $this->getDatafromField('Vehicle','motor_number')),
                 ),
             array(
-                'legend' => 'Datos del Titular',
+                'legend' => '"E" Datos del Titular',
 
                  'titular_name' => array('label' => 'Apellido y Nombres o Denominacion', 'value' => $this->getDatafromField('Titular','name')),
                  'titular_calle' => array('label' => 'Domicilio Fiscal - Leyenda Calle - Localidad', 'value' => $this->getDatafromField('Titular','calle')),
@@ -65,7 +65,7 @@ class F13caba extends FormSkeleton {
                  'titular_postal_cp' => array('label' => 'Domicilio Postal - Cod. Postal', 'value' => $this->getDatafromField('Titular','cp')),
                  'titular_identification_type_id' => array('label' => 'Tipo Documento', 'empty' => 'Seleccione', 'options'=> $identificationsTypes, 'value' => $this->getDatafromField('Titular','identification_type_id')),
                  'titular_identification_number' => array('label' => 'Numero Documento', 'value' => $this->getDatafromField('Titular','identification_number')),
-
+                 'titular_cuit_cuil' => array('label' => 'Cuit/Cuil', 'value' => $this->getDatafromField('Titular','cuit_cuil')),
             ),
               
         );

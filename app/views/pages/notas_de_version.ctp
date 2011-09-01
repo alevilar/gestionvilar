@@ -1,8 +1,22 @@
+
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
-<h3>Versión <?php echo GESTAFORM_VERSION?></h3>
+<h3>Versión 1.4 (1/10/2011)</h3>
 
-<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<ul>
+    <li>Automáticamente se coloca 100% en los porcentajes para todos los casos.</li>
+    <li>Se modificó el diseño del tamaño de los INPUTS en los formularios para que se pueda visualizar mejor los nombres largos.</li>
+    <li>Se agrego la posibilidad de imprimir CUIT o CUIL en el formulaio 13 CABA</li>
+    <li>Se arregló el domicilio fiscal del formulario 31A debido a que no se estaba mostrando</li>
+    <li>Ahora el formulario rápido no muestra datos del último vehículo cargado. Inicialmente se habia pedido esta funcionalidad, peor posterior mente se pidió que sea quitada para facilitar la carga de datos nuevos</li>    
+</ul>
+
+
+
+
+<h3>Versión 1.33 (19/07/2011)</h3>
 
 <ul>
     <li>Se agregó el nuevo formulario 01 (en esta version figura como F 001 bis</li>
@@ -13,11 +27,7 @@
 
 
 
-<h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
-
 <h3>Versión 1.32 (25/05/2011)</h3>
-
-<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de mejorar la aplicación al máximo. Siguiendo esta metodologia, se ha realizado una actualización que resuelve los siguientes puntos:</p>
 
 <ul>
     <li>Se agregó la posibilidad de manejar múltiples domicilios para los Actores (aunque ellos solo tendrán 1 por que será utilizado por default)</li>

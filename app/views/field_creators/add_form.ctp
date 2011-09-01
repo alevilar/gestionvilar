@@ -106,7 +106,7 @@ foreach($formInputs as $inputs) {
         unset ($inputs['ocupa-todoel-ancho']);
     }
 
-    echo "<div class='$spanN $last'>";
+    echo "<div class='$spanN $last inputs-anchos'>";
     echo $this->Form->inputs($inputs,$formBlackList);
     echo "</div>";
 

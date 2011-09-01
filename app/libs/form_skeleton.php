@@ -895,16 +895,16 @@ abstract class FormSkeleton extends AppModel
 
         return array(
             'legend' => $legenda,
-            'vehicle_id' => array('type' => 'hidden', 'value' => $this->data['Vehicle']['id']),
-            'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->data['Vehicle']['patente']),
-            'vehicle_brand' => array('label' => 'Marca', 'value' => $this->data['Vehicle']['brand']),
-            'vehicle_type' => array('label' => 'Tipo', 'value' => $this->data['Vehicle']['type']),
-            'vehicle_model' => array('label' => 'Modelo', 'value' => $this->data['Vehicle']['model']),
-            'vehicle_motor_brand' => array('label' => 'Marca del Motor', 'value' => $this->data['Vehicle']['motor_brand']),
-            'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->data['Vehicle']['motor_number']),
-            'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->data['Vehicle']['chasis_brand']),
-            'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['chasis_number']),
-            'vehicle_use' => array('label' => 'Uso', 'value' => $this->data['Vehicle']['use']),
+            'vehicle_id' => array('type' => 'hidden', 'value' => $this->getDatafromField('Vehicle','id')),
+            'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->getDatafromField('Vehicle','patente')),
+            'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle','brand')),
+            'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle','type')),
+            'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle','model')),
+            'vehicle_motor_brand' => array('label' => 'Marca del Motor', 'value' => $this->getDatafromField('Vehicle','motor_brand')),
+            'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->getDatafromField('Vehicle','motor_number')),
+            'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->getDatafromField('Vehicle','chasis_brand')),
+            'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->getDatafromField('Vehicle','chasis_number')),
+            'vehicle_use' => array('label' => 'Uso', 'value' => $this->getDatafromField('Vehicle','use')),
         );
     }
 
@@ -912,24 +912,34 @@ abstract class FormSkeleton extends AppModel
     {
         $legenda = empty($legend) ? __('Vehicle', true) : $legend;
         
+        $dia = $mes = $anio = '';
+        
+        $adquisitionDat = $this->getDatafromField('Vehicle', 'adquisition_date');
+        if ( !empty($adquisitionDat) ){
+            $dia   = date( 'd', strtotime( $adquisitionDat ) ) ;
+            $mes   = date( 'm', strtotime( $adquisitionDat ) );
+            $anio  = date( 'y', strtotime( $adquisitionDat ) );
+        }
+        
+        
         return array(
             'legend' => $legenda,
-            'vehicle_id' => array('type' => 'hidden', 'value' => $this->data['Vehicle']['id']),
-            'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->data['Vehicle']['patente']),
-            'vehicle_fabrication_certificate' => array('label' => 'Certificado de fabricación', 'value' => $this->data['Vehicle']['fabrication_certificate']),
-            'vehicle_brand' => array('label' => 'Marca', 'value' => $this->data['Vehicle']['brand']),
-            'vehicle_type' => array('label' => 'Tipo', 'value' => $this->data['Vehicle']['type']),
-            'vehicle_model' => array('label' => 'Modelo', 'value' => $this->data['Vehicle']['model']),
-            'vehicle_motor_brand' => array('label' => 'Marca del Motor', 'value' => $this->data['Vehicle']['motor_brand']),
-            'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->data['Vehicle']['motor_number']),
-            'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->data['Vehicle']['chasis_brand']),
-            'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->data['Vehicle']['chasis_number']),
-            'vehicle_use' => array('label' => 'Uso', 'value' => $this->data['Vehicle']['use']),
-            'vehicle_adquisition_value' => array('label' => 'Valor de adquisición', 'value' => $this->data['Vehicle']['adquisition_value']),
-            'vehicle_adquisition_dia' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Día', 'value' => date('d', strtotime($this->data['Vehicle']['adquisition_date']))),
-            'vehicle_adquisition_mes' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Mes', 'value' => date('m', strtotime($this->data['Vehicle']['adquisition_date']))),
-            'vehicle_adquisition_anio' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Año', 'value' => date('y', strtotime($this->data['Vehicle']['adquisition_date']))),
-            'vehicle_adquisition_evidence_element' => array('label' => 'Elemento provatorio de la adquisición', 'value' => $this->data['Vehicle']['adquisition_evidence_element']),
+            'vehicle_id' => array('type' => 'hidden', 'value' => $this->getDatafromField('Vehicle','id')),
+            'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->getDatafromField('Vehicle', 'patente')),
+            'vehicle_fabrication_certificate' => array('label' => 'Certificado de fabricación', 'value' => $this->getDatafromField('Vehicle', 'fabrication_certificate')),
+            'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle', 'brand')),
+            'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle', 'type')),
+            'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle', 'model')),
+            'vehicle_motor_brand' => array('label' => 'Marca del Motor', 'value' => $this->getDatafromField('Vehicle', 'motor_brand')),
+            'vehicle_motor_number' => array('label' => 'N° de Motor', 'value' => $this->getDatafromField('Vehicle', 'motor_number')),
+            'vehicle_chasis_brand' => array('label' => 'Marca del Chasis', 'value' => $this->getDatafromField('Vehicle', 'chasis_brand')),
+            'vehicle_chasis_number' => array('label' => 'N° de Chasis', 'value' => $this->getDatafromField('Vehicle', 'chasis_number')),
+            'vehicle_use' => array('label' => 'Uso', 'value' => $this->getDatafromField('Vehicle', 'use')),
+            'vehicle_adquisition_value' => array('label' => 'Valor de adquisición', 'value' => $this->getDatafromField('Vehicle', 'adquisition_value')),
+            'vehicle_adquisition_dia' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Día', 'value' => $dia),
+            'vehicle_adquisition_mes' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Mes', 'value' => $mes),
+            'vehicle_adquisition_anio' => array('div' => array('class' => 'span-1'), 'class' => 'span-1', 'label' => 'Año', 'value' => $anio),
+            'vehicle_adquisition_evidence_element' => array('label' => 'Elemento provatorio de la adquisición', 'value' => $this->getDatafromField('Vehicle', 'adquisition_evidence_element')),
         );
     }
 

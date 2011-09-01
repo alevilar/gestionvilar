@@ -466,3 +466,8 @@ img#background {
 .hover-highlight{
     margin-left: 3px;
 }
+
+
+.inputs-anchos input{
+    width: 80%;
+}

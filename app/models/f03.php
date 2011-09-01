@@ -83,7 +83,7 @@ class F03 extends FormSkeleton {
                 'a_dia'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Día'),
                 'a_mes'	=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Mes'),
                 'a_anio'=>array('div'=>array('class'=>'span-1'), 'class'=>'span-1', 'label'=>'Año'),
-                'a_monto' =>array('label'=>'Monto del contrato'),
+                'a_monto' =>array('label'=>'Monto del contrato', 'div'=> array('style'=>'clear: both;')),
                
             ) ,
 
@@ -147,10 +147,10 @@ class F03 extends FormSkeleton {
 //            ),
             array(
                 'legend'=>'"O" Traslado',
-                'o_traslado' =>array('label'=>'traslado'),
-                'o_traslado_dia' =>array('label'=>'trslado día'),
-                'o_traslado_mes' =>array('label'=>'traslado mes'),
-                'o_traslado_anio' =>array('label'=>'traslado año'),
+//                'o_traslado' =>array('label'=>'traslado'),
+//                'o_traslado_dia' =>array('label'=>'trslado día'),
+//                'o_traslado_mes' =>array('label'=>'traslado mes'),
+//                'o_traslado_anio' =>array('label'=>'traslado año'),
                 'o_se_tomo_nota' =>array('label'=>'se tomó nota', 'type' => 'textarea'),
                 'o_n' =>array('label'=>'n°'),
             ),

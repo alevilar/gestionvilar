@@ -29,7 +29,7 @@ if (empty($customer)) {
             $customer[$field] = $fval;
         }
 
-    $customer['porcentaje'] = '';
+    $customer['porcentaje'] = '100  00';
     $customer['name'] = $d['Vehicle']['Customer']['name'];
     $customer['cuit_cuil'] = $d['Vehicle']['Customer']["cuit_cuil"] ;
 
