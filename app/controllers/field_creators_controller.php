@@ -78,9 +78,11 @@ class FieldCreatorsController extends AppController {
             $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'éste formulario'));
         }
         if ($formName =& ClassRegistry::init($form)) {
+            $formName->recursive = -1;
             if ($formName->delete($id, false)) {
                 $this->Session->setFlash(sprintf(__('%s deleted', true), 'Formulario'));
             } else {
+                debug($formName);die;
                 $this->Session->setFlash(sprintf(__('%s was not deleted', true), 'El Formulario'));
             }
         } else {
@@ -223,9 +225,7 @@ class FieldCreatorsController extends AppController {
             $debug_mode = true;
         }
 
-        $page1 = $fxx->fieldsPage1;
-        $page2 = $fxx->fieldsPage2;
-        $pages = array($page1, $page2);
+        $pages = $fxx->fieldsPage;
 
         $this->set('form_name', $form_model_name);
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);

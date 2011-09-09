@@ -161,6 +161,28 @@ class FieldCoordenate extends AppModel {
             }
         }
 
+        /**
+         *  Devuelve la cantidad de paginas involucradas en este formulario
+         * @param integer $field_creator_id
+         * @return integer cantidad de paginas
+         */
+        function getCantPages($field_creator_id) {
+            $cond['FieldCoordenate.field_creator_id'] = (int)$field_creator_id;
+         
+
+            $fields = array('FieldCoordenate.page');
+            
+            $ca = $this->find('list', array(
+                'conditions'=>$cond,
+                'recursive' => -1,
+                'fields' => $fields,
+                'group'  => $fields,
+                'order'  => $fields,
+            ));
+
+            return count($ca);
+        }
+
 
         /**
          *  Me devuelve todas las coordenadas para un formulario en especial y una pagina en concreto

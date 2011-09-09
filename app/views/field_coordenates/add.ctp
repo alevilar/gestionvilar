@@ -9,7 +9,7 @@
         echo $this->Form->input('font_size', array('default'=>10, 'after'=>'también se peden ingresar valores con decimales. Ej: 12.45 (notar que el decimal va con punto)'));
         echo $this->Form->input('x', array('after'=>'Coordenada X en milimetros'));
         echo $this->Form->input('y', array('after'=>'Coordenada Y en milimetros'));
-        echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array(1=>1,2=>2)));
+        echo $this->Form->input('page', array('default'=>1,'label'=>'¿El campo se imprime en la página 1 o de la 2?', 'options'=>array( 1=>1, 2=>2, 3=>3, 4=>4)));
         echo $this->Form->input('w', array('default'=>0, 'after'=>'Ancho en milimetros. Si queda en cero, el ancho no importa'));
         echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
         echo $this->Form->input('renglones_max', array('label'=>'Máxima cantidad de renglones', 'after'=>'Éste parámetro es útil cuando se selecciona MultiCell (múltiples renglones)'));

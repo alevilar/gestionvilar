@@ -2,16 +2,16 @@
 
 <script type="text/javascript">
 
-     $(document).ready(mostrarDireccionesLegales);
-     $('#CustomerType').change(mostrarDireccionesLegales);
-
-    function mostrarDireccionesLegales(){
-           if ($('#CustomerType').val() == 'legal') {
-               $('.direcciones-legales').show();
-           } else {
-               $('.direcciones-legales').hide();
-           }
-    }
+//     $(document).ready(mostrarDireccionesLegales);
+//     $('#CustomerType').change(mostrarDireccionesLegales);
+//
+//    function mostrarDireccionesLegales(){
+//           if ($('#CustomerType').val() == 'legal') {
+//               $('.direcciones-legales').show();
+//           } else {
+//               $('.direcciones-legales').hide();
+//           }
+//    }
 
     /**
      * Form Wizard
@@ -49,6 +49,17 @@
 
 
 </script>
+
+<?php
+if (!empty($this->data['Customer']['id'])) { ?>
+    <h2>Editando a <?php echo $this->data['Customer']['name']?></h2>
+<?php
+} else {
+?>
+    <h2>Crear Nuevo Cliente</h2>
+    <?php
+}
+    ?>
 
 
 <div class="customers form span-18 prepend-3">
@@ -147,8 +158,18 @@
                 </div>
             </fieldset>
         </div>
-<? //debug($this->data['CustomerHome'])?>
+<?
+// si estoy editando el cliente, solo quiero editar los CustomerHome que tengan datos
+$cantHomes = 0;
+if (!empty($this->data['CustomerHome'])) {
+    $cantHomes = count( $this->data['CustomerHome'] );
+}
+if (empty($this->data['Customer']['id'])) {
+    $cantHomes = 99999999;
+}
+?>
         <div id="CustomerHome" class="span-16 step">
+            <? if ( $cantHomes-- > 0 ) { ?>
             <fieldset class="span-16 column">
                 <legend>
                     <?php
@@ -177,11 +198,14 @@
                     ?>
                 </div>
             </fieldset>
+            <?php } ?>
 
+
+            <? if ( $cantHomes-- > 0) { ?>
             <fieldset class="span-16 column direcciones-legales">
                 <legend>
                     <?php
-                    $homeType = (!empty($this->data['CustomerHome'][1]['type']))?$this->data['CustomerHome'][1]['type']:'Comercial';
+                    $homeType = (!empty($this->data['CustomerHome'][1]['type']))?$this->data['CustomerHome'][1]['type']:'Real';
                     echo $homeType;
                     ?>
                 </legend>
@@ -206,7 +230,9 @@
                     ?>
                 </div>
             </fieldset>
+            <?php } ?>
 
+            <? if ( $cantHomes-- > 0) { ?>
             <fieldset class="span-16 column direcciones-legales">
                 <legend>
                     <?php
@@ -235,6 +261,7 @@
                     ?>
                 </div>
             </fieldset>
+            <?php } ?>
         </div>
 
     </div>

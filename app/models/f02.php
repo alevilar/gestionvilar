@@ -29,8 +29,6 @@ class F02 extends FormSkeleton {
 
 
 
-    var $belongsTo = array('Vehicle','Representative');
-
     var $form_id = 2;
 
 

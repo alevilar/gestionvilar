@@ -90,6 +90,7 @@ class Customer extends AppModel {
         }
 
         $dataHome = array();
+        // limpio los que llego la address vacia
         if (!empty($data['CustomerHome'])) {
             foreach ($data['CustomerHome'] as $ch) {
                 if (!empty($ch['address'])) {

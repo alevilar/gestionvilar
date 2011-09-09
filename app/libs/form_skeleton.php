@@ -7,8 +7,7 @@ abstract class FormSkeleton extends AppModel
      * de formulario que se solicite. EL tipo de formulario esta en la tabla field-creators
      * @var array
      */
-    var $fieldsPage1 = array(); // ANVERSO
-    var $fieldsPage2 = array(); // REVERSO
+    var $fieldsPage = array();
     /**
      *
      *  Es solo para mstar una columan vacia en la fista addForm del formCreator
@@ -175,6 +174,7 @@ abstract class FormSkeleton extends AppModel
 		}
 	}
 
+
     /**
      *
      * Me carga la data de un formulario. La que yo previamente guarde con el addForm
@@ -217,10 +217,11 @@ abstract class FormSkeleton extends AppModel
         $this->loadFields();
 
         // levanto la data del Formulario
-        if (empty($data))
+        if (empty($data)) {
             $this->loadFormData($fxx_id);
-        else
+        } else {
             $this->data = $data;
+        }
 
         // asigno los valoresque en field_coordenates ya tienen un campo en la tabla del model asignado
         $this->autoPopulateFields();
@@ -266,24 +267,15 @@ abstract class FormSkeleton extends AppModel
     function autoPopulateFields()
     {
         $campoFallo = array();
-        foreach ($this->fieldsPage1 as &$p) {
-            if ($this->makePopulation($p) < 0) {
-                $campoFallo[] = $p;
-            }
-            // o fallo, o esta vacio, por lo tanto no lo quiero.
-            if ($this->makePopulation($p) < 1) {
-                unset ($p);
-            }
-        }
-        
-        foreach ($this->fieldsPage2 as &$q) {
-            if ($this->makePopulation($q) < 0) {
-                $campoFallo[] = $q;
-            }
-
-            // o fallo, o esta vacio, por lo tanto no lo quiero.
-            if ($this->makePopulation($q) < 1) {
-                unset ($q);
+        foreach ($this->fieldsPage as &$fp) {
+            foreach ($fp as &$p) {
+                if ($this->makePopulation($p) < 0) {
+                    $campoFallo[] = $p;
+                }
+                // o fallo, o esta vacio, por lo tanto no lo quiero.
+                if ($this->makePopulation($p) < 1) {
+                    unset ($p);
+                }
             }
         }
 
@@ -311,15 +303,16 @@ abstract class FormSkeleton extends AppModel
      *
      * @return array de fields
      */
-    private function loadFields()
+     function loadFields()
     {
         $this->FieldCoordenate = ClassRegistry::init('FieldCoordenate');
         $id = $this->getFieldCreatorId();
 
-
-        $this->fieldsPage1 = $this->FieldCoordenate->getCoorFrom($id, 1);
-
-        $this->fieldsPage2 = $this->FieldCoordenate->getCoorFrom($id, 2);
+        $cantPages = $this->FieldCoordenate->getCantPages($id);
+        
+        while ($cantPages--) {
+            $this->fieldsPage[] = $this->FieldCoordenate->getCoorFrom($id, $cantPages);
+        }
     }
 
     /**
@@ -349,23 +342,17 @@ abstract class FormSkeleton extends AppModel
      */
     function populateFieldWithValue($fieldCoordenateId, $value, $options = array('fontSize' => 10))
     {
-        if (empty($fieldCoordenateId))
-            return -1;
-
-        foreach ($this->fieldsPage1 as &$f) {
-            if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
-                $f['FieldCoordenate']['value'] = $value;
-                $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
-                return 1;
+        if (empty($fieldCoordenateId)) return -1;
+        foreach ($this->fieldsPage as $fp) {
+            foreach ($fp as &$f) {
+                if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
+                    $f['FieldCoordenate']['value'] = $value;
+                    $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
+                    return 1;
+                }
             }
         }
-        foreach ($this->fieldsPage2 as &$f) {
-            if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
-                $f['FieldCoordenate']['value'] = $value;
-                $f['FieldCoordenate']['fontSize'] = $options['fontSize'];
-                return 2;
-            }
-        }
+        
         debug("<br>El campo ID de field_coodenates'$fieldCoordenateId' para el valor '$value' no fué encontrado<br>");
         $this->log("$this->name PopulateFieldWidthValue::: El campo ID de field_coordenats n°'$fieldCoordenateId', para el valor '$value' no fué encontrado");
         return 0;
@@ -730,13 +717,13 @@ abstract class FormSkeleton extends AppModel
         }
     }
 
-    public function beforeSave($options)
+    function beforeSave($options)
     {
         $this->__autoCompletarElFormData();
         return parent::beforeSave($options);
     }
 
-    public function __preformTipo1($involucrado, $legend = null)
+    function __preformTipo1($involucrado, $legend = null)
     {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
@@ -774,7 +761,7 @@ abstract class FormSkeleton extends AppModel
     }
 
 
-    public function __preformDomicilios($involucrados, $customerHomeType = ''){
+    function __preformDomicilios($involucrados, $customerHomeType = ''){
         $campo = $involucrados.'_home_';
         if ($customerHomeType !== '') {
             $campo .= strtolower($customerHomeType).'_';
@@ -808,7 +795,7 @@ abstract class FormSkeleton extends AppModel
         return $vRes;
     }
 
-    public function __preform2011Tipo1($involucrado, $legend = null)
+    function __preform2011Tipo1($involucrado, $legend = null)
     {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
@@ -843,7 +830,7 @@ abstract class FormSkeleton extends AppModel
         );
     }
 
-    public function __preformTipo2($involucrado, $legend = null)
+    function __preformTipo2($involucrado, $legend = null)
     {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
@@ -871,7 +858,7 @@ abstract class FormSkeleton extends AppModel
         );
     }
 
-    public function __representativePreform($involucrado, $legend = null)
+    function __representativePreform($involucrado, $legend = null)
     {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
@@ -944,5 +931,3 @@ abstract class FormSkeleton extends AppModel
     }
 
 }
-
-?>

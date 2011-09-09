@@ -6,8 +6,6 @@ App::import('Lib', 'FormSkeleton');
 class F01 extends FormSkeleton {
 
 
-    var $belongsTo = array('Vehicle','Character','Spouse', 'Representative');
-
     var $form_id = 1;
 
     var $involucrados = array('comprador', 'condominiocomprador');

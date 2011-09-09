@@ -10,7 +10,9 @@
     <li>Se modificó el diseño del tamaño de los INPUTS en los formularios para que se pueda visualizar mejor los nombres largos.</li>
     <li>Se agrego la posibilidad de imprimir CUIT o CUIL en el formulaio 13 CABA</li>
     <li>Se arregló el domicilio fiscal del formulario 31A debido a que no se estaba mostrando</li>
-    <li>Ahora el formulario rápido no muestra datos del último vehículo cargado. Inicialmente se habia pedido esta funcionalidad, peor posterior mente se pidió que sea quitada para facilitar la carga de datos nuevos</li>    
+    <li>Ahora el formulario rápido no muestra datos del último vehículo cargado. Inicialmente se habia pedido esta funcionalidad, peor posterior mente se pidió que sea quitada para facilitar la carga de datos nuevos</li>
+    <li>Se agregó inteligencia para detectar que si un cliente es nuevo muestre 3 tipos de domicilios: Legal, Real y Guarda Habitual. Si en cambio, estoy editándolo, entonces sólo muestra el domicilio que se le habia cargado previamente</li>
+    <li>Se pueden crear formularios con 3 páginas de impresión (Ej: Para las prendas que tiene 2 tipos de reverso)</li>
 </ul>
 
 
