@@ -54,6 +54,7 @@ echo $this->Form->end('Buscar');
 	<tr>
             <th><?php echo $this->Paginator->sort('character_type');?></th>
 			<th><?php echo $this->Paginator->sort('name');?> or <?php echo $this->Paginator->sort('id');?></th>
+                        <th><?php echo $this->Paginator->sort('order');?></th>
 			<th><?php echo $this->Paginator->sort('page');?></th>
 			<th><?php echo $this->Paginator->sort('field_type_id');?></th>
 			<th><?php echo $this->Paginator->sort('x');?></th>
@@ -81,7 +82,8 @@ echo $this->Form->end('Buscar');
                         <?php echo $fieldCoordenate['FieldCoordenate']['character_type']?>
                 </td>
 		<td class="edit" field="name" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['name']; ?></td>
-		<td class="edit" field=page" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['page']; ?></td>
+                <td class="edit" field="order" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['order']; ?></td>
+		<td class="edit" field="page" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['page']; ?></td>
 		<td class="edit_field_types" options_types='<?php print json_encode($fieldTypes) ?>' field="field_type_id" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldType']['name'];?></td>
 		<td class="edit" field="x" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['x']; ?></td>
 		<td class="edit" field="y" field_coordenate_id="<?php echo $fId; ?>"><?php echo $fieldCoordenate['FieldCoordenate']['y']; ?></td>

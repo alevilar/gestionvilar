@@ -115,12 +115,13 @@ class FpdfHelper extends AppHelper {
     private function __meterTexto($f, $printer){
         $c = $f['FieldCoordenate'];
         $fType = $f['FieldType']['function'];
-
+        
         if (!empty($c['value'])) {
             $c['x'] = (int)$c['x'] + (int)$printer['Printer']['x'];
             $c['y'] = (int)$c['y'] + (int)$printer['Printer']['y'];
 
-            $c['txt'] = iconv('UTF-8', Configure::read('Fpdf.iconvSource'), $c['value'] );;
+            $c['txt'] = iconv('UTF-8', Configure::read('Fpdf.iconvSource'), $c['value'] );
+            
             $this->SetFontSize(floatval($c['font_size']));
             $textoImprimio = $this->printStuff($fType,$c);
             

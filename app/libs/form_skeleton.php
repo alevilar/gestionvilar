@@ -309,10 +309,32 @@ abstract class FormSkeleton extends AppModel
         $id = $this->getFieldCreatorId();
 
         $cantPages = $this->FieldCoordenate->getCantPages($id);
-        
-        while ($cantPages--) {
-            $this->fieldsPage[] = $this->FieldCoordenate->getCoorFrom($id, $cantPages);
+        $i=0;
+        while ($i++ <= $cantPages) {
+            $this->fieldsPage[] = $this->FieldCoordenate->getCoorFrom($id, $i);
         }
+    }
+    
+    
+    /**
+     * Me devuelve un array con solo aquellos campos de coordenadas que tienen 
+     * un valor llenado o populado.
+     * o sea, me devuelve todas las coordenadas de este formulario que yo quiero
+     * imprimir a PDF ya que son los que tienen valor
+     * @return array
+     */
+    function getOnlyFieldsWithValue(){
+        $vec = array();
+        $iPage=0;
+        foreach($this->fieldsPage as $page) {
+            foreach($page as $v ) {
+                if ( !empty($v['FieldCoordenate']['value'])) {
+                    $vec[$iPage][] = $v;
+                }
+            }
+            $iPage++;
+        }
+        return $vec;
     }
 
     /**
@@ -340,10 +362,11 @@ abstract class FormSkeleton extends AppModel
      * @return integer pagina donde fue encontrada (1 o 2) retorna 0 si no encuentra nada
      *
      */
-    function populateFieldWithValue($fieldCoordenateId, $value, $options = array('fontSize' => 10))
+    function populateFieldWithValue($fieldCoordenateId = 0, $value = '', $options = array('fontSize' => 10))
     {
         if (empty($fieldCoordenateId)) return -1;
-        foreach ($this->fieldsPage as $fp) {
+        if (empty($value)) return -2;
+        foreach ($this->fieldsPage as &$fp) {
             foreach ($fp as &$f) {
                 if (($f['FieldCoordenate']['id'] == $fieldCoordenateId)) {
                     $f['FieldCoordenate']['value'] = $value;
@@ -434,7 +457,7 @@ abstract class FormSkeleton extends AppModel
 
         // preparo el texto en array para recorrerlo y calcular su tamaño
         $vec = explode(" ", $options['field_name']);
-        //limpio caracteres nulos
+        //limpio caracteres nulos, espacios en blanco
         $newVec = array();
         foreach ($vec as $v) {
             if (!empty($v)) {
@@ -471,6 +494,7 @@ abstract class FormSkeleton extends AppModel
                 return 1;
             }
 
+            // como no es multicelda debo agregar palabra por palabra
             while ($palabra = array_shift($vec)) {
                 if (strtoupper($palabra) == 'CUIT' || strtoupper($palabra) == 'CUIL') {
                     $palabra .= " " . array_shift($vec);
@@ -481,17 +505,18 @@ abstract class FormSkeleton extends AppModel
                     $texto = implode(" ", $vec);
                     $vec = array(); // vacio el array
                 }
+                // si la palabra entra.. la concateno el texto
                 if ($coordenada['FieldCoordenate']['w'] >= $fpdfAux->GetStringWidth($texto . " " . $palabra)) {
                     $texto .= " " . $palabra;
                 } else {
+                    // si la palabra no entraba, la vuelvo a meter al array
                     array_unshift($vec, $palabra);
                     break;
                 }
             }
             $this->populateFieldWithValue($coordenada['FieldCoordenate']['id'], $texto);
             $texto = ''; // lo vuelvo a inicializar
-            if (count($vec) == 0)
-                break; // salgo del For renglones
+            if (count($vec) == 0) break; // salgo del For renglones
 
         }
         return 2;

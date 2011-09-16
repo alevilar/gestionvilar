@@ -226,7 +226,6 @@ class FieldCreatorsController extends AppController {
         }
 
         $pages = $fxx->fieldsPage;
-
         $this->set('form_name', $form_model_name);
         $this->set('vehicle_domain', $fxx->data['Vehicle']['patente']);
         $this->set(compact('modelViewVars', 'debug_mode', 'pages', 'printer'));

@@ -72,7 +72,7 @@ echo "
 
         \$coso =  array(
 
-            // EJEMPLOS
+            // EJEMPLOS  ---------------------------
             array(
                 'legend'=>'TITULO EJEMPLO',
                 'se_certifica_obs' => array('type'=>'textarea', 'label'=>'Se certifica que las condiciones de indetificación que figuran en esta solicitud fueron verificacas con el certificado de fabricación y con el automotor cuya inscripción se solicita a favor del señor'),
@@ -83,6 +83,9 @@ echo "
 
             \$this->__vehiclePreform1('Vehículo que se tansfiere'),
 
+            //--------------------------- FIN EJEMPLOS 
+            
+
             array(
                 'legend' => 'TITULO LEYENDA',
 ";
@@ -92,12 +95,12 @@ $prefixAnt  = '';
 foreach ($res['FieldCoordenate'] as $r) {
     
     if ( !empty($r['related_field_table']) ) {
-        if (!empty($r['related_field_table_select']) || !empty($r['character_type'])){
+        if (!empty($r['related_field_table_select']) && $r['related_field_table_select'] != '' && !empty($r['character_type'])){
             echo "
                          '".low($r['related_field_table'])."' => array('label' => '".$r['name']."', 'value' => \$this->getDatafromField('".  Inflector::camelize($r['character_type'])."','".$r['related_field_table_select']."')),";
         } else {
             echo "
-                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."',";
+                         '".low($r['related_field_table'])."' => array('label' => '".$r['name']."'),";
         }
     } else {
         echo "

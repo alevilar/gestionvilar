@@ -55,7 +55,7 @@ class FieldCreator extends AppModel {
                     if ( ! empty($nomAux)) $campoNom = "`".$nomAux."`";
                 }
 
-                $tipoField = 'varchar(32) default NULL';
+                $tipoField = 'varchar(64) default NULL';
                 if ($f['field_type_id'] == 3) {
                     // es Multi Celda
                     $tipoField = 'text default NULL';
@@ -66,9 +66,8 @@ class FieldCreator extends AppModel {
                 }
                 if (!empty($campoNom) && !empty($tipoField)) $setDeCampos[$campoNom] = $tipoField;
 
-
                 // meto indentification_type_id como FK si es que hay algun campo DNI; PASS, CI, etc
-                if (strpos($campoNom, '_identification_') !== false){
+                if ($campoNom && strpos($campoNom, '_identification_') !== false){
                     $prefix = strstr($campoNom, '_identification', true);
                     if ( !in_array($prefix, $prefixesInsertados) ) {
                          $prefixesInsertados[] = $prefix;
