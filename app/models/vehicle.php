@@ -28,6 +28,7 @@ class Vehicle extends AppModel
      * @var array Containable Behaiviour
      */
     var $sContain = array(
+        'VehicleType',
         'Customer' => array(
             'Character' => array('CharacterType'),
             'Representative',

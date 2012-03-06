@@ -4,7 +4,7 @@ $options = array(
             'debug' => Configure::read('debug'),
             'Printer' => $printer['Printer'],
             'filename' => $form_name.'_'.$vehicle_domain,
-            //'output' => 's',
+            'output' => 'f',
         );
 
 //debug($pages);die;

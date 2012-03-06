@@ -67,7 +67,9 @@ abstract class FormSkeleton extends AppModel
     function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        $this->setSContain();
+        if (empty($this->sContain)) {
+            $this->setSContain();
+        }
 
         if (empty($this->form_id)) {
             debug("No se declaró el ID del formulario, no se puede continuar");

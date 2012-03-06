@@ -14,6 +14,8 @@
         echo $this->Form->input('h', array('default'=>0, 'after'=>'Elalto de la celda en milimetros. Si queda en cero, el alto no importa'));
         echo $this->Form->input('renglones_max', array('label'=>'Máxima cantidad de renglones', 'after'=>'Éste parámetro es útil cuando se selecciona MultiCell (múltiples renglones)'));
 
+        echo $this->Form->input('text_indent', array('label' => 'Sangria del Texto, sirve para que comience a escribir el primer renglon mas a la izquierda que el resto del texto'));
+        
         echo "<hr>";
 
        echo $this->Form->input('character_type', array('options'=>$character_types, 'empty'=>'Seleccione'));

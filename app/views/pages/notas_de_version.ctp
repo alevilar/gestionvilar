@@ -1,9 +1,24 @@
 
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
-<h3>Versión 1.4 (1/10/2011)</h3>
+<h3>Versión 1.5 (06/03/2012)</h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Mejoras en el formulario de Prendas</h4>
+<ul>
+    <li>En el ítem: "Declara adeudar en concepto de", se agregaron 3 opciones (combo) ya pre-definidos</li>
+    <li>En el ítem: "Bienes" se colocó un texto automático con los datos completos del vehículo a fin de no tener que escribirlos cada vez que se imprima el formulario.</li>
+    <li>En el ítem: "gravámenes" se colocó el texto automático, <i>NINGUNO DE NINGUNA NATURALEZA</i></li>
+    <li>En el ítem: "documentación" se colocó un texto automático</li>
+    <li>En el ítem: ".... los siguientes vencimientos" se colocó un texto automático</li>
+    <li>En el ítem: "lugar de pago" se colocó un texto automático, <i>DOMICILIO ACREEDOR</i></li>
+</ul>
+
+
+
+
+<h3>Versión 1.4 (09/10/2011)</h3>
 
 <ul>
     <li>Automáticamente se coloca 100% en los porcentajes para todos los casos.</li>

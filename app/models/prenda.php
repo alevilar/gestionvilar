@@ -20,13 +20,50 @@ class Prenda extends FormSkeleton {
          array('field_forms/character_data'=> array('field_prefix'=>'deudor', 'label'=>"Actor Como 'deudor'")),
          array('field_forms/character_data'=> array('field_prefix'=>'acreedor', 'label'=>"Actor Como 'acreedor'")),
          );
+    
+    
+    
+    /**
+     * Es el setter del atributo $sContain
+     * sirve para realizar las busquedas y se ejecuta en el constructor
+     *
+     * para que la busqueda trauga TODO habria que copiar este array:
+     *                    array(
+      'Customer'=>array(
+      'Representative',
+      'CustomerHome',
+      'CustomerLegal',
+      'CustomerNatural'=>array('Spouse'),
+      'Identification'=>array('IdentificationType')
+      )
+      )
+     */
+    function setSContain()
+    {
+        $this->sContain = array(
+            'Representative',
+            'Vehicle' => array(
+                'VehicleType',
+                'Customer' => array(
+                    'Character' => array('CharacterType'),
+                    'Representative',
+                    'CustomerLegal',
+                    'CustomerNatural' => array('Spouse'),
+                    'CustomerHome',
+                    'Identification' => array('IdentificationType')
+                )
+            )
+        );
+    }
+    
 
 
     function beforeSave($options)
     {
         parent::beforeSave($options);
         
-         $MS = ClassRegistry::init('MaritalStatus');
+        
+        $MS = ClassRegistry::init('MaritalStatus');
         if (!empty($this->data[$this->name]['acreedor_marital_status_id'])) {
             $MS->id = $this->data[$this->name]['acreedor_marital_status_id'];
             $maritalName = strtoupper( $MS->field('name') );
@@ -47,23 +84,35 @@ class Prenda extends FormSkeleton {
         $identificationsTypes = ClassRegistry::init('IdentificationType')->find('list');
         $nationalities = $this->Vehicle->Customer->CustomerNatural->nationalityTypes;
         $maritalStatus = ClassRegistry::init('MaritalStatus')->find('list');
+                
+        $textoBienes = 'UN VEHÍCULO AUTOMOTOR 0KM., MARCA: '.$this->data['Vehicle']['brand'].
+                        ', TIPO: '. $this->data['Vehicle']['type'] .
+                        ', MODELO: '. $this->data['Vehicle']['model'] .
+                        ', AÑO: ' . date('Y', strtotime($this->data['Vehicle']['adquisition_date'])) .
+                        ', USO: ' . $this->data['Vehicle']['use'] .
+                        ', MOTOR MARCA: '. $this->data['Vehicle']['motor_brand'] .
+                        ', NÚMERO: ' . $this->data['Vehicle']['motor_number'] .
+                        ', CHASIS MARCA: '. $this->data['Vehicle']['chasis_brand'] .
+                        ', NÚMERO: '. $this->data['Vehicle']['chasis_number'] .
+                        ', A PATENTAR.';
 
         $coso =  array(
             array(
                 'legend' => 'Introducción',
-                
+                'pruebita' => array('label' => 'Prueba', 'value' => 'ashiahs iahs iahsi auhsi uahis ahi shaoihap siuh dishud'),
                          'clase_fija_flotante' => array('label' => 'Clase (¿fija o flotante?)', 'value' => 'FIJA'),
                 
                 'precio' => array('label' => 'Por $'),
                 'precio_texto' => array('label' => 'La suma de'),
                 
                          'deudor_name' => array('label' => 'que el señor', 'value' => $this->getDatafromField('Deudor','name')),
-                         'deudor_concepto' => array('label' => 'declara adeudar en concepto de:'),
+                         'deudor_concepto' => array('label' => 'declara adeudar en concepto de:', 'options' => array('SALDO DE PRECIO' => 'SALDO DE PRECIO', 'PRESTAMO DE DINERO EN EFECTIVO' => 'PRESTAMO DE DINERO EN EFECTIVO', 'GARANTÍA DE PAGO' => 'GARANTÍA DE PAGO')),
                          'acreedor_name' => array('label' => 'a don', 'value' => $this->getDatafromField('Acreedor','name')),
+                'deudor_bienes' => array('label' => 'Bienes', 'value' => $textoBienes ),
                 ),
             array(
                 'legend' => 'Ubicación de los bienes',
-                         'deudor_bienes' => array('label' => 'Bienes'),
+                         
                          'deudor_home_state' => array('label' => 'Provincia', 'value' => $this->getDatafromField('Deudor','home_state')),
                          'deudor_home_county' => array('label' => 'Depto o Partido', 'value' => $this->getDatafromField('Deudor','home_county')),
                          'deudor_distrito' => array('label' => 'Distrito o Pedanía'),
@@ -75,11 +124,11 @@ class Prenda extends FormSkeleton {
             array(
                 'legend' => 'Gravámenes/Documentación/Intereses/Pago',
                          'deudor_gravamenes' => array('label' => 'Gravámenes', 'value' => 'NINGUNO DE NINGUNA NATURALEZA'),
-                         'deudor_documentacion' => array('label' => 'Documentación'),
-                         'deudor_vencimientos' => array('label' => 'Vencimientos'),
+                         'deudor_documentacion' => array('label' => 'Documentación', 'type' => 'textarea' ,'value' => 'LA DEUDA QUEDA DOCUMENTADA EN EL PRESENTE CONTRATO PRENDARIO PAGAREDO EN 36 CUOTAS IGUALES MENSUALES Y CONSECUTIVAS DE u$sXXXXXX CADA UNA.'),
+                         'deudor_vencimientos' => array('label' => 'Vencimientos', 'value' => 'EL PRIMERO EL XX-XX-XX Y LOS RESTANTES EL DÍA XX DE LOS MESES SIGUIENTES HASTA CANCELAR LA TOTALIDAD DE LA DEUDA. ÚLTIMO VENCIMIENTO: XX-XX-XX'),
                 
                          'acreedor_intereses' => array('label' => 'Intereses'),
-                         'lugar_de_pago' => array('label' => 'Lugar de pago'),
+                         'lugar_de_pago' => array('label' => 'Lugar de pago', 'value' => 'DOMICILIO ACREEDOR'),
                          'derechos_de_inspeccion' => array('label' => 'Derechos de Inspección del acreedor', 'value' => 'AMPLIOS'),
                 ),
             array(
@@ -122,7 +171,7 @@ class Prenda extends FormSkeleton {
                         'deudor_inscription_number' => array('label' => 'N° de Inscripción', 'value' => $this->getDatafromField('Deudor','inscription_number')),
                 ),
             array(
-                'legend' => 'Traslado',
+                'legend' => 'Reverso 1',
                          'traslado' => array('label' => 'traslado'),
                          'traslado_de' => array('label' => 'traslado de'),
                          'traslado_de_2' => array('label' => 'traslado de 2'),

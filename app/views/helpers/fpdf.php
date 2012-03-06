@@ -106,6 +106,31 @@ class FpdfHelper extends AppHelper {
         }
     }
 
+    /**
+     * AGrega espacios en blancos segun el ancho en milimetros pasado como parametro
+     */
+    function agregarEspaciosEnBlancoOnTextIndent($text, $fontSize ,$mm_indent = 0) {
+        if ($mm_indent == 0) return $text;
+        
+        // inicializo el FPDF para luego verificar el tamaño de la celda
+        App::import('Vendor', 'fpdf/fpdf');
+        $orientation = Configure::read('Fpdf.orientation');
+        $unit = Configure::read('Fpdf.unit');
+        $format = Configure::read('Fpdf.format');
+        $fpdfAux = new FPDF();
+        $fpdfAux->FPDF($orientation, $unit, $format);
+        $fpdfAux->AddPage();
+
+        $fpdfAux->SetFont(Configure::read('Fpdf.fontFamily'), '', $fontSize);
+        
+        $espacios = '';
+        while ($mm_indent >=  $fpdfAux->GetStringWidth($espacios)){
+            $espacios = $espacios.' ';
+        }
+        
+        
+        return $espacios.$text;
+    }
 
     /**
      *
@@ -121,6 +146,10 @@ class FpdfHelper extends AppHelper {
             $c['y'] = (int)$c['y'] + (int)$printer['Printer']['y'];
 
             $c['txt'] = iconv('UTF-8', Configure::read('Fpdf.iconvSource'), $c['value'] );
+            
+            if ( !empty($c['text_indent']) ){
+                $c['txt'] = $this->agregarEspaciosEnBlancoOnTextIndent($c['txt'], $c['font_size'], $c['text_indent']);
+            }
             
             $this->SetFontSize(floatval($c['font_size']));
             $textoImprimio = $this->printStuff($fType,$c);
