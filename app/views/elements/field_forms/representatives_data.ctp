@@ -18,6 +18,7 @@ if (empty($representatives)) {
     $representatives = $this->data['Vehicle']['Customer']['Representative'];
 
     $finalRepresentatives = array();
+    if ( !empty($representatives) ) {
     foreach($representatives as $rp) {
         $finalRepresentatives[$rp['id']] = array(
                 'text'=>$rp['name'],
@@ -25,6 +26,7 @@ if (empty($representatives)) {
         );
     }
     $representatives = $finalRepresentatives;
+}
 }
 ?>
 

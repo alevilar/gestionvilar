@@ -25,9 +25,11 @@ if (empty($customer)) {
         $d['Vehicle']['Customer'] = $d['Customer'];
     }
 
+    if ( !empty($d['Vehicle']['Customer']) ) {
     foreach ($d['Vehicle']['Customer'] as $field=>$fval) {
             $customer[$field] = $fval;
         }
+    }
 
     $customer['porcentaje'] = '100  00';
     $customer['name'] = $d['Vehicle']['Customer']['name'];

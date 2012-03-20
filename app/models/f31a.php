@@ -77,7 +77,7 @@ class F31a extends FormSkeleton {
               'legend' => 'Datos del Automotor',
                  'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->getDatafromField('Vehicle','patente')),
                  'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle','brand')),
-                 'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle','model')),
+                 'vehicle_model' => array('label' => 'Modelo', 'value' => date('Y', strtotime($this->data['Vehicle']['adquisition_date'])) ),
                  'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle','type')),
                  'vehicle_adquisition_anio' => array('label' => 'Modelo Año', 'value' => $this->getDatafromField('Vehicle','model')),
                  'vehicle_motor_brand' => array('label' => 'Marca De Motor', 'value' => $this->getDatafromField('Vehicle','motor_brand')),

@@ -846,7 +846,7 @@ abstract class FormSkeleton extends AppModel
             
             $involucrado . '_cuit_cuil' => array('label' => 'CUIT o CUIL'),
             $involucrado . '_born_place' => array('label' => 'Lugar de Nacimiento'),
-            $involucrado . '_fecha_nacimiento' => array('label' => 'Fecha de Nacimiento', 'type' => 'text'),
+            $involucrado . '_fecha_nacimiento' => array('label' => 'Fecha de Nacimiento (formato día-mes-año, EJ: 30/10/52', 'type' => 'text'),
             $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
             $involucrado . '_nupcia' => array('label' => 'Nupcia'),
             $involucrado . '_conyuge' => array('label' => 'Apellido y nombres del cónyuge'),

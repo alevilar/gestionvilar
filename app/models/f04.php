@@ -139,6 +139,7 @@ class F04 extends FormSkeleton {
             array(
                  'legend'=>'"K" Observaciones',
                  'observaciones' => array('label'=>false),  
+                 'deudor_inscripcion' => array('label' => 'Descripción del nuevo tipo'),
             ),
             array(
                 'legend'=>'"M"',

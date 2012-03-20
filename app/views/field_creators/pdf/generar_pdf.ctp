@@ -1,10 +1,22 @@
 <?
 
+//Tipos de output
+// I: Send to standard output
+// D: Download file
+// F: Save to local file
+// S: Devolver como un string
+
+
+$filename = $form_name;
+if (!empty($vehicle_domain)) {
+    $filename .= '_'.$vehicle_domain;
+}
+
 $options = array(
             'debug' => Configure::read('debug'),
             'Printer' => $printer['Printer'],
-            'filename' => $form_name.'_'.$vehicle_domain,
-            'output' => 'f',
+            'filename' => $filename,
+            'output' => 'i',
         );
 
 //debug($pages);die;

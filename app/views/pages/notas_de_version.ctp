@@ -1,6 +1,25 @@
 
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
+
+<h3>Versión 1.6 (20/03/2012)</h3>
+
+<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Se resolvieron los siguientes "bugs" encontrados</h4>
+<ul>
+    <li>F08 BIS    no aparece en el pdf  actividad / profesión  ni fecha de nacimiento, ni cuando se lo grabo ni cuando lo agrego antes de generarlo</li>
+ 
+    <li>F04  haría falta agregarle campos a : “ descripción del nuevo tipo”  y en el dorso no aparecen en el pdf los datos del firmante o apoderado numero de documento  ni autoridad que lo expide.</li>
+ 
+    <li>F13 CABA  no aparece CUIT/L</li>
+ 
+    <li>13 A BSAS   modelo= año , Tipo van dos letras , USO va un numero , NAC un numero ,  PESO habría que agregarlo  lo completamos antes degenerar el PDF.  Ni modelo ni uso ni tipo en este formulario coincide con los campos que se completan cuando se carga el vehiculo.</li>
+ 
+    <li>31 A  MODELO /AÑO  va el año  no el modelo, faltarían campos par acompeltar peso y combustible los agregamos en el momento antes de generar el PDF</li>
+</ul>
+
+
 <h3>Versión 1.5 (06/03/2012)</h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
