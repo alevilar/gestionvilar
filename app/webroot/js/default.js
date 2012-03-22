@@ -5,20 +5,22 @@
  * @param integer integerValue es un random value generado desde el PHP para cada elemento
  */
 function populateCampos(modelName, formName, fieldPrefix, integerValue) {
-    var seleccionado = $('#Form'+modelName+'Id-'+integerValue+'  option:selected');
-    var inputName = "data["+formName+"]["+fieldPrefix;
+    var seleccionado = $('#Form'+modelName+'Id-'+integerValue+'  option:selected'),
+        inputName = "data["+formName+"]["+fieldPrefix,
+        elementoFormInput,
+        elementoElement;
 
     if (seleccionado.val()){
         var Coso =  jQuery.parseJSON(seleccionado.attr('json'));
 //        window.console.debug(Coso);
         for (property in Coso) {
             inputName = "data["+formName+"]["+fieldPrefix+"_"+property+"]";            
-            var elementoFormInput = $('[name="'+inputName+'"]');
+            elementoFormInput = $('[name="'+inputName+'"]');
             if (elementoFormInput.length > 0) {
                 
                 elementoFormInput.val(Coso[property]);
             } else {
-                var elementoElement = $("#"+fieldPrefix+"_"+property);
+                elementoElement = $("#"+fieldPrefix+"_"+property);
                 if(elementoElement.length > 0) {
                     elementoElement.val(Coso[property]);
                 }

@@ -101,12 +101,39 @@ if (empty($customer)) {
             foreach ($home as $h=>$val){
                 $prefix = 'home_'.strtolower($home['type']).'_';
                 $customer[$prefix.$h] = $val;
+                
+                //traducir al castellano
+                switch ( $h ) {
+                    case 'address':
+                        $customer[$prefix.'calle'] = $val ;
+                        break;
+                    case 'number':
+                        $customer[$prefix.'numero_calle'] = $val ;
+                        break;
+                    case 'floor':
+                        $customer[$prefix.'piso'] = $val ;
+                        break;
+                    case 'apartment':
+                        $customer[$prefix.'depto'] = $val ;
+                        break;
+                    case 'postal_code':
+                        $customer[$prefix.'cp'] = $val ;
+                        break;
+                    case 'city':
+                        $customer[$prefix.'localidad'] = $val ;
+                        break;
+                    case 'county':
+                        $customer[$prefix.'departamento'] = $val ;
+                        break;
+                    case 'state':
+                        $customer[$prefix.'provincia'] = $val ;
+                        break;
+                    default:
+                        break;
+                }
             }
-       }
+        }
     }
-
-
-        
         
 
     // PERSONA FÍSICA
@@ -172,10 +199,6 @@ if (empty($customer)) {
         }
     }
 
-
-//    $customer['fecha_nacimiento'] = date('d-m-Y',strtotime($customer['fecha_nacimiento']));
-//    $customer['fecha_inscripcion'] = date('d-m-Y',strtotime($customer['fecha_inscripcion']));
-
     $customer = json_encode($customer);
  
 }
@@ -196,31 +219,35 @@ if (empty($customer)) {
 
 
 <script type="text/javascript">
-    lastElementValue = 'comprador';
-    // funcion que sirve para limpiar el codigo de los eventos de este script
-    function meterCustomer(){
-        var modelName = '<?php echo 'Customer' ?>';
-        var formName = '<?php echo $formName?>';
-        var elementValue = $('<?php echo "#FormCustomerId-$random" ?>').val();
-        var randomNumber = <?php echo $random?>;
+    var lastElementValue = 'comprador';
+    (function(){
         
-        if (modelName && formName && randomNumber) {
-            if (elementValue) {
-                lastElementValue = elementValue;
+        // funcion que sirve para limpiar el codigo de los eventos de este script
+        function meterCustomer(){
+            var modelName = '<?php echo 'Customer' ?>';
+            var formName = '<?php echo $formName?>';
+            var elementValue = $('<?php echo "#FormCustomerId-$random" ?>').val();
+            var randomNumber = <?php echo $random?>;
+
+            if (modelName && formName && randomNumber) {
+                if (elementValue) {
+                    lastElementValue = elementValue;
+                }
+               populateCampos(modelName,formName, lastElementValue, randomNumber);
             }
-           populateCampos(modelName,formName, lastElementValue, randomNumber);
         }
-    }
 
-    // Evento cuando se carga lapagina
-    $(document).ready(function(){
-        meterCustomer();
+        window.onload = meterCustomer;
 
-    });
+        // Evento cuando se cambia la opcion del SELECT
+        $('<?php echo "#FormCustomerId-$random" ?>').change(meterCustomer);
 
-    // Evento cuando se cambia la opcion del SELECT
-    $('<?php echo "#FormCustomerId-$random" ?>').change(meterCustomer);
 
-    $('<?php echo "#FormCustomerId-$random" ?>').click(meterCustomer);
+        
+    })();
+    
+    
+
+//    $('<?php echo "#FormCustomerId-$random" ?>').click(meterCustomer);
 
 </script>
