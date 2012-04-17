@@ -39,7 +39,7 @@ class F13caba extends FormSkeleton {
                          'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle','brand')),
                          'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle','type')),
                          'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle','model')),
-                         'vehicle_adquisition_anio' => array('label' => 'Año', 'value' => $this->getDatafromField('Vehicle','adquisition_anio')),
+                         'vehicle_adquisition_anio' => array('label' => 'Año', 'value' => date('Y', strtotime($this->data['Vehicle']['adquisition_date']))),
                          'vehicle_peso' => array('label' => 'Peso', 'value' => $this->getDatafromField('Vehicle','')),
                          'vehicle_fecha' => array('label' => 'Fecha', 'value' => $this->getDatafromField('Vehicle','')),
                          'vehicle_motor_number' => array('label' => 'Motor Numero', 'value' => $this->getDatafromField('Vehicle','motor_number')),

@@ -2,9 +2,18 @@
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
 
-<h3>Versión 1.6 (20/03/2012)</h3>
+<h3>Versión 1.7 (17/04/2012)</h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Se corrigió el orden y la malinterpretación entre el Modelo y el Modelo del año de adquisición del vehículo en los siguietes formularios:</h4>
+<ul>
+    <li>Formulario 13 CABA</li>
+    <li>Formulario 31 A</li>
+</ul>
+
+
+<h3>Versión 1.6 (20/03/2012)</h3>
 
 <h4>Se resolvieron los siguientes "bugs" encontrados</h4>
 <ul>
