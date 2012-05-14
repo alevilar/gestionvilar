@@ -2,9 +2,19 @@
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
 
-<h3>Versión 1.7 (17/04/2012)</h3>
+<h3>Versión 1.8 (14/05/2012)</h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Se agregó el formulario 01 bis 2 siendo éste una copia del 01 bis pero con pequeñas diferencias en las coordenadas:</h4>
+<ul>
+    <li>Se agregó el Modelo y las tablas en la base de datos que darán la lógica del nuevo formulario</li>
+    <li>Se migraron las coordenadas del formulario 01 bis, generando una copia del mismo</li>
+    <li>Se subieron los cambios en día y horario no laborables para no generar conflictos con el trabajo cotidiano de la empresa</li>
+</ul>
+
+
+<h3>Versión 1.7 (17/04/2012)</h3>
 
 <h4>Se corrigió el orden y la malinterpretación entre el Modelo y el Modelo del año de adquisición del vehículo en los siguietes formularios:</h4>
 <ul>
