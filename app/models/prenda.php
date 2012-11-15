@@ -99,15 +99,17 @@ class Prenda extends FormSkeleton {
         $coso =  array(
             array(
                 'legend' => 'Introducción',
-                'pruebita' => array('label' => 'Prueba', 'value' => 'ashiahs iahs iahsi auhsi uahis ahi shaoihap siuh dishud'),
-                         'clase_fija_flotante' => array('label' => 'Clase (¿fija o flotante?)', 'value' => 'FIJA'),
                 
-                'precio' => array('label' => 'Por $'),
+                'clase_fija_flotante' => array('label' => 'Clase (¿fija o flotante?)', 'value' => 'FIJA'),
+                'lugar_y_fecha' => array('label' => 'Lugar y Fecha'),
+                'de_anio' => array('label' => 'Año'),
+                
+                'por' => array('label' => 'Por $'),
                 'precio_texto' => array('label' => 'La suma de'),
                 
-                         'deudor_name' => array('label' => 'que el señor', 'value' => $this->getDatafromField('Deudor','name')),
-                         'deudor_concepto' => array('label' => 'declara adeudar en concepto de:', 'options' => array('SALDO DE PRECIO' => 'SALDO DE PRECIO', 'PRESTAMO DE DINERO EN EFECTIVO' => 'PRESTAMO DE DINERO EN EFECTIVO', 'GARANTÍA DE PAGO' => 'GARANTÍA DE PAGO')),
-                         'acreedor_name' => array('label' => 'a don', 'value' => $this->getDatafromField('Acreedor','name')),
+                 'deudor_name' => array('label' => 'que el señor', 'value' => $this->getDatafromField('Deudor','name')),
+                 'deudor_concepto' => array('label' => 'declara adeudar en concepto de:', 'options' => array('SALDO DE PRECIO' => 'SALDO DE PRECIO', 'PRESTAMO DE DINERO EN EFECTIVO' => 'PRESTAMO DE DINERO EN EFECTIVO', 'GARANTÍA DE PAGO' => 'GARANTÍA DE PAGO')),
+                 'acreedor_name' => array('label' => 'a don', 'value' => $this->getDatafromField('Acreedor','name')),
                 'deudor_bienes' => array('label' => 'Bienes', 'value' => $textoBienes ),
                 ),
             array(

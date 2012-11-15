@@ -50,7 +50,7 @@ class F13ba extends FormSkeleton {
                  'vehicle_letra' => array('label' => 'Letra', 'value' => $this->getDatafromField('Vehicle','')),
                  'vehicle_patente' => array('label' => 'Dominio', 'value' => $this->getDatafromField('Vehicle','patente')),
                  'vehicle_brand' => array('label' => 'Marca', 'value' => $this->getDatafromField('Vehicle','brand')),
-                 'vehicle_model' => array('label' => 'Mod año', 'value' => $this->getDatafromField('Vehicle','model')),
+                 'vehicle_model' => array('label' => 'Modelo', 'value' => $this->getDatafromField('Vehicle','model')),
                  'vehicle_modeloanio' => array('label' => 'Mod. Año', 'value' => $this->getDatafromField('Vehicle','')),
                  'vehicle_type' => array('label' => 'Tipo', 'value' => $this->getDatafromField('Vehicle','type')),
                  'vehicle_motor_number' => array('label' => 'Número de Motor', 'value' => $this->getDatafromField('Vehicle','motor_number')),

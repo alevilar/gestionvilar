@@ -39,6 +39,8 @@ class F01 extends FormSkeleton {
             array(
                 'legend'=>'+',
                 'se_certifica_obs' => array('type'=>'textarea', 'label'=>'Se certifica que las condiciones de indetificación que figuran en esta solicitud fueron verificacas con el certificado de fabricación y con el automotor cuya inscripción se solicita a favor del señor'),
+                'texto_fijo' => array('label'=>'Texto Fijo', 'type'=>'textarea', 'value' => 'Si la inscripción del dominio de este automotor se produjera en el año anterior al consignado en el presente certificado de fabricación como modelo-año, regirá a estos efectos el año de su inscripción, tal como lo establece la resolución ex. S.I.M. 416/82 '),
+                'comerciante' => array('label'=>'Comerciante Habitualista'),
                  'obervaciones' => array('label'=>'Observaciones', 'type'=>'textarea'),
                  ),
             $this->__representativePreform('comprador', 'Apoderado del Titular'),

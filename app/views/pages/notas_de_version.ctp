@@ -1,10 +1,41 @@
-
 <h2>Resumen de cambios desde el lanzamiento de la aplicación en Julio del 2010</h2>
 
 
-<h3>Versión 1.8 (14/05/2012)</h3>
+<h3>Versión 1.9.2 (15/11/2012)</h3>
 
 <p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Mejora en el formularios F13 A de Provincia Bs As, se agregaron los siguientes campos:</h4>
+<ul>
+    <li>Vehículo Peso</li>
+    <li>Vehículo carga máxima</li>
+    <li>Vehículo combustible</li>
+</ul>
+
+
+<h3>Versión 1.9.1 (2/10/2012)</h3>
+
+
+<h4>Mejoras en formularios:</h4>
+<ul>
+    <li>Se mejoró el Formulario "F 13 A de Provincia"</li>
+    <li>Se mejoró el formulario "F 13 de Provincia"</li>
+</ul>
+
+
+
+<h3>Versión 1.9 (3/09/2012)</h3>
+
+<p>Desde su puesta en funcionamiento el sistema ha sufrido numerosas modificaciones con el fin de lograr una mejora constante en la calidad de la impresión y rapidez de uso. Siguiendo esa metodologia de <b>mejora continua</b>, se ha realizado una actualización que resuelve los siguientes puntos:</p>
+
+<h4>Mejoras en formularios:</h4>
+<ul>
+    <li>Se mejoró el Formulario "04"</li>
+    <li>Se mejoró el formulario "Prendas"</li>
+</ul>
+
+
+<h3>Versión 1.8 (14/05/2012)</h3>
 
 <h4>Se agregó el formulario 01 bis 2 siendo éste una copia del 01 bis pero con pequeñas diferencias en las coordenadas:</h4>
 <ul>

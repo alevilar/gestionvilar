@@ -875,7 +875,7 @@ abstract class FormSkeleton extends AppModel
             $involucrado . '_marital_status_id' => array('label' => 'Estado Civil', 'options' => $maritalStatus, 'empty' => 'Seleccione'),
             $involucrado . '_nupcia' => array('label' => 'Nupcia'),
             $involucrado . '_conyuge' => array('label' => 'Apellido y nombres del cónyuge'),
-            $involucrado . '_conyuge_apoderado_name' => array('label' => 'Apellido y nombres del cónyuge'),
+            $involucrado . '_conyuge_apoderado_name' => array('label' => 'Apellido y nombres del Apoderado del Cónyuge'),
             $involucrado . '_conyuge_apoderado_identification_type_id' => array('label' => 'Tipo de identificación', 'empty' => 'Seleccione', 'options' => $identificationsTypes),
             $involucrado . '_conyuge_apoderado_identification_number' => array('label' => 'N° Documento'),
             $involucrado . '_conyuge_apoderado_nationality_type' => array('label' => 'Nacionalidad', 'options' => $nationalities, 'empty'=>'Seleccione'),
